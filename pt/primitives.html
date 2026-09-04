@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-lang="pt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Primitives — Interface Craft</title>
+  <meta name="description" content="Botão, campo, menu, diálogo, slider, aba, tabela. Os componentes de que todo produto é feito, no nível de detalhe em que eles de fato quebram.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#fcfcfc" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
+  <script>
+    // Applies the saved theme before first paint to avoid a flash
+    try { var t = localStorage.getItem('theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script>
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <div>
+        <div class="brand-name">Interface Craft</div>
+        <div class="brand-sub">Biblioteca viva</div>
+      </div>
+      <div class="controls">
+        <nav class="lang-switch" aria-label="Idioma"><a class="lang-opt" href="../primitives.html" data-lang="en" hreflang="en">EN</a><a class="lang-opt" href="#" data-lang="pt" hreflang="pt" aria-current="true">PT</a></nav>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Alternar tema claro e escuro" title="Alternar tema claro e escuro"><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+      </div>
+    </div>
+    <a class="back-link" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>Início</a>
+    <nav class="nav-groups" aria-label="Sumário da seção">
+      <div class="nav-group" data-section="primitives" style="margin-top:0">
+        <div class="nav-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="6" rx="2"/><rect x="3" y="14" width="8" height="6" rx="2"/><path d="M15 17h6M18 14v6"/></svg>Primitives</div>
+        <ul class="nav-list"><li><a class="nav-link" href="#what-makes-a-primitive">What Makes a Primitive</a></li><li><a class="nav-link" href="#hit-areas-and-targets">Hit Areas</a></li><li><a class="nav-link" href="#pointer-touch-keyboard">Pointer, Touch and Keyboard</a></li><li><a class="nav-link" href="#focus-management">Focus</a></li><li><a class="nav-link" href="#layers-and-stacking">Layers and Stacking</a></li><li><a class="nav-link" href="#scrolling-behavior">Scrolling</a></li><li><a class="nav-link" href="#component-state">State</a></li><li><a class="nav-link" href="#semantics-and-announcement">Semantics and Announcement</a></li><li><a class="nav-link" href="#button">Button</a></li><li><a class="nav-link" href="#text-field">Text Field</a></li><li><a class="nav-link" href="#checkbox-radio-switch">Checkbox, Radio and Switch</a></li><li><a class="nav-link" href="#select-and-combobox">Select and Combobox</a></li><li><a class="nav-link" href="#slider">Slider</a></li><li><a class="nav-link" href="#tooltip">Tooltip</a></li><li><a class="nav-link" href="#popover-and-menu">Popover and Menu</a></li><li><a class="nav-link" href="#command-menu">Command Menu</a></li><li><a class="nav-link" href="#dialog">Dialog</a></li><li><a class="nav-link" href="#drawer">Drawer</a></li><li><a class="nav-link" href="#toast">Toast</a></li><li><a class="nav-link" href="#tabs">Tabs</a></li><li><a class="nav-link" href="#disclosure-and-accordion">Disclosure and Accordion</a></li><li><a class="nav-link" href="#table">Table</a></li><li><a class="nav-link" href="#scroll-area">Scroll Area</a></li><li><a class="nav-link" href="#drag-and-reorder">Drag and Reorder</a></li></ul>
+      </div>
+      <div class="nav-group nav-other" data-section="primitives">
+        <div class="nav-title">Outras seções</div>
+        <ul class="nav-list"><li><a class="nav-link" href="craft.html">Craft</a></li><li><a class="nav-link" href="typography.html">Typography</a></li><li><a class="nav-link" href="color.html">Color</a></li><li><a class="nav-link" href="layout.html">Layout</a></li><li><a class="nav-link" href="motion.html">Motion</a></li><li><a class="nav-link" href="ux.html">UX</a></li><li><a class="nav-link" href="referencias.html">Referências</a></li></ul>
+      </div>
+    </nav>
+  </aside>
+  <main class="content">
+    <div class="container">
+<section class="section" data-section="primitives">
+        <div class="section-head" id="primitives">
+          <span class="eyebrow">Seção 07</span>
+          <h2>Primitives</h2>
+          <p>Botão, campo, menu, diálogo, slider, aba, tabela. Os componentes de que todo produto é feito, no nível de detalhe em que eles de fato quebram.</p>
+        </div>
+
+        <article class="lesson" id="what-makes-a-primitive">
+          <span class="eyebrow">Primitives · 01</span>
+          <h2>What Makes a Primitive</h2>
+          <p class="lede">Um primitivo é um componente que não pode ser decomposto sem deixar de ser útil. É usado centenas de vezes, então um detalhe corrigido no botão aparece em toda tela. Um detalhe errado também.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="dims">
+            <div class="demo-stage">
+            <div class="dm-wrap"><div class="dm-row"><button class="dm-start" type="button">Comece aqui</button><div class="dm-el dm-fake" data-el>Publicar</div><button class="dm-el dm-native" type="button" data-el>Publicar</button></div><ul class="dm-checks"><li data-check="reach"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Alcançável com Tab</span></li><li data-check="activate"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Ativa com Espaço ou Enter</span></li><li data-check="ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Anel de foco aparece</span></li><li data-check="role"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Anunciado como botão</span></li></ul></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Elemento button nativo</span><input type="checkbox" name="native" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Clique em "Comece aqui", depois Tab e Espaço. A div estilizada de botão falha em toda dimensão menos a visual. Mude para o elemento nativo e as quatro passam com zero código extra.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Todo primitivo precisa ser resolvido em sete dimensões, e a maioria das implementações resolve duas ou três. Visual: todos os estados existem e se distinguem? Ponteiro: área de acerto, hover, arrasto, cursor. Toque: alvo, ausência de hover, gesto, feedback. Teclado: alcançável, operável, com as convenções certas. Semântica: anunciado com papel e estado. Estado: controlado, não controlado, interrompido, concorrente. Robustez: conteúdo longo, vazio, muitos itens, erro. Um botão que só resolve visual e ponteiro não está pronto; está pela metade.</p>
+          <p>A ordem é estrutura, depois comportamento, depois visual. Sempre. O erro típico é o inverso: o componente é desenhado, implementado visualmente, e depois alguém "adiciona acessibilidade". O resultado é um elemento genérico com atributos colados por cima que se comporta errado em toda situação não prevista. Começar pelo elemento certo da plataforma resolve de graça foco, teclado, semântica, formulário, tecnologia assistiva e impressão. Substituir isso por implementação própria é assumir toda essa dívida.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Elemento nativo primeiro.</strong> Depois nativo estilizado, depois biblioteca de primitivos sem estilo e testada, depois implementação própria com semântica declarada. A maioria dos produtos pula para o quarto passo e paga por isso.</li>
+            <li><strong>Sete dimensões por componente,</strong> revisadas antes de chamá-lo de pronto.</li>
+            <li><strong>Só construa do zero quando o nativo comprovadamente não serve.</strong> Um combobox correto é mais complexo que qualquer estimativa inicial.</li>
+            <li><strong>Estrutura, comportamento, visual.</strong> Acessibilidade não é camada; é esqueleto.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Sete dimensões, um checklist.</strong> Visual, ponteiro, toque, teclado, semântica, estado, robustez.</li>
+            <li><strong>Estrutura antes dos pixels.</strong> Escolha o elemento, depois o comportamento, depois a aparência.</li>
+            <li><strong>Nativo, nativo estilizado, biblioteca testada, próprio, nada.</strong> Nessa ordem.</li>
+            <li><strong>Conte os casos que o seu botão trata.</strong> O número costuma surpreender.</li>
+            <li><strong>Uma correção num primitivo sai em todo lugar de uma vez.</strong> Um bug também.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Anatomia dos primitivos de interface, handbook</em> (capítulo 1) · <a href="https://www.w3.org/WAI/ARIA/apg/" target="_blank" rel="noopener">ARIA Authoring Practices Guide</a> · <a href="https://www.radix-ui.com/primitives" target="_blank" rel="noopener">Radix Primitives</a></footer>
+        </article>
+
+        <article class="lesson" id="hit-areas-and-targets">
+          <span class="eyebrow">Primitives · 02</span>
+          <h2>Hit Areas</h2>
+          <p class="lede">A área de acerto não é a área visual. Um ícone de 16px não precisa de um alvo de 16px. É o defeito mais comum em interfaces e o mais barato de corrigir.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="hit">
+            <div class="demo-stage" data-hits="acertos">
+            <div class="ht-row"><button class="ht-btn" type="button" aria-label="Buscar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button><button class="ht-btn" type="button" aria-label="Notificações"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg></button><button class="ht-btn" type="button" aria-label="Ajustes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg></button></div><span class="ht-read"></span>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Área de acerto</span><input type="range" name="hit" min="20" max="48" step="4" value="20" data-unit="px"><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Mostrar áreas</span><input type="checkbox" name="show" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Clique em volta dos ícones. Em 20px você erra o tempo todo. Arraste a área para 44px: o desenho não muda, o alvo muda, e os erros param.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Expanda o alvo sem tocar no desenho: um pseudo-elemento com inset negativo em volta do ícone. Os mínimos são 44 por 44 em toque, 48 para toque confortável, 24 em ponteiro, 32 para ponteiro confortável, e pelo menos 8px entre alvos vizinhos. Quebra com mais frequência em ícones de fechar em cantos, botões de ação em linhas de tabela, alças de arrastar, checkboxes em listas, links dentro de texto corrido no mobile, setas de paginação e controles sobre imagens.</p>
+          <p>Numa lista a linha inteira deve ser clicável, não só o texto, mas isso conflita com botões de ação dentro da mesma linha. O padrão que resolve: um elemento com posicionamento absoluto cobre a linha, e os botões de ação ficam acima na ordem de empilhamento, então a área grande funciona e os controles internos continuam alcançáveis, inclusive por teclado.</p>
+          <p>Um alvo que se move durante a interação é hostil: lista que reordena enquanto a pessoa aponta, item que some ao ser marcado e desloca os seguintes, conteúdo que carrega acima e empurra tudo, botão que muda de largura ao trocar o rótulo. Reserve espaço, adie a reordenação até o ponteiro sair e trave as posições enquanto ele estiver dentro da lista.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>44px em toque, 24px em ponteiro,</strong> independentemente do tamanho do ícone.</li>
+            <li><strong>Pseudo-elemento com inset negativo</strong> para crescer o alvo invisivelmente.</li>
+            <li><strong>Clique na linha inteira mais ações empilhadas</strong> em listas.</li>
+            <li><strong>Alvos não se movem</strong> enquanto alguém aponta para eles.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copiar" data-copied="Copiado" aria-label="Copiar"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copiar</span></button></div><pre><code><span class="k">.icon-button</span> { position: relative; }
+<span class="k">.icon-button::after</span> { content: <span class="s">""</span>; position: absolute; inset: <span class="n">-12px</span>; }</code></pre></figure>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Pseudo-elemento com inset negativo</strong> cresce o alvo sem mover pixels.</li>
+            <li><strong>44 toque, 24 ponteiro, 8 entre.</strong></li>
+            <li><strong>Clique na linha inteira com ações empilhadas acima.</strong></li>
+            <li><strong>Congele posições enquanto o ponteiro está dentro</strong> de uma lista que pode reordenar.</li>
+            <li><strong>Audite cantos, linhas de tabela, alças, paginação.</strong> É onde quebra.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Anatomia dos primitivos de interface, handbook</em> (capítulo 2) · <a href="https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html" target="_blank" rel="noopener">WCAG 2.2, Target Size (Minimum)</a></footer>
+        </article>
+
+        <article class="lesson" id="pointer-touch-keyboard">
+          <span class="eyebrow">Primitives · 03</span>
+          <h2>Pointer, Touch and Keyboard</h2>
+          <p class="lede">A mesma interface é operada de três formas fundamentalmente diferentes. Hover existe em uma delas. Nada essencial pode depender dele.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="press">
+            <div class="demo-stage">
+            <div class="pm-wrap"><button class="pm-trigger" type="button" aria-haspopup="menu">Opções<span class="sp-chev">▾</span></button><div class="pm-menu" role="menu"><div class="pm-item" role="menuitem" data-v="Renomear">Renomear</div><div class="pm-item" role="menuitem" data-v="Duplicar">Duplicar</div><div class="pm-item" role="menuitem" data-v="Arquivar">Arquivar</div></div><span class="pm-read">Selecionado: —</span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Abrir no pressionar</span><input type="checkbox" name="onpress" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Pressione o gatilho, arraste até um item e solte. No pressionar, tudo é um gesto só. Mude para o soltar e o menu espera o clique terminar, meio quadro atrasado, e o arrasto não faz nada.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Ponteiro tem hover, precisão alta e modificadores. Toque não tem hover, tem precisão baixa e gestos. Teclado tem precisão exata e o foco como estado intermediário. Se uma ação só aparece no hover, ela não existe em toque. As opções são mostrar sempre em toque, oferecer um caminho alternativo como pressionar e segurar ou menu de contexto, ou aceitar que a ação é secundária.</p>
+          <p>Quando disparar muda a sensação de resposta. Menus e popovers abrem no pressionar, não no soltar, o que permite o gesto contínuo de pressionar, arrastar até o item e soltar para selecionar, o comportamento nativo dos sistemas operacionais. Botões disparam no soltar, o que permite cancelar arrastando para fora antes de soltar. Ações destrutivas sempre no soltar, nunca durante o gesto. Menus que abrem no soltar parecem meio quadro mais lentos que os nativos, e as pessoas percebem.</p>
+          <p>Sem hover, o estado pressionado é o único feedback de que o toque foi registrado. Precisa aparecer imediatamente e ser visível. Em listas roláveis, porém, não deve aparecer instantaneamente ou todo gesto de rolagem acende itens; a convenção é um atraso de 50 a 100ms, cancelado se o dedo passar do limiar de rolagem. Elementos de interface não devem selecionar texto ao arrastar ou clicar duas vezes, então <code>user-select: none</code> em botões, itens de menu e abas, e nunca em conteúdo real: bloquear a seleção de um identificador ou de um valor é hostil, porque a pessoa quer copiar. Um componente arrastável dentro de página rolável precisa de travamento direcional: limiar de início em torno de 10px, depois compromisso com o eixo dominante e declaração explícita dele para o navegador não rolar junto.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Nada essencial atrás de hover.</strong> Toque precisa da ação visível ou alcançável de outro jeito.</li>
+            <li><strong>Menus no pressionar, botões no soltar,</strong> destrutivas no soltar.</li>
+            <li><strong>Estado pressionado em toque,</strong> com 50 a 100ms de atraso em listas roláveis.</li>
+            <li><strong>user-select: none no chrome,</strong> nunca em conteúdo.</li>
+            <li><strong>Travamento direcional</strong> para arrastos dentro de scrollers.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Ações só de hover não existem em toque.</strong> Mostre ou ofereça outro caminho.</li>
+            <li><strong>Abra menus no pointerdown.</strong> Pressionar, arrastar, soltar parece nativo.</li>
+            <li><strong>Botões no soltar</strong> para arrastar para fora cancelar.</li>
+            <li><strong>Estado pressionado com 50 a 100ms de atraso em listas roláveis.</strong></li>
+            <li><strong>user-select: none só em controles.</strong> Conteúdo é para copiar.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Anatomia dos primitivos de interface, handbook</em> (capítulo 3) · <a href="https://developer.apple.com/design/human-interface-guidelines/menus" target="_blank" rel="noopener">Apple HIG, Menus</a></footer>
+        </article>
+
+        <article class="lesson" id="focus-management">
+          <span class="eyebrow">Primitives · 04</span>
+          <h2>Focus</h2>
+          <p class="lede">Um anel de foco que aparece no clique do mouse incomoda. Um que não aparece na navegação por teclado inviabiliza o produto. A plataforma distingue os dois, e a maior parte da gestão de foco é sobre para onde ele vai depois.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="focus2">
+            <div class="demo-stage" data-focus="Foco" data-body="body" data-tabs="Tabs para atravessar">
+            <div class="fc-wrap"><button class="fc-before" type="button">Antes</button><div class="fc-list" role="listbox"><div class="fc-item" tabindex="0" data-i="0">Revisão de design<kbd>⌫</kbd></div><div class="fc-item" tabindex="-1" data-i="1">Sync semanal<kbd>⌫</kbd></div><div class="fc-item" tabindex="-1" data-i="2">Roadmap<kbd>⌫</kbd></div><div class="fc-item" tabindex="-1" data-i="3">Retro<kbd>⌫</kbd></div><div class="fc-item" tabindex="-1" data-i="4">Planejamento<kbd>⌫</kbd></div></div><button class="fc-after" type="button">Depois</button><span class="fc-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Foco itinerante</span><input type="checkbox" name="roving" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Mover o foco após apagar</span><input type="checkbox" name="restore" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Clique em "Antes", depois Tab. Com foco itinerante a lista é uma parada só e as setas navegam dentro. Pressione Backspace num item: o foco vai para um vizinho, ou cai no body com o toggle desligado.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p><code>:focus-visible</code> resolve o falso dilema: anel para teclado, nenhum para ponteiro. O anel precisa de contraste contra o fundo e contra o elemento, visibilidade nos dois temas, deslocamento em vez de borda para não mover o layout, e um ancestral sem <code>overflow: hidden</code>, que corta anéis e é um bug frequente. A ordem de tabulação segue a ordem do documento; quando o layout visual diverge dela, a navegação por teclado pula de forma incoerente. A ordem do documento deve corresponder à visual, e valores positivos de tabindex criam uma ordem paralela que quebra assim que alguém adiciona um elemento.</p>
+          <p>Dentro de listas, menus, abas e grades, cada item não deve ser destino de tabulação, ou são quarenta pressionamentos para atravessar uma lista. O grupo é um destino e as setas navegam dentro dele; só o item ativo é focável, e o foco se move com ele. Ao abrir um modal, o foco entra imediatamente sem esperar a animação, não escapa para o conteúdo atrás, e volta exatamente ao elemento que abriu ao fechar. Esse último ponto é o mais esquecido; sem ele quem usa teclado é jogado para o início do documento a cada fechamento. O conteúdo atrás fica inerte, removido da navegação e da leitura assistiva. O foco inicial vai ao campo principal, ou à ação segura numa confirmação, nunca à destrutiva, ou ao contêiner num diálogo só de leitura. E quando um elemento focado desaparece, item apagado, linha removida, o foco precisa ir para um lugar sensato: o item seguinte, o anterior se era o último, o contêiner se a lista esvaziou. Senão o foco cai no corpo do documento e a navegação recomeça do zero, invisível para quem não usa teclado.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>:focus-visible com outline e offset,</strong> visível nos dois temas, nunca cortado.</li>
+            <li><strong>Ordem do documento igual à visual.</strong> Sem tabindex positivo.</li>
+            <li><strong>Foco itinerante em grupos.</strong> Um destino de tab, setas dentro.</li>
+            <li><strong>Captura e restauração</strong> em modais; inerte atrás.</li>
+            <li><strong>Planeje o foco após exclusão.</strong> Próximo, anterior ou contêiner.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>:focus-visible, outline, offset.</strong> Sem mudar layout, sem ancestral que recorta.</li>
+            <li><strong>Sem tabindex positivo, nunca.</strong></li>
+            <li><strong>Tabindex itinerante em listas, menus, abas, grades.</strong></li>
+            <li><strong>Devolva o foco a quem abriu.</strong> Todo diálogo, todo menu.</li>
+            <li><strong>Item apagado: foco no próximo, depois no anterior, depois no contêiner.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Anatomia dos primitivos de interface, handbook</em> (capítulo 4) · <a href="https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/" target="_blank" rel="noopener">APG, Developing a Keyboard Interface</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-visible" target="_blank" rel="noopener">MDN, :focus-visible</a></footer>
+        </article>
+
+        <article class="lesson" id="layers-and-stacking">
+          <span class="eyebrow">Primitives · 05</span>
+          <h2>Layers and Stacking</h2>
+          <p class="lede">Um componente flutuante renderizado dentro de um contêiner com recorte ou contexto de empilhamento próprio fica preso. A plataforma hoje oferece uma camada acima de tudo, e Escape fecha a camada mais recente, não todas.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="stack">
+            <div class="demo-stage" data-layers="Camadas" data-dialog="diálogo" data-menu="menu">
+            <div class="st-wrap" tabindex="-1"><button class="st-open" type="button">Abrir diálogo</button>
+              <div class="st-dialog" role="dialog"><b>Exportar relatório</b><span>Escolha um formato no menu e pressione Escape.</span><div class="st-actions"><button class="st-menubtn" type="button">Formato ▾</button><div class="st-menu" role="menu"><div class="st-mi">PDF</div><div class="st-mi">CSV</div><div class="st-mi">PNG</div></div></div></div>
+              <span class="st-read">Camadas: —</span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Escape fecha uma camada</span><input type="checkbox" name="stackesc" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Abra o diálogo, abra o menu, pressione Escape. Com pilha, Escape fecha o menu e um segundo Escape fecha o diálogo. Sem ela, um Escape derruba tudo.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>A correção clássica era renderizar componentes flutuantes no fim do documento para escapar do contexto de empilhamento do pai. Funciona e traz problemas próprios: foco gerenciado à mão, relação semântica com o gatilho declarada manualmente, ordem de leitura divergindo da visual. A camada superior muda isso. Diálogos modais nativos, elementos declarados como popover e conteúdo em tela cheia entram numa camada imune a contexto de empilhamento e a recorte, mantêm a relação semântica, ganham fundo estilizável, descartam por clique fora e por Escape automaticamente, e não dependem de números arbitrários. Se o seu caso couber, use.</p>
+          <p>Quando você gerencia empilhamento à mão, defina uma escala e proíba valores fora dela: conteúdo elevado 10, barra lateral 20, fundo de sobreposição 30, diálogo e drawer 40, popover e menu 50, tooltip 60, toast 70. Tooltip fica acima de popover porque tooltips aparecem sobre itens de menu. Um componente flutuante também precisa tratar colisão: inverter quando não há espaço, deslocar quando quase não cabe, encolher e rolar quando não cabe de jeito nenhum, acompanhar o gatilho em rolagem e redimensionamento, e animar de uma origem que inverte junto. Um menu que abre para cima com origem no canto superior nasce no lugar errado. Com várias camadas abertas, Escape fecha a mais recente: um menu dentro de um diálogo, Escape fecha o menu, Escape de novo fecha o diálogo. Isso exige uma pilha, e a maioria das implementações caseiras não tem.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Camada superior via dialog e popover</strong> sempre que o caso couber.</li>
+            <li><strong>Uma escala de z-index,</strong> nada fora dela.</li>
+            <li><strong>Inverter, deslocar, encolher, acompanhar,</strong> e inverter a origem da animação também.</li>
+            <li><strong>Escape fecha uma camada.</strong> Mantenha uma pilha.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>dialog e popover usam a camada superior.</strong> Imunes a z-index e recorte.</li>
+            <li><strong>Escala: 10, 20, 30, 40, 50, 60, 70.</strong> Tooltip acima de popover.</li>
+            <li><strong>Inverter, deslocar, encolher, acompanhar.</strong> Uma biblioteca de posicionamento paga seus bytes.</li>
+            <li><strong>A origem da animação inverte com a posição.</strong></li>
+            <li><strong>Escape fecha uma camada</strong> de uma pilha real.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Anatomia dos primitivos de interface, handbook</em> (capítulo 5) · <a href="https://developer.mozilla.org/en-US/docs/Web/API/Popover_API" target="_blank" rel="noopener">MDN, Popover API</a> · <a href="https://floating-ui.com/" target="_blank" rel="noopener">Floating UI</a></footer>
+        </article>
+
+        <article class="lesson" id="scrolling-behavior">
+          <span class="eyebrow">Primitives · 06</span>
+          <h2>Scrolling</h2>
+          <p class="lede">Quando um diálogo abre, o conteúdo atrás não deve rolar. Parece trivial e é uma das áreas mais cheias de armadilhas. Duas linhas de CSS removem a maioria delas.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="scroll2">
+            <div class="demo-stage">
+            <div class="sl-page"><div class="sl-head"><span>Página</span><button class="sl-lock" type="button" data-toggle="is-locked" aria-pressed="false">Travar (abrir diálogo)</button></div><p>Conteúdo da página que deveria ficar parado quando um diálogo abre e não deveria rolar atrás dele.</p><p>Conteúdo da página que deveria ficar parado quando um diálogo abre e não deveria rolar atrás dele.</p><p>Conteúdo da página que deveria ficar parado quando um diálogo abre e não deveria rolar atrás dele.</p><div class="sl-panel"><div class="sl-row">Linha 1</div><div class="sl-row">Linha 2</div><div class="sl-row">Linha 3</div><div class="sl-row">Linha 4</div><div class="sl-row">Linha 5</div><div class="sl-row">Linha 6</div><div class="sl-row">Linha 7</div><div class="sl-row">Linha 8</div><div class="sl-row">Linha 9</div><div class="sl-row">Linha 10</div><div class="sl-row">Linha 11</div><div class="sl-row">Linha 12</div></div><p>Conteúdo da página que deveria ficar parado quando um diálogo abre e não deveria rolar atrás dele.</p><p>Conteúdo da página que deveria ficar parado quando um diálogo abre e não deveria rolar atrás dele.</p><p>Conteúdo da página que deveria ficar parado quando um diálogo abre e não deveria rolar atrás dele.</p></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">overscroll-behavior: contain</span><input type="checkbox" name="contain" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">scrollbar-gutter: stable</span><input type="checkbox" name="gutter" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Role o painel interno até o fim: a página atrás começa a se mover até o contain ligar. Clique em Travar: a página esconde o overflow e o layout pula para o lado até o espaço da barra ser reservado.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Esconder o overflow do documento pode fazer a página saltar para o topo em algumas condições, então a posição precisa ser preservada e restaurada. Esconder o overflow também remove a barra de rolagem, o conteúdo alarga alguns pixels e todo o layout desloca; <code>scrollbar-gutter: stable</code> reserva o espaço permanentemente e o problema deixa de existir. No WebKit do iOS, técnicas que funcionam em desktop frequentemente não impedem a rolagem elástica; se o produto é fortemente mobile, teste especificamente e considere uma biblioteca dedicada.</p>
+          <p>Quando uma área rolável chega ao fim, a rolagem vaza para o pai, então dentro de um menu ou drawer continuar rolando move a página atrás. <code>overscroll-behavior: contain</code> resolve o vazamento e o puxar para atualizar acidental dentro de painéis com uma linha. Rolar até um elemento focado: suave só sem preferência por movimento reduzido, com margem de rolagem para cabeçalhos fixos não o esconderem, e nunca roubar o controle se a pessoa já está rolando. Encaixe de rolagem ajuda carrosséis e galerias: encaixe obrigatório pode impedir a pessoa de parar entre itens, proximidade costuma ser melhor, tamanhos mistos o tornam imprevisível, e sempre deve haver navegação por botão e teclado também.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>scrollbar-gutter: stable no html.</strong> Sem deslocamento quando um modal trava a página.</li>
+            <li><strong>overscroll-behavior: contain</strong> em todo painel rolável.</li>
+            <li><strong>Preserve a posição</strong> ao travar e destravar.</li>
+            <li><strong>scroll-margin para cabeçalhos fixos,</strong> suave só quando movimento é permitido.</li>
+            <li><strong>Encaixe: proximity, não mandatory,</strong> com navegação alternativa.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copiar" data-copied="Copiado" aria-label="Copiar"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copiar</span></button></div><pre><code><span class="k">html</span> { scrollbar-gutter: stable; }
+<span class="k">.panel</span> { overscroll-behavior: contain; }</code></pre></figure>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>scrollbar-gutter: stable</strong> mata o pulo de layout do modal.</li>
+            <li><strong>overscroll-behavior: contain</strong> em painéis, menus, drawers.</li>
+            <li><strong>Salve e restaure scrollTop</strong> em volta de travas.</li>
+            <li><strong>scroll-margin-top</strong> igual à altura do cabeçalho fixo.</li>
+            <li><strong>Encaixe proximity,</strong> mais botões e teclado.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Anatomia dos primitivos de interface, handbook</em> (capítulo 6) · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior" target="_blank" rel="noopener">MDN, overscroll-behavior</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-gutter" target="_blank" rel="noopener">MDN, scrollbar-gutter</a></footer>
+        </article>
+
+        <article class="lesson" id="component-state">
+          <span class="eyebrow">Primitives · 07</span>
+          <h2>State</h2>
+          <p class="lede">Todo primitivo com estado interno precisa das duas formas: gerenciar o próprio por padrão, aceitar de fora quando necessário. E todo primitivo tem estados que ninguém desenhou: vazio, carregando, erro, desabilitado com motivo, somente leitura, misto, transitório.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="state2">
+            <div class="demo-stage">
+            <div class="se-wrap"><div class="se-row"><button class="se-btn" type="button">Publicar</button><span class="se-why">Adicione um título antes de publicar.</span></div><label class="mf-label">ID do pedido<input class="mf-input se-field" type="text" value="ORD-2041-7F3A" readonly></label></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Desabilitar em vez de explicar</span><input type="checkbox" name="disable" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Somente leitura como desabilitado</span><input type="checkbox" name="asdisabled" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Clique em Publicar. Desabilitado, não faz nada e nem recebe foco, então o motivo nunca aparece. Habilitado, explica. Depois tente selecionar e copiar o ID: como desabilitado não copia, como somente leitura copia.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Um menu que sempre gerencia o próprio estado aberto não pode ser controlado por um atalho global. Um que só aceita estado externo obriga todo consumidor a escrever a mesma lógica. Ofereça os dois. Depois faça o inventário: vazio, carregando inicial e subsequente, erro com caminho de recuperação, desabilitado com motivo explicado, somente leitura, parcial ou indeterminado, sucesso transitório que precisa expirar.</p>
+          <p>Dois merecem destaque. Desabilitado sem explicação é hostil: ou explique no hover, ou permita a ação e explique o erro. A segunda costuma ser melhor, porque dá agência e funciona com teclado, já que elementos desabilitados não recebem foco e o motivo nunca é descoberto. Somente leitura não é desabilitado: conteúdo que pode ser lido, focado e copiado mas não editado precisa de tratamento próprio, e tratar como desabilitado impede a cópia, que é justamente a operação mais comum ali.</p>
+          <p>Concorrência exige decisões explícitas: duplo clique rápido em algo que abre e fecha, ação disparada enquanto a anterior está em voo, item removido enquanto em hover, lista reordenada durante seleção, componente desmontado durante a animação de saída. Ignore o segundo disparo, ou cancele o primeiro e assuma o segundo; deixar os dois correrem produz estados impossíveis. Para ações com alta taxa de sucesso, atualize imediatamente e reverta se falhar; atualizações otimistas são a maior alavanca de performance percebida, e o trabalho de design está na reversão. Otimismo sem plano de reversão é mentira.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Controlado e não controlado,</strong> os dois suportados.</li>
+            <li><strong>Sete estados no inventário</strong> antes de o componente sair.</li>
+            <li><strong>Explique em vez de desabilitar</strong> onde possível.</li>
+            <li><strong>Somente leitura continua focável e copiável.</strong></li>
+            <li><strong>Decida a concorrência;</strong> desenhe a reversão.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>APIs controlada e não controlada.</strong> As duas.</li>
+            <li><strong>Vazio, carregando, erro, desabilitado com motivo, somente leitura, misto, transitório.</strong></li>
+            <li><strong>Prefira habilitado mais explicação</strong> a desabilitado silencioso.</li>
+            <li><strong>Somente leitura: focável, selecionável, copiável.</strong></li>
+            <li><strong>Duplo disparo: ignore ou cancele e substitua.</strong> Nunca os dois.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Anatomia dos primitivos de interface, handbook</em> (capítulo 7) · <a href="https://www.smashingmagazine.com/2021/08/frustrating-design-patterns-disabled-buttons/" target="_blank" rel="noopener">Vitaly Friedman, Disabled buttons</a></footer>
+        </article>
+
+        <article class="lesson" id="semantics-and-announcement">
+          <span class="eyebrow">Primitives · 08</span>
+          <h2>Semantics and Announcement</h2>
+          <p class="lede">Se muda visualmente, precisa mudar semanticamente. Um estado visual sem estado declarado é invisível para tecnologia assistiva, e conteúdo que aparece sem ação direta precisa ser anunciado.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="aria">
+            <div class="demo-stage" data-role="botão" data-pressed="pressionado" data-expanded="expandido" data-collapsed="recolhido" data-none="sem estado">
+            <div class="ar-wrap"><div class="ar-row"><button class="ar-toggle" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20L16 8M15 3l1 2 2 1-2 1-1 2-1-2-2-1 2-1zM20 10l.6 1.4L22 12l-1.4.6L20 14l-.6-1.4L18 12l1.4-.6z"/></svg>Negrito</button><button class="ar-disc" type="button">Detalhes<span class="sp-chev">▾</span></button></div><div class="ar-panel">O envio leva de 3 a 5 dias úteis.</div><div class="ar-sr"><span class="ar-sr-label">O leitor de tela ouve</span><span class="ar-read">—</span></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Declarar estado (aria-pressed, aria-expanded)</span><input type="checkbox" name="declare" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Clique em Negrito e Detalhes. Com estado declarado, o leitor ouve "Negrito, botão, pressionado" e "Detalhes, botão, expandido". Sem ele, ambos são só "botão", e a mudança visual é invisível.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Antes de qualquer atributo, use o elemento nativo. Um elemento genérico com atributos colados nunca replica por completo o comportamento nativo: teclado, formulário, contexto, impressão, modo de alto contraste. A hierarquia é nativo, nativo estilizado, biblioteca sem estilo testada, próprio com semântica declarada, nada. Depois declare estado: expandido ou recolhido, selecionado, marcado incluindo o misto, pressionado em botões de alternância, ocupado durante carregamento, inválido com a descrição associada, ordenação atual em cabeçalho de tabela.</p>
+          <p>Regiões vivas anunciam conteúdo que aparece sem ação direta: toasts, resultados de busca atualizados, erros de validação assíncronos. Duas intensidades: educada espera uma pausa, assertiva interrompe. Educada por padrão, assertiva só para erro que bloqueia. A armadilha comum: a região precisa existir no documento antes do conteúdo chegar; inserir região e conteúdo juntos frequentemente não anuncia nada. Todo controle precisa de nome, preferindo texto visível, depois rótulo associado, depois atributo de rótulo. Botões só de ícone precisam de nome textual, o nome deve começar pelo texto visível para comandos de voz funcionarem, e não deve descrever o widget: "botão de fechar" é redundante porque o papel já é anunciado.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Nativo primeiro, atributos por último.</strong></li>
+            <li><strong>Todo estado visual tem um estado ARIA.</strong> Pressionado, expandido, selecionado, marcado, ocupado, inválido, ordenação.</li>
+            <li><strong>Região viva montada antes do conteúdo,</strong> educada por padrão.</li>
+            <li><strong>Nomes a partir do texto visível;</strong> botões de ícone ganham um explicitamente.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Se muda visualmente, mude o atributo.</strong></li>
+            <li><strong>aria-pressed, aria-expanded, aria-selected, aria-checked, aria-busy, aria-invalid, aria-sort.</strong></li>
+            <li><strong>Região viva no DOM primeiro,</strong> conteúdo depois.</li>
+            <li><strong>Educada por padrão,</strong> assertiva para bloqueios.</li>
+            <li><strong>Nome começa pelo texto visível;</strong> nunca repita o papel.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Anatomia dos primitivos de interface, handbook</em> (capítulo 8) · <a href="https://www.w3.org/WAI/ARIA/apg/practices/names-and-descriptions/" target="_blank" rel="noopener">APG, Providing Accessible Names</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions" target="_blank" rel="noopener">MDN, ARIA live regions</a></footer>
+        </article>
+
+        <article class="lesson" id="button">
+          <span class="eyebrow">Primitives · 09</span>
+          <h2>Button</h2>
+          <p class="lede">O primitivo mais simples e o que mais expõe descuido. Desce rápido, volta suave, largura preservada, dispara no soltar, e não é um link disfarçado.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="btn2">
+            <div class="demo-stage" data-saving="Salvando…" data-saved="Salvo" data-save="Salvar">
+            <div class="bt-row"><button class="bt-btn" type="button"><span class="bt-label">Salvar</span></button><span class="bt-side">Salvo há 2 min</span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Reservar largura</span><input type="checkbox" name="reserve" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Pressão assimétrica</span><input type="checkbox" name="asym" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Pressione e segure o botão, depois solte: desce em 80ms, volta em 150ms. Clique para salvar e o rótulo muda; sem largura reservada o texto ao lado pula.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Os estados: hover com mudança de fundo e escala opcional de 1,02 em 120ms, pressionado em 0,97 em 80ms, volta em 150ms, anel de focus-visible sem alteração de layout, desabilitado com contraste reduzido e cursor padrão, carregando com indicador e largura preservada. A sensação tátil vem da assimetria: descer rápido, voltar suave. "Salvar" virando "Salvando…" muda a largura e desloca tudo ao lado; reserve a largura maior ou defina um mínimo. O indicador de carregamento substitui o rótulo na mesma caixa ou fica ao lado em espaço já reservado. Disparar no soltar permite cancelar arrastando para fora, o comportamento nativo com que as pessoas contam. Não anime o anel de foco com movimento; navegação por teclado é rápida e o anel vira borrão.</p>
+          <p>Link navega e deve funcionar com clique do meio, abrir em nova aba, ser copiável e aparecer no histórico. Botão executa. Um link estilizado de botão continua sendo link, e isso está certo desde que ele navegue de verdade. Um botão que na verdade navega quebra a abertura em nova aba, uma das interações mais usadas em produtos de conteúdo. Botões destrutivos nunca ficam onde estava o botão seguro no diálogo anterior, mantêm distância de ações frequentes, preferem desfazer a confirmar, dizem o que será destruído em vez de "OK", e nunca são o foco inicial de um diálogo. Grupos: uma ação primária por tela no máximo, ordem consistente no produto todo, primária ao alcance do polegar em toque, empilhados no mobile com a primária em cima quando os rótulos são longos.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>80ms para descer, 150ms para voltar.</strong> A assimetria é a sensação.</li>
+            <li><strong>Reserve largura</strong> para trocas de rótulo e carregamento.</li>
+            <li><strong>Dispare no soltar,</strong> cancele arrastando para fora.</li>
+            <li><strong>Link navega, botão executa.</strong> Nunca troque.</li>
+            <li><strong>Destrutivo: distância, desfazer, rótulo explícito, nunca foco inicial.</strong></li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Desce em 80ms, volta em 150ms.</strong></li>
+            <li><strong>min-width ou rótulo reservado</strong> para carregamento e trocas de rótulo.</li>
+            <li><strong>Clique no soltar;</strong> ponteiro saindo cancela.</li>
+            <li><strong>Links navegam. Botões agem.</strong> Clique do meio precisa funcionar em links.</li>
+            <li><strong>Destrutivo: nunca onde estava o seguro.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Anatomia dos primitivos de interface, handbook</em> (capítulo 9) · <a href="https://www.w3.org/WAI/ARIA/apg/patterns/button/" target="_blank" rel="noopener">APG, Button pattern</a></footer>
+        </article>
+
+        <article class="lesson" id="text-field">
+          <span class="eyebrow">Primitives · 10</span>
+          <h2>Text Field</h2>
+          <p class="lede">A maior superfície de atrito de qualquer produto. Rótulo acima, sempre visível. Valide quando a pessoa sai do campo, não a cada tecla. E nunca bloqueie colar.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="field2">
+            <div class="demo-stage">
+            <div class="fd-wrap"><label class="fd-label" for="fd-email">E-mail de trabalho</label><input class="fd-input" id="fd-email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="name@company.com"><span class="fd-error">Digite um e-mail válido.</span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Rótulo acima do campo</span><input type="checkbox" name="labelabove" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Validar ao sair</span><input type="checkbox" name="onblur" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Digite metade de um endereço. Validar a cada tecla mostra erro para quem não terminou. Ao sair, o erro aparece quando você sai. Desligue o rótulo e ele vira um placeholder que some ao digitar.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Anatomia: rótulo acima do campo e sempre visível, campo com pelo menos 44px de altura em toque, texto de ajuda abaixo e antes do erro, mensagem de erro abaixo e associada semanticamente, contador quando há limite, visível antes de chegar perto. Usar o texto de exemplo como rótulo economiza espaço e custa caro: desaparece ao digitar e a pessoa não consegue revisar o que cada campo era, o contraste é baixo demais, confunde vazio com preenchido, quebra para quem tem dificuldade de memória de trabalho, e ferramentas de tradução e preenchimento lidam pior. Rótulo flutuante resolve em parte e adiciona complexidade; rótulo acima resolve por inteiro pelo preço de espaço vertical. O texto de exemplo tem um uso legítimo: mostrar o formato.</p>
+          <p>Cinco atributos custam uma palavra cada e mudam perceptivelmente o uso no mobile: <code>inputmode</code> para o teclado certo, <code>autocomplete</code> para gerenciadores de senha e preenchimento, <code>enterkeyhint</code> para o que a tecla de ação faz, <code>spellcheck</code> desligado fora de prosa, <code>autocapitalize</code> desligado em e-mail, usuário e código. Nunca bloqueie colar; bloquear em senha derrota gerenciadores e piora a segurança. Valide ao sair do campo, porque validar durante a digitação mostra erro para quem só não terminou; a exceção são verificações que só melhoram, como força de senha ou disponibilidade de nome. Depois da primeira falha, revalidar ao vivo passa a ser útil porque a pessoa está corrigindo. Requisitos visíveis antes de digitar, erro junto ao campo, reenvio focando o primeiro campo inválido, e tudo o que foi digitado preservado. Sempre. Aceite formatos liberais e normalize internamente; cada rejeição de formato válido é trabalho transferido para a pessoa. Máscaras ajudam quando formatam enquanto a pessoa digita e atrapalham quando impedem a digitação ou fazem o cursor saltar. Áreas de texto crescem com o conteúdo até um máximo, nunca desabilitam o redimensionamento manual sem crescimento automático, enviam com modificador mais Enter e preservam rascunho.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Rótulo acima.</strong> Texto de exemplo só para formato.</li>
+            <li><strong>inputmode, autocomplete, enterkeyhint, spellcheck, autocapitalize.</strong></li>
+            <li><strong>Valide ao sair,</strong> ao vivo depois do primeiro erro, ao vivo para verificações que só melhoram.</li>
+            <li><strong>Nunca bloqueie colar. Nunca perca o que foi digitado.</strong></li>
+            <li><strong>Formatos liberais, máscaras que nunca bloqueiam.</strong></li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Rótulo acima, exemplo para formato.</strong></li>
+            <li><strong>inputmode, autocomplete, enterkeyhint, spellcheck, autocapitalize.</strong></li>
+            <li><strong>Valide no blur; ao vivo depois do primeiro erro.</strong></li>
+            <li><strong>Nunca bloqueie colar.</strong></li>
+            <li><strong>Preserve o digitado em toda falha.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Anatomia dos primitivos de interface, handbook</em> (capítulo 10) · <a href="https://www.nngroup.com/articles/form-design-placeholders/" target="_blank" rel="noopener">Nielsen Norman Group, Placeholders in Form Fields Are Harmful</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/inputmode" target="_blank" rel="noopener">MDN, inputmode</a></footer>
+        </article>
+
+        <article class="lesson" id="checkbox-radio-switch">
+          <span class="eyebrow">Primitives · 11</span>
+          <h2>Checkbox, Radio and Switch</h2>
+          <p class="lede">Checkbox para zero ou mais, radio para exatamente um de um conjunto pequeno e visível, switch para liga e desliga com efeito imediato. Um switch dentro de um formulário com botão de salvar está contando uma mentira.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="check2">
+            <div class="demo-stage">
+            <div class="ck2-wrap"><label class="ck2-row ck2-parentrow"><input type="checkbox" class="ck2-parent"><span class="todo-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><i class="ck2-dash"></i></span><span class="ck2-text">Todas as notificações</span></label><div class="ck2-kids"><label class="ck2-row"><input type="checkbox" class="ck2-child"><span class="todo-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="ck2-text">E-mail</span></label><label class="ck2-row"><input type="checkbox" class="ck2-child"><span class="todo-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="ck2-text">Push</span></label><label class="ck2-row"><input type="checkbox" class="ck2-child"><span class="todo-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="ck2-text">SMS</span></label></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Rótulo amplia o alvo</span><input type="checkbox" name="label" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Refletir estado misto</span><input type="checkbox" name="mixed" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Marque um filho: o pai mostra o estado misto em vez de mentir com uma caixa vazia. Clique no texto do rótulo: com o rótulo no alvo a linha inteira alterna; sem ele só a caixinha.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>A distinção entre checkbox e switch é a mais violada: switch implica que o efeito acontece agora. A área clicável inclui o rótulo; um checkbox de 16px sozinho é um alvo minúsculo e associar o rótulo multiplica a área. O estado indeterminado existe e é necessário em qualquer seleção hierárquica; não pode ser definido pela marcação, precisa ser programático, e é frequentemente esquecido. Radio não pode ser desmarcado clicando de novo, então se a pessoa precisa poder não escolher nada, inclua uma opção explícita de "nenhum". Setas navegam entre radios do mesmo grupo e a seleção acompanha o foco; é o comportamento nativo esperado.</p>
+          <p>O knob do switch pode esticar levemente na direção do movimento e assentar no fim, um detalhe pequeno com sensação mecânica desproporcional. Overshoot só no transform, nunca na cor do trilho. Grupos declaram e associam o rótulo do grupo, empilham na vertical quando as opções são longas e vão para a horizontal só quando curtas e poucas, ordenam por lógica ou frequência e nunca alfabeticamente por acidente, e acima de sete opções consideram um select.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Switch só para efeito imediato.</strong> Senão, checkbox.</li>
+            <li><strong>Rótulo dentro da área de acerto.</strong></li>
+            <li><strong>Pai indeterminado</strong> refletindo seleção mista.</li>
+            <li><strong>"Nenhum" explícito</strong> quando um grupo de radio pode ficar vazio.</li>
+            <li><strong>Knob estica no transform,</strong> cor do trilho com easing simples.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Switch é efeito imediato.</strong> Dentro de formulário, use checkbox.</li>
+            <li><strong>Envolva o input no rótulo.</strong></li>
+            <li><strong>indeterminate é propriedade,</strong> não atributo.</li>
+            <li><strong>Grupos de radio: setas movem e selecionam.</strong></li>
+            <li><strong>Knob estica só no transform.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Anatomia dos primitivos de interface, handbook</em> (capítulo 11) · <a href="https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/" target="_blank" rel="noopener">APG, Checkbox pattern</a> · <a href="https://www.w3.org/WAI/ARIA/apg/patterns/switch/" target="_blank" rel="noopener">APG, Switch pattern</a></footer>
+        </article>
+
+        <article class="lesson" id="select-and-combobox">
+          <span class="eyebrow">Primitives · 12</span>
+          <h2>Select and Combobox</h2>
+          <p class="lede">O primitivo mais complexo, e onde implementações caseiras mais falham. Abre no item selecionado, não no topo. Digitar salta para a correspondência. Use uma biblioteca testada.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="select2">
+            <div class="demo-stage" data-typed="Digitado">
+            <div class="sx-wrap"><button class="sx-trigger" type="button" aria-haspopup="listbox"><span class="sx-value">Uruguai</span><span class="sp-chev">▾</span></button><div class="sx-list" role="listbox" tabindex="-1"><div class="sx-opt" role="option" data-v="Argentina">Argentina</div><div class="sx-opt" role="option" data-v="Austrália">Austrália</div><div class="sx-opt" role="option" data-v="Áustria">Áustria</div><div class="sx-opt" role="option" data-v="Bélgica">Bélgica</div><div class="sx-opt" role="option" data-v="Brasil">Brasil</div><div class="sx-opt" role="option" data-v="Canadá">Canadá</div><div class="sx-opt" role="option" data-v="Chile">Chile</div><div class="sx-opt" role="option" data-v="Colômbia">Colômbia</div><div class="sx-opt" role="option" data-v="Dinamarca">Dinamarca</div><div class="sx-opt" role="option" data-v="Finlândia">Finlândia</div><div class="sx-opt" role="option" data-v="França">França</div><div class="sx-opt" role="option" data-v="Alemanha">Alemanha</div><div class="sx-opt" role="option" data-v="Grécia">Grécia</div><div class="sx-opt" role="option" data-v="Índia">Índia</div><div class="sx-opt" role="option" data-v="Irlanda">Irlanda</div><div class="sx-opt" role="option" data-v="Itália">Itália</div><div class="sx-opt" role="option" data-v="Japão">Japão</div><div class="sx-opt" role="option" data-v="México">México</div><div class="sx-opt" role="option" data-v="Holanda">Holanda</div><div class="sx-opt" role="option" data-v="Noruega">Noruega</div><div class="sx-opt" role="option" data-v="Peru">Peru</div><div class="sx-opt" role="option" data-v="Polônia">Polônia</div><div class="sx-opt" role="option" data-v="Portugal">Portugal</div><div class="sx-opt" role="option" data-v="Espanha">Espanha</div><div class="sx-opt" role="option" data-v="Suécia">Suécia</div><div class="sx-opt" role="option" data-v="Suíça">Suíça</div><div class="sx-opt" role="option" data-v="Uruguai" aria-selected=true>Uruguai</div><div class="sx-opt" role="option" data-v="Vietnã">Vietnã</div></div><span class="sx-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Abrir no item selecionado</span><input type="checkbox" name="openat" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Acumular caracteres digitados</span><input type="checkbox" name="typeahead" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Abra a lista. Ela rola até Uruguai, não até o topo. Depois digite "su" rápido: com buffer cai em Suécia; sem buffer para em Suíça e depois pula para Uruguai.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>O select nativo tem vantagens difíceis de replicar: comportamento correto no mobile, teclado completo, busca por digitação e desempenho com muitas opções. Substitua só quando precisar de opções ricas com ícone e descrição, busca dentro do menu, múltipla seleção sofisticada ou agrupamento complexo. E quando substituir, use uma biblioteca de primitivos testada; o padrão completo de um combobox acessível é longo e cheio de casos limite.</p>
+          <p>Teclado é obrigatório: Enter ou Espaço abre, setas navegam e abrem se fechado, Home e End saltam, digitação salta para a opção que começa com o que foi digitado, Enter seleciona e fecha, Escape fecha sem alterar, Tab fecha e segue. A busca por digitação é a mais esquecida e a mais usada por quem opera rápido: acumula caracteres numa janela curta, então digitar "sa" rapidamente vai para "São Paulo" em vez de parar em "Sergipe" e depois "Amapá". Ao abrir, o item selecionado fica visível e focado, não o primeiro; numa lista de duzentos países, abrir no topo quando o valor é "Uruguai" é falha básica. A rolagem interna mantém o item ativo visível com contexto acima e abaixo. O gatilho mantém largura estável independentemente do valor. O estado vazio de busca sugere algo. Muitas opções exigem virtualização, e virtualização exige cuidado com foco e anúncio. Múltipla seleção decide se o menu fecha a cada escolha, não deve, como itens são removidos, e o que acontece quando as fichas estouram. Um combobox que cria valor mostra a opção de criar só quando não há correspondência exata, com o texto exato que será criado, no fim da lista e visualmente distinta.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Nativo a menos que precise de opções ricas ou busca.</strong></li>
+            <li><strong>Mapa de teclado completo,</strong> incluindo busca por digitação com buffer.</li>
+            <li><strong>Abra no item selecionado,</strong> rolado para a vista.</li>
+            <li><strong>Largura estável do gatilho,</strong> estado vazio de busca útil.</li>
+            <li><strong>Opção de criar por último, texto exato, só sem correspondência.</strong></li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Select nativo até precisar de mais de verdade.</strong></li>
+            <li><strong>A busca por digitação acumula caracteres</strong> por cerca de 700ms.</li>
+            <li><strong>Abra rolado até o item selecionado.</strong></li>
+            <li><strong>A largura do gatilho não depende do valor.</strong></li>
+            <li><strong>Opção de criar por último, só sem correspondência exata.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Anatomia dos primitivos de interface, handbook</em> (capítulo 12) · <a href="https://www.w3.org/WAI/ARIA/apg/patterns/combobox/" target="_blank" rel="noopener">APG, Combobox pattern</a> · <a href="https://react-spectrum.adobe.com/react-aria/" target="_blank" rel="noopener">React Aria</a></footer>
+        </article>
+
+        <article class="lesson" id="slider">
+          <span class="eyebrow">Primitives · 13</span>
+          <h2>Slider</h2>
+          <p class="lede">Uma vez iniciado o arrasto, mover o ponteiro para fora da trilha não pode cancelar. Clicar na trilha salta para a posição. O valor flutua acima do polegar em toque porque o dedo o esconde.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="slider2">
+            <div class="demo-stage">
+            <div class="sd-wrap"><div class="sd-track" role="slider" tabindex="0" aria-valuemin="0" aria-valuemax="100" aria-valuenow="40"><span class="sd-fill"></span><span class="sd-thumb"><span class="sd-bubble">40</span></span></div><span class="sd-read">Arraste o polegar e saia da trilha</span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Captura de ponteiro</span><input type="checkbox" name="capture" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Clique na trilha salta</span><input type="checkbox" name="jump" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Comece a arrastar o polegar e leve o ponteiro bem acima da trilha. Com captura o arrasto continua; sem ela o slider solta no instante em que você sai. Clique em qualquer ponto da trilha para saltar.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Teclado: setas para o passo pequeno, Shift mais setas e Page Up e Down para o passo grande, Home e End para mínimo e máximo. Valor atual, mínimo e máximo são declarados semanticamente, e quando o número não é significativo por si, "médio", "alto", o texto correspondente também. A captura continua fora do controle: sliders pequenos são impossíveis de usar sem isso. Clicar na trilha salta para a posição, comportamento esperado e frequentemente ausente. Em toque o valor aparece acima do polegar porque o dedo cobre o controle, e some ao soltar. A área de acerto do polegar é maior que o desenho; um polegar de 16px precisa de alvo de 44px. Com passos discretos, um háptico leve em cada encaixe comunica a granularidade sem olhar.</p>
+          <p>Um slider de intervalo tem dois polegares e a complexidade multiplica: decida se podem se cruzar, qual recebe o gesto quando se sobrepõem, dê a cada um nome acessível, e deixe Tab mover entre eles enquanto as setas movem o focado.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Captura de ponteiro</strong> para sair da trilha não cancelar.</li>
+            <li><strong>Clique na trilha salta.</strong></li>
+            <li><strong>Bolha de valor em toque,</strong> some ao soltar.</li>
+            <li><strong>Alvo de 44px</strong> em volta de um desenho de 16px.</li>
+            <li><strong>Intervalo: regra de cruzamento, regra de sobreposição, dois nomes.</strong></li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>setPointerCapture no pointerdown.</strong></li>
+            <li><strong>Clique na trilha define o valor.</strong></li>
+            <li><strong>Bolha de valor acima do polegar em toque.</strong></li>
+            <li><strong>Alvo de 44px no polegar.</strong></li>
+            <li><strong>Shift e Page para passos grandes.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Anatomia dos primitivos de interface, handbook</em> (capítulo 13) · <a href="https://www.w3.org/WAI/ARIA/apg/patterns/slider/" target="_blank" rel="noopener">APG, Slider pattern</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/setPointerCapture" target="_blank" rel="noopener">MDN, setPointerCapture</a></footer>
+        </article>
+
+        <article class="lesson" id="tooltip">
+          <span class="eyebrow">Primitives · 14</span>
+          <h2>Tooltip</h2>
+          <p class="lede">Tooltip é rótulo suplementar. Não é lugar para conteúdo interativo, informação essencial nem texto longo. O primeiro custa meio segundo; os seguintes na mesma barra são imediatos.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="tip">
+            <div class="demo-stage">
+            <div class="tp-wrap"><div class="tp-bar" role="toolbar"><button class="tp-btn" type="button" aria-label="Buscar" data-tip="Buscar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button><button class="tp-btn" type="button" aria-label="Notificações" data-tip="Notificações"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg></button><button class="tp-btn" type="button" aria-label="Formatar" data-tip="Formatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20L16 8M15 3l1 2 2 1-2 1-1 2-1-2-2-1 2-1zM20 10l.6 1.4L22 12l-1.4.6L20 14l-.6-1.4L18 12l1.4-.6z"/></svg></button><button class="tp-btn" type="button" aria-label="Excluir" data-tip="Excluir"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg></button><button class="tp-btn" type="button" aria-label="Ajustes" data-tip="Ajustes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg></button></div><div class="tp-tip" role="tooltip"></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Atraso de grupo</span><input type="checkbox" name="group" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Mostrar no foco</span><input type="checkbox" name="focus" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Passe o mouse no primeiro ícone: meio segundo. Vá para os seguintes: instantâneo, porque o grupo está aquecido. Desligue o atraso de grupo e cada ícone custa meio segundo de novo. Percorra a barra com Tab para ver o comportamento de foco.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Se o conteúdo tem link ou botão, é popover, e a diferença muda tudo: popover precisa ser alcançável por teclado e permanecer aberto enquanto o ponteiro estiver dentro. Se a informação é essencial, não pode estar em tooltip, porque tooltip não existe de forma confiável em toque. Timing: 400 a 600ms para entrar, 0ms enquanto o ponteiro continua entre gatilhos próximos, 100 a 200ms para sair, fade mais 4px de deslocamento em 150ms. O comportamento de grupo separa tooltip bom de irritante: sem ele, ou a tela pisca a cada movimento ou cada tooltip custa meio segundo.</p>
+          <p>Detalhes: aparece no foco por teclado, não só no hover; Escape fecha mesmo com o ponteiro parado sobre o gatilho; some ao clicar porque a informação já não é necessária; move-se o mínimo, porque apoio que se move rouba atenção; nunca sobrepõe o gatilho, ou o hover se cancela e o tooltip pisca em loop; e é associado semanticamente ao elemento que descreve. Um ícone de ajuda que abre explicação é botão, não tooltip: focável, ativável por teclado, com conteúdo que permanece aberto para ser lido.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Só rótulo.</strong> Conteúdo interativo é popover.</li>
+            <li><strong>500ms para entrar, instantâneo no grupo, 150ms para sair.</strong></li>
+            <li><strong>Aparece no foco, fecha no Escape e no clique.</strong></li>
+            <li><strong>Nunca sobre o gatilho.</strong></li>
+            <li><strong>Ícone de ajuda é botão.</strong></li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Só texto.</strong> Qualquer coisa clicável é popover.</li>
+            <li><strong>500ms no primeiro, 0ms no grupo, 150ms para sair.</strong></li>
+            <li><strong>Mostre também no focus-visible.</strong></li>
+            <li><strong>Esconda no clique e no Escape.</strong></li>
+            <li><strong>Nunca cubra o gatilho.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Anatomia dos primitivos de interface, handbook</em> (capítulo 14) · <a href="https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/" target="_blank" rel="noopener">APG, Tooltip pattern</a> · <a href="https://www.radix-ui.com/primitives/docs/components/tooltip" target="_blank" rel="noopener">Radix, Tooltip</a></footer>
+        </article>
+
+        <article class="lesson" id="popover-and-menu">
+          <span class="eyebrow">Primitives · 15</span>
+          <h2>Popover and Menu</h2>
+          <p class="lede">Popover contém conteúdo arbitrário e Tab navega dentro dele. Menu contém comandos, setas navegam e Tab fecha. Confundir os dois produz componentes que se comportam de forma inesperada. E um submenu precisa sobreviver à diagonal.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="menu2">
+            <div class="demo-stage">
+            <div class="mn-wrap"><button class="mn-trigger" type="button" aria-haspopup="menu">Arquivo ▾</button>
+              <div class="mn-menu" role="menu"><div class="mn-item" role="menuitem">Duplicar<kbd class="mn-kbd">⌘D</kbd></div><div class="mn-item" role="menuitem">Renomear<kbd class="mn-kbd">⌘R</kbd></div><div class="mn-item mn-parent" role="menuitem" aria-haspopup="menu">Compartilhar<span class="sp-chev">›</span><div class="mn-sub" role="menu"><div class="mn-item" role="menuitem">Copiar link</div><div class="mn-item" role="menuitem">E-mail</div><div class="mn-item" role="menuitem">Exportar</div></div></div><div class="mn-item" role="menuitem">Excluir<kbd class="mn-kbd">⌘⌫</kbd></div></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Triângulo de segurança</span><input type="checkbox" name="safe" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Mostrar atalhos</span><input type="checkbox" name="shortcuts" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Abra Arquivo, passe em Compartilhar e mova na diagonal até o submenu. Com o triângulo o submenu sobrevive à passagem por Excluir. Sem ele, fecha no instante em que você sai de Compartilhar.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Comportamento de menu: Enter, Espaço ou setas abrem; setas navegam; Home e End saltam; digitação salta para o item correspondente; Enter ativa e fecha; Escape fecha e devolve o foco ao gatilho; Tab fecha e continua a navegação; clique fora fecha. Abre no pressionar, permitindo pressionar, arrastar e soltar sobre o item. Itens desabilitados são pulados pelas setas mas continuam visíveis, porque removê-los esconde que a opção existe e focá-los irrita.</p>
+          <p>O triângulo de segurança: mover o ponteiro na diagonal em direção ao submenu sai do item pai e atravessa outros itens. Enquanto o movimento apontar para o submenu, não feche. Aproximações aceitáveis são um atraso de 200 a 300ms ou uma área invisível de ligação. Submenus abrem pela seta lateral e fecham pela oposta. A origem da animação segue o gatilho e inverte quando o menu inverte de lado. Escala de entrada entre 0,95 e 0,97; abaixo de 0,9 o menu parece explodir. Separadores não são focáveis e declaram papel. Itens com atalho mostram o atalho alinhado à direita, a forma mais eficaz de ensinar atalhos que existe. Menus de contexto aparecem na posição do ponteiro com colisão tratada nas quatro direções, disparam por pressionar e segurar em toque com háptico no limiar, deslocam-se para não ficar sob o dedo, e nunca substituem ações visíveis: tudo que está no menu de contexto existe em outro lugar.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Menu: setas dentro, Tab fora. Popover: Tab dentro.</strong></li>
+            <li><strong>Abra no pressionar,</strong> selecione no soltar.</li>
+            <li><strong>Triângulo de segurança ou 250ms de intenção</strong> para submenus.</li>
+            <li><strong>Escala de 0,96, origem no gatilho,</strong> invertida com o menu.</li>
+            <li><strong>Atalhos à direita;</strong> menu de contexto duplica, nunca substitui.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Menu: setas, digitação, Tab fecha.</strong> Popover: Tab dentro.</li>
+            <li><strong>Abra no pressionar.</strong></li>
+            <li><strong>Triângulo de segurança ou atraso de intenção</strong> antes de fechar um submenu.</li>
+            <li><strong>Pule desabilitados com as setas, mantenha-os visíveis.</strong></li>
+            <li><strong>Atalhos alinhados à direita nos itens.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Anatomia dos primitivos de interface, handbook</em> (capítulo 15) · <a href="https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/" target="_blank" rel="noopener">APG, Menu Button pattern</a> · <a href="https://rauno.me/craft/invisible-details" target="_blank" rel="noopener">Rauno Freiberg, Invisible Details of Interaction Design</a></footer>
+        </article>
+
+        <article class="lesson" id="command-menu">
+          <span class="eyebrow">Primitives · 16</span>
+          <h2>Command Menu</h2>
+          <p class="lede">O primitivo que define produtos de produtividade modernos. Correspondência aproximada, recência, nada de estado inicial vazio, sinônimos. E sem animação de entrada, porque é alta frequência e toda animação vira latência percebida.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="cmd">
+            <div class="demo-stage" data-cmds="Novo projeto|Nova página|Abrir ajustes|Alternar tema|Convidar colega|Buscar arquivos|Ir para entrada|Exportar relatório|Sair" data-empty="Nada encontrado" data-recent="Recentes">
+            <div class="cm-wrap"><button class="cm-trigger" type="button">Buscar comandos<kbd>⌘K</kbd></button><div class="cm-panel" role="dialog"><input class="cm-input" type="text" placeholder="Digite um comando…" autocomplete="off" spellcheck="false"><div class="cm-list" role="listbox"></div><div class="cm-foot"><span>↑↓ navegar</span><span>↵ executar</span><span>esc</span></div></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Correspondência aproximada</span><input type="checkbox" name="fuzzy" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Animação de entrada</span><input type="checkbox" name="animate" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Abra com ⌘K ou pelo botão e digite "nprj": aproximada acha Novo projeto, exata não acha nada. Ligue a animação de entrada e sinta como 200ms de escala transformam uma ferramenta de alta frequência em latência.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Anatomia: um atalho global disponível em qualquer tela, um campo de busca focado ao abrir, resultados agrupados por categoria, item ativo sempre visível com a rolagem acompanhando, e um rodapé com os atalhos disponíveis para o item ativo. A correspondência é aproximada, não exata: digitar "nprj" deve encontrar "Novo projeto", e correspondência por subsequência é o mínimo aceitável. A ordenação é relevância mais recência, então o que a pessoa usou recentemente sobe e o menu vira memória muscular. Abrir sem digitar mostra comandos recentes e sugestões; é o momento de ensinar o que existe. Um mapa de sinônimos é barato e transforma a taxa de sucesso: "sair", "logout" e "desconectar" encontram o mesmo comando.</p>
+          <p>Os detalhes que quase ninguém faz. Sem animação de entrada: aparecer instantaneamente, sair com fade sutil. Sem animação nos itens durante a navegação: mover a seleção com as setas precisa ser instantâneo; um indicador que desliza fica bonito por dois dias e lento a partir do terceiro. Modos aninhados: um prefixo entra num escopo, arquivos, ir para, executar; Backspace no campo vazio sai dele, e o modo é visível como ficha. Decida se preserva a busca ao fechar; limpar é a convenção mais comum. Não roube o atalho da plataforma.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Subsequência no mínimo,</strong> ponderada por recência.</li>
+            <li><strong>Recentes e sugestões ao abrir.</strong></li>
+            <li><strong>Mapa de sinônimos.</strong></li>
+            <li><strong>Zero animação de entrada, seleção instantânea.</strong></li>
+            <li><strong>Modos visíveis, Backspace sai, atalho que não colide.</strong></li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Correspondência por subsequência, reforço de recência.</strong></li>
+            <li><strong>Recentes ao abrir, nunca vazio.</strong></li>
+            <li><strong>Mapa de sinônimos.</strong></li>
+            <li><strong>Sem animação de entrada, setas instantâneas.</strong></li>
+            <li><strong>Fichas de modo, Backspace sai.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Anatomia dos primitivos de interface, handbook</em> (capítulo 16) · <a href="https://cmdk.paco.me/" target="_blank" rel="noopener">Paco Coursey, ⌘K</a> · <a href="https://linear.app/" target="_blank" rel="noopener">Linear</a></footer>
+        </article>
+
+        <article class="lesson" id="dialog">
+          <span class="eyebrow">Primitives · 17</span>
+          <h2>Dialog</h2>
+          <p class="lede">O elemento nativo de diálogo dá de graça a camada superior, fundo inerte, captura de foco, Escape e fundo estilizável. Nunca foque a ação destrutiva. E clicar fora de um formulário é perigoso.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="dlg">
+            <div class="demo-stage" data-focused="Foco em" data-lost="fechado por clique fora, perdidos" data-closed="fechado">
+            <div class="dg-wrap"><button class="dg-open" type="button">Excluir projeto</button>
+              <dialog class="dg-dialog"><b>Excluir "Lançamento Q3"?</b><p>Isso remove 12 tarefas e o histórico. Não pode ser desfeito.</p><label class="mf-label">Digite um motivo<input class="mf-input dg-field" type="text"></label><div class="dg-actions"><button class="btn btn--ghost dg-cancel" type="button">Manter projeto</button><button class="btn dg-delete" type="button">Excluir projeto</button></div></dialog>
+              <span class="dg-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Focar a ação segura</span><input type="checkbox" name="safefocus" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Fechar com clique fora</span><input type="checkbox" name="outside" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Abra: o foco cai em Manter, então Enter é seguro. Inverta o toggle e Enter exclui. Digite um motivo, ligue o clique fora e clique no fundo: o diálogo fecha e o texto se perde.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Diálogos caseiros precisam replicar tudo o que o elemento nativo faz e quase nunca replicam. O foco entra imediatamente sem esperar a animação, vai ao campo principal, à ação segura ou ao contêiner, não escapa enquanto aberto, e volta exatamente ao elemento que abriu ao fechar. Enter deve fazer a coisa segura. Os caminhos de fechamento são Escape, botão de fechar, clique fora e ação explícita. Clique fora é perigoso com formulários: alguém preenchendo um formulário longo e clicando fora por acidente perde tudo. Desabilite o clique fora em diálogos com entrada de dados, ou peça confirmação quando houver alterações não salvas, ou preserve o rascunho e restaure ao reabrir. Escape durante a animação de abertura deve reverter, não esperar.</p>
+          <p>Diálogos empilhados acontecem e precisam de decisão: o de baixo recua levemente e escurece, Escape fecha só o topo, o foco volta ao diálogo anterior e não ao documento. Se você precisa de três níveis, o problema provavelmente é o fluxo, não o componente. Conteúdo longo: o corpo rola enquanto cabeçalho e rodapé ficam fixos, a altura máxima é relativa à viewport com margem, no mobile considere tela cheia ou drawer, e o botão de ação nunca sai da área visível. O título de um diálogo de confirmação faz a pergunta com o nome do objeto, o corpo explica a consequência principalmente quando irreversível, os botões descrevem as ações e nunca são "Sim" e "Não", a ação segura é a padrão, e a ordem é consistente com o resto do produto. E antes de tudo isso, prefira desfazer a confirmar.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Use &lt;dialog&gt;.</strong> Camada superior, inerte, captura, Escape, fundo.</li>
+            <li><strong>Foco inicial na ação segura</strong> ou no campo principal.</li>
+            <li><strong>Sem fechar por clique fora em formulários,</strong> ou confirme, ou guarde o rascunho.</li>
+            <li><strong>Escape fecha só o diálogo do topo.</strong></li>
+            <li><strong>Botões dizem o que fazem.</strong> Nunca Sim e Não.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>&lt;dialog&gt; com showModal.</strong></li>
+            <li><strong>autofocus na ação segura.</strong></li>
+            <li><strong>Clique fora desabilitado em formulários.</strong></li>
+            <li><strong>Escape fecha só o topo.</strong></li>
+            <li><strong>Título pergunta, corpo explica, botões nomeiam a ação.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Anatomia dos primitivos de interface, handbook</em> (capítulo 17) · <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog" target="_blank" rel="noopener">MDN, elemento dialog</a> · <a href="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/" target="_blank" rel="noopener">APG, Dialog (Modal) pattern</a></footer>
+        </article>
+
+        <article class="lesson" id="drawer">
+          <span class="eyebrow">Primitives · 18</span>
+          <h2>Drawer</h2>
+          <p class="lede">O gesto acompanha o dedo um para um, solta com a velocidade do gesto e dispensa depois de 25% ou 500px/s. O detalhe que separa drawer nativo de drawer web é quem recebe o gesto quando o conteúdo de dentro também rola.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="drawer2">
+            <div class="demo-stage" data-sheet="movendo o sheet" data-content="rolando o conteúdo">
+            <div class="dw2-wrap"><button class="dw2-open" type="button">Abrir drawer</button><div class="dw2-overlay"></div><div class="dw2-sheet"><div class="dw2-handle"></div><div class="dw2-list"><div class="dw2-row">Mensagem 1</div><div class="dw2-row">Mensagem 2</div><div class="dw2-row">Mensagem 3</div><div class="dw2-row">Mensagem 4</div><div class="dw2-row">Mensagem 5</div><div class="dw2-row">Mensagem 6</div><div class="dw2-row">Mensagem 7</div><div class="dw2-row">Mensagem 8</div><div class="dw2-row">Mensagem 9</div><div class="dw2-row">Mensagem 10</div><div class="dw2-row">Mensagem 11</div><div class="dw2-row">Mensagem 12</div><div class="dw2-row">Mensagem 13</div><div class="dw2-row">Mensagem 14</div></div></div><span class="dw2-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Entregar o gesto ao conteúdo</span><input type="checkbox" name="transfer" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Abra o drawer e arraste na lista. Com transferência, arrastar para cima rola o conteúdo e arrastar para baixo no topo move o sheet. Sem ela, todo arrasto move o sheet e a lista nunca rola por toque.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Arrasto 1:1 sem interpolação, soltura com spring alimentado pela velocidade do gesto, dispensa com mais de 25% de deslocamento ou mais de 500px/s, resistência elástica ao ultrapassar o topo, e a opacidade do overlay em função da posição, não do tempo. O conflito com a rolagem interna é a parte difícil. Enquanto o drawer não está totalmente aberto, o gesto move o drawer. Totalmente aberto, o gesto rola o conteúdo. Com o conteúdo no topo, arrastar para baixo volta a mover o drawer. Sem essa lógica de transferência, ou o conteúdo não rola, ou o drawer não fecha por gesto.</p>
+          <p>Pontos de encaixe: o spring escolhe o encaixe mais próximo da posição projetada pela velocidade, não da posição atual. O teclado virtual no mobile precisa empurrar o drawer, não cobrir: use unidades de viewport que consideram a interface do navegador e teste com o teclado aberto, um dos casos mais frequentemente quebrados.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Arrasto 1:1, spring por velocidade, 25% ou 500px/s para dispensar.</strong></li>
+            <li><strong>Transferência de gesto:</strong> drawer até abrir, conteúdo quando aberto, drawer de novo no topo.</li>
+            <li><strong>Encaixe pela posição projetada.</strong></li>
+            <li><strong>Opacidade do overlay pela posição.</strong></li>
+            <li><strong>Teclado empurra o drawer;</strong> teste com ele aberto.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Arrasto 1:1, spring ao soltar.</strong></li>
+            <li><strong>25% ou 500px/s dispensa.</strong></li>
+            <li><strong>Transferência de gesto</strong> entre sheet e conteúdo.</li>
+            <li><strong>Encaixe na posição projetada.</strong></li>
+            <li><strong>Teste com o teclado virtual aberto.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Anatomia dos primitivos de interface, handbook</em> (capítulo 18) · <a href="https://vaul.emilkowal.ski/" target="_blank" rel="noopener">Emil Kowalski, Vaul</a></footer>
+        </article>
+
+        <article class="lesson" id="toast">
+          <span class="eyebrow">Primitives · 19</span>
+          <h2>Toast</h2>
+          <p class="lede">Um toast não pode conter erro que exige ação, porque ele some. Não pode ser a única confirmação de algo importante. Precisa pausar no hover, ou a mensagem desaparece enquanto a pessoa lê.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="toast2">
+            <div class="demo-stage" data-msg="Alterações salvas" data-undo="Desfazer">
+            <div class="ts-wrap"><button class="ts-btn" type="button">Salvar alterações</button><div class="ts-stack" aria-live="polite"></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Pausar no hover</span><input type="checkbox" name="pause" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Empilhar e recuar</span><input type="checkbox" name="stack" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Clique em Salvar algumas vezes. Passe o mouse num toast: o timer pausa enquanto você lê. Desligue a pausa e ele some sob o ponteiro. Empilhar recua os antigos em vez de empurrar uma lista crescente.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Duração de quatro segundos, seis com ação. Pausa no hover e no foco. Toasts antigos recuam com escala e deslocamento; hover expande a pilha para leitura; swipe dispensa seguindo o dedo; anúncio por região viva educada, assertiva só para erro. Pausar no hover é obrigatório. O foco não é roubado: um toast que captura foco interrompe o que a pessoa estava fazendo; deve ser alcançável por teclado via atalho ou pela ordem normal, não por captura. Ação dentro de toast precisa de tempo suficiente: com botão de desfazer, quatro segundos é pouco para quem estava olhando outra coisa, então seis a dez, com pausa no hover.</p>
+          <p>Quando um toast novo chega enquanto outro sai, a coreografia precisa de ordem definida ou a pilha treme. Padrão: a saída completa antes de a entrada do novo começar a reposicionar os demais. E nunca empilhe indefinidamente; limite os visíveis e recolha o resto.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>4s, 6 a 10 com ação, pausado no hover e no foco.</strong></li>
+            <li><strong>Nunca o único caminho para um erro acionável.</strong></li>
+            <li><strong>Sem roubar foco;</strong> alcançável por teclado mesmo assim.</li>
+            <li><strong>Recua, expande no hover, swipe dispensa.</strong></li>
+            <li><strong>A saída termina antes de a próxima entrada reorganizar.</strong></li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Pausa no hover e no foco.</strong> Obrigatório.</li>
+            <li><strong>6 a 10 segundos com desfazer.</strong></li>
+            <li><strong>Nunca roube o foco.</strong></li>
+            <li><strong>Limite a pilha; recue o resto.</strong></li>
+            <li><strong>A saída termina antes de a próxima reposicionar.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Anatomia dos primitivos de interface, handbook</em> (capítulo 19) · <a href="https://sonner.emilkowal.ski/" target="_blank" rel="noopener">Emil Kowalski, Sonner</a></footer>
+        </article>
+
+        <article class="lesson" id="tabs">
+          <span class="eyebrow">Primitives · 20</span>
+          <h2>Tabs</h2>
+          <p class="lede">Ativação automática troca o painel conforme as setas se movem. Ativação manual move o foco e espera Enter. Escolha manual quando o painel é pesado ou faz requisição, senão navegar cinco abas dispara cinco carregamentos. Quase ninguém faz.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="tabs2">
+            <div class="demo-stage">
+            <div class="tb-wrap"><div class="tb-list" role="tablist"><button class="tb-tab" role="tab" type="button" aria-selected="true" tabindex="0">Visão geral</button><button class="tb-tab" role="tab" type="button" aria-selected="false" tabindex="-1">Atividade</button><button class="tb-tab" role="tab" type="button" aria-selected="false" tabindex="-1">Arquivos</button><button class="tb-tab" role="tab" type="button" aria-selected="false" tabindex="-1">Ajustes</button><span class="tb-ind"></span></div><div class="tb-panel" role="tabpanel"><span class="tb-panel-name"></span><span class="tb-loads">Carregamentos: <b>0</b></span></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Ativação manual</span><input type="checkbox" name="manual" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Animar indicador</span><input type="checkbox" name="indicator" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Clique numa aba e percorra as quatro com as setas. Ativação automática carrega todo painel pelo qual você passa. Manual move o foco e espera Enter, então atravessar a fila não custa nada.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Automática serve para painéis leves. Manual é necessária quando o painel custa, que é o caso comum em produtos reais. Teclado: setas movem entre abas, Home e End saltam, Tab sai do grupo e vai para o painel. O grupo inteiro é um destino de tabulação e só a aba ativa é focável. O indicador desliza entre abas; quando as larguras diferem, anima posição e largura, e uma curva ligeiramente diferente para cada uma produz um leve efeito elástico que disfarça a mudança de largura. A altura fica estável: painéis de alturas diferentes fazem a página saltar, então anime a altura ou defina um mínimo. Abas que não cabem precisam de estratégia, rolagem horizontal com indicadores de continuação ou um menu de excedentes, e nunca quebram em duas linhas. Coloque a aba na URL quando ela é significativa; alguém que compartilha o link espera que a aba certa abra.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Ativação manual quando os painéis custam.</strong></li>
+            <li><strong>Um destino de tab, setas dentro, Tab para o painel.</strong></li>
+            <li><strong>Indicador anima posição e largura.</strong></li>
+            <li><strong>Altura estável, nunca duas linhas.</strong></li>
+            <li><strong>Aba na URL</strong> quando importa.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Ativação manual para painéis caros.</strong></li>
+            <li><strong>Foco itinerante; Tab vai ao painel.</strong></li>
+            <li><strong>Indicador anima x e largura.</strong></li>
+            <li><strong>Min-height nos painéis.</strong></li>
+            <li><strong>Excedente rola ou vira menu; nunca quebra linha.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Anatomia dos primitivos de interface, handbook</em> (capítulo 20) · <a href="https://www.w3.org/WAI/ARIA/apg/patterns/tabs/" target="_blank" rel="noopener">APG, Tabs pattern</a></footer>
+        </article>
+
+        <article class="lesson" id="disclosure-and-accordion">
+          <span class="eyebrow">Primitives · 21</span>
+          <h2>Disclosure and Accordion</h2>
+          <p class="lede">Disclosure é um elemento que expande. Accordion são vários com uma regra sobre quantos ficam abertos. A altura precisa ser medida para animar, fechar um e abrir outro rodam juntos, e o cabeçalho inteiro é o gatilho.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="acc">
+            <div class="demo-stage">
+            <div class="ac-list"><div class="ac-item"><button class="ac-head" type="button" aria-expanded="true">Envio<span class="sp-chev">▾</span></button><div class="ac-body"><div class="ac-inner">Pedidos saem em até dois dias úteis. O rastreio é enviado por e-mail assim que a etiqueta é impressa.</div></div></div><div class="ac-item"><button class="ac-head" type="button" aria-expanded="false">Devoluções<span class="sp-chev">▾</span></button><div class="ac-body"><div class="ac-inner">Trinta dias, qualquer motivo. Imprima a etiqueta na página do pedido e entregue em qualquer ponto da transportadora.</div></div></div><div class="ac-item"><button class="ac-head" type="button" aria-expanded="false">Garantia<span class="sp-chev">▾</span></button><div class="ac-body"><div class="ac-inner">Dois anos contra defeitos de fabricação. Desgaste de uso normal não é coberto.</div></div></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Abrir e fechar juntos</span><input type="checkbox" name="together" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Animar altura medida</span><input type="checkbox" name="measure" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Clique em outro cabeçalho. Juntos, um fecha enquanto o outro abre e a lista mantém a forma. Sequencial dobra o tempo com um mergulho no meio. Desligue a medição e a altura simplesmente pula.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Decida se abrir um fecha os outros; ambos são legítimos e o comportamento precisa ser consistente no produto. Altura não é animável a partir de valor automático sem medir, e se o conteúdo tem imagem que ainda não carregou, a altura medida está errada e a animação salta. Fechar um e abrir outro rodam em paralelo, não em sequência; sequencial dobra o tempo e cria um pulo no meio. Um item no fim da página que expande pode empurrar conteúdo para fora da viewport; considere rolar junto. O cabeçalho inteiro é o gatilho, não só o ícone. E a busca do navegador não encontra conteúdo colapsado; se o conteúdo precisa ser encontrável, considere não colapsar por padrão.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Uma regra para quantos ficam abertos,</strong> consistente em todo lugar.</li>
+            <li><strong>Meça a altura, ou use linhas de grid,</strong> e cuidado com imagens não carregadas.</li>
+            <li><strong>Fechar e abrir juntos.</strong></li>
+            <li><strong>Cabeçalho inteiro clicável.</strong></li>
+            <li><strong>Conteúdo encontrável fica aberto</strong> por padrão.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Decida um ou vários abertos.</strong></li>
+            <li><strong>Meça scrollHeight, ou grid-template-rows de 0fr a 1fr.</strong></li>
+            <li><strong>Abra e feche em paralelo.</strong></li>
+            <li><strong>O cabeçalho inteiro é o botão.</strong></li>
+            <li><strong>A busca não encontra conteúdo colapsado.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Anatomia dos primitivos de interface, handbook</em> (capítulo 21) · <a href="https://www.w3.org/WAI/ARIA/apg/patterns/accordion/" target="_blank" rel="noopener">APG, Accordion pattern</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/interpolate-size" target="_blank" rel="noopener">MDN, interpolate-size</a></footer>
+        </article>
+
+        <article class="lesson" id="table">
+          <span class="eyebrow">Primitives · 22</span>
+          <h2>Table</h2>
+          <p class="lede">Uma tabela feita de elementos genéricos perde navegação por célula, associação com cabeçalho e comportamento de cópia. Use a estrutura real e estilize. Fixe o cabeçalho, mostre a sombra só quando há conteúdo rolado acima, e alinhe números e seus cabeçalhos à direita.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="table3">
+            <div class="demo-stage">
+            <div class="tb3-scroll"><table class="tb3"><thead><tr><th>Cliente</th><th class="tb3-num">Pedidos</th><th class="tb3-num">Receita</th></tr></thead><tbody><tr><td>Acme Corp</td><td class="tb3-num">128</td><td class="tb3-num">48.210,00</td></tr><tr><td>Birch & Co</td><td class="tb3-num">64</td><td class="tb3-num">19.860,50</td></tr><tr><td>Cobalt Labs</td><td class="tb3-num">311</td><td class="tb3-num">96.004,25</td></tr><tr><td>Delta Studio</td><td class="tb3-num">9</td><td class="tb3-num">2.140,00</td></tr><tr><td>Everly</td><td class="tb3-num">452</td><td class="tb3-num">131.780,00</td></tr><tr><td>Fjord</td><td class="tb3-num">77</td><td class="tb3-num">23.115,75</td></tr><tr><td>Granite</td><td class="tb3-num">203</td><td class="tb3-num">60.930,00</td></tr><tr><td>Halo Works</td><td class="tb3-num">18</td><td class="tb3-num">5.402,10</td></tr></tbody></table></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Sombra do cabeçalho só quando rolado</span><input type="checkbox" name="shadow" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Números e cabeçalhos à direita</span><input type="checkbox" name="align" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Role a tabela. O cabeçalho fica e a sombra aparece só quando há conteúdo embaixo dele. Desligue o alinhamento: os números deixam de ser comparáveis e os cabeçalhos param de alinhar com as colunas.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Cabeçalho fixo é necessário em qualquer tabela com rolagem. A sombra aparece só quando há conteúdo rolado acima; em tabelas com rolagem horizontal a primeira coluna também pode ser fixa, e fixar os dois eixos exige cuidado no canto de interseção. O estado de ordenação é declarado semanticamente no cabeçalho, com três estados quando faz sentido, crescente, decrescente, nenhum, indicador que mostra a direção e não só "ordenado", e ordenação estável para a segunda chave não embaralhar. Alinhamento: texto à esquerda, números à direita com algarismos tabulares, datas consistentes em qualquer lado, ações à direita com largura fixa, cabeçalho alinhado com o conteúdo da coluna. Cabeçalho à esquerda sobre coluna numérica à direita é desalinhamento gratuito e extremamente comum.</p>
+          <p>Seleção: checkbox no cabeçalho seleciona tudo com indeterminado quando parcial, Shift-clique seleciona intervalo, a contagem de selecionados fica visível, e as ações em lote aparecem sem deslocar a tabela, em espaço reservado ou barra sobreposta. Conteúdo real: colunas que não cabem exigem escolha entre rolagem horizontal, esconder por prioridade ou expandir a linha; células longas truncam com acesso ao completo; no mobile a tabela vira lista de cards com frequência, e isso é decisão de conteúdo, não só de layout; e o estado vazio distingue "sem dados" de "o filtro escondeu tudo".</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Elementos reais de tabela,</strong> estilizados.</li>
+            <li><strong>Cabeçalho fixo, sombra só quando rolado.</strong></li>
+            <li><strong>aria-sort, três estados, ordenação estável.</strong></li>
+            <li><strong>Números e seus cabeçalhos à direita,</strong> algarismos tabulares.</li>
+            <li><strong>Ações em lote sem deslocamento;</strong> estado vazio que nomeia a causa.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>table, thead, th scope.</strong> Depois estilize.</li>
+            <li><strong>Cabeçalho fixo com sombra só quando rolado.</strong></li>
+            <li><strong>aria-sort com três estados.</strong></li>
+            <li><strong>Números e seus cabeçalhos à direita.</strong></li>
+            <li><strong>Barra de lote sobreposta; estado vazio nomeia o filtro.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Anatomia dos primitivos de interface, handbook</em> (capítulo 22) · <a href="https://www.w3.org/WAI/ARIA/apg/patterns/table/" target="_blank" rel="noopener">APG, Table pattern</a> · <a href="https://adrianroselli.com/2017/11/a-responsive-accessible-table.html" target="_blank" rel="noopener">Adrian Roselli, A Responsive Accessible Table</a></footer>
+        </article>
+
+        <article class="lesson" id="scroll-area">
+          <span class="eyebrow">Primitives · 23</span>
+          <h2>Scroll Area</h2>
+          <p class="lede">A barra de rolagem é o único sinal de que existe mais conteúdo e de onde você está. Se esconder, forneça outro sinal, e faça as sombras de borda acompanhar a posição em vez de ficarem lá permanentemente.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="scroller2">
+            <div class="demo-stage">
+            <div class="sa-wrap"><div class="sa-strip" tabindex="0"><span class="sa-chip">Tudo</span><span class="sa-chip">Design</span><span class="sa-chip">Engenharia</span><span class="sa-chip">Pesquisa</span><span class="sa-chip">Marketing</span><span class="sa-chip">Suporte</span><span class="sa-chip">Financeiro</span><span class="sa-chip">Jurídico</span><span class="sa-chip">Operações</span><span class="sa-chip">Pessoas</span><span class="sa-chip">Vendas</span><span class="sa-chip">Dados</span></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Sombras acompanham a posição</span><input type="checkbox" name="fades" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Esconder a barra</span><input type="checkbox" name="hidebar" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Role a faixa para o lado. As sombras aparecem só onde há mais conteúdo: nenhuma à esquerda no início, nenhuma à direita no fim. Desligue o acompanhamento e uma sombra permanente mente sobre o que existe.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Esconder a barra é comum e problemático. Se esconder, forneça sombras de continuação nas bordas, indicadores ou revelação no hover, e reserve o espaço da barra para o layout não deslocar quando ela aparece. A indicação de continuação deve aparecer e sumir conforme a posição; uma sombra permanente no topo de uma lista já rolada até o início é ruído. Rolagem horizontal é o caso mais difícil: uma faixa horizontal dentro de página vertical precisa de travamento direcional ou os eixos brigam, controles alternativos por botão e teclado, sinal de que há mais conteúdo já que em toque não há barra visível, e não deve capturar a rolagem vertical da página. Preserve a posição: ao navegar e voltar, restaure; ao carregar mais itens acima, mantenha a posição visual, porque inserir conteúdo acima sem compensar joga a pessoa para longe do que estava lendo.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Barra escondida exige outro sinal,</strong> e espaço reservado.</li>
+            <li><strong>Sombras de borda acompanham a posição,</strong> nunca estáticas.</li>
+            <li><strong>Faixas horizontais: travamento, botões, teclado, sinal.</strong></li>
+            <li><strong>Restaure a posição ao voltar;</strong> compense ao inserir acima.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Barra escondida exige sombras de borda ou revelação no hover.</strong></li>
+            <li><strong>Sombras alternam com a posição de rolagem.</strong></li>
+            <li><strong>Faixas horizontais precisam de travamento, botões, teclado.</strong></li>
+            <li><strong>Restaure scrollTop ao voltar.</strong></li>
+            <li><strong>Compense ao inserir itens acima.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Anatomia dos primitivos de interface, handbook</em> (capítulo 23) · <a href="https://www.radix-ui.com/primitives/docs/components/scroll-area" target="_blank" rel="noopener">Radix, Scroll Area</a></footer>
+        </article>
+
+        <article class="lesson" id="drag-and-reorder">
+          <span class="eyebrow">Primitives · 24</span>
+          <h2>Drag and Reorder</h2>
+          <p class="lede">O item arrastado segue o ponteiro um para um com leve elevação. O indicador de destino é uma linha, não um espaço que abre e faz a lista pular. E reordenar por teclado é obrigatório e quase nunca implementado.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="reorder">
+            <div class="demo-stage" data-moved="movido para" data-of="de" data-grab="Segurado. Use as setas para mover, Espaço para soltar, Escape para cancelar.">
+            <div class="ro-wrap"><div class="ro-list" role="listbox"><div class="ro-item" tabindex="0"><span class="ro-handle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h18M3 6h18M3 18h18"/></svg></span><span>Entrada</span></div><div class="ro-item" tabindex="-1"><span class="ro-handle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h18M3 6h18M3 18h18"/></svg></span><span>Hoje</span></div><div class="ro-item" tabindex="-1"><span class="ro-handle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h18M3 6h18M3 18h18"/></svg></span><span>Em breve</span></div><div class="ro-item" tabindex="-1"><span class="ro-handle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h18M3 6h18M3 18h18"/></svg></span><span>Algum dia</span></div><div class="ro-item" tabindex="-1"><span class="ro-handle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h18M3 6h18M3 18h18"/></svg></span><span>Arquivo</span></div><span class="ro-line"></span></div><span class="ro-live" aria-live="polite"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Indicador em linha</span><input type="checkbox" name="line" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Reordenar por teclado</span><input type="checkbox" name="keyboard" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Arraste um item pela alça. A linha mostra onde ele cai sem abrir vãos que fazem a lista pular. Foque um item e pressione Espaço, setas, Espaço: a mesma reordenação, anunciada a cada passo.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>O básico: limiar de início em torno de 10px para não confundir com clique, alça explícita ou o item inteiro, feedback de origem como espaço vazio ou fantasma, feedback de destino mostrando onde vai cair, rolagem automática perto das bordas do contêiner, e Escape para cancelar. O item arrastado segue o ponteiro 1:1 com leve elevação, escala pequena e sombra maior. O indicador de destino é uma linha, não um espaço que abre; espaços que abrem e fecham fazem a lista pular durante todo o arrasto e a pessoa perde a referência. A rolagem automática tem velocidade proporcional à proximidade da borda, não binária. A reordenação anima os vizinhos com transição de layout. Soltura fora da área válida reverte com animação para comunicar que nada aconteceu.</p>
+          <p>Teclado: Espaço ou Enter entra em modo de movimento, setas movem o item, Espaço ou Enter confirma, Escape cancela e restaura, com cada movimento anunciado por região viva: "Item movido para a posição 3 de 8". Se implementar isso parece caro, pergunte se a reordenação por arrasto é mesmo necessária; botões de mover para cima e para baixo resolvem o problema para todo mundo por uma fração do custo.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Limiar de 10px, acompanhamento 1:1, elevação com sombra.</strong></li>
+            <li><strong>Indicador em linha,</strong> vizinhos animam.</li>
+            <li><strong>Rolagem automática proporcional,</strong> reversão animada em soltura inválida.</li>
+            <li><strong>Modo de movimento por teclado com anúncios.</strong></li>
+            <li><strong>Ou só botões de subir e descer.</strong></li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Limiar de 10px, depois elevação.</strong></li>
+            <li><strong>Indicador em linha, não vãos.</strong></li>
+            <li><strong>Rolagem automática proporcional perto das bordas.</strong></li>
+            <li><strong>Espaço entra em modo de movimento; setas; Espaço confirma; Escape cancela.</strong></li>
+            <li><strong>Botões de subir e descer são uma resposta válida.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Anatomia dos primitivos de interface, handbook</em> (capítulo 24) · <a href="https://www.w3.org/WAI/ARIA/apg/patterns/listbox/" target="_blank" rel="noopener">APG, Listbox pattern</a> · <a href="https://dndkit.com/" target="_blank" rel="noopener">dnd kit, acessibilidade</a></footer>
+        </article>
+      </section>
+      <footer class="footer"><p>Biblioteca de estudo pessoal. Conteúdo sintetizado a partir das fontes listadas em cada aula; nomes de cursos e autores pertencem aos seus respectivos donos. Hierarquia só por tamanho, peso e espaço.</p></footer>
+    </div>
+  </main>
+</div>
+<script src="../app.js"></script>
+</body>
+</html>

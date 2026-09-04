@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Primitives — Interface Craft</title>
+  <meta name="description" content="Button, field, menu, dialog, slider, tab, table. The components every product is made of, at the level of detail where they actually break.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#fcfcfc" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
+  <script>
+    // Applies the saved theme before first paint to avoid a flash
+    try { var t = localStorage.getItem('theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script>
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <div>
+        <div class="brand-name">Interface Craft</div>
+        <div class="brand-sub">Living library</div>
+      </div>
+      <div class="controls">
+        <nav class="lang-switch" aria-label="Language"><a class="lang-opt" href="#" data-lang="en" hreflang="en" aria-current="true">EN</a><a class="lang-opt" href="pt/primitives.html" data-lang="pt" hreflang="pt">PT</a></nav>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle light and dark theme" title="Toggle light and dark theme"><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+      </div>
+    </div>
+    <a class="back-link" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>Home</a>
+    <nav class="nav-groups" aria-label="Section contents">
+      <div class="nav-group" data-section="primitives" style="margin-top:0">
+        <div class="nav-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="6" rx="2"/><rect x="3" y="14" width="8" height="6" rx="2"/><path d="M15 17h6M18 14v6"/></svg>Primitives</div>
+        <ul class="nav-list"><li><a class="nav-link" href="#what-makes-a-primitive">What Makes a Primitive</a></li><li><a class="nav-link" href="#hit-areas-and-targets">Hit Areas</a></li><li><a class="nav-link" href="#pointer-touch-keyboard">Pointer, Touch and Keyboard</a></li><li><a class="nav-link" href="#focus-management">Focus</a></li><li><a class="nav-link" href="#layers-and-stacking">Layers and Stacking</a></li><li><a class="nav-link" href="#scrolling-behavior">Scrolling</a></li><li><a class="nav-link" href="#component-state">State</a></li><li><a class="nav-link" href="#semantics-and-announcement">Semantics and Announcement</a></li><li><a class="nav-link" href="#button">Button</a></li><li><a class="nav-link" href="#text-field">Text Field</a></li><li><a class="nav-link" href="#checkbox-radio-switch">Checkbox, Radio and Switch</a></li><li><a class="nav-link" href="#select-and-combobox">Select and Combobox</a></li><li><a class="nav-link" href="#slider">Slider</a></li><li><a class="nav-link" href="#tooltip">Tooltip</a></li><li><a class="nav-link" href="#popover-and-menu">Popover and Menu</a></li><li><a class="nav-link" href="#command-menu">Command Menu</a></li><li><a class="nav-link" href="#dialog">Dialog</a></li><li><a class="nav-link" href="#drawer">Drawer</a></li><li><a class="nav-link" href="#toast">Toast</a></li><li><a class="nav-link" href="#tabs">Tabs</a></li><li><a class="nav-link" href="#disclosure-and-accordion">Disclosure and Accordion</a></li><li><a class="nav-link" href="#table">Table</a></li><li><a class="nav-link" href="#scroll-area">Scroll Area</a></li><li><a class="nav-link" href="#drag-and-reorder">Drag and Reorder</a></li></ul>
+      </div>
+      <div class="nav-group nav-other" data-section="primitives">
+        <div class="nav-title">Other sections</div>
+        <ul class="nav-list"><li><a class="nav-link" href="craft.html">Craft</a></li><li><a class="nav-link" href="typography.html">Typography</a></li><li><a class="nav-link" href="color.html">Color</a></li><li><a class="nav-link" href="layout.html">Layout</a></li><li><a class="nav-link" href="motion.html">Motion</a></li><li><a class="nav-link" href="ux.html">UX</a></li><li><a class="nav-link" href="references.html">References</a></li></ul>
+      </div>
+    </nav>
+  </aside>
+  <main class="content">
+    <div class="container">
+<section class="section" data-section="primitives">
+        <div class="section-head" id="primitives">
+          <span class="eyebrow">Section 07</span>
+          <h2>Primitives</h2>
+          <p>Button, field, menu, dialog, slider, tab, table. The components every product is made of, at the level of detail where they actually break.</p>
+        </div>
+
+        <article class="lesson" id="what-makes-a-primitive">
+          <span class="eyebrow">Primitives · 01</span>
+          <h2>What Makes a Primitive</h2>
+          <p class="lede">A primitive is a component that cannot be broken down without stopping being useful. It is used hundreds of times, so a detail fixed in the button shows up on every screen. So does a detail that is wrong.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="dims">
+            <div class="demo-stage">
+            <div class="dm-wrap"><div class="dm-row"><button class="dm-start" type="button">Start here</button><div class="dm-el dm-fake" data-el>Publish</div><button class="dm-el dm-native" type="button" data-el>Publish</button></div><ul class="dm-checks"><li data-check="reach"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Reachable with Tab</span></li><li data-check="activate"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Activates with Space or Enter</span></li><li data-check="ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Focus ring appears</span></li><li data-check="role"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Announced as a button</span></li></ul></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Native button element</span><input type="checkbox" name="native" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Click "Start here", then press Tab and Space. The div styled as a button fails every dimension except the visual one. Switch to the native element and all four pass with zero extra code.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Every primitive has to be resolved in seven dimensions, and most implementations resolve two or three. Visual: do all states exist and read differently? Pointer: hit area, hover, drag, cursor. Touch: target, no hover, gesture, feedback. Keyboard: reachable, operable, with the right conventions. Semantics: announced with role and state. State: controlled, uncontrolled, interrupted, concurrent. Robustness: long content, empty, many items, error. A button that only solves visual and pointer is not done; it is half done.</p>
+          <p>The order is structure, then behavior, then visual. Always. The typical mistake is the reverse: the component is drawn, implemented visually, and then somebody "adds accessibility". The result is a generic element with attributes glued on that misbehaves in every situation nobody predicted. Starting from the right platform element gives you focus, keyboard, semantics, form behavior, assistive technology and print for free. Replacing it with your own is taking on all of that debt.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Native element first.</strong> Then native styled, then a tested unstyled primitives library, then your own implementation with declared semantics. Most products jump straight to step four and pay for it.</li>
+            <li><strong>Seven dimensions per component,</strong> reviewed before it is called done.</li>
+            <li><strong>Only build from scratch when the native element demonstrably fails.</strong> A correct combobox is more complex than any first estimate.</li>
+            <li><strong>Structure, behavior, visual.</strong> Accessibility is not a layer; it is the skeleton.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Seven dimensions, one checklist.</strong> Visual, pointer, touch, keyboard, semantics, state, robustness.</li>
+            <li><strong>Structure before pixels.</strong> Pick the element, then the behavior, then the look.</li>
+            <li><strong>Native, styled native, tested library, custom, nothing.</strong> In that order.</li>
+            <li><strong>Count the cases your button handles.</strong> The number usually surprises.</li>
+            <li><strong>A fix in a primitive ships everywhere at once.</strong> So does a bug.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Anatomy of interface primitives, handbook</em> (chapter 1) · <a href="https://www.w3.org/WAI/ARIA/apg/" target="_blank" rel="noopener">ARIA Authoring Practices Guide</a> · <a href="https://www.radix-ui.com/primitives" target="_blank" rel="noopener">Radix Primitives</a></footer>
+        </article>
+
+        <article class="lesson" id="hit-areas-and-targets">
+          <span class="eyebrow">Primitives · 02</span>
+          <h2>Hit Areas</h2>
+          <p class="lede">The hit area is not the visual area. A 16px icon does not need a 16px target. This is the most common defect in interfaces and the cheapest to fix.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="hit">
+            <div class="demo-stage" data-hits="hits">
+            <div class="ht-row"><button class="ht-btn" type="button" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button><button class="ht-btn" type="button" aria-label="Notifications"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg></button><button class="ht-btn" type="button" aria-label="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg></button></div><span class="ht-read"></span>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Hit area</span><input type="range" name="hit" min="20" max="48" step="4" value="20" data-unit="px"><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Show hit areas</span><input type="checkbox" name="show" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Click around the icons. At 20px you miss constantly. Drag the hit area to 44px: the drawing does not change, the target does, and the misses stop.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Expand the target without touching the drawing: a pseudo-element with a negative inset around the icon. Minimums are 44 by 44 for touch, 48 for comfortable touch, 24 for pointer, 32 for comfortable pointer, and at least 8px between adjacent targets. It breaks most often in close icons in corners, action buttons in table rows, drag handles, checkboxes in lists, links inside running text on mobile, pagination arrows and controls over images.</p>
+          <p>In a list the whole row should be clickable, not only the text, but that conflicts with action buttons inside the same row. The pattern that solves it: an absolutely positioned element covers the row, and the action buttons sit above it in the stacking order, so the big area works and the inner controls remain reachable, including by keyboard.</p>
+          <p>A target that moves during the interaction is hostile: a list that reorders while the person is aiming, an item that disappears when checked and shifts the rest, content that loads above and pushes everything down, a button that changes width when its label changes. Reserve space, defer reordering until the pointer leaves, and lock positions while the pointer is inside the list.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>44px on touch, 24px on pointer,</strong> regardless of the icon size.</li>
+            <li><strong>Pseudo-element with negative inset</strong> to grow the target invisibly.</li>
+            <li><strong>Whole-row click plus stacked actions</strong> in lists.</li>
+            <li><strong>Targets do not move</strong> while someone is aiming at them.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copy" data-copied="Copied" aria-label="Copy"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copy</span></button></div><pre><code><span class="k">.icon-button</span> { position: relative; }
+<span class="k">.icon-button::after</span> { content: <span class="s">""</span>; position: absolute; inset: <span class="n">-12px</span>; }</code></pre></figure>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Pseudo-element with negative inset</strong> grows the target without moving pixels.</li>
+            <li><strong>44 touch, 24 pointer, 8 between.</strong></li>
+            <li><strong>Row-wide click with actions stacked above.</strong></li>
+            <li><strong>Freeze positions while the pointer is inside</strong> a list that may reorder.</li>
+            <li><strong>Audit corners, table rows, handles, pagination.</strong> That is where it breaks.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Anatomy of interface primitives, handbook</em> (chapter 2) · <a href="https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html" target="_blank" rel="noopener">WCAG 2.2, Target Size (Minimum)</a></footer>
+        </article>
+
+        <article class="lesson" id="pointer-touch-keyboard">
+          <span class="eyebrow">Primitives · 03</span>
+          <h2>Pointer, Touch and Keyboard</h2>
+          <p class="lede">The same interface is operated in three fundamentally different ways. Hover exists in one of them. Nothing essential can depend on it.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="press">
+            <div class="demo-stage">
+            <div class="pm-wrap"><button class="pm-trigger" type="button" aria-haspopup="menu">Options<span class="sp-chev">▾</span></button><div class="pm-menu" role="menu"><div class="pm-item" role="menuitem" data-v="Rename">Rename</div><div class="pm-item" role="menuitem" data-v="Duplicate">Duplicate</div><div class="pm-item" role="menuitem" data-v="Archive">Archive</div></div><span class="pm-read">Selected: —</span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Open on press</span><input type="checkbox" name="onpress" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Press the trigger, drag onto an item and release. On press, the whole thing is one gesture. Switch to release and the menu waits for the click to finish, half a frame late, and the drag does nothing.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Pointer has hover, high precision and modifier keys. Touch has no hover, low precision and gestures. Keyboard has exact precision and focus as its intermediate state. If an action only appears on hover, it does not exist on touch. The options are to show it always on touch, to offer an alternate path such as press and hold or a context menu, or to accept that the action is secondary.</p>
+          <p>When to fire changes how responsive things feel. Menus and popovers open on press, not on release, which allows the continuous gesture of pressing, dragging to the item and releasing to select, the native behavior of operating systems. Buttons fire on release, which lets you cancel by dragging out before letting go. Destructive actions always fire on release, never during the gesture. Menus that open on release feel half a frame slower than native ones, and people notice.</p>
+          <p>Without hover, the pressed state is the only feedback that a touch registered. It must appear immediately and be visible. In scrollable lists, though, it should not appear instantly or every scroll gesture lights up items; the convention is a delay of 50 to 100ms, cancelled if the finger moves past the scroll threshold. Interface elements should not select text on drag or double click, so <code>user-select: none</code> on buttons, menu items and tabs, and never on real content: blocking selection of an identifier or a value is hostile, because the person wants to copy it. A draggable component inside a scrollable page needs directional locking: a start threshold around 10px, then commit to the dominant axis and declare it so the browser does not scroll concurrently.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Nothing essential behind hover.</strong> Touch needs the action visible or reachable another way.</li>
+            <li><strong>Menus on press, buttons on release,</strong> destructive on release.</li>
+            <li><strong>Pressed state on touch,</strong> delayed 50 to 100ms inside scrollable lists.</li>
+            <li><strong>user-select: none on chrome,</strong> never on content.</li>
+            <li><strong>Directional lock</strong> for drags inside scrollers.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Hover-only actions do not exist on touch.</strong> Show them or offer another path.</li>
+            <li><strong>Open menus on pointerdown.</strong> Press, drag, release feels native.</li>
+            <li><strong>Buttons on release</strong> so drag-out cancels.</li>
+            <li><strong>Pressed state delayed 50 to 100ms in scroll lists.</strong></li>
+            <li><strong>user-select: none on controls only.</strong> Content is for copying.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Anatomy of interface primitives, handbook</em> (chapter 3) · <a href="https://developer.apple.com/design/human-interface-guidelines/menus" target="_blank" rel="noopener">Apple HIG, Menus</a></footer>
+        </article>
+
+        <article class="lesson" id="focus-management">
+          <span class="eyebrow">Primitives · 04</span>
+          <h2>Focus</h2>
+          <p class="lede">A focus ring that shows on mouse click annoys. One that does not show on keyboard navigation makes the product unusable. The platform distinguishes the two, and most of focus management is about where focus goes next.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="focus2">
+            <div class="demo-stage" data-focus="Focus" data-body="body" data-tabs="Tabs to cross">
+            <div class="fc-wrap"><button class="fc-before" type="button">Before</button><div class="fc-list" role="listbox"><div class="fc-item" tabindex="0" data-i="0">Design review<kbd>⌫</kbd></div><div class="fc-item" tabindex="-1" data-i="1">Weekly sync<kbd>⌫</kbd></div><div class="fc-item" tabindex="-1" data-i="2">Roadmap<kbd>⌫</kbd></div><div class="fc-item" tabindex="-1" data-i="3">Retro<kbd>⌫</kbd></div><div class="fc-item" tabindex="-1" data-i="4">Planning<kbd>⌫</kbd></div></div><button class="fc-after" type="button">After</button><span class="fc-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Roving focus</span><input type="checkbox" name="roving" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Move focus after delete</span><input type="checkbox" name="restore" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Click "Before", then Tab. With roving focus the list is one stop and arrows move inside it. Press Backspace on an item: focus moves to a neighbour, or falls to the body when the toggle is off.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p><code>:focus-visible</code> resolves the false dilemma: ring for keyboard, none for pointer. The ring needs contrast against the background and against the element, visibility in both themes, an offset instead of a border so it does not move the layout, and an ancestor without <code>overflow: hidden</code>, which clips rings and is a frequent bug. Tab order follows document order; when the visual layout diverges from it, keyboard navigation jumps incoherently. Document order must match visual order, and positive tabindex values create a parallel order that breaks the moment somebody adds an element.</p>
+          <p>Inside lists, menus, tabs and grids, each item must not be a tab stop, or it takes forty presses to cross a list. The group is one tab stop and arrows move inside it; only the active item is focusable, and focus moves with it. When a modal opens, focus enters immediately without waiting for the animation, cannot escape to the content behind, and returns exactly to the opener on close. The last point is the most forgotten; without it keyboard users are thrown to the top of the document every time. The content behind becomes inert, removed from navigation and from assistive reading. Initial focus goes to the main field, or to the safe action in a confirmation, never the destructive one, or to the container in a read-only dialog. And when a focused element disappears, deleted item, removed row, focus must go somewhere sensible: the next item, the previous if it was last, the container if the list is empty. Otherwise focus falls to the body and navigation restarts from zero, invisible to everyone who does not use a keyboard.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>:focus-visible with outline and offset,</strong> visible in both themes, never clipped.</li>
+            <li><strong>Document order equals visual order.</strong> No positive tabindex.</li>
+            <li><strong>Roving focus in groups.</strong> One tab stop, arrows inside.</li>
+            <li><strong>Trap and restore</strong> in modals; inert behind.</li>
+            <li><strong>Plan focus after deletion.</strong> Next, previous, or container.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>:focus-visible, outline, offset.</strong> No layout change, no clipping ancestor.</li>
+            <li><strong>No positive tabindex, ever.</strong></li>
+            <li><strong>Roving tabindex in lists, menus, tabs, grids.</strong></li>
+            <li><strong>Return focus to the opener.</strong> Every dialog, every menu.</li>
+            <li><strong>Deleted item: focus next, then previous, then container.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Anatomy of interface primitives, handbook</em> (chapter 4) · <a href="https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/" target="_blank" rel="noopener">APG, Developing a Keyboard Interface</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-visible" target="_blank" rel="noopener">MDN, :focus-visible</a></footer>
+        </article>
+
+        <article class="lesson" id="layers-and-stacking">
+          <span class="eyebrow">Primitives · 05</span>
+          <h2>Layers and Stacking</h2>
+          <p class="lede">A floating component rendered inside a container with clipping or its own stacking context gets trapped. The platform now offers a layer above everything else, and Escape closes the most recent layer, not all of them.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="stack">
+            <div class="demo-stage" data-layers="Layers" data-dialog="dialog" data-menu="menu">
+            <div class="st-wrap" tabindex="-1"><button class="st-open" type="button">Open dialog</button>
+              <div class="st-dialog" role="dialog"><b>Export report</b><span>Choose a format from the menu, then press Escape.</span><div class="st-actions"><button class="st-menubtn" type="button">Format ▾</button><div class="st-menu" role="menu"><div class="st-mi">PDF</div><div class="st-mi">CSV</div><div class="st-mi">PNG</div></div></div></div>
+              <span class="st-read">Layers: —</span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Escape closes one layer</span><input type="checkbox" name="stackesc" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Open the dialog, open the menu, press Escape. With a stack, Escape closes the menu and a second Escape closes the dialog. Without one, a single Escape tears down everything.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>The classic fix was to render floating components at the end of the document to escape the parent's stacking context. It works and brings its own problems: focus managed by hand, the semantic relation to the trigger declared manually, reading order diverging from visual order. The top layer changes that. Native modal dialogs, elements declared as popovers and fullscreen content go into a layer immune to stacking contexts and clipping, keep their semantic relation, get a stylable backdrop, dismiss on outside click and Escape automatically, and do not depend on arbitrary numbers. If your case fits, use it.</p>
+          <p>When you do manage stacking manually, define a scale and forbid values outside it: elevated content 10, sidebar 20, overlay backdrop 30, dialog and drawer 40, popover and menu 50, tooltip 60, toast 70. Tooltip sits above popover because tooltips appear over menu items. A floating component also needs collision handling: flip when there is no room, shift when it barely fits, resize and scroll when it does not fit at all, follow the trigger on scroll and resize, and animate from an origin that flips with it. A menu that opens upward with its origin at the top corner is born in the wrong place. With several layers open, Escape closes the most recent: a menu inside a dialog, Escape closes the menu, Escape again closes the dialog. That needs a stack, and most homemade implementations do not have one.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Top layer via dialog and popover</strong> whenever the case fits.</li>
+            <li><strong>One z-index scale,</strong> nothing outside it.</li>
+            <li><strong>Flip, shift, resize, follow,</strong> and flip the animation origin too.</li>
+            <li><strong>Escape pops one layer.</strong> Keep a stack.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>dialog and popover use the top layer.</strong> Immune to z-index and clipping.</li>
+            <li><strong>Scale: 10, 20, 30, 40, 50, 60, 70.</strong> Tooltip above popover.</li>
+            <li><strong>Flip, shift, size, follow.</strong> A positioning library earns its bytes.</li>
+            <li><strong>Animation origin flips with placement.</strong></li>
+            <li><strong>Escape pops one layer</strong> from a real stack.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Anatomy of interface primitives, handbook</em> (chapter 5) · <a href="https://developer.mozilla.org/en-US/docs/Web/API/Popover_API" target="_blank" rel="noopener">MDN, Popover API</a> · <a href="https://floating-ui.com/" target="_blank" rel="noopener">Floating UI</a></footer>
+        </article>
+
+        <article class="lesson" id="scrolling-behavior">
+          <span class="eyebrow">Primitives · 06</span>
+          <h2>Scrolling</h2>
+          <p class="lede">When a dialog opens, the content behind must not scroll. It sounds trivial and is one of the most trap-filled areas there is. Two CSS lines remove most of the traps.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="scroll2">
+            <div class="demo-stage">
+            <div class="sl-page"><div class="sl-head"><span>Page</span><button class="sl-lock" type="button" data-toggle="is-locked" aria-pressed="false">Lock (open dialog)</button></div><p>Page content that should stay put when a dialog opens and should not scroll behind it.</p><p>Page content that should stay put when a dialog opens and should not scroll behind it.</p><p>Page content that should stay put when a dialog opens and should not scroll behind it.</p><div class="sl-panel"><div class="sl-row">Row 1</div><div class="sl-row">Row 2</div><div class="sl-row">Row 3</div><div class="sl-row">Row 4</div><div class="sl-row">Row 5</div><div class="sl-row">Row 6</div><div class="sl-row">Row 7</div><div class="sl-row">Row 8</div><div class="sl-row">Row 9</div><div class="sl-row">Row 10</div><div class="sl-row">Row 11</div><div class="sl-row">Row 12</div></div><p>Page content that should stay put when a dialog opens and should not scroll behind it.</p><p>Page content that should stay put when a dialog opens and should not scroll behind it.</p><p>Page content that should stay put when a dialog opens and should not scroll behind it.</p></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">overscroll-behavior: contain</span><input type="checkbox" name="contain" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">scrollbar-gutter: stable</span><input type="checkbox" name="gutter" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Scroll the inner panel to its end: the page behind starts moving until contain is on. Click Lock: the page hides its overflow and the layout jumps sideways until the gutter is reserved.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Hiding the document's overflow can make the page jump to the top under some conditions, so the position has to be preserved and restored. Hiding overflow also removes the scrollbar, the content widens by a few pixels and the whole layout shifts; <code>scrollbar-gutter: stable</code> reserves the space permanently and the problem stops existing. On iOS WebKit, techniques that work on desktop often fail to stop rubber-band scrolling; if the product is mobile-heavy, test specifically and consider a dedicated library.</p>
+          <p>When a scrollable area reaches its end, the scroll leaks to the parent, so inside a menu or drawer continuing to scroll moves the page behind. <code>overscroll-behavior: contain</code> fixes the leak and the accidental pull-to-refresh inside panels in one line. Scrolling to a focused element: smooth only without a reduced-motion preference, with a scroll margin so fixed headers do not hide it, and never steal control if the person is already scrolling. Scroll snapping helps carousels and galleries: mandatory snap can stop people from pausing between items, proximity is usually better, mixed item sizes make it unpredictable, and there must always be button and keyboard navigation too.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>scrollbar-gutter: stable on html.</strong> No layout shift when a modal locks the page.</li>
+            <li><strong>overscroll-behavior: contain</strong> on every scrollable panel.</li>
+            <li><strong>Preserve scroll position</strong> when locking and unlocking.</li>
+            <li><strong>scroll-margin for fixed headers,</strong> smooth only when motion is allowed.</li>
+            <li><strong>Snap: proximity, not mandatory,</strong> with alternate navigation.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copy" data-copied="Copied" aria-label="Copy"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copy</span></button></div><pre><code><span class="k">html</span> { scrollbar-gutter: stable; }
+<span class="k">.panel</span> { overscroll-behavior: contain; }</code></pre></figure>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>scrollbar-gutter: stable</strong> kills the modal layout jump.</li>
+            <li><strong>overscroll-behavior: contain</strong> on panels, menus, drawers.</li>
+            <li><strong>Save and restore scrollTop</strong> around locks.</li>
+            <li><strong>scroll-margin-top</strong> equal to the fixed header height.</li>
+            <li><strong>Proximity snap,</strong> plus buttons and keyboard.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Anatomy of interface primitives, handbook</em> (chapter 6) · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior" target="_blank" rel="noopener">MDN, overscroll-behavior</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-gutter" target="_blank" rel="noopener">MDN, scrollbar-gutter</a></footer>
+        </article>
+
+        <article class="lesson" id="component-state">
+          <span class="eyebrow">Primitives · 07</span>
+          <h2>State</h2>
+          <p class="lede">Every primitive with internal state needs both forms: manage its own by default, accept it from outside when necessary. And every primitive has states nobody drew: empty, loading, error, disabled with a reason, read-only, mixed, transient.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="state2">
+            <div class="demo-stage">
+            <div class="se-wrap"><div class="se-row"><button class="se-btn" type="button">Publish</button><span class="se-why">Add a title before publishing.</span></div><label class="mf-label">Order ID<input class="mf-input se-field" type="text" value="ORD-2041-7F3A" readonly></label></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Disable instead of explaining</span><input type="checkbox" name="disable" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Read-only as disabled</span><input type="checkbox" name="asdisabled" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Click Publish. Disabled, it does nothing and cannot even be focused, so the reason never surfaces. Enabled, it explains. Then try to select and copy the order ID: as disabled it cannot be copied, as read-only it can.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>A menu that always manages its own open state cannot be controlled by a global keyboard shortcut. One that only accepts external state forces every consumer to write the same logic. Offer both. Then take inventory: empty, loading initial and subsequent, error with a recovery path, disabled with the reason explained, read-only, partial or indeterminate, transient success that must expire.</p>
+          <p>Two deserve emphasis. Disabled without explanation is hostile: either explain on hover or allow the action and explain the error. The second is often better, because it gives agency and works with a keyboard, since disabled elements do not receive focus and the reason is never discovered. Read-only is not disabled: content that can be read, focused and copied but not edited needs its own treatment, and treating it as disabled prevents the copy, which is exactly the most common operation there.</p>
+          <p>Concurrency needs explicit decisions: a fast double click on something that opens and closes, an action fired while the previous one is in flight, an item removed while hovered, a list reordered during selection, a component unmounted during its exit animation. Ignore the second trigger, or cancel the first and take the second; letting both run produces impossible states. For actions with a high success rate, update immediately and revert on failure; optimistic updates are the biggest lever on perceived performance, and the design work is in the reversal. Optimism without a plan for reverting is lying.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Controlled and uncontrolled,</strong> both supported.</li>
+            <li><strong>Seven states in the inventory</strong> before the component ships.</li>
+            <li><strong>Explain instead of disabling</strong> where possible.</li>
+            <li><strong>Read-only stays focusable and copyable.</strong></li>
+            <li><strong>Decide concurrency;</strong> design the rollback.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Controlled and uncontrolled APIs.</strong> Both.</li>
+            <li><strong>Empty, loading, error, disabled with reason, read-only, mixed, transient.</strong></li>
+            <li><strong>Prefer enabled plus explanation</strong> over silent disabled.</li>
+            <li><strong>Read-only: focusable, selectable, copyable.</strong></li>
+            <li><strong>Double fire: ignore or cancel-and-replace.</strong> Never both.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Anatomy of interface primitives, handbook</em> (chapter 7) · <a href="https://www.smashingmagazine.com/2021/08/frustrating-design-patterns-disabled-buttons/" target="_blank" rel="noopener">Vitaly Friedman, Disabled buttons</a></footer>
+        </article>
+
+        <article class="lesson" id="semantics-and-announcement">
+          <span class="eyebrow">Primitives · 08</span>
+          <h2>Semantics and Announcement</h2>
+          <p class="lede">If it changes visually, it must change semantically. A visual state with no declared state is invisible to assistive technology, and content that appears without a direct action needs to be announced.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="aria">
+            <div class="demo-stage" data-role="button" data-pressed="pressed" data-expanded="expanded" data-collapsed="collapsed" data-none="no state">
+            <div class="ar-wrap"><div class="ar-row"><button class="ar-toggle" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20L16 8M15 3l1 2 2 1-2 1-1 2-1-2-2-1 2-1zM20 10l.6 1.4L22 12l-1.4.6L20 14l-.6-1.4L18 12l1.4-.6z"/></svg>Bold</button><button class="ar-disc" type="button">Details<span class="sp-chev">▾</span></button></div><div class="ar-panel">Shipping takes 3 to 5 business days.</div><div class="ar-sr"><span class="ar-sr-label">Screen reader hears</span><span class="ar-read">—</span></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Declare state (aria-pressed, aria-expanded)</span><input type="checkbox" name="declare" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Click Bold and Details. With state declared, a screen reader hears "Bold, button, pressed" and "Details, button, expanded". Without it, both are just "button", and the visual change is invisible.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Before any attribute, use the native element. A generic element with attributes glued on never fully replicates native behavior: keyboard, form, context, print, high contrast mode. The hierarchy is native, native styled, tested unstyled library, your own with declared semantics, nothing. Then declare state: expanded or collapsed, selected, checked including mixed, pressed for toggle buttons, busy during loading, invalid with the associated description, current sort in a table header.</p>
+          <p>Live regions announce content that appears without a direct user action: toasts, updated search results, asynchronous validation errors. Two intensities: polite waits for a pause, assertive interrupts. Polite by default, assertive only for blocking errors. The common trap: the region must exist in the document before the content arrives; inserting region and content together often announces nothing. Every control needs a name, preferring visible text, then an associated label, then a label attribute. Icon-only buttons need a textual name, the name should start with the visible text so voice commands work, and it should not describe the widget: "close button" is redundant because the role is already announced.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Native first, attributes last.</strong></li>
+            <li><strong>Every visual state has an ARIA state.</strong> Pressed, expanded, selected, checked, busy, invalid, sort.</li>
+            <li><strong>Live region mounted before content,</strong> polite by default.</li>
+            <li><strong>Names from visible text;</strong> icon buttons get one explicitly.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>If it changes visually, change the attribute.</strong></li>
+            <li><strong>aria-pressed, aria-expanded, aria-selected, aria-checked, aria-busy, aria-invalid, aria-sort.</strong></li>
+            <li><strong>Live region in the DOM first,</strong> content later.</li>
+            <li><strong>Polite by default,</strong> assertive for blockers.</li>
+            <li><strong>Name starts with visible text;</strong> never repeat the role.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Anatomy of interface primitives, handbook</em> (chapter 8) · <a href="https://www.w3.org/WAI/ARIA/apg/practices/names-and-descriptions/" target="_blank" rel="noopener">APG, Providing Accessible Names</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions" target="_blank" rel="noopener">MDN, ARIA live regions</a></footer>
+        </article>
+
+        <article class="lesson" id="button">
+          <span class="eyebrow">Primitives · 09</span>
+          <h2>Button</h2>
+          <p class="lede">The simplest primitive and the one that exposes carelessness most. Down fast, back soft, width preserved, fires on release, and it is not a link in disguise.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="btn2">
+            <div class="demo-stage" data-saving="Saving…" data-saved="Saved" data-save="Save">
+            <div class="bt-row"><button class="bt-btn" type="button"><span class="bt-label">Save</span></button><span class="bt-side">Last saved 2 min ago</span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Reserve width</span><input type="checkbox" name="reserve" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Asymmetric press</span><input type="checkbox" name="asym" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Press and hold the button, then release: down in 80ms, back in 150ms. Click to save and the label changes; without reserved width the text beside it jumps.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>The states: hover with a background change and an optional 1.02 scale in 120ms, pressed at 0.97 in 80ms, release back in 150ms, focus-visible ring with no layout change, disabled with reduced contrast and default cursor, loading with an indicator and preserved width. The tactile feel comes from the asymmetry: go down fast, come back soft. "Save" becoming "Saving…" changes the width and shifts everything beside it; reserve the wider width or set a minimum. The loading indicator replaces the label inside the same box or sits beside it in space already reserved. Firing on release lets people cancel by dragging out, the native behavior they count on. Do not animate the focus ring with movement; keyboard navigation is fast and the ring becomes a smear.</p>
+          <p>A link navigates and must work with middle click, open in a new tab, be copyable and appear in history. A button executes. A link styled as a button is still a link, and that is correct as long as it navigates. A button that actually navigates breaks open-in-new-tab, one of the most used interactions in content products. Destructive buttons never sit where the safe button was in the previous dialog, keep physical distance from frequent actions, prefer undo to confirmation, say what will be destroyed instead of "OK", and are never a dialog's initial focus. Groups: one primary action per screen at most, consistent order across the product, primary within thumb reach on touch, stacked on mobile with the primary on top when labels are long.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>80ms down, 150ms up.</strong> Asymmetry is the feel.</li>
+            <li><strong>Reserve width</strong> for label changes and loading.</li>
+            <li><strong>Fire on release,</strong> cancel by dragging out.</li>
+            <li><strong>Link navigates, button executes.</strong> Never swap them.</li>
+            <li><strong>Destructive: distance, undo, explicit label, never initial focus.</strong></li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Down 80ms, up 150ms.</strong></li>
+            <li><strong>min-width or reserved label</strong> for loading and label swaps.</li>
+            <li><strong>Click on release;</strong> pointer leaving cancels.</li>
+            <li><strong>Links navigate. Buttons act.</strong> Middle click must work on links.</li>
+            <li><strong>Destructive: never where the safe one was.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Anatomy of interface primitives, handbook</em> (chapter 9) · <a href="https://www.w3.org/WAI/ARIA/apg/patterns/button/" target="_blank" rel="noopener">APG, Button pattern</a></footer>
+        </article>
+
+        <article class="lesson" id="text-field">
+          <span class="eyebrow">Primitives · 10</span>
+          <h2>Text Field</h2>
+          <p class="lede">The largest friction surface in any product. Label above, always visible. Validate when the person leaves the field, not on every keystroke. And never block paste.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="field2">
+            <div class="demo-stage">
+            <div class="fd-wrap"><label class="fd-label" for="fd-email">Work email</label><input class="fd-input" id="fd-email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="name@company.com"><span class="fd-error">Enter a valid email address.</span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Label above the field</span><input type="checkbox" name="labelabove" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Validate on blur</span><input type="checkbox" name="onblur" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Type half an address. Validating on every keystroke shows an error to someone who has not finished. On blur, the error appears when you leave. Turn the label off and it becomes a placeholder that vanishes as you type.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Anatomy: label above the field and always visible, a field at least 44px tall on touch, help text below and before the error, an error message below and semantically associated, a counter when there is a limit, visible before the limit is near. Using the placeholder as the label saves space and costs dearly: it disappears on typing so the person cannot review what each field was, its contrast is too low, it confuses empty with filled, it breaks for people with working-memory difficulties, and translation and autofill tools handle it worse. Floating labels solve part of it and add complexity; a label above solves all of it for the price of vertical space. Placeholder text has one legitimate use: showing the format.</p>
+          <p>Five attributes cost a word each and change mobile use perceptibly: <code>inputmode</code> for the right keyboard, <code>autocomplete</code> for password managers and autofill, <code>enterkeyhint</code> for what the action key does, <code>spellcheck</code> off outside prose, <code>autocapitalize</code> off in email, username and codes. Never block paste; blocking it in password fields defeats password managers and weakens security. Validate on leaving the field, because validating while typing shows errors to people who simply have not finished; the exception is checks that only improve, like password strength or name availability. After the first failure, live revalidation becomes useful because the person is correcting. Requirements are visible before typing, errors sit next to the field, resubmission focuses the first invalid field, and everything typed is preserved. Always. Accept liberal formats and normalize internally; every rejection of a valid format is work transferred to the person. Masks help when they format as the person types and hurt when they block typing or make the cursor jump. Text areas grow with content to a maximum, never disable manual resizing without auto-growth, submit with modifier plus Enter, and preserve drafts.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Label above.</strong> Placeholder shows format only.</li>
+            <li><strong>inputmode, autocomplete, enterkeyhint, spellcheck, autocapitalize.</strong></li>
+            <li><strong>Validate on blur,</strong> live after the first error, live for improving checks.</li>
+            <li><strong>Never block paste. Never lose typed input.</strong></li>
+            <li><strong>Liberal formats, masks that never block.</strong></li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Label above, placeholder for format.</strong></li>
+            <li><strong>inputmode, autocomplete, enterkeyhint, spellcheck, autocapitalize.</strong></li>
+            <li><strong>Validate on blur; live after the first error.</strong></li>
+            <li><strong>Never block paste.</strong></li>
+            <li><strong>Preserve input on every failure.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Anatomy of interface primitives, handbook</em> (chapter 10) · <a href="https://www.nngroup.com/articles/form-design-placeholders/" target="_blank" rel="noopener">Nielsen Norman Group, Placeholders in Form Fields Are Harmful</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/inputmode" target="_blank" rel="noopener">MDN, inputmode</a></footer>
+        </article>
+
+        <article class="lesson" id="checkbox-radio-switch">
+          <span class="eyebrow">Primitives · 11</span>
+          <h2>Checkbox, Radio and Switch</h2>
+          <p class="lede">Checkbox for zero or more, radio for exactly one of a small visible set, switch for on and off with immediate effect. A switch inside a form with a Save button is telling a lie.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="check2">
+            <div class="demo-stage">
+            <div class="ck2-wrap"><label class="ck2-row ck2-parentrow"><input type="checkbox" class="ck2-parent"><span class="todo-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><i class="ck2-dash"></i></span><span class="ck2-text">All notifications</span></label><div class="ck2-kids"><label class="ck2-row"><input type="checkbox" class="ck2-child"><span class="todo-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="ck2-text">Email</span></label><label class="ck2-row"><input type="checkbox" class="ck2-child"><span class="todo-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="ck2-text">Push</span></label><label class="ck2-row"><input type="checkbox" class="ck2-child"><span class="todo-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="ck2-text">SMS</span></label></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Label extends the target</span><input type="checkbox" name="label" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Reflect mixed state</span><input type="checkbox" name="mixed" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Check one child: the parent shows the mixed state instead of lying with an empty box. Click the label text: with the label in the target the whole row toggles; without it only the tiny box does.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>The checkbox versus switch distinction is the most violated: a switch implies the effect happens now. The clickable area includes the label; a bare 16px checkbox is a tiny target and associating the label multiplies the area. The indeterminate state exists and is required in any hierarchical selection; it cannot be set from markup, has to be set programmatically, and is frequently forgotten. A radio cannot be unchecked by clicking it again, so if people need to choose nothing, include an explicit "none" option. Arrows move between radios in a group and selection follows focus; that is the native behavior people expect.</p>
+          <p>The switch knob can stretch slightly in the direction of travel and settle at the end, a small detail with a disproportionate mechanical feel. Overshoot only on the transform, never on the track color. Groups declare and associate a group label, stack vertically when options are long and go horizontal only when short and few, order logically or by frequency and never alphabetically by accident, and past seven options consider a select.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Switch only for immediate effect.</strong> Otherwise checkbox.</li>
+            <li><strong>Label inside the hit area.</strong></li>
+            <li><strong>Indeterminate parent</strong> reflecting a mixed selection.</li>
+            <li><strong>Explicit "none"</strong> when a radio group may be empty.</li>
+            <li><strong>Knob stretch on transform,</strong> track color eased plainly.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Switch equals immediate effect.</strong> Inside a form, use a checkbox.</li>
+            <li><strong>Wrap the input in the label.</strong></li>
+            <li><strong>indeterminate is a property,</strong> not an attribute.</li>
+            <li><strong>Radio groups: arrows move and select.</strong></li>
+            <li><strong>Knob stretch on transform only.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Anatomy of interface primitives, handbook</em> (chapter 11) · <a href="https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/" target="_blank" rel="noopener">APG, Checkbox pattern</a> · <a href="https://www.w3.org/WAI/ARIA/apg/patterns/switch/" target="_blank" rel="noopener">APG, Switch pattern</a></footer>
+        </article>
+
+        <article class="lesson" id="select-and-combobox">
+          <span class="eyebrow">Primitives · 12</span>
+          <h2>Select and Combobox</h2>
+          <p class="lede">The most complex primitive, and where homemade implementations fail most. Opens at the selected item, not at the top. Typing jumps to the match. Use a tested library.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="select2">
+            <div class="demo-stage" data-typed="Typed">
+            <div class="sx-wrap"><button class="sx-trigger" type="button" aria-haspopup="listbox"><span class="sx-value">Uruguay</span><span class="sp-chev">▾</span></button><div class="sx-list" role="listbox" tabindex="-1"><div class="sx-opt" role="option" data-v="Argentina">Argentina</div><div class="sx-opt" role="option" data-v="Australia">Australia</div><div class="sx-opt" role="option" data-v="Austria">Austria</div><div class="sx-opt" role="option" data-v="Belgium">Belgium</div><div class="sx-opt" role="option" data-v="Brazil">Brazil</div><div class="sx-opt" role="option" data-v="Canada">Canada</div><div class="sx-opt" role="option" data-v="Chile">Chile</div><div class="sx-opt" role="option" data-v="Colombia">Colombia</div><div class="sx-opt" role="option" data-v="Denmark">Denmark</div><div class="sx-opt" role="option" data-v="Finland">Finland</div><div class="sx-opt" role="option" data-v="France">France</div><div class="sx-opt" role="option" data-v="Germany">Germany</div><div class="sx-opt" role="option" data-v="Greece">Greece</div><div class="sx-opt" role="option" data-v="India">India</div><div class="sx-opt" role="option" data-v="Ireland">Ireland</div><div class="sx-opt" role="option" data-v="Italy">Italy</div><div class="sx-opt" role="option" data-v="Japan">Japan</div><div class="sx-opt" role="option" data-v="Mexico">Mexico</div><div class="sx-opt" role="option" data-v="Netherlands">Netherlands</div><div class="sx-opt" role="option" data-v="Norway">Norway</div><div class="sx-opt" role="option" data-v="Peru">Peru</div><div class="sx-opt" role="option" data-v="Poland">Poland</div><div class="sx-opt" role="option" data-v="Portugal">Portugal</div><div class="sx-opt" role="option" data-v="Spain">Spain</div><div class="sx-opt" role="option" data-v="Sweden">Sweden</div><div class="sx-opt" role="option" data-v="Switzerland">Switzerland</div><div class="sx-opt" role="option" data-v="Uruguay" aria-selected=true>Uruguay</div><div class="sx-opt" role="option" data-v="Vietnam">Vietnam</div></div><span class="sx-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Open at the selected item</span><input type="checkbox" name="openat" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Buffer typed characters</span><input type="checkbox" name="typeahead" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Open the list. It scrolls to Uruguay, not to the top. Then type "sw" quickly: with a buffer it lands on Sweden; without one it stops at Spain and then jumps to Vietnam.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>The native select has advantages that are hard to replicate: correct mobile behavior, full keyboard, type-ahead and performance with many options. Replace it only when you need rich options with icons and descriptions, search inside the menu, sophisticated multiple selection or complex grouping. And when you replace it, use a tested primitives library; the complete accessible combobox pattern is long and full of edge cases.</p>
+          <p>Keyboard is mandatory: Enter or Space opens, arrows navigate and open if closed, Home and End jump, typing jumps to the option that starts with what was typed, Enter selects and closes, Escape closes without changing, Tab closes and moves on. Type-ahead is the most forgotten and the most used by fast operators: it accumulates characters in a short window, so typing "sa" quickly goes to "São Paulo" instead of stopping at "Sergipe" and then "Amapá". On open, the selected item is visible and focused, not the first; in a list of two hundred countries, opening at the top when the value is "Uruguay" is a basic failure. Internal scrolling keeps the active item visible with context above and below. The trigger keeps a stable width regardless of the selected value. An empty search state suggests something. Many options need virtualization, and virtualization needs care with focus and announcement. Multiple selection decides whether the menu closes per pick, it should not, how items are removed, and what happens when chips overflow. A combobox that can create a value shows the create option only when there is no exact match, with the exact text that will be created, at the end of the list and visually distinct.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Native unless you need rich options or search.</strong></li>
+            <li><strong>Full keyboard map,</strong> including buffered type-ahead.</li>
+            <li><strong>Open at the selected item,</strong> scrolled into view.</li>
+            <li><strong>Stable trigger width,</strong> helpful empty search state.</li>
+            <li><strong>Create option last, exact text shown, only without a match.</strong></li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Native select until you truly need more.</strong></li>
+            <li><strong>Type-ahead buffers characters</strong> for about 700ms.</li>
+            <li><strong>Open scrolled to the selected item.</strong></li>
+            <li><strong>Trigger width does not depend on the value.</strong></li>
+            <li><strong>Create option last, only without exact match.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Anatomy of interface primitives, handbook</em> (chapter 12) · <a href="https://www.w3.org/WAI/ARIA/apg/patterns/combobox/" target="_blank" rel="noopener">APG, Combobox pattern</a> · <a href="https://react-spectrum.adobe.com/react-aria/" target="_blank" rel="noopener">React Aria</a></footer>
+        </article>
+
+        <article class="lesson" id="slider">
+          <span class="eyebrow">Primitives · 13</span>
+          <h2>Slider</h2>
+          <p class="lede">Once the drag starts, moving the pointer off the track must not cancel it. Clicking the track jumps to the position. The value floats above the thumb on touch because the finger hides it.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="slider2">
+            <div class="demo-stage">
+            <div class="sd-wrap"><div class="sd-track" role="slider" tabindex="0" aria-valuemin="0" aria-valuemax="100" aria-valuenow="40"><span class="sd-fill"></span><span class="sd-thumb"><span class="sd-bubble">40</span></span></div><span class="sd-read">Drag the thumb, then leave the track</span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Pointer capture</span><input type="checkbox" name="capture" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Click on track jumps</span><input type="checkbox" name="jump" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Start dragging the thumb and move your pointer far above the track. With capture the drag continues; without it the slider lets go the moment you leave. Click anywhere on the track to jump.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Keyboard: arrows for the small step, Shift plus arrows and Page Up and Down for the large step, Home and End for minimum and maximum. Current value, minimum and maximum are declared semantically, and when the number is not meaningful by itself, "medium", "high", the corresponding text is declared too. Capture continues outside the control: small sliders are impossible to use without it. Clicking the track jumps to the position, an expected behavior that is frequently missing. On touch the value appears above the thumb because the finger covers the control, and disappears on release. The thumb's hit area is larger than its drawing; a 16px thumb needs a 44px target. With discrete steps, a light haptic on each snap communicates the granularity without looking.</p>
+          <p>A range slider has two thumbs and the complexity multiplies: decide whether they can cross, which one takes the gesture when they overlap, give each an accessible name, and let Tab move between them while arrows move the focused one.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Pointer capture</strong> so leaving the track does not cancel.</li>
+            <li><strong>Track click jumps.</strong></li>
+            <li><strong>Value bubble on touch,</strong> gone on release.</li>
+            <li><strong>44px thumb target</strong> around a 16px drawing.</li>
+            <li><strong>Range: crossing rule, overlap rule, two names.</strong></li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>setPointerCapture on pointerdown.</strong></li>
+            <li><strong>Track click sets the value.</strong></li>
+            <li><strong>Value bubble above the thumb on touch.</strong></li>
+            <li><strong>44px thumb target.</strong></li>
+            <li><strong>Shift and Page keys for big steps.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Anatomy of interface primitives, handbook</em> (chapter 13) · <a href="https://www.w3.org/WAI/ARIA/apg/patterns/slider/" target="_blank" rel="noopener">APG, Slider pattern</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/setPointerCapture" target="_blank" rel="noopener">MDN, setPointerCapture</a></footer>
+        </article>
+
+        <article class="lesson" id="tooltip">
+          <span class="eyebrow">Primitives · 14</span>
+          <h2>Tooltip</h2>
+          <p class="lede">A tooltip is a supplementary label. Not a place for interactive content, essential information or long text. The first one costs half a second; the next ones in the same toolbar are immediate.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="tip">
+            <div class="demo-stage">
+            <div class="tp-wrap"><div class="tp-bar" role="toolbar"><button class="tp-btn" type="button" aria-label="Search" data-tip="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button><button class="tp-btn" type="button" aria-label="Notifications" data-tip="Notifications"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg></button><button class="tp-btn" type="button" aria-label="Format" data-tip="Format"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20L16 8M15 3l1 2 2 1-2 1-1 2-1-2-2-1 2-1zM20 10l.6 1.4L22 12l-1.4.6L20 14l-.6-1.4L18 12l1.4-.6z"/></svg></button><button class="tp-btn" type="button" aria-label="Delete" data-tip="Delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg></button><button class="tp-btn" type="button" aria-label="Settings" data-tip="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg></button></div><div class="tp-tip" role="tooltip"></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Group delay</span><input type="checkbox" name="group" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Show on focus</span><input type="checkbox" name="focus" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Hover the first icon: half a second. Move to the next ones: instant, because the group is warm. Turn group delay off and every icon costs half a second again. Tab through the bar to see the focus behavior.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>If the content has a link or a button, it is a popover, and the difference changes everything: a popover must be reachable by keyboard and stay open while the pointer is inside it. If the information is essential, it cannot live in a tooltip, because tooltips do not exist reliably on touch. Timing: 400 to 600ms to enter, 0ms while the pointer keeps moving between nearby triggers, 100 to 200ms to leave, fade plus 4px of travel in 150ms. The group behavior separates a good tooltip from an irritating one: without it, either the screen flickers at every movement or every tooltip costs half a second.</p>
+          <p>Details: it appears on keyboard focus, not only on hover; Escape closes it even with the pointer resting on the trigger; it disappears on click because the information is no longer needed; it moves minimally, because support that moves steals attention; it never overlaps the trigger, or the hover cancels and the tooltip blinks in a loop; and it is semantically associated with the element it describes. A help icon that opens an explanation is a button, not a tooltip: focusable, keyboard-activated, with content that stays open to be read.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Label only.</strong> Interactive content is a popover.</li>
+            <li><strong>500ms in, instant within a group, 150ms out.</strong></li>
+            <li><strong>Shows on focus, closes on Escape and on click.</strong></li>
+            <li><strong>Never over the trigger.</strong></li>
+            <li><strong>Help icon is a button.</strong></li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Text only.</strong> Anything clickable is a popover.</li>
+            <li><strong>500ms first, 0ms within the group, 150ms out.</strong></li>
+            <li><strong>Show on focus-visible too.</strong></li>
+            <li><strong>Hide on click and Escape.</strong></li>
+            <li><strong>Never cover the trigger.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Anatomy of interface primitives, handbook</em> (chapter 14) · <a href="https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/" target="_blank" rel="noopener">APG, Tooltip pattern</a> · <a href="https://www.radix-ui.com/primitives/docs/components/tooltip" target="_blank" rel="noopener">Radix, Tooltip</a></footer>
+        </article>
+
+        <article class="lesson" id="popover-and-menu">
+          <span class="eyebrow">Primitives · 15</span>
+          <h2>Popover and Menu</h2>
+          <p class="lede">A popover holds arbitrary content and Tab moves inside it. A menu holds commands, arrows move and Tab closes. Confusing the two produces components that behave unexpectedly. And a submenu must survive the diagonal.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="menu2">
+            <div class="demo-stage">
+            <div class="mn-wrap"><button class="mn-trigger" type="button" aria-haspopup="menu">File ▾</button>
+              <div class="mn-menu" role="menu"><div class="mn-item" role="menuitem">Duplicate<kbd class="mn-kbd">⌘D</kbd></div><div class="mn-item" role="menuitem">Rename<kbd class="mn-kbd">⌘R</kbd></div><div class="mn-item mn-parent" role="menuitem" aria-haspopup="menu">Share<span class="sp-chev">›</span><div class="mn-sub" role="menu"><div class="mn-item" role="menuitem">Copy link</div><div class="mn-item" role="menuitem">Email</div><div class="mn-item" role="menuitem">Export</div></div></div><div class="mn-item" role="menuitem">Delete<kbd class="mn-kbd">⌘⌫</kbd></div></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Safe triangle</span><input type="checkbox" name="safe" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Show shortcuts</span><input type="checkbox" name="shortcuts" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Open File, hover Share, then move diagonally toward the submenu. With the safe triangle the submenu survives the pass over Delete. Without it, it closes the instant you leave Share.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Menu behavior: Enter, Space or arrows open; arrows navigate; Home and End jump; typing jumps to the matching item; Enter activates and closes; Escape closes and returns focus to the trigger; Tab closes and continues navigation; outside click closes. It opens on press, allowing press, drag and release on the item. Disabled items are skipped by arrow navigation but stay visible, because removing them hides that the option exists and focusing them irritates.</p>
+          <p>The safe triangle: moving the pointer diagonally toward a submenu leaves the parent item and crosses other items. While the movement points at the submenu, do not close it. Acceptable approximations are a 200 to 300ms delay or an invisible bridge area. Submenus open with the sideways arrow and close with the opposite one. The animation origin follows the trigger and flips when the menu flips sides. Entry scale between 0.95 and 0.97; below 0.9 the menu seems to explode. Separators are not focusable and declare their role. Items with shortcuts show them right-aligned, the most effective way to teach shortcuts there is. Context menus appear at the pointer with collision handled in four directions, trigger on press and hold on touch with a haptic at the threshold, shift so they are not under the finger, and never replace visible actions: everything in a context menu exists somewhere else.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Menu: arrows inside, Tab out. Popover: Tab inside.</strong></li>
+            <li><strong>Open on press,</strong> select on release.</li>
+            <li><strong>Safe triangle or 250ms intent delay</strong> for submenus.</li>
+            <li><strong>Scale from 0.96, origin at the trigger,</strong> flipped with the menu.</li>
+            <li><strong>Shortcuts right-aligned;</strong> context menu duplicates, never replaces.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Menu: arrows, type-ahead, Tab closes.</strong> Popover: Tab inside.</li>
+            <li><strong>Open on press.</strong></li>
+            <li><strong>Safe triangle or intent delay</strong> before closing a submenu.</li>
+            <li><strong>Skip disabled items with arrows, keep them visible.</strong></li>
+            <li><strong>Shortcuts right-aligned in items.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Anatomy of interface primitives, handbook</em> (chapter 15) · <a href="https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/" target="_blank" rel="noopener">APG, Menu Button pattern</a> · <a href="https://rauno.me/craft/invisible-details" target="_blank" rel="noopener">Rauno Freiberg, Invisible Details of Interaction Design</a></footer>
+        </article>
+
+        <article class="lesson" id="command-menu">
+          <span class="eyebrow">Primitives · 16</span>
+          <h2>Command Menu</h2>
+          <p class="lede">The primitive that defines modern productivity products. Fuzzy matching, recency, no empty initial state, synonyms. And no entrance animation, because it is high frequency and every animation becomes perceived latency.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="cmd">
+            <div class="demo-stage" data-cmds="New project|New page|Open settings|Toggle theme|Invite teammate|Search files|Go to inbox|Export report|Sign out" data-empty="No matches" data-recent="Recent">
+            <div class="cm-wrap"><button class="cm-trigger" type="button">Search commands<kbd>⌘K</kbd></button><div class="cm-panel" role="dialog"><input class="cm-input" type="text" placeholder="Type a command…" autocomplete="off" spellcheck="false"><div class="cm-list" role="listbox"></div><div class="cm-foot"><span>↑↓ navigate</span><span>↵ run</span><span>esc</span></div></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Fuzzy matching</span><input type="checkbox" name="fuzzy" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Entrance animation</span><input type="checkbox" name="animate" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Open with ⌘K or the button and type "nprj": fuzzy finds New project, exact finds nothing. Turn the entrance animation on and feel how a 200ms scale turns a high-frequency tool into latency.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Anatomy: a global trigger shortcut available on every screen, a search field focused on open, results grouped by category, an active item always visible with scrolling following it, and a footer with the shortcuts available for the active item. Matching is approximate, not exact: typing "nprj" must find "New project", and subsequence matching is the acceptable minimum. Ordering is relevance plus recency, so what the person used recently rises and the menu becomes muscle memory. Opening without typing shows recent commands and suggestions; it is the moment to teach what exists. A synonym map is cheap and transforms the success rate: "sign out", "logout" and "disconnect" find the same command.</p>
+          <p>The details almost nobody does. No entrance animation: appear instantly, leave with a subtle fade. No animation on items during navigation: moving the selection with arrows must be instant; a sliding indicator looks good for two days and slow from the third. Nested modes: a prefix enters a scope, files, go to, run; Backspace on an empty field exits it, and the mode is visible as a chip. Decide whether to preserve the query on close; clearing is the common convention. Do not steal the platform's shortcut.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Subsequence match at minimum,</strong> recency-weighted.</li>
+            <li><strong>Recents and suggestions on open.</strong></li>
+            <li><strong>Synonym map.</strong></li>
+            <li><strong>Zero entrance animation, instant selection moves.</strong></li>
+            <li><strong>Visible modes, Backspace exits, shortcut that does not collide.</strong></li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Subsequence matching, recency boost.</strong></li>
+            <li><strong>Recents on open, never empty.</strong></li>
+            <li><strong>Synonyms map.</strong></li>
+            <li><strong>No entrance animation, instant arrows.</strong></li>
+            <li><strong>Mode chips, Backspace exits.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Anatomy of interface primitives, handbook</em> (chapter 16) · <a href="https://cmdk.paco.me/" target="_blank" rel="noopener">Paco Coursey, ⌘K</a> · <a href="https://linear.app/" target="_blank" rel="noopener">Linear</a></footer>
+        </article>
+
+        <article class="lesson" id="dialog">
+          <span class="eyebrow">Primitives · 17</span>
+          <h2>Dialog</h2>
+          <p class="lede">The native dialog element gives you the top layer, an inert background, focus capture, Escape and a stylable backdrop for free. Never focus the destructive action. And clicking outside a form is dangerous.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="dlg">
+            <div class="demo-stage" data-focused="Focused" data-lost="closed by outside click, lost" data-closed="closed">
+            <div class="dg-wrap"><button class="dg-open" type="button">Delete project</button>
+              <dialog class="dg-dialog"><b>Delete "Q3 launch"?</b><p>This removes 12 tasks and their history. It cannot be undone.</p><label class="mf-label">Type a reason<input class="mf-input dg-field" type="text"></label><div class="dg-actions"><button class="btn btn--ghost dg-cancel" type="button">Keep project</button><button class="btn dg-delete" type="button">Delete project</button></div></dialog>
+              <span class="dg-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Focus the safe action</span><input type="checkbox" name="safefocus" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Close on outside click</span><input type="checkbox" name="outside" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Open it: focus lands on Keep, so Enter is safe. Flip the toggle and Enter deletes. Type a reason, turn on outside click and click the backdrop: the dialog closes and your text is gone.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Homemade dialogs must replicate everything the native element does and almost never do. Focus enters immediately without waiting for the animation, goes to the main field, the safe action or the container, does not escape while open, and returns exactly to the opener on close. Enter must do the safe thing. Closing paths are Escape, a close button, outside click and an explicit action. Outside click is dangerous with forms: somebody filling a long form and clicking outside by accident loses everything. Disable outside click on dialogs with data entry, or ask for confirmation when there are unsaved changes, or preserve the draft and restore it on reopen. Escape during the opening animation should reverse it, not wait.</p>
+          <p>Stacked dialogs happen and need decisions: the one below recedes slightly and darkens, Escape closes only the top, focus returns to the previous dialog rather than the document. If you need three levels, the problem is probably the flow, not the component. Long content: the body scrolls while header and footer stay fixed, the maximum height is relative to the viewport with a margin, on mobile consider fullscreen or a drawer, and the action button never leaves the visible area. A confirmation dialog's title asks the question with the object's name, the body explains the consequence especially when irreversible, the buttons describe the actions and are never "Yes" and "No", the safe action is the default, and the order matches the rest of the product. And before all of that, prefer undo to confirmation.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Use &lt;dialog&gt;.</strong> Top layer, inert, trap, Escape, backdrop.</li>
+            <li><strong>Initial focus on the safe action</strong> or the main field.</li>
+            <li><strong>No outside-click close on forms,</strong> or confirm, or keep the draft.</li>
+            <li><strong>Escape closes only the top dialog.</strong></li>
+            <li><strong>Buttons say what they do.</strong> Never Yes and No.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>&lt;dialog&gt; with showModal.</strong></li>
+            <li><strong>autofocus on the safe action.</strong></li>
+            <li><strong>Outside click disabled on forms.</strong></li>
+            <li><strong>Escape closes the top only.</strong></li>
+            <li><strong>Title asks, body explains, buttons name the action.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Anatomy of interface primitives, handbook</em> (chapter 17) · <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog" target="_blank" rel="noopener">MDN, dialog element</a> · <a href="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/" target="_blank" rel="noopener">APG, Dialog (Modal) pattern</a></footer>
+        </article>
+
+        <article class="lesson" id="drawer">
+          <span class="eyebrow">Primitives · 18</span>
+          <h2>Drawer</h2>
+          <p class="lede">The gesture follows the finger one to one, releases with the gesture's velocity and dismisses past 25% or 500px/s. The detail that separates a native drawer from a web one is who receives the gesture when the content inside also scrolls.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="drawer2">
+            <div class="demo-stage" data-sheet="moving the sheet" data-content="scrolling the content">
+            <div class="dw2-wrap"><button class="dw2-open" type="button">Open drawer</button><div class="dw2-overlay"></div><div class="dw2-sheet"><div class="dw2-handle"></div><div class="dw2-list"><div class="dw2-row">Message 1</div><div class="dw2-row">Message 2</div><div class="dw2-row">Message 3</div><div class="dw2-row">Message 4</div><div class="dw2-row">Message 5</div><div class="dw2-row">Message 6</div><div class="dw2-row">Message 7</div><div class="dw2-row">Message 8</div><div class="dw2-row">Message 9</div><div class="dw2-row">Message 10</div><div class="dw2-row">Message 11</div><div class="dw2-row">Message 12</div><div class="dw2-row">Message 13</div><div class="dw2-row">Message 14</div></div></div><span class="dw2-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Hand the gesture to content</span><input type="checkbox" name="transfer" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Open the drawer and drag on the list. With transfer, dragging up scrolls the content and dragging down at the top moves the sheet. Without it, every drag moves the sheet and the list can never scroll by touch.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Drag is 1:1 with no interpolation, release is a spring seeded with the gesture's velocity, dismissal happens at more than 25% displacement or more than 500px/s, rubber-band resistance past the top, and the overlay's opacity is a function of position, not time. The conflict with internal scrolling is the hard part. While the drawer is not fully open, the gesture moves the drawer. Fully open, the gesture scrolls the content. With the content at the top, dragging down moves the drawer again. Without this transfer logic, either the content does not scroll or the drawer cannot be closed by gesture.</p>
+          <p>Snap points: the spring picks the snap closest to the position projected by velocity, not the current position. The virtual keyboard on mobile must push the drawer, not cover it: use viewport units that account for browser UI and test with the keyboard open, one of the most frequently broken cases.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>1:1 drag, velocity spring, 25% or 500px/s to dismiss.</strong></li>
+            <li><strong>Gesture transfer:</strong> drawer until open, content when open, drawer again at the top.</li>
+            <li><strong>Snap by projected position.</strong></li>
+            <li><strong>Overlay opacity from position.</strong></li>
+            <li><strong>Keyboard pushes the drawer;</strong> test with it open.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Drag 1:1, spring on release.</strong></li>
+            <li><strong>25% or 500px/s dismisses.</strong></li>
+            <li><strong>Gesture transfer</strong> between sheet and content.</li>
+            <li><strong>Snap to the projected position.</strong></li>
+            <li><strong>Test with the virtual keyboard open.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Anatomy of interface primitives, handbook</em> (chapter 18) · <a href="https://vaul.emilkowal.ski/" target="_blank" rel="noopener">Emil Kowalski, Vaul</a></footer>
+        </article>
+
+        <article class="lesson" id="toast">
+          <span class="eyebrow">Primitives · 19</span>
+          <h2>Toast</h2>
+          <p class="lede">A toast cannot hold an error that needs action, because it disappears. It cannot be the only confirmation of something important. It must pause on hover, or the message vanishes while the person reads it.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="toast2">
+            <div class="demo-stage" data-msg="Changes saved" data-undo="Undo">
+            <div class="ts-wrap"><button class="ts-btn" type="button">Save changes</button><div class="ts-stack" aria-live="polite"></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Pause on hover</span><input type="checkbox" name="pause" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Stack and recede</span><input type="checkbox" name="stack" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Click Save a few times. Hover a toast: the timer pauses while you read. Turn pause off and it vanishes under your pointer. Stacking recedes older toasts instead of pushing a growing list.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Duration four seconds, six with an action. Pause on hover and on focus. Older toasts recede with scale and offset; hovering expands the stack for reading; swipe dismisses following the finger; announcement through a polite live region, assertive only for errors. Pausing on hover is mandatory. Focus is not stolen: a toast that captures focus interrupts whatever the person was doing; it should be reachable by keyboard through a shortcut or the normal order, not by capture. An action inside a toast needs enough time: with an undo button, four seconds is too little for someone who was looking elsewhere, so six to ten, with pause on hover.</p>
+          <p>When a new toast arrives while another is leaving, the choreography needs a defined order or the stack trembles. Pattern: the exit completes before the newcomer's entrance starts repositioning the rest. And never stack indefinitely; cap the visible count and collapse the rest.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>4s, 6 to 10 with an action, paused on hover and focus.</strong></li>
+            <li><strong>Never the only path for an actionable error.</strong></li>
+            <li><strong>No focus stealing;</strong> keyboard reachable anyway.</li>
+            <li><strong>Recede, expand on hover, swipe to dismiss.</strong></li>
+            <li><strong>Exit finishes before the next entrance reshuffles.</strong></li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Pause on hover and focus.</strong> Mandatory.</li>
+            <li><strong>6 to 10 seconds with an undo.</strong></li>
+            <li><strong>Never steal focus.</strong></li>
+            <li><strong>Cap the stack; recede the rest.</strong></li>
+            <li><strong>Exit completes before the next repositions.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Anatomy of interface primitives, handbook</em> (chapter 19) · <a href="https://sonner.emilkowal.ski/" target="_blank" rel="noopener">Emil Kowalski, Sonner</a></footer>
+        </article>
+
+        <article class="lesson" id="tabs">
+          <span class="eyebrow">Primitives · 20</span>
+          <h2>Tabs</h2>
+          <p class="lede">Automatic activation switches the panel as the arrows move. Manual activation moves focus and waits for Enter. Choose manual when the panel is heavy or fetches, or navigating five tabs fires five loads. Almost nobody does.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="tabs2">
+            <div class="demo-stage">
+            <div class="tb-wrap"><div class="tb-list" role="tablist"><button class="tb-tab" role="tab" type="button" aria-selected="true" tabindex="0">Overview</button><button class="tb-tab" role="tab" type="button" aria-selected="false" tabindex="-1">Activity</button><button class="tb-tab" role="tab" type="button" aria-selected="false" tabindex="-1">Files</button><button class="tb-tab" role="tab" type="button" aria-selected="false" tabindex="-1">Settings</button><span class="tb-ind"></span></div><div class="tb-panel" role="tabpanel"><span class="tb-panel-name"></span><span class="tb-loads">Panel loads: <b>0</b></span></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Manual activation</span><input type="checkbox" name="manual" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Animate indicator</span><input type="checkbox" name="indicator" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Click a tab, then press the arrow keys across all four. Automatic activation loads every panel you pass. Manual moves focus and waits for Enter, so crossing the row costs nothing.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Automatic is fine for light panels. Manual is necessary when the panel costs, which is the common case in real products. Keyboard: arrows move between tabs, Home and End jump, Tab leaves the group and goes to the panel. The whole group is one tab stop and only the active tab is focusable. The indicator slides between tabs; when widths differ it animates position and width, and a slightly different curve for each produces a light elastic effect that disguises the width change. Height stays stable: panels of different heights make the page jump, so animate the height or set a minimum. Tabs that do not fit need a strategy, horizontal scrolling with continuation cues or an overflow menu, and never wrap to two lines. Put the tab in the URL when it is meaningful; someone sharing the link expects the right tab to open.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Manual activation when panels cost.</strong></li>
+            <li><strong>One tab stop, arrows inside, Tab to the panel.</strong></li>
+            <li><strong>Indicator animates position and width.</strong></li>
+            <li><strong>Stable height, never two rows.</strong></li>
+            <li><strong>Tab in the URL</strong> when it matters.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Manual activation for costly panels.</strong></li>
+            <li><strong>Roving focus; Tab goes to the panel.</strong></li>
+            <li><strong>Indicator animates x and width.</strong></li>
+            <li><strong>Min-height on panels.</strong></li>
+            <li><strong>Overflow scrolls or menus; never wraps.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Anatomy of interface primitives, handbook</em> (chapter 20) · <a href="https://www.w3.org/WAI/ARIA/apg/patterns/tabs/" target="_blank" rel="noopener">APG, Tabs pattern</a></footer>
+        </article>
+
+        <article class="lesson" id="disclosure-and-accordion">
+          <span class="eyebrow">Primitives · 21</span>
+          <h2>Disclosure and Accordion</h2>
+          <p class="lede">A disclosure is one element that expands. An accordion is several with a rule about how many stay open. Height has to be measured to animate, closing one and opening another run together, and the whole header is the trigger.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="acc">
+            <div class="demo-stage">
+            <div class="ac-list"><div class="ac-item"><button class="ac-head" type="button" aria-expanded="true">Shipping<span class="sp-chev">▾</span></button><div class="ac-body"><div class="ac-inner">Orders ship within two business days. Tracking is emailed as soon as the label prints.</div></div></div><div class="ac-item"><button class="ac-head" type="button" aria-expanded="false">Returns<span class="sp-chev">▾</span></button><div class="ac-body"><div class="ac-inner">Thirty days, any reason. Print the label from your order page and drop it at any carrier location.</div></div></div><div class="ac-item"><button class="ac-head" type="button" aria-expanded="false">Warranty<span class="sp-chev">▾</span></button><div class="ac-body"><div class="ac-inner">Two years on manufacturing defects. Wear from normal use is not covered.</div></div></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Open and close together</span><input type="checkbox" name="together" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Animate measured height</span><input type="checkbox" name="measure" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Click another header. Together, one closes while the other opens and the list keeps its shape. Sequential doubles the time with a dip in the middle. Turn the measurement off and the height simply jumps.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Decide whether opening one closes the others; both are legitimate and the behavior must be consistent across the product. Height is not animatable from an automatic value without measuring it, and if the content has an image that has not loaded, the measured height is wrong and the animation jumps. Closing one and opening another run in parallel, not in sequence; sequential doubles the time and creates a jump in the middle. An item at the bottom of the page that expands can push content out of the viewport; consider scrolling along. The whole header is the trigger, not just the icon. And the browser's find does not search collapsed content; if the content must be findable, consider not collapsing by default.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>One rule for how many open,</strong> consistent everywhere.</li>
+            <li><strong>Measure height, or use grid rows,</strong> and beware of unloaded images.</li>
+            <li><strong>Close and open together.</strong></li>
+            <li><strong>Whole header clickable.</strong></li>
+            <li><strong>Findable content stays open</strong> by default.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Decide single or multiple open.</strong></li>
+            <li><strong>Measure scrollHeight, or grid-template-rows 0fr to 1fr.</strong></li>
+            <li><strong>Open and close in parallel.</strong></li>
+            <li><strong>Whole header is the button.</strong></li>
+            <li><strong>Search cannot find collapsed content.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Anatomy of interface primitives, handbook</em> (chapter 21) · <a href="https://www.w3.org/WAI/ARIA/apg/patterns/accordion/" target="_blank" rel="noopener">APG, Accordion pattern</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/interpolate-size" target="_blank" rel="noopener">MDN, interpolate-size</a></footer>
+        </article>
+
+        <article class="lesson" id="table">
+          <span class="eyebrow">Primitives · 22</span>
+          <h2>Table</h2>
+          <p class="lede">A table made of generic elements loses cell navigation, header association and copy behavior. Use the real structure and style it. Fix the header, show its shadow only when there is content scrolled above, and align numbers and their headers to the right.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="table3">
+            <div class="demo-stage">
+            <div class="tb3-scroll"><table class="tb3"><thead><tr><th>Customer</th><th class="tb3-num">Orders</th><th class="tb3-num">Revenue</th></tr></thead><tbody><tr><td>Acme Corp</td><td class="tb3-num">128</td><td class="tb3-num">48,210.00</td></tr><tr><td>Birch & Co</td><td class="tb3-num">64</td><td class="tb3-num">19,860.50</td></tr><tr><td>Cobalt Labs</td><td class="tb3-num">311</td><td class="tb3-num">96,004.25</td></tr><tr><td>Delta Studio</td><td class="tb3-num">9</td><td class="tb3-num">2,140.00</td></tr><tr><td>Everly</td><td class="tb3-num">452</td><td class="tb3-num">131,780.00</td></tr><tr><td>Fjord</td><td class="tb3-num">77</td><td class="tb3-num">23,115.75</td></tr><tr><td>Granite</td><td class="tb3-num">203</td><td class="tb3-num">60,930.00</td></tr><tr><td>Halo Works</td><td class="tb3-num">18</td><td class="tb3-num">5,402.10</td></tr></tbody></table></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Header shadow only when scrolled</span><input type="checkbox" name="shadow" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Right-align numbers and headers</span><input type="checkbox" name="align" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Scroll the table. The header stays and its shadow appears only once content is under it. Turn alignment off: the numbers become uncomparable and the headers stop lining up with their columns.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>A sticky header is necessary in any scrolling table. Its shadow appears only when content has scrolled above it; in tables with horizontal scroll the first column may be sticky too, and fixing both axes needs care at the intersection corner. Sorting state is declared semantically in the header, with three states when it makes sense, ascending, descending, none, an indicator that shows direction rather than merely "sorted", and stable sorting so a secondary key does not shuffle. Alignment: text left, numbers right with tabular figures, dates consistently either way, actions right with fixed width, header aligned with its column's content. A left header over a right-aligned numeric column is free misalignment and extremely common.</p>
+          <p>Selection: a header checkbox selects all with indeterminate when partial, Shift-click selects a range, the selected count is visible, and bulk actions appear without shifting the table, either in reserved space or an overlaid bar. Real content: columns that do not fit need a choice between horizontal scroll, hiding by priority or expanding the row; long cells truncate with access to the full text; on mobile the table often becomes a list of cards, and that is a content decision, not only layout; and the empty state distinguishes "no data" from "the filter hid everything".</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Real table elements,</strong> styled.</li>
+            <li><strong>Sticky header, shadow only when scrolled.</strong></li>
+            <li><strong>aria-sort, three states, stable sort.</strong></li>
+            <li><strong>Numbers and their headers right-aligned,</strong> tabular figures.</li>
+            <li><strong>Bulk actions without layout shift;</strong> empty state that names the cause.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>table, thead, th scope.</strong> Then style.</li>
+            <li><strong>Sticky header with shadow only when scrolled.</strong></li>
+            <li><strong>aria-sort with three states.</strong></li>
+            <li><strong>Numbers and their headers right.</strong></li>
+            <li><strong>Bulk bar overlays; empty state names the filter.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Anatomy of interface primitives, handbook</em> (chapter 22) · <a href="https://www.w3.org/WAI/ARIA/apg/patterns/table/" target="_blank" rel="noopener">APG, Table pattern</a> · <a href="https://adrianroselli.com/2017/11/a-responsive-accessible-table.html" target="_blank" rel="noopener">Adrian Roselli, A Responsive Accessible Table</a></footer>
+        </article>
+
+        <article class="lesson" id="scroll-area">
+          <span class="eyebrow">Primitives · 23</span>
+          <h2>Scroll Area</h2>
+          <p class="lede">The scrollbar is the only sign that more content exists and where you are. If you hide it, provide another sign, and make the edge fades follow the position instead of sitting there permanently.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="scroller2">
+            <div class="demo-stage">
+            <div class="sa-wrap"><div class="sa-strip" tabindex="0"><span class="sa-chip">All</span><span class="sa-chip">Design</span><span class="sa-chip">Engineering</span><span class="sa-chip">Research</span><span class="sa-chip">Marketing</span><span class="sa-chip">Support</span><span class="sa-chip">Finance</span><span class="sa-chip">Legal</span><span class="sa-chip">Operations</span><span class="sa-chip">People</span><span class="sa-chip">Sales</span><span class="sa-chip">Data</span></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Edge fades follow position</span><input type="checkbox" name="fades" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Hide the scrollbar</span><input type="checkbox" name="hidebar" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Scroll the strip sideways. The fades appear only where there is more content: none on the left at the start, none on the right at the end. Turn following off and a permanent fade lies about what is there.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Hiding the bar is common and problematic. If you hide it, provide continuation shadows at the edges, indicators or reveal on hover, and reserve the bar's space so the layout does not shift when it appears. The continuation cue must appear and disappear with the position; a permanent shadow at the top of a list already scrolled to the start is noise. Horizontal scrolling is the hardest case: a horizontal strip inside a vertical page needs directional locking or the axes fight, alternate controls by button and keyboard, a sign that there is more content since touch shows no bar, and it must not capture the page's vertical scroll. Preserve position: when navigating away and back, restore it; when loading more items above, keep the visual position, because inserting content above without compensating throws the person far from what they were reading.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Hidden bar means another cue,</strong> and reserved space.</li>
+            <li><strong>Edge fades track position,</strong> never static.</li>
+            <li><strong>Horizontal strips: lock, buttons, keyboard, cue.</strong></li>
+            <li><strong>Restore position on return;</strong> compensate when prepending.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Hidden bar needs edge fades or hover reveal.</strong></li>
+            <li><strong>Fades toggle with scroll position.</strong></li>
+            <li><strong>Horizontal strips need lock, buttons, keyboard.</strong></li>
+            <li><strong>Restore scrollTop on return.</strong></li>
+            <li><strong>Compensate when prepending items.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Anatomy of interface primitives, handbook</em> (chapter 23) · <a href="https://www.radix-ui.com/primitives/docs/components/scroll-area" target="_blank" rel="noopener">Radix, Scroll Area</a></footer>
+        </article>
+
+        <article class="lesson" id="drag-and-reorder">
+          <span class="eyebrow">Primitives · 24</span>
+          <h2>Drag and Reorder</h2>
+          <p class="lede">The dragged item follows the pointer one to one with a little lift. The drop indicator is a line, not a gap that opens and makes the list jump. And keyboard reordering is mandatory and almost never implemented.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="reorder">
+            <div class="demo-stage" data-moved="moved to" data-of="of" data-grab="Grabbed. Use arrows to move, Space to drop, Escape to cancel.">
+            <div class="ro-wrap"><div class="ro-list" role="listbox"><div class="ro-item" tabindex="0"><span class="ro-handle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h18M3 6h18M3 18h18"/></svg></span><span>Inbox</span></div><div class="ro-item" tabindex="-1"><span class="ro-handle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h18M3 6h18M3 18h18"/></svg></span><span>Today</span></div><div class="ro-item" tabindex="-1"><span class="ro-handle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h18M3 6h18M3 18h18"/></svg></span><span>Upcoming</span></div><div class="ro-item" tabindex="-1"><span class="ro-handle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h18M3 6h18M3 18h18"/></svg></span><span>Someday</span></div><div class="ro-item" tabindex="-1"><span class="ro-handle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h18M3 6h18M3 18h18"/></svg></span><span>Archive</span></div><span class="ro-line"></span></div><span class="ro-live" aria-live="polite"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Line indicator</span><input type="checkbox" name="line" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Keyboard reordering</span><input type="checkbox" name="keyboard" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Drag an item by its handle. The line shows where it lands without opening gaps that make the list jump. Focus an item and press Space, arrows, Space: the same reorder, announced at every step.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Basics: a start threshold around 10px so it is not confused with a click, an explicit handle or the whole item, origin feedback as an empty slot or ghost, destination feedback showing where it will land, auto-scroll near the container edges, and Escape to cancel. The dragged item follows the pointer 1:1 with slight elevation, a small scale and a larger shadow. The destination indicator is a line, not an opening space; spaces that open and close make the list jump for the whole drag and the person loses the reference. Auto-scroll speed is proportional to edge proximity, not binary. Reordering animates the neighbours with a layout transition. Dropping outside a valid area reverts with animation to say nothing happened.</p>
+          <p>Keyboard: Space or Enter enters move mode, arrows move the item, Space or Enter confirms, Escape cancels and restores, with each move announced through a live region: "Item moved to position 3 of 8". If implementing that seems expensive, ask whether drag reordering is necessary at all; move up and move down buttons solve the problem for everyone at a fraction of the cost.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>10px threshold, 1:1 follow, lift with shadow.</strong></li>
+            <li><strong>Line indicator,</strong> neighbours animate.</li>
+            <li><strong>Proportional auto-scroll,</strong> animated revert on invalid drop.</li>
+            <li><strong>Keyboard move mode with announcements.</strong></li>
+            <li><strong>Or just up and down buttons.</strong></li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>10px threshold, then lift.</strong></li>
+            <li><strong>Line indicator, not gaps.</strong></li>
+            <li><strong>Proportional auto-scroll near edges.</strong></li>
+            <li><strong>Space enters move mode; arrows; Space confirms; Escape cancels.</strong></li>
+            <li><strong>Up and down buttons are a valid answer.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Anatomy of interface primitives, handbook</em> (chapter 24) · <a href="https://www.w3.org/WAI/ARIA/apg/patterns/listbox/" target="_blank" rel="noopener">APG, Listbox pattern</a> · <a href="https://dndkit.com/" target="_blank" rel="noopener">dnd kit, accessibility</a></footer>
+        </article>
+      </section>
+      <footer class="footer"><p>Personal study library. Content synthesized from the sources listed in each lesson; course and author names belong to their respective owners. Hierarchy through size, weight and space only.</p></footer>
+    </div>
+  </main>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
