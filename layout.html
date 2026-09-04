@@ -105,9 +105,9 @@
             <div class="demo-stage">
             <div class="sq-row"><div class="sq-shape"></div><span class="sq-unsupported">Your browser does not support corner-shape yet; the shape shows circular corners.</span></div>
             </div>
-            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Radius</span><input type="range" name="r" min="8" max="64" step="4" value="40" data-unit="px"><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Curve the chroma</span><input type="checkbox" name="squircle" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Radius</span><input type="range" name="r" min="8" max="64" step="4" value="40" data-unit="px"><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Continuous curvature</span><input type="checkbox" name="squircle" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
           </div>
-            <figcaption class="demo-caption">Drag the hue. With a constant chroma the light steps go neon and the dark ones go muddy. With the arc, one hue produces a usable twelve-step scale at any angle.</figcaption>
+            <figcaption class="demo-caption">Switch between circular corners and a squircle, then grow the radius. Below 16px you can barely tell; at 40px the circular corner looks cut out next to the continuous one.</figcaption>
           </figure>
 
           <h3>Why</h3>
@@ -239,9 +239,9 @@
               <div class="win-canvas"><div class="win-page"><div class="win-line" style="width:60%"></div><div class="win-line" style="width:90%"></div><div class="win-line" style="width:75%"></div></div></div>
             </div>
             </div>
-            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Validate while typing</span><input type="checkbox" name="htmlbg" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Background on html</span><input type="checkbox" name="htmlbg" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
           </div>
-            <figcaption class="demo-caption">Type a password. Requirements tick off live; the red only appears when you leave the field. Switch on eager validation to feel the difference: it scolds you before you finish.</figcaption>
+            <figcaption class="demo-caption">Hover the window to pull the page past its end. With the background only on the body, the canvas behind it flashes white.</figcaption>
           </figure>
 
           <h3>Why</h3>
@@ -287,7 +287,7 @@
             </div>
             <div class="demo-controls"><label class="ctl"><span class="ctl-label">Corner radius</span><input type="range" name="r" min="0" max="24" step="2" value="12" data-unit="px"><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Counter-movement</span><input type="checkbox" name="counter" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
           </div>
-            <figcaption class="demo-caption">Add an icon. With props, it needs a new prop and the count grows; with compound components you just place it inside the trigger. The code reads like the component looks.</figcaption>
+            <figcaption class="demo-caption">Hover the card to reveal. The panel already has its final size; only the clipping window changes. Counter-movement slides the content 10px against the reveal.</figcaption>
           </figure>
 
           <h3>Why</h3>
@@ -464,7 +464,7 @@
               <div class="zm-more">+ 4 more</div>
             </div>
             </div>
-            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Items</span><input type="range" name="items" min="0" max="12" step="1" value="3" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Designed for each case</span><input type="checkbox" name="designed" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Items</span><input type="range" name="items" min="0" max="12" step="1" value="1" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Designed for each case</span><input type="checkbox" name="designed" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
           </div>
             <figcaption class="demo-caption">Drag from 0 to 12. Designed: an empty state at zero, a single wide card at one, a bounded grid with a count past eight. Default: a lonely cell and an endless grid.</figcaption>
           </figure>

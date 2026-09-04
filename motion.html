@@ -275,7 +275,7 @@
             </div>
             <div class="demo-controls"><label class="ctl"><span class="ctl-label">Bounce</span><input type="range" name="bounce" min="0" max="0.4" step="0.2" value="0.2" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Spring</span><input type="checkbox" name="spring" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
           </div>
-            <figcaption class="demo-caption">Apply the spacing overrides. With min-height the card grows and stays readable. Turn on fixed height and the last lines are clipped: the same content, now inaccessible.</figcaption>
+            <figcaption class="demo-caption">Drag the box and let go. Bounce 0 is critically damped, 0.2 the sweet spot for UI, 0.4 already cartoon. Switch the spring off to compare with an ease-out.</figcaption>
           </figure>
 
           <h3>Why</h3>
@@ -420,7 +420,7 @@
             </div>
             <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Composite (clip-path) instead of height</span><input type="checkbox" name="composite" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
           </div>
-            <figcaption class="demo-caption">Hover the first icon: half a second. Move to the next ones: instant, because the group is warm. Turn group delay off and every icon costs half a second again. Tab through the bar to see the focus behavior.</figcaption>
+            <figcaption class="demo-caption">Click the header. Animating height triggers layout every frame and squashes the text; clip-path runs on the compositor and reveals it.</figcaption>
           </figure>
 
           <h3>Why</h3>
@@ -564,7 +564,7 @@
             </div>
             <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Counter-scale the text</span><input type="checkbox" name="counterscale" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
           </div>
-            <figcaption class="demo-caption">Click Publish. Disabled, it does nothing and cannot even be focused, so the reason never surfaces. Enabled, it explains. Then try to select and copy the order ID: as disabled it cannot be copied, as read-only it can.</figcaption>
+            <figcaption class="demo-caption">Click the card. The box scales, which is cheap. With counter-scaling off, the text scales with it and balloons; with it on, the text keeps its size and the description fades in at the end.</figcaption>
           </figure>
 
           <h3>Why</h3>
@@ -804,7 +804,7 @@
             </div>
             <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Default pattern (fade in, instant out)</span><input type="checkbox" name="default" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
           </div>
-            <figcaption class="demo-caption">Open with ⌘K or the button and type "nprj": fuzzy finds New project, exact finds nothing. Turn the entrance animation on and feel how a 200ms scale turns a high-frequency tool into latency.</figcaption>
+            <figcaption class="demo-caption">Open the menu and pick an item. Instant in: the menu appears with no animation, the chosen item flashes, the menu fades out. Switch to the default pattern to compare.</figcaption>
           </figure>
 
           <h3>Why</h3>
@@ -893,11 +893,11 @@
           <figure class="demo-figure">
           <div class="demo" data-demo="detents">
             <div class="demo-stage">
-            <div class="dt-wrap"><div class="dt-track" data-detents><span class="dt-tick"></span><span class="dt-tick"></span><span class="dt-tick"></span><span class="dt-tick"></span><span class="dt-tick"></span><div class="dt-knob" tabindex="0" role="slider" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0" aria-label="Work email"></div></div><span class="dt-val"></span></div>
+            <div class="dt-wrap"><div class="dt-track" data-detents><span class="dt-tick"></span><span class="dt-tick"></span><span class="dt-tick"></span><span class="dt-tick"></span><span class="dt-tick"></span><div class="dt-knob" tabindex="0" role="slider" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0" aria-label="Detent slider"></div></div><span class="dt-val"></span></div>
             </div>
             <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Detents</span><input type="checkbox" name="snap" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
           </div>
-            <figcaption class="demo-caption">Type half an address. Validating on every keystroke shows an error to someone who has not finished. On blur, the error appears when you leave. Turn the label off and it becomes a placeholder that vanishes as you type.</figcaption>
+            <figcaption class="demo-caption">Drag the knob. With detents it pulls slightly toward each stop, snaps on release and ticks. Without them it just slides. Notice which one you keep playing with.</figcaption>
           </figure>
 
           <h3>Why</h3>
@@ -984,9 +984,9 @@
               <div class="card tk-c" tabindex="0"><div class="card-title">Design review</div><div class="card-sub">Today, 3:00 PM</div></div>
             </div>
             </div>
-            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Components reference primitives</span><input type="checkbox" name="tokens" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Use motion tokens</span><input type="checkbox" name="tokens" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
           </div>
-            <figcaption class="demo-caption">Drag the brand hue: everything follows because it is derived from one token. Turn on primitives and the badge and link were hardcoded to blue-9: rebranding now means touching every component.</figcaption>
+            <figcaption class="demo-caption">Hover the three components. With tokens they share one curve and one duration scale and feel like one product. Without, each has its own idea of time.</figcaption>
           </figure>
 
           <h3>Why</h3>

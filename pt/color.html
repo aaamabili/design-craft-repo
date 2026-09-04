@@ -115,7 +115,7 @@
             </div>
             <div class="demo-controls"><label class="ctl"><span class="ctl-label">Opacidade do grão</span><input type="range" name="grain" min="0" max="0.8" step="0.05" value="0.5" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Fonte de luz</span><input type="checkbox" name="light" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
           </div>
-            <figcaption class="demo-caption">Clique num número para abrir uma observação. Depois troque para prescrições e note como cada uma chuta um conserto antes de entender o problema.</figcaption>
+            <figcaption class="demo-caption">Arraste o grão. Sozinho é textura; com a fonte de luz lê como material. Acima de 0,5 o ruído vira o assunto.</figcaption>
           </figure>
 
           <h3>Por quê</h3>
@@ -318,9 +318,9 @@
               <div class="dm-foot"><button class="dm-btn" type="button" tabindex="-1">Ver fatura</button><span class="dm-meta">Hoje, 09:14</span></div>
             </div>
             </div>
-            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Elemento button nativo</span><input type="checkbox" name="inverted" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Inversão ingênua</span><input type="checkbox" name="inverted" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
           </div>
-            <figcaption class="demo-caption">Clique em "Comece aqui", depois Tab e Espaço. A div estilizada de botão falha em toda dimensão menos a visual. Mude para o elemento nativo e as quatro passam com zero código extra.</figcaption>
+            <figcaption class="demo-caption">Troque para inversão: preto puro, branco brilhando, verde neon, sem profundidade. Volte para o card escuro desenhado, com superfícies mais claras e acentos suavizados.</figcaption>
           </figure>
 
           <h3>Por quê</h3>
@@ -522,9 +522,9 @@
             <div class="demo-stage">
             <div class="sc-wrap"><div class="sc-half sc-left"><span class="sc-sq"></span></div><div class="sc-half sc-right"><span class="sc-sq"></span></div><span class="sc-bridge"></span></div>
             </div>
-            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Diferença do entorno</span><input type="range" name="diff" min="0" max="100" step="5" value="70" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Escala híbrida</span><input type="checkbox" name="connect" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Diferença do entorno</span><input type="range" name="diff" min="0" max="100" step="5" value="70" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Conectar os quadrados</span><input type="checkbox" name="connect" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
           </div>
-            <figcaption class="demo-caption">Arraste a razão. Uma escala modular dá tamanhos fracionários e pula os degraus de 1px que texto pequeno precisa. A híbrida mantém inteiros, densa embaixo e proporcional em cima.</figcaption>
+            <figcaption class="demo-caption">Afaste os entornos. Os dois quadrados são o mesmo cinza e parecem dois cinzas. Conecte-os para provar. Nunca julgue uma cor isolada.</figcaption>
           </figure>
 
           <h3>Por quê</h3>
@@ -596,9 +596,9 @@
           <figure class="demo-figure">
           <div class="demo" data-demo="tokens">
             <div class="demo-stage">
-            <div class="tk-ui"><div class="tk-row"><span class="tk-badge">Beta</span><a class="tk-link" href="#" tabindex="-1">Saiba mais</a></div><div class="tk-input"><span>Buscar projetos</span></div><div class="tk-row"><button class="tk-btn" type="button" tabindex="-1">Criar projeto</button><button class="tk-ghost" type="button" tabindex="-1">Cancelar</button></div></div>
+            <div class="tok-ui"><div class="tok-row"><span class="tok-badge">Beta</span><a class="tok-link" href="#" tabindex="-1">Saiba mais</a></div><div class="tok-input"><span>Buscar projetos</span></div><div class="tok-row"><button class="tok-btn" type="button" tabindex="-1">Criar projeto</button><button class="tok-ghost" type="button" tabindex="-1">Cancelar</button></div></div>
             </div>
-            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Matiz da marca</span><input type="range" name="bhue" min="0" max="360" step="5" value="260" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Componentes referenciam primitivos</span><input type="checkbox" name="primitives" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Matiz da marca</span><input type="range" name="bhue" min="0" max="360" step="5" value="200" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Componentes referenciam primitivos</span><input type="checkbox" name="primitives" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
           </div>
             <figcaption class="demo-caption">Arraste o matiz da marca: tudo acompanha porque deriva de um token. Ligue os primitivos e o badge e o link estavam fixos em blue-9: rebrandear agora significa tocar em todo componente.</figcaption>
           </figure>
@@ -765,9 +765,9 @@ background: <span class="f">linear-gradient</span>(in oklch longer hue, red, blu
             <div class="demo-stage">
             <svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="cvd-deuter" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0.625 0.375 0 0 0  0.7 0.3 0 0 0  0 0.3 0.7 0 0  0 0 0 1 0"/></filter></svg><div class="cv-chart"><span class="cv-group"><span class="cv-bar cv-a" style="--h:70%"><i>A</i></span><span class="cv-bar cv-b" style="--h:45%"><i>B</i></span></span><span class="cv-group"><span class="cv-bar cv-a" style="--h:50%"><i>A</i></span><span class="cv-bar cv-b" style="--h:80%"><i>B</i></span></span><span class="cv-group"><span class="cv-bar cv-a" style="--h:85%"><i>A</i></span><span class="cv-bar cv-b" style="--h:60%"><i>B</i></span></span><span class="cv-group"><span class="cv-bar cv-a" style="--h:40%"><i>A</i></span><span class="cv-bar cv-b" style="--h:55%"><i>B</i></span></span><span class="cv-base"></span></div>
             </div>
-            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Segmentar por time</span><input type="checkbox" name="simulate" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Mostrar variantes destacadas</span><input type="checkbox" name="channels" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Simular deuteranopia</span><input type="checkbox" name="simulate" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Adicionar um segundo canal</span><input type="checkbox" name="channels" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
           </div>
-            <figcaption class="demo-caption">68% de cobertura parece saudável. Segmente e um time está em 15% com cinco cópias locais de coisas que o sistema já oferece. O agregado escondeu exatamente o time que precisa de atenção.</figcaption>
+            <figcaption class="demo-caption">Duas séries em vermelho e verde com a mesma luminosidade. Simule deuteranopia e elas se fundem. Adicione rótulos, padrão e luminosidade diferente, e o gráfico sobrevive à simulação e a uma impressão em preto e branco.</figcaption>
           </figure>
 
           <h3>Por quê</h3>

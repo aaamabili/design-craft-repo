@@ -105,9 +105,9 @@
             <div class="demo-stage">
             <div class="sq-row"><div class="sq-shape"></div><span class="sq-unsupported">Seu navegador ainda não suporta corner-shape; a forma mostra cantos circulares.</span></div>
             </div>
-            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Raio</span><input type="range" name="r" min="8" max="64" step="4" value="40" data-unit="px"><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Curvar o croma</span><input type="checkbox" name="squircle" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Raio</span><input type="range" name="r" min="8" max="64" step="4" value="40" data-unit="px"><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Curvatura contínua</span><input type="checkbox" name="squircle" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
           </div>
-            <figcaption class="demo-caption">Arraste o matiz. Com croma constante os passos claros viram neon e os escuros ficam sujos. Com o arco, um matiz produz uma escala de doze passos utilizável em qualquer ângulo.</figcaption>
+            <figcaption class="demo-caption">Alterne entre cantos circulares e squircle, depois aumente o raio. Abaixo de 16px quase não dá para notar; em 40px o canto circular parece recortado ao lado do contínuo.</figcaption>
           </figure>
 
           <h3>Por quê</h3>
@@ -239,9 +239,9 @@
               <div class="win-canvas"><div class="win-page"><div class="win-line" style="width:60%"></div><div class="win-line" style="width:90%"></div><div class="win-line" style="width:75%"></div></div></div>
             </div>
             </div>
-            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Validar enquanto digita</span><input type="checkbox" name="htmlbg" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Fundo no html</span><input type="checkbox" name="htmlbg" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
           </div>
-            <figcaption class="demo-caption">Digite uma senha. Os requisitos vão sendo marcados ao vivo; o vermelho só aparece quando você sai do campo. Ligue a validação ansiosa para sentir a diferença: ela repreende antes de você terminar.</figcaption>
+            <figcaption class="demo-caption">Passe o mouse na janela para puxar a página além do fim. Com o fundo só no body, o canvas atrás dela pisca branco.</figcaption>
           </figure>
 
           <h3>Por quê</h3>
@@ -287,7 +287,7 @@
             </div>
             <div class="demo-controls"><label class="ctl"><span class="ctl-label">Raio dos cantos</span><input type="range" name="r" min="0" max="24" step="2" value="12" data-unit="px"><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Contramovimento</span><input type="checkbox" name="counter" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
           </div>
-            <figcaption class="demo-caption">Adicione um ícone. Com props, precisa de uma prop nova e a contagem cresce; com componentes compostos você só o coloca dentro do gatilho. O código lê como o componente aparece.</figcaption>
+            <figcaption class="demo-caption">Passe o mouse no card para revelar. O painel já tem o tamanho final; só a janela de recorte muda. O contramovimento desliza o conteúdo 10px contra o reveal.</figcaption>
           </figure>
 
           <h3>Por quê</h3>
@@ -464,7 +464,7 @@
               <div class="zm-more">+ 4 mais</div>
             </div>
             </div>
-            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Itens</span><input type="range" name="items" min="0" max="12" step="1" value="3" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Desenhado para cada caso</span><input type="checkbox" name="designed" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Itens</span><input type="range" name="items" min="0" max="12" step="1" value="1" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Desenhado para cada caso</span><input type="checkbox" name="designed" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
           </div>
             <figcaption class="demo-caption">Arraste de 0 a 12. Desenhado: estado vazio no zero, um card largo no um, grid limitado com contagem depois de oito. Padrão: uma célula solitária e um grid sem fim.</figcaption>
           </figure>

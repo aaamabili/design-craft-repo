@@ -115,7 +115,7 @@
             </div>
             <div class="demo-controls"><label class="ctl"><span class="ctl-label">Grain opacity</span><input type="range" name="grain" min="0" max="0.8" step="0.05" value="0.5" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Light source</span><input type="checkbox" name="light" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
           </div>
-            <figcaption class="demo-caption">Click a number to open an observation. Then switch to prescriptions and notice how each one guesses at a fix before understanding the problem.</figcaption>
+            <figcaption class="demo-caption">Drag the grain. Alone it is texture; with the light source it reads as material. Above 0.5 the noise becomes the subject.</figcaption>
           </figure>
 
           <h3>Why</h3>
@@ -318,9 +318,9 @@
               <div class="dm-foot"><button class="dm-btn" type="button" tabindex="-1">View invoice</button><span class="dm-meta">Today, 09:14</span></div>
             </div>
             </div>
-            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Native button element</span><input type="checkbox" name="inverted" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Naive inversion</span><input type="checkbox" name="inverted" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
           </div>
-            <figcaption class="demo-caption">Click "Start here", then press Tab and Space. The div styled as a button fails every dimension except the visual one. Switch to the native element and all four pass with zero extra code.</figcaption>
+            <figcaption class="demo-caption">Switch to inversion: pure black, glowing white, neon green, no depth. Switch back to the designed dark card with lighter surfaces and softened accents.</figcaption>
           </figure>
 
           <h3>Why</h3>
@@ -522,9 +522,9 @@
             <div class="demo-stage">
             <div class="sc-wrap"><div class="sc-half sc-left"><span class="sc-sq"></span></div><div class="sc-half sc-right"><span class="sc-sq"></span></div><span class="sc-bridge"></span></div>
             </div>
-            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Surround difference</span><input type="range" name="diff" min="0" max="100" step="5" value="70" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Hybrid scale</span><input type="checkbox" name="connect" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Surround difference</span><input type="range" name="diff" min="0" max="100" step="5" value="70" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Connect the squares</span><input type="checkbox" name="connect" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
           </div>
-            <figcaption class="demo-caption">Drag the ratio. A modular scale gives fractional sizes and skips the 1px steps small text needs. The hybrid keeps integers, dense at the bottom and proportional at the top.</figcaption>
+            <figcaption class="demo-caption">Drag the surround apart. The two squares are the same gray and look like two grays. Connect them to prove it. Never judge a color in isolation.</figcaption>
           </figure>
 
           <h3>Why</h3>
@@ -596,9 +596,9 @@
           <figure class="demo-figure">
           <div class="demo" data-demo="tokens">
             <div class="demo-stage">
-            <div class="tk-ui"><div class="tk-row"><span class="tk-badge">Beta</span><a class="tk-link" href="#" tabindex="-1">Learn more</a></div><div class="tk-input"><span>Search projects</span></div><div class="tk-row"><button class="tk-btn" type="button" tabindex="-1">Create project</button><button class="tk-ghost" type="button" tabindex="-1">Cancel</button></div></div>
+            <div class="tok-ui"><div class="tok-row"><span class="tok-badge">Beta</span><a class="tok-link" href="#" tabindex="-1">Learn more</a></div><div class="tok-input"><span>Search projects</span></div><div class="tok-row"><button class="tok-btn" type="button" tabindex="-1">Create project</button><button class="tok-ghost" type="button" tabindex="-1">Cancel</button></div></div>
             </div>
-            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Brand hue</span><input type="range" name="bhue" min="0" max="360" step="5" value="260" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Components reference primitives</span><input type="checkbox" name="primitives" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Brand hue</span><input type="range" name="bhue" min="0" max="360" step="5" value="200" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Components reference primitives</span><input type="checkbox" name="primitives" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
           </div>
             <figcaption class="demo-caption">Drag the brand hue: everything follows because it is derived from one token. Turn on primitives and the badge and link were hardcoded to blue-9: rebranding now means touching every component.</figcaption>
           </figure>
@@ -765,9 +765,9 @@ background: <span class="f">linear-gradient</span>(in oklch longer hue, red, blu
             <div class="demo-stage">
             <svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="cvd-deuter" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0.625 0.375 0 0 0  0.7 0.3 0 0 0  0 0.3 0.7 0 0  0 0 0 1 0"/></filter></svg><div class="cv-chart"><span class="cv-group"><span class="cv-bar cv-a" style="--h:70%"><i>A</i></span><span class="cv-bar cv-b" style="--h:45%"><i>B</i></span></span><span class="cv-group"><span class="cv-bar cv-a" style="--h:50%"><i>A</i></span><span class="cv-bar cv-b" style="--h:80%"><i>B</i></span></span><span class="cv-group"><span class="cv-bar cv-a" style="--h:85%"><i>A</i></span><span class="cv-bar cv-b" style="--h:60%"><i>B</i></span></span><span class="cv-group"><span class="cv-bar cv-a" style="--h:40%"><i>A</i></span><span class="cv-bar cv-b" style="--h:55%"><i>B</i></span></span><span class="cv-base"></span></div>
             </div>
-            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Segment by team</span><input type="checkbox" name="simulate" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Show detached variants</span><input type="checkbox" name="channels" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Simulate deuteranopia</span><input type="checkbox" name="simulate" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Add a second channel</span><input type="checkbox" name="channels" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
           </div>
-            <figcaption class="demo-caption">68% coverage looks healthy. Segment it and one team sits at 15% with five local copies of things the system already offers. The aggregate hid exactly the team that needs attention.</figcaption>
+            <figcaption class="demo-caption">Two series in red and green at the same lightness. Simulate deuteranopia and they merge. Add labels, a pattern and different lightness, and the chart survives the simulation and a grayscale print.</figcaption>
           </figure>
 
           <h3>Why</h3>

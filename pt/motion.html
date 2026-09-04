@@ -275,7 +275,7 @@
             </div>
             <div class="demo-controls"><label class="ctl"><span class="ctl-label">Bounce</span><input type="range" name="bounce" min="0" max="0.4" step="0.2" value="0.2" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Spring</span><input type="checkbox" name="spring" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
           </div>
-            <figcaption class="demo-caption">Aplique os ajustes de espaçamento. Com min-height o card cresce e continua legível. Ligue a altura fixa e as últimas linhas são cortadas: o mesmo conteúdo, agora inacessível.</figcaption>
+            <figcaption class="demo-caption">Arraste a caixa e solte. Bounce 0 é criticamente amortecido, 0,2 o ponto ideal para UI, 0,4 já é cartoon. Desligue a spring para comparar com um ease-out.</figcaption>
           </figure>
 
           <h3>Por quê</h3>
@@ -420,7 +420,7 @@
             </div>
             <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Composite (clip-path) em vez de height</span><input type="checkbox" name="composite" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
           </div>
-            <figcaption class="demo-caption">Passe o mouse no primeiro ícone: meio segundo. Vá para os seguintes: instantâneo, porque o grupo está aquecido. Desligue o atraso de grupo e cada ícone custa meio segundo de novo. Percorra a barra com Tab para ver o comportamento de foco.</figcaption>
+            <figcaption class="demo-caption">Clique no cabeçalho. Animar height dispara layout a cada frame e comprime o texto; clip-path roda no compositor e o revela.</figcaption>
           </figure>
 
           <h3>Por quê</h3>
@@ -564,7 +564,7 @@
             </div>
             <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Escala inversa no texto</span><input type="checkbox" name="counterscale" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
           </div>
-            <figcaption class="demo-caption">Clique em Publicar. Desabilitado, não faz nada e nem recebe foco, então o motivo nunca aparece. Habilitado, explica. Depois tente selecionar e copiar o ID: como desabilitado não copia, como somente leitura copia.</figcaption>
+            <figcaption class="demo-caption">Clique no card. A caixa escala, o que é barato. Com a escala inversa desligada o texto escala junto e infla; ligada, o texto mantém o tamanho e a descrição aparece no fim.</figcaption>
           </figure>
 
           <h3>Por quê</h3>
@@ -804,7 +804,7 @@
             </div>
             <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Padrão default (fade na entrada, saída instantânea)</span><input type="checkbox" name="default" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
           </div>
-            <figcaption class="demo-caption">Abra com ⌘K ou pelo botão e digite "nprj": aproximada acha Novo projeto, exata não acha nada. Ligue a animação de entrada e sinta como 200ms de escala transformam uma ferramenta de alta frequência em latência.</figcaption>
+            <figcaption class="demo-caption">Abra o menu e escolha um item. Entrada instantânea: o menu aparece sem animação, o item escolhido pisca, o menu esmaece. Troque para o padrão default para comparar.</figcaption>
           </figure>
 
           <h3>Por quê</h3>
@@ -893,11 +893,11 @@
           <figure class="demo-figure">
           <div class="demo" data-demo="detents">
             <div class="demo-stage">
-            <div class="dt-wrap"><div class="dt-track" data-detents><span class="dt-tick"></span><span class="dt-tick"></span><span class="dt-tick"></span><span class="dt-tick"></span><span class="dt-tick"></span><div class="dt-knob" tabindex="0" role="slider" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0" aria-label="E-mail de trabalho"></div></div><span class="dt-val"></span></div>
+            <div class="dt-wrap"><div class="dt-track" data-detents><span class="dt-tick"></span><span class="dt-tick"></span><span class="dt-tick"></span><span class="dt-tick"></span><span class="dt-tick"></span><div class="dt-knob" tabindex="0" role="slider" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0" aria-label="Slider com encaixes"></div></div><span class="dt-val"></span></div>
             </div>
             <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Encaixes</span><input type="checkbox" name="snap" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
           </div>
-            <figcaption class="demo-caption">Digite metade de um endereço. Validar a cada tecla mostra erro para quem não terminou. Ao sair, o erro aparece quando você sai. Desligue o rótulo e ele vira um placeholder que some ao digitar.</figcaption>
+            <figcaption class="demo-caption">Arraste o knob. Com encaixes ele puxa de leve para cada parada, encaixa ao soltar e dá um tique. Sem eles, só desliza. Note com qual você continua brincando.</figcaption>
           </figure>
 
           <h3>Por quê</h3>
@@ -984,9 +984,9 @@
               <div class="card tk-c" tabindex="0"><div class="card-title">Revisão de design</div><div class="card-sub">Hoje, 15:00</div></div>
             </div>
             </div>
-            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Componentes referenciam primitivos</span><input type="checkbox" name="tokens" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Usar tokens de movimento</span><input type="checkbox" name="tokens" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
           </div>
-            <figcaption class="demo-caption">Arraste o matiz da marca: tudo acompanha porque deriva de um token. Ligue os primitivos e o badge e o link estavam fixos em blue-9: rebrandear agora significa tocar em todo componente.</figcaption>
+            <figcaption class="demo-caption">Passe o mouse nos três componentes. Com tokens eles compartilham uma curva e uma escala de duração e parecem um produto. Sem, cada um tem a própria ideia de tempo.</figcaption>
           </figure>
 
           <h3>Por quê</h3>

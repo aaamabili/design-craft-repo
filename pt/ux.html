@@ -60,9 +60,9 @@
             <div class="demo-stage">
             <div class="pp-grid"><button class="pp-dot" type="button" data-i="0" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="1" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="2" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="3" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="4" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="5" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="6" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="7" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="8" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="9" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="10" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="11" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="12" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="13" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="14" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="15" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="16" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="17" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="18" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="19" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="20" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="21" aria-label="Ponto"></button><button class="pp-dot pp-target" type="button" data-i="22" data-flash=is-found data-flash-ms=900 aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="23" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="24" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="25" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="26" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="27" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="28" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="29" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="30" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="31" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="32" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="33" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="34" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="35" aria-label="Ponto"></button></div><span class="pp-found">Achou</span>
             </div>
-            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Itens</span><input type="range" name="items" min="12" max="36" step="6" value="24" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Compor em vez disso</span><input type="checkbox" name="conjunction" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Itens</span><input type="range" name="items" min="12" max="36" step="6" value="24" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Adicionar forma como segundo atributo</span><input type="checkbox" name="conjunction" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
           </div>
-            <figcaption class="demo-caption">Arraste as props. Seis booleanas já são 64 combinações, a maioria nunca testada. Doze são 4.096. Componha em vez disso e o número deixa de importar: peças se arranjam em estados que são todos válidos.</figcaption>
+            <figcaption class="demo-caption">Clique no diferente. Só com cor ele salta em qualquer quantidade. Adicione forma e o quadrado vermelho se esconde entre círculos vermelhos e quadrados azuis: agora você varre.</figcaption>
           </figure>
 
           <h3>Por quê</h3>
@@ -217,7 +217,7 @@
             </div>
             <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Agrupado</span><input type="checkbox" name="chunked" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Manter o código visível ao digitar</span><input type="checkbox" name="visible" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
           </div>
-            <figcaption class="demo-caption">Marque um filho: o pai mostra o estado misto em vez de mentir com uma caixa vazia. Clique no texto do rótulo: com o rótulo no alvo a linha inteira alterna; sem ele só a caixinha.</figcaption>
+            <figcaption class="demo-caption">Digite o código. Agrupado em 3-3 são dois itens, não seis. Desligue “visível” e o código some assim que você foca o campo: agora ele mora na memória de trabalho.</figcaption>
           </figure>
 
           <h3>Por quê</h3>
@@ -251,7 +251,7 @@
           <div class="demo" data-demo="infer">
             <div class="demo-stage">
             <div class="in-form">
-              <label class="mf-label">CEP<input class="mf-input in-zip" type="text" inputmode="numeric" maxlength="9" placeholder="01310-100" data-zip></label>
+              <label class="mf-label">CEP<input class="mf-input in-zip" type="text" inputmode="numeric" maxlength="9" placeholder="01310-100" value="01310-100" data-zip></label>
               <div class="in-row2"><label class="mf-label">Cidade<input class="mf-input in-city" type="text" readonly></label><label class="mf-label">Estado<input class="mf-input in-state" type="text" readonly></label></div>
               <span class="in-hint">Tente 01310-100, 20040-020 ou 30130-010</span>
             </div>
@@ -330,9 +330,9 @@
             <div class="demo-stage">
             <div class="st-grid"><button class="st-plan" type="button" data-pick="0" style="--o:3"><span class="st-name">Pro</span><span class="st-price">R$ 149 / mês</span><span class="st-dim">10 assentos</span><span class="st-badge">Recomendado</span></button><button class="st-plan" type="button" data-pick="1" style="--o:1"><span class="st-name">Basic</span><span class="st-price">R$ 49 / mês</span><span class="st-dim">1 assento</span><span class="st-badge">Recomendado</span></button><button class="st-plan" type="button" data-pick="2" style="--o:2"><span class="st-name">Team</span><span class="st-price">R$ 99 / mês</span><span class="st-dim">5 assentos</span><span class="st-badge">Recomendado</span></button><button class="st-plan" type="button" data-pick="3" style="--o:6"><span class="st-name">Enterprise</span><span class="st-price">R$ 499 / mês</span><span class="st-dim">Ilimitado</span><span class="st-badge">Recomendado</span></button><button class="st-plan" type="button" data-pick="4" style="--o:4"><span class="st-name">Plus</span><span class="st-price">R$ 249 / mês</span><span class="st-dim">25 assentos</span><span class="st-badge">Recomendado</span></button><button class="st-plan" type="button" data-pick="5" style="--o:0"><span class="st-name">Free</span><span class="st-price">R$ 0</span><span class="st-dim">1 assento, limitado</span><span class="st-badge">Recomendado</span></button></div>
             </div>
-            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Escape fecha uma camada</span><input type="checkbox" name="structured" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Estruturar a comparação</span><input type="checkbox" name="structured" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
           </div>
-            <figcaption class="demo-caption">Abra o diálogo, abra o menu, pressione Escape. Com pilha, Escape fecha o menu e um segundo Escape fecha o diálogo. Sem ela, um Escape derruba tudo.</figcaption>
+            <figcaption class="demo-caption">Escolha um plano. Sem estrutura: seis cards em ordem aleatória sem dimensão dominante. Com estrutura: ordenados por preço, assentos como a única coisa a comparar, um padrão recomendado.</figcaption>
           </figure>
 
           <h3>Por quê</h3>
@@ -456,7 +456,7 @@
           <div class="demo" data-demo="postel">
             <div class="demo-stage">
             <form class="mini-form" onsubmit="return false">
-              <label class="mf-label">Telefone<input class="mf-input" type="text" inputmode="tel" autocomplete="off" placeholder="(11) 98765-4321" data-phone></label>
+              <label class="mf-label">Telefone<input class="mf-input" type="text" inputmode="tel" autocomplete="off" placeholder="(11) 98765-4321" value="(11) 98765-4321" data-phone></label>
               <p class="po-result"><span class="po-ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span class="po-norm"></span></span><span class="po-err">Use o formato 11987654321, só dígitos.</span></p>
             </form>
             </div>
@@ -544,9 +544,9 @@
               </div>
             </div>
             </div>
-            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Extrair na primeira ocorrência</span><input type="checkbox" name="respectful" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Saída respeitosa</span><input type="checkbox" name="respectful" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
           </div>
-            <figcaption class="demo-caption">Arraste as ocorrências. O veredito muda em três. Extraia em uma e você congela decisões antes de saber quais são certas: o componente genérico não serve a nenhum dos casos que vieram depois.</figcaption>
+            <figcaption class="demo-caption">Clique em Cancelar. Respeitosa: uma tela, consequências claras, desfazer. Obstruída: cinco telas de culpa e barganha. O fim é o que as pessoas lembram, e contam para os outros.</figcaption>
           </figure>
 
           <h3>Por quê</h3>
