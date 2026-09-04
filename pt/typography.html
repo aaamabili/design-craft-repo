@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-lang="pt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Typography — Interface Craft</title>
+  <meta name="description" content="Texto é 90% de qualquer interface. Estas aulas são sobre os ajustes pequenos que separam texto &quot;renderizado&quot; de texto &quot;composto&quot;.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#fcfcfc" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
+  <script>
+    // Applies the saved theme before first paint to avoid a flash
+    try { var t = localStorage.getItem('theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script>
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <div>
+        <div class="brand-name">Interface Craft</div>
+        <div class="brand-sub">Biblioteca viva</div>
+      </div>
+      <div class="controls">
+        <nav class="lang-switch" aria-label="Idioma"><a class="lang-opt" href="../typography.html" data-lang="en" hreflang="en">EN</a><a class="lang-opt" href="#" data-lang="pt" hreflang="pt" aria-current="true">PT</a></nav>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Alternar tema claro e escuro" title="Alternar tema claro e escuro"><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+      </div>
+    </div>
+    <a class="back-link" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>Início</a>
+    <nav class="nav-groups" aria-label="Sumário da seção">
+      <div class="nav-group" data-section="type" style="margin-top:0">
+        <div class="nav-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h16"/><path d="M6 16l6-12 6 12"/><path d="M8.5 11h7"/></svg>Typography</div>
+        <ul class="nav-list"><li><a class="nav-link" href="#letter-spacing">Letter Spacing</a></li><li><a class="nav-link" href="#text-wrapping">Text Wrapping</a></li><li><a class="nav-link" href="#tabular-numbers">Tabular Numbers</a></li><li><a class="nav-link" href="#relative-time">Relative Time</a></li><li><a class="nav-link" href="#optical-alignment">Optical Alignment</a></li><li><a class="nav-link" href="#icons">Icons</a></li><li><a class="nav-link" href="#font-smoothing">Font Smoothing</a></li><li><a class="nav-link" href="#hierarchy-without-size">Hierarchy Without Size</a></li><li><a class="nav-link" href="#font-metrics">Font Metrics</a></li><li><a class="nav-link" href="#leading-trim">Leading Trim</a></li><li><a class="nav-link" href="#choosing-a-typeface">Choosing a Typeface</a></li><li><a class="nav-link" href="#type-scale">The Type Scale</a></li><li><a class="nav-link" href="#line-height-and-measure">Line Height and Measure</a></li><li><a class="nav-link" href="#variable-fonts">Variable Fonts</a></li><li><a class="nav-link" href="#opentype-features">OpenType Features</a></li><li><a class="nav-link" href="#formatting-numbers">Formatting Numbers</a></li><li><a class="nav-link" href="#hyphenation-and-breaks">Hyphenation and Line Breaks</a></li><li><a class="nav-link" href="#truncation">Truncation and Hostile Content</a></li><li><a class="nav-link" href="#font-loading">Font Loading</a></li><li><a class="nav-link" href="#rendering-and-weight">Rendering and Weight</a></li><li><a class="nav-link" href="#type-tokens">Type Tokens</a></li><li><a class="nav-link" href="#text-accessibility">Text Accessibility</a></li><li><a class="nav-link" href="#internationalization">Internationalization</a></li></ul>
+      </div>
+      <div class="nav-group nav-other" data-section="type">
+        <div class="nav-title">Outras seções</div>
+        <ul class="nav-list"><li><a class="nav-link" href="craft.html">Craft</a></li><li><a class="nav-link" href="color.html">Color</a></li><li><a class="nav-link" href="layout.html">Layout</a></li><li><a class="nav-link" href="motion.html">Motion</a></li><li><a class="nav-link" href="ux.html">UX</a></li><li><a class="nav-link" href="referencias.html">Referências</a></li></ul>
+      </div>
+    </nav>
+  </aside>
+  <main class="content">
+    <div class="container">
+<section class="section" data-section="type">
+        <div class="section-head" id="typography">
+          <span class="eyebrow">Seção 02</span>
+          <h2>Typography</h2>
+          <p>Texto é 90% de qualquer interface. Estas aulas são sobre os ajustes pequenos que separam texto "renderizado" de texto "composto".</p>
+        </div>
+
+        <article class="lesson" id="letter-spacing">
+          <span class="eyebrow">Typography · 01</span>
+          <h2>Letter Spacing</h2>
+          <p class="lede">Fontes são desenhadas para o tamanho de texto corrido. Quando você aumenta ou diminui muito, o espaçamento entre letras precisa de ajuste.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="tracking">
+            <div class="demo-stage">
+            <div class="tr-block"><div class="tr-heading">Craft de interface</div>
+            <div class="tr-label">Configurações da conta</div>
+            <p class="tr-body">Texto corrido foi desenhado para este tamanho e não precisa de tracking nenhum.</p></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">letter-spacing</span><input type="range" name="tracking" min="-0.06" max="0.12" step="0.005" value="0" data-unit="em"><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">text-transform: uppercase</span><input type="checkbox" name="uppercase" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Arraste o letter-spacing. Um valor atinge um título de 32px, um label de 11px e um corpo de 16px: o título quer cerca de −0,025em, o label +0,06em, o corpo zero.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Em tamanhos grandes, o espaço entre letras que parece correto a 15px fica visualmente largo, e o título parece "solto". Em tamanhos pequenos com caixa alta, as letras maiúsculas precisam de mais ar para serem lidas como palavra e não como bloco. A regra geral: quanto maior o texto, mais apertado; quanto menor e mais alto (uppercase), mais aberto.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Títulos grandes (28px+):</strong> <code>letter-spacing: -0.02em</code> a <code>-0.04em</code>. Inter costuma ficar bem em -0.02em a -0.03em.</li>
+            <li><strong>Texto corrido (14 a 17px):</strong> deixe em zero. A fonte foi desenhada para isso.</li>
+            <li><strong>Labels em uppercase (10 a 12px):</strong> <code>letter-spacing: 0.04em</code> a <code>0.1em</code>.</li>
+            <li><strong>Use <code>em</code>, não <code>px</code>.</strong> Assim o ajuste escala com o tamanho da fonte.</li>
+            <li><strong>Confie no olho, não na fórmula.</strong> Ajuste até o título parecer uma unidade sólida e o label parecer respirável.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copiar" data-copied="Copiado" aria-label="Copiar"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copiar</span></button></div><pre><code><span class="k">h1</span> { font-size: <span class="n">32px</span>; letter-spacing: <span class="n">-0.025em</span>; }
+<span class="k">.eyebrow</span> { font-size: <span class="n">11px</span>; text-transform: uppercase; letter-spacing: <span class="n">0.06em</span>; }</code></pre></figure>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>A Inter tem fórmula.</strong> A calculadora Dynamic Metrics no site da Inter dá o tracking por tamanho: aproximadamente −0,006em a 14px, −0,019em a 24px, −0,021em a 32px. Use como ponto de partida.</li>
+            <li><strong>Nunca abra minúsculas.</strong> Letter-spacing positivo em texto corrido destrói o desenho das palavras e atrasa a leitura. Tracking positivo é só para caixa alta e versaletes.</li>
+            <li><strong>O peso muda a resposta.</strong> Texto display em bold pede tracking um pouco mais fechado que o regular no mesmo tamanho; pesos leves pedem um pouco mais de ar.</li>
+            <li><strong>Tracking anda com entrelinha.</strong> Tracking fechado quer line-height fechado: display 1,05 a 1,15, títulos 1,2 a 1,3, corpo 1,5 a 1,6.</li>
+            <li><strong>Números em KPIs grandes.</strong> Algarismos grandes leem mais apertados que palavras: −0,02em a −0,03em, combinados com figuras tabulares.</li>
+            <li><strong>Botões e labels em 13 a 14px medium.</strong> Zero ou −0,005em. Mais apertado que isso, labels em medium se aglomeram.</li>
+            <li><strong>Deixe o código em paz.</strong> Nunca aplique letter-spacing em texto monoespaçado ou estilizado como código; o avanço fixo é o objetivo.</li>
+            <li><strong>Confira se o kerning está ligado.</strong> <code>font-kerning: normal</code> é o padrão, mas alguns resets desligam ligaturas e kerning via <code>font-variant-ligatures: none</code>. Não faça isso.</li>
+            <li data-craftbook><strong>Entrelinha cai conforme o tamanho sobe.</strong> 12 a 16px perto de 1,5, 24px perto de 1,3, 32px perto de 1,2, 48px perto de 1,1. Tracking acompanha: +0,01em em 12px, 0 em 16, −0,02em em 32, −0,03em em 48. Essas duas tabelas sozinhas consertam a maioria das tipografias.</li>
+            <li data-typebook><strong>Por tamanho, em em.</strong> +0,01 a +0,02 em 11 a 12px, +0,005 em 14, 0 em 16, −0,01 em 20 a 24, −0,02 em 30 a 38, −0,03 de 48 para cima.</li>
+            <li data-typebook><strong>Maiúsculas sempre positivo,</strong> +0,03 a +0,08em: o espacejamento é calibrado para minúsculas.</li>
+            <li data-typebook><strong>Nunca em px.</strong> O tracking precisa escalar com o tamanho que corrige.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://rsms.me/inter/" target="_blank" rel="noopener">Rasmus Andersson, Inter</a> (dynamic metrics) · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/letter-spacing" target="_blank" rel="noopener">MDN, letter-spacing</a> · <a href="https://practicaltypography.com/letterspacing.html" target="_blank" rel="noopener">Butterick's Practical Typography</a></footer>
+        </article>
+
+<article class="lesson" id="text-wrapping">
+          <span class="eyebrow">Typography · 02</span>
+          <h2>Text Wrapping</h2>
+          <p class="lede">Uma palavra sozinha na última linha de um título estraga a composição. O CSS hoje resolve isso com uma linha.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="wrap">
+            <div class="demo-stage">
+            <div class="wrap-box">
+              <div class="tw-title">Como treinar o olho para detalhes de interface</div>
+              <p class="tw-body">Referência boa não é print bonito. É entender por que algo funciona a ponto de conseguir recriar em um playground.</p>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">max-width</span><input type="range" name="width" min="200" max="440" step="10" value="250" data-unit="px"><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">text-wrap: balance / pretty</span><input type="checkbox" name="wrap" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Estreite a caixa até sobrar uma palavra sozinha na última linha, depois ligue o text-wrap.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>O algoritmo padrão de quebra de linha é ganancioso: enche cada linha ao máximo e joga o resto para a próxima. O resultado são títulos com uma palavra órfã e parágrafos com linhas finais de duas letras. Tipógrafos ajustam isso à mão há séculos; <code>text-wrap</code> faz automaticamente.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong><code>text-wrap: balance</code></strong> em títulos e textos curtos (até 4 a 6 linhas). Equilibra o comprimento das linhas. Tem custo de layout, por isso os navegadores limitam a poucas linhas.</li>
+            <li><strong><code>text-wrap: pretty</code></strong> em parágrafos. Evita órfãs na última linha com custo menor. Suporte ainda parcial (Chrome, Safari 18+); degrada bem para o padrão.</li>
+            <li><strong>Limite a medida.</strong> <code>max-width: 60ch</code> em texto corrido. Linhas de 45 a 75 caracteres são as mais confortáveis.</li>
+            <li><strong>Evite quebras ruins em nomes e valores.</strong> <code>white-space: nowrap</code> em "R$ 1.200,00", datas e nomes de produto.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copiar" data-copied="Copiado" aria-label="Copiar"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copiar</span></button></div><pre><code><span class="k">h1, h2, h3</span> { text-wrap: balance; }
+<span class="k">p</span> { text-wrap: pretty; max-width: <span class="n">60ch</span>; }
+<span class="k">.price</span> { white-space: nowrap; }</code></pre></figure>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Cole números às unidades.</strong> <code>&amp;nbsp;</code> entre "24" e "px", "iPhone" e "15", nome e sobrenome em uma assinatura. Senão a linha quebra no pior lugar.</li>
+            <li><strong>Hifenize corpo, não títulos.</strong> <code>hyphens: auto</code> precisa de um atributo <code>lang</code> correto e ajuda colunas estreitas no mobile; em títulos parece erro.</li>
+            <li><strong>Conteúdo do usuário transborda.</strong> URLs, e-mails e tokens longos precisam de <code>overflow-wrap: anywhere</code>, ou empurram o layout para o lado.</li>
+            <li><strong>O bug de truncamento no flex.</strong> <code>text-overflow: ellipsis</code> precisa de <code>overflow: hidden</code>, <code>white-space: nowrap</code> e, dentro de flex ou grid, <code>min-width: 0</code> no filho. Esquecer o último é a falha de truncamento mais comum.</li>
+            <li><strong>Clamp de várias linhas com saída.</strong> <code>-webkit-line-clamp: 2</code> mais um <code>title</code> ou um affordance de expandir. Nunca corte texto que o usuário precisa comparar entre linhas.</li>
+            <li><strong>Reticências no meio para nomes de arquivo.</strong> "relatorio-anual…final.pdf" mantém a extensão e o final distintivo; reticências no fim escondem os dois.</li>
+            <li><strong>Label de botão nunca quebra.</strong> <code>white-space: nowrap</code> em botões, abas e chips. Se o label não cabe, encurte o texto ou alargue o controle.</li>
+            <li><strong>Medida independente do container.</strong> Um parágrafo dentro de um card largo ainda recebe <code>max-width: 60ch</code>. Cards largos não justificam linhas de 120 caracteres.</li>
+            <li data-typebook><strong>Balance tem limite de linhas.</strong> Seis no Chromium, dez no Firefox; acima disso é ignorado em silêncio. Só títulos.</li>
+            <li data-typebook><strong>Pretty ainda não está no Firefox.</strong> Aprimoramento progressivo: sem suporte, quebra padrão, nada quebra.</li>
+            <li data-typebook><strong>Recalculado a cada redimensionamento.</strong> Barato num título, desperdício num parágrafo.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://developer.chrome.com/docs/css-ui/css-text-wrap-balance" target="_blank" rel="noopener">Chrome for Developers, text-wrap: balance</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/text-wrap" target="_blank" rel="noopener">MDN, text-wrap</a></footer>
+        </article>
+
+<article class="lesson" id="tabular-numbers">
+          <span class="eyebrow">Typography · 03</span>
+          <h2>Tabular Numbers</h2>
+          <p class="lede">Em Inter e na maioria das fontes modernas, o "1" é mais estreito que o "8". Em listas, timers e tabelas, isso faz os números dançarem.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="tnum">
+            <div class="demo-stage">
+            <div class="tn-grid">
+              <ul class="num-list">
+                <li><span>Receita</span><span>1,111.11</span></li>
+                <li><span>Custos</span><span>8,888.88</span></li>
+                <li><span>Margem</span><span>2,417.05</span></li>
+              </ul>
+              <button class="num-clock" type="button" data-toggle="is-running" aria-label="Timer"></button>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">font-variant-numeric: tabular-nums</span><input type="checkbox" name="tabular" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Clique no timer para iniciar e parar. Sem figuras tabulares os decimais derivam entre as linhas e o timer treme a cada tick.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Algarismos proporcionais têm larguras diferentes para o texto ficar bonito em prosa. Mas em qualquer coluna de números, o alinhamento vertical é o que permite comparar valores de relance. E em qualquer número que muda (timer, contador, preço ao vivo), largura variável faz o layout tremer a cada tick.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Tabelas, listas de valores, dashboards:</strong> <code>font-variant-numeric: tabular-nums</code>.</li>
+            <li><strong>Qualquer número que anima ou atualiza:</strong> tabular, sempre. Inclui relógios, contadores, progresso, preços.</li>
+            <li><strong>Texto corrido:</strong> deixe proporcional. "Em 2024 tivemos 3 lançamentos" fica melhor com larguras naturais.</li>
+            <li><strong>Zero cortado</strong> (<code>font-feature-settings: "zero"</code>) ajuda a distinguir 0 de O em códigos e IDs.</li>
+            <li><strong>Verifique se a fonte tem a feature.</strong> Inter, SF, Roboto, Geist e a maioria das grotescas modernas têm. Nem toda fonte display tem.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copiar" data-copied="Copiado" aria-label="Copiar"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copiar</span></button></div><pre><code><span class="k">table, .timer, .price</span> { font-variant-numeric: tabular-nums; }
+<span class="k">.code-id</span> { font-feature-settings: <span class="s">"tnum"</span>, <span class="s">"zero"</span>; }</code></pre></figure>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Números à direita, texto à esquerda.</strong> Cabeçalhos seguem o alinhamento da coluna. Colunas numéricas centralizadas não podem ser comparadas.</li>
+            <li><strong>Mesma precisão em tudo.</strong> 2,50, não 2,5 ao lado de 3,25. Formate com <code>Intl.NumberFormat</code> para decimais, separadores e moeda seguirem o locale.</li>
+            <li><strong>Reserve largura em <code>ch</code>.</strong> Um timer indo de 9:59 para 10:00 desloca tudo à sua direita. Defina <code>min-width: 5ch</code> com base no máximo de dígitos.</li>
+            <li><strong>Sinal de menos de verdade.</strong> Use U+2212 (−) em vez de hífen para negativos. Ele tem largura compatível com dígitos e posição vertical correta.</li>
+            <li><strong>Deixe os dígitos dominarem.</strong> Unidades, símbolos de moeda e porcentagem em cor apagada ou peso mais leve, nunca em tamanho diferente que quebre a escala.</li>
+            <li><strong>Contadores animados.</strong> Figuras tabulares mais um container de largura fixa; com <code>@property</code> do CSS dá para animar uma propriedade inteira e renderizar via <code>counter()</code> sem layout shift.</li>
+            <li><strong>Datas e horas também.</strong> Timestamps em um feed ou log só alinham com figuras tabulares. Nunca use <code>oldstyle-nums</code> em UI.</li>
+            <li><strong>Zero cortado em identificadores.</strong> IDs, hashes e códigos: <code>font-feature-settings: "zero"</code> para que 0 e O não se confundam.</li>
+            <li data-typebook><strong>Quantidades à direita, identificadores à esquerda,</strong> decimais pelo separador, cabeçalho alinhado com os dados.</li>
+            <li data-typebook><strong>Formatação regional é correção.</strong> 1,234.56 é errado para uma pessoa brasileira; use Intl.</li>
+            <li data-typebook><strong>Precisão igual à decisão,</strong> valor exato a um hover.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric" target="_blank" rel="noopener">MDN, font-variant-numeric</a> · <a href="https://rsms.me/inter/#features" target="_blank" rel="noopener">Inter, OpenType features</a></footer>
+        </article>
+
+<article class="lesson" id="relative-time">
+          <span class="eyebrow">Typography · 04</span>
+          <h2>Relative Time</h2>
+          <p class="lede">"Há 2 minutos" é ótimo para escanear e inútil como referência. Bons timestamps são relativos quando recentes, absolutos quando não, e sempre deixam a data exata a um gesto.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="reltime">
+            <div class="demo-stage">
+            <div class="rt-list"><div class="rt-row"><span class="rt-what">Ana comentou</span><span class="rt-time" title="4 set 2026, 09:14" tabindex="0"><span class="rel">agora</span><span class="abs">4 set 2026, 09:14</span></span></div><div class="rt-row"><span class="rt-what">Build passou</span><span class="rt-time" title="4 set 2026, 09:02" tabindex="0"><span class="rel">há 12 min</span><span class="abs">4 set 2026, 09:02</span></span></div><div class="rt-row"><span class="rt-what">Roadmap atualizado</span><span class="rt-time" title="4 set 2026, 06:10" tabindex="0"><span class="rel">há 3 h</span><span class="abs">4 set 2026, 06:10</span></span></div><div class="rt-row"><span class="rt-what">Fatura paga</span><span class="rt-time" title="3 set 2026, 16:40" tabindex="0"><span class="rel">ontem</span><span class="abs">3 set 2026, 16:40</span></span></div><div class="rt-row"><span class="rt-what">Projeto criado</span><span class="rt-time" title="12 mar 2026, 11:00" tabindex="0"><span class="rel">12 de março</span><span class="abs">12 mar 2026, 11:00</span></span></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Tempo relativo</span><input type="checkbox" name="relative" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Passe o mouse num horário para ver a data exata. Desligue o relativo para ver por que “há 3 h” escaneia mais rápido num feed, e por que a data absoluta precisa ficar a um gesto.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Tempo relativo responde à pergunta que a pessoa tem de verdade num feed: isto é fresco? Passando de alguns dias, a pergunta muda para "quando exatamente", e "há 23 dias" obriga a fazer conta. A escala abaixo é a que a maioria dos produtos bem feitos converge, e o detalhe que separa cuidado de preguiça é o hover: a data e a hora absolutas sempre a um gesto de distância.</p>
+          <table>
+            <thead><tr><th>Idade</th><th>Mostrar</th></tr></thead>
+            <tbody>
+              <tr><td>menos de 1 minuto</td><td>"agora"</td></tr>
+              <tr><td>menos de 1 hora</td><td>"há 12 min"</td></tr>
+              <tr><td>menos de 24 horas</td><td>"há 3 h"</td></tr>
+              <tr><td>menos de 7 dias</td><td>"ontem", "sábado"</td></tr>
+              <tr><td>menos de 1 ano</td><td>"12 de março"</td></tr>
+              <tr><td>1 ano ou mais</td><td>"12 de março de 2024"</td></tr>
+            </tbody>
+          </table>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Absoluto no hover ou no toque,</strong> sempre, com o timestamp completo e o fuso se importar.</li>
+            <li><strong>Formato regional não é opcional.</strong> Separador decimal e de milhar, posição do símbolo de moeda, ordem da data. Mostrar 1,234.56 para um usuário brasileiro está errado, não é escolha de estilo.</li>
+            <li><strong>Precisão segue o uso.</strong> Quatro decimais numa lista é ruído; "R$ 1,2 mil" num relatório contábil é inaceitável.</li>
+            <li><strong>Plural correto.</strong> "1 itens" é o sintoma clássico; idiomas com regras complexas precisam de pluralização de verdade.</li>
+            <li><strong>Detalhes tipográficos que denunciam cuidado:</strong> aspas curvas, o traço certo para cada uso (hífen para compor, meia-risca para intervalos, travessão para aparte), sem parágrafos centralizados, sem justificação sem hifenização.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Hover dá a data exata.</strong> Todo timestamp relativo carrega o absoluto como title ou tooltip.</li>
+            <li><strong>Absoluto depois de uma semana.</strong> "há 23 dias" faz a pessoa calcular; "12 de março" não.</li>
+            <li><strong>Ano só quando não é este ano.</strong> "12 de março de 2024" quando o ano muda.</li>
+            <li><strong>Use o formatador da plataforma.</strong> Intl.RelativeTimeFormat e Intl.DateTimeFormat cuidam de plurais, locales e casos limite que você vai errar à mão.</li>
+            <li><strong>Figuras tabulares em colunas de horário,</strong> para o feed não tremer quando os tempos atualizam.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Craft de interfaces, handbook</em> (seções 11.2 a 11.4) · <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/RelativeTimeFormat" target="_blank" rel="noopener">MDN, Intl.RelativeTimeFormat</a> · <a href="https://practicaltypography.com/" target="_blank" rel="noopener">Butterick's Practical Typography</a></footer>
+        </article>
+
+<article class="lesson" id="optical-alignment">
+          <span class="eyebrow">Typography · 05</span>
+          <h2>Optical Alignment</h2>
+          <p class="lede">Centralizado matematicamente e centralizado visualmente são coisas diferentes. O olho vence a régua.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="optical">
+            <div class="demo-stage">
+            <div class="oa-row" data-hover>
+              <div class="oa-item"><span class="cap">Ícone de play</span><div class="play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></div></div>
+              <div class="oa-item"><span class="cap">Botão com ícone</span><button class="btn oa-btn" type="button" tabindex="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Novo item</button></div>
+              <div class="oa-item oa-quote"><span class="cap">Citação</span><p class="oa-text">“Pontuação na margem parece recuada.”</p><p class="oa-text">Uma linha comum para comparar.</p></div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Nudge do play</span><input type="range" name="nudge" min="0" max="3" step="0.5" value="1.5" data-unit="px"><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Correções ópticas</span><input type="checkbox" name="optical" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Passe o mouse na fileira para ver as guias. O nudge leva o triângulo ao centro visual; as correções reduzem o padding do lado do ícone e penduram a aspa.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>O olho lê massa visual, não bounding box. Um triângulo de play tem mais peso à esquerda, então centralizado ele parece deslocado para a esquerda. Um ícone dentro de um botão tem menos "tinta" que o texto, então parece ter mais padding do lado dele. Aspas e travessões na margem esquerda parecem um recuo. Nenhuma dessas coisas está errada na régua, e todas parecem erradas.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Ícones com formas assimétricas</strong> (play, setas, envio): desloque 1 a 2px na direção da massa. Use <code>transform: translateX()</code> ou ajuste o path.</li>
+            <li><strong>Botões com ícone:</strong> reduza o padding do lado do ícone em 2 a 4px, ou dê ao ícone um <code>margin-left</code> negativo.</li>
+            <li><strong>Pontuação na margem:</strong> <code>hanging-punctuation: first</code> (Safari) ou <code>text-indent</code> negativo em citações.</li>
+            <li><strong>Texto e ícone na mesma linha:</strong> alinhe pela linha de base ou pela altura-x, não pelo centro do box. Ícones de 1em com <code>vertical-align: -0.125em</code> costumam cair certo.</li>
+            <li><strong>Letras com formas redondas ou pontudas</strong> (O, A, V) em títulos alinhados à esquerda podem precisar de <code>margin-left</code> negativo de 1 a 2px.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copiar" data-copied="Copiado" aria-label="Copiar"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copiar</span></button></div><pre><code><span class="k">.play svg</span> { transform: <span class="f">translateX</span>(<span class="n">1.5px</span>); }  <span class="c">/* compensa a massa do triângulo */</span>
+<span class="k">.btn--icon-left</span> { padding-left: <span class="n">10px</span>; padding-right: <span class="n">14px</span>; }
+<span class="k">blockquote</span> { hanging-punctuation: first; }</code></pre></figure>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Centralize na altura das maiúsculas, não na line box.</strong> Texto tem meia-entrelinha em cima e embaixo. Ícones ao lado de texto ficam certos quando centralizados nas capitulares (cerca de 0,7em), o que costuma significar subir 0,5 a 1px.</li>
+            <li><strong>Side bearings deslocam a borda esquerda.</strong> Glifos carregam 0,05 a 0,1em de espaço embutido. Um título sobre um parágrafo, ou texto dentro de um botão com borda, parece recuado; uma margem negativa de 1 a 2px resolve.</li>
+            <li><strong>Círculos parecem menores que quadrados.</strong> Um avatar redondo ao lado de um thumbnail quadrado do mesmo tamanho parece 5 a 10% menor. Aumente o círculo.</li>
+            <li><strong>Centralização vertical em botões.</strong> Fontes com ascendentes altas fazem o texto parecer baixo. Use <code>line-height: 1</code> com altura explícita e confira com uma guia horizontal; às vezes 1px extra de padding inferior é a solução.</li>
+            <li><strong>Checkboxes alinham à primeira linha.</strong> Ao lado de um label de várias linhas, alinhe o controle à primeira linha de base, não ao centro do bloco.</li>
+            <li><strong>Dígitos têm altura de maiúscula.</strong> Em uma fileira de chips misturando "12" e "rascunho", o número parece mais alto porque não tem descendente nem altura-x. Dê 1px a mais de padding superior a chips só numéricos, ou aceite conscientemente.</li>
+            <li><strong>Chevrons e setas ficam baixos.</strong> Glifos direcionais de um grid de 24px leem baixos ao lado de minúsculas. Suba 0,5 a 1px.</li>
+            <li><strong>Corrija o path, não o layout.</strong> Com SVG você desloca a arte dentro do viewBox uma vez, e toda instância fica alinhada sem gambiarra por uso.</li>
+            <li data-typebook><strong>Alinhe ícone à altura de capitular e à linha de base,</strong> não à caixa do texto. Leading trim torna automático.</li>
+            <li data-typebook><strong>O ajuste de 1px no botão</strong> é sintoma do meio-espaço; corte a caixa em vez disso.</li>
+            <li data-typebook><strong>Colunas de tamanhos diferentes alinham pela primeira linha de base,</strong> não pela caixa.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://medium.com/design-bridges/optical-effects-9fca82b4cd9a" target="_blank" rel="noopener">Slava Shestopalov, Optical Effects in User Interfaces</a> · <a href="https://en.wikipedia.org/wiki/Optical_margin_alignment" target="_blank" rel="noopener">Wikipedia, Optical margin alignment</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/hanging-punctuation" target="_blank" rel="noopener">MDN, hanging-punctuation</a></footer>
+        </article>
+
+<article class="lesson" id="icons">
+          <span class="eyebrow">Typography · 06</span>
+          <h2>Icons</h2>
+          <p class="lede">Ícones são tipografia: precisam do mesmo peso, do mesmo tamanho óptico e da mesma linha de base que o texto ao lado.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="icons">
+            <div class="demo-stage">
+            <div class="icons-block"><div class="icon-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h18M3 6h18M3 18h18"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg></div>
+            <div class="icon-inline-row">
+              <span class="icon-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg>Notificações</span>
+              <span class="icon-inline icon-inline--lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg>Notificações</span>
+            </div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Tamanho</span><input type="range" name="size" min="12" max="28" step="2" value="16" data-unit="px"><output></output></label><label class="ctl"><span class="ctl-label">stroke-width</span><input type="range" name="stroke" min="1" max="2.5" step="0.25" value="1.75" data-unit="px"><output></output></label></div>
+          </div>
+            <figcaption class="demo-caption">Arraste tamanho e traço. Ao lado de texto de 13px, 16px com traço de 1,75px fica certo; a 28px os mesmos ícones começam a gritar.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Um set de ícones com traços de 1.5px ao lado de outro com 2px é tão perceptível quanto misturar duas fontes. O mesmo vale para tamanhos: um ícone de 24px ao lado de texto de 14px pesa demais. Ícones bem postos desaparecem na leitura; ícones mal postos gritam.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Uma família só.</strong> Lucide, Phosphor, SF Symbols, Heroicons. Se precisar de um ícone que não existe, desenhe seguindo o grid e o traço da família.</li>
+            <li><strong>Traço igual ao peso do texto.</strong> Texto regular de 14px combina com traço de 1.5 a 1.75px. Texto medium/semibold, traço de 2px.</li>
+            <li><strong>Tamanho por contexto.</strong> 16px ao lado de texto de 13 a 14px; 20px em toolbars; 24px só em navegação principal. Inline, use <code>1em</code>.</li>
+            <li><strong>Herde a cor.</strong> <code>stroke: currentColor</code> ou <code>fill: currentColor</code>, para o ícone seguir o estado do texto (hover, disabled).</li>
+            <li><strong>Alinhe pela óptica.</strong> Ícones com formas assimétricas pedem o mesmo nudge da aula anterior.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copiar" data-copied="Copiado" aria-label="Copiar"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copiar</span></button></div><pre><code><span class="k">.icon</span> { width: <span class="n">1em</span>; height: <span class="n">1em</span>; vertical-align: <span class="n">-0.125em</span>; stroke: currentColor; stroke-width: <span class="n">1.75</span>; }
+<span class="k">.toolbar .icon</span> { width: <span class="n">20px</span>; height: <span class="n">20px</span>; }</code></pre></figure>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Tamanhos ópticos existem.</strong> O mesmo glifo a 16px precisa de menos detalhe e traço relativamente mais grosso. Sets com variantes pequenas dedicadas (Phosphor, Radix, Heroicons mini) ficam mais nítidos que ícones de 24px reduzidos.</li>
+            <li><strong>Gap pelo tamanho do texto.</strong> 6 a 8px entre ícone e texto de 13 a 14px; 8 a 10px a 16px. Gap demais descola o ícone do label.</li>
+            <li><strong>Tamanhos de botão só-ícone.</strong> Ícone de 16px em botão de 32px, 20px em 36 a 40px. O ícone ocupa cerca de metade do controle.</li>
+            <li><strong>Preenchido significa selecionado.</strong> Use o glifo de contorno no default e o gêmeo preenchido no estado ativo (tab bars, toggles). Semântica consistente, sem precisar de cor.</li>
+            <li><strong>Cor só com significado.</strong> <code>currentColor</code> para acionável, cinza apagado para secundário, vermelho ou verde só para status. Cor decorativa em ícone é ruído.</li>
+            <li><strong>Encaixe o traço no pixel.</strong> Um traço de 1,5px de um viewBox 24 renderizado a 16px cai em meio pixel e desfoca em DPR 1×. Prefira tamanhos que mantenham o traço em pixels inteiros, e teste em tela não retina.</li>
+            <li><strong>Direção tem convenção.</strong> Chevron à direita navega, chevron para baixo expande, seta para cima-direita abre externamente. Misturar confunde sem ninguém saber por quê.</li>
+            <li><strong>Esconda do leitor de tela, rotule o botão.</strong> <code>aria-hidden="true"</code> em ícones decorativos; <code>aria-label</code> explícito em todo botão só-ícone.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://developer.apple.com/design/human-interface-guidelines/sf-symbols" target="_blank" rel="noopener">Apple HIG, SF Symbols</a> (weights e escalas alinhadas ao texto) · <a href="https://lucide.dev/guide/design/icon-design-guide" target="_blank" rel="noopener">Lucide, Icon design guide</a></footer>
+        </article>
+
+<article class="lesson" id="font-smoothing">
+          <span class="eyebrow">Typography · 07</span>
+          <h2>Font Smoothing</h2>
+          <p class="lede">No macOS, texto claro em fundo escuro parece mais grosso do que deveria. Um ajuste de renderização corrige isso, mas só ali.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="smooth">
+            <div class="demo-stage">
+            <div class="fs-pair">
+              <div class="fs-box sp"><span class="cap">-webkit-font-smoothing: auto</span>Texto claro em fundo escuro renderiza mais pesado por causa do bleed de luminosidade dos pixels acesos.</div>
+              <div class="fs-box aa"><span class="cap">-webkit-font-smoothing: antialiased</span>Texto claro em fundo escuro renderiza mais pesado por causa do bleed de luminosidade dos pixels acesos.</div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">font-weight</span><input type="range" name="weight" min="300" max="700" step="100" value="400" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Superfície escura</span><input type="checkbox" name="darksurface" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Arraste o peso e troque a superfície. Visível só em WebKit e Blink no macOS; em superfície clara com peso baixo, texto antialiased fica apagado.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>O macOS engrossa levemente o texto ao renderizar (uma herança do antigo subpixel antialiasing, que a Apple removeu no Mojave, mas o "peso extra" ficou). Em fundo claro isso ajuda a legibilidade. Em fundo escuro, pixels claros irradiam sobre o preto ao redor, e o texto parece inchado. <code>-webkit-font-smoothing: antialiased</code> força o antialiasing em escala de cinza sem o engrossamento, e o texto volta ao peso que o designer da fonte pretendia.</p>
+          <p>O debate na comunidade é se vale aplicar em tudo. O risco: em fundo claro, texto pequeno e regular pode ficar fino demais. Por isso a recomendação mais cuidadosa é aplicar em superfícies escuras, ou globalmente apenas se você conferir o resultado em textos de 13 a 14px.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Dark mode:</strong> <code>-webkit-font-smoothing: antialiased</code> e <code>-moz-osx-font-smoothing: grayscale</code> no body. É o que este site faz.</li>
+            <li><strong>Light mode:</strong> teste. Inter em 14px regular costuma ficar OK; fontes mais finas podem sofrer.</li>
+            <li><strong>Textos claros em fundo escuro dentro de um tema claro</strong> (botões primários, tooltips, toasts): aplique localmente no componente.</li>
+            <li><strong>Só macOS.</strong> Windows e Linux ignoram a propriedade. Não conte com ela para "corrigir" peso de fonte cross-platform.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copiar" data-copied="Copiado" aria-label="Copiar"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copiar</span></button></div><pre><code><span class="c">/* Aplicado só quando o fundo é escuro */</span>
+:root[data-theme=<span class="s">"dark"</span>] body,
+<span class="k">.btn-primary, .tooltip</span> {
+  <span class="p">-webkit-font-smoothing</span>: antialiased;
+  <span class="p">-moz-osx-font-smoothing</span>: grayscale;
+}</code></pre></figure>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Texto que anima pisca.</strong> No Chrome do macOS, texto em uma camada animada com <code>transform</code> ou <code>opacity</code> troca o modo de renderização no meio. Mantenha <code>-webkit-font-smoothing: antialiased</code> constante em texto animado para ele não "estalar" no fim.</li>
+            <li><strong>Pesos leves somem.</strong> Peso 300 em fundo claro com antialiased quase desaparece. Use 400 como mínimo no light mode.</li>
+            <li><strong>Windows renderiza mais fino.</strong> O ClearType faz a mesma fonte parecer mais leve e áspera. Confira labels pequenos no Windows; 500 em vez de 400 costuma salvar.</li>
+            <li><strong>Evite branco puro sobre preto puro.</strong> #fff sobre #000 reverbera. Este site usa #ededef sobre #0e0e10 para reduzir o brilho antes de qualquer ajuste de smoothing.</li>
+            <li><strong>Texto sobre blur precisa de base.</strong> Tipo sobre superfícies com <code>backdrop-filter</code> fica turvo; adicione um fundo translúcido fino atrás do texto.</li>
+            <li><strong>Confira telas 1×.</strong> A maioria das regras é ajustada em retina. Num monitor 1×, 13px regular com antialiased pode ficar leve demais; teste antes de aplicar globalmente.</li>
+            <li><strong><code>optimizeLegibility</code>, não <code>geometricPrecision</code>.</strong> O primeiro liga kerning e ligaturas; o segundo desliga hinting e pode piorar texto pequeno.</li>
+            <li><strong>Restrinja o escopo.</strong> Prefira aplicar a propriedade em superfícies escuras e componentes (botões primários, tooltips) a uma regra global, e expanda só depois de conferir visualmente.</li>
+            <li data-typebook><strong>A posição do handbook: não por padrão.</strong> Desde que o macOS abandonou a renderização subpixel, o ajuste principalmente afina o texto e reduz o contraste efetivo.</li>
+            <li data-typebook><strong>Se o texto parece pesado, mude peso ou tamanho.</strong> Suavização não é controle de peso.</li>
+            <li data-typebook><strong>Peso no dark mode: um degrau mais leve,</strong> ou 20 a 50 unidades variáveis, e texto quase branco.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-smooth" target="_blank" rel="noopener">MDN, font-smooth</a> · <a href="https://www.zachleat.com/web/font-smooth/" target="_blank" rel="noopener">Zach Leatherman, Laissez-faire font smoothing and anti-aliasing</a> · <a href="https://www.makingsoftware.com/" target="_blank" rel="noopener">Dan Hollick, Making Software</a> (capítulo Rasterisation and anti-aliasing)</footer>
+        </article>
+
+<article class="lesson" id="hierarchy-without-size">
+          <span class="eyebrow">Typography · 08</span>
+          <h2>Hierarchy Without Size</h2>
+          <p class="lede">O instinto para tornar algo importante é aumentar. Peso, cor e espaço fazem o mesmo trabalho com mais silêncio.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="hier">
+            <div class="demo-stage">
+            <div class="hier-card">
+              <div class="hier-title">Revisão trimestral</div>
+              <div class="hier-meta">Design · Sexta · 4 pessoas</div>
+              <p class="hier-body">Passar pelas métricas, decidir o que cortar e fechar as duas apostas do próximo trimestre.</p>
+              <div class="hier-foot">Atualizado há 2 horas por Ana</div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Só tamanho</span><input type="checkbox" name="sizeonly" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Troque para só tamanho: quatro tamanhos de fonte, um peso, uma cor. Volte: um tamanho, hierarquia por peso, cor e espaço.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Uma tela em que cada nível de importância ganha o próprio tamanho de fonte acaba gritando. Títulos enormes, labels minúsculos, e o olho quica entre eles sem descansar. Olhe as interfaces que você acha calmas, um bom cliente de e-mail, um bom app de notas, e vai notar que a maior parte do texto tem o mesmo tamanho. O que separa um título de uma legenda é que um é mais pesado e mais escuro, o outro mais leve e mais cinza, e há ar entre eles.</p>
+          <p>É também por isso que um conjunto fixo de cinco tamanhos basta para um produto inteiro. Tamanho marca os saltos grandes: título da página, seção, corpo. Tudo no meio é peso, cor e espaçamento.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Comece com um tamanho só.</strong> Componha um card ou uma linha de lista inteiramente no tamanho de corpo, depois crie a hierarquia com peso (600 no título, 400 no resto) e cor (cheia no título, apagada na descrição, sutil nos metadados).</li>
+            <li><strong>Adicione tamanho só quando peso e cor não bastarem.</strong> Normalmente isso significa o título da página e nada mais numa tela densa.</li>
+            <li><strong>Espaço faz parte.</strong> Um título com 4px abaixo pertence ao texto de baixo; com 16px abaixo, vira cabeçalho de um grupo.</li>
+            <li><strong>Três cores de texto cobrem quase tudo.</strong> Primária, apagada, sutil. Um quarto nível costuma significar que o conteúdo precisa de edição, não de outro tom.</li>
+            <li><strong>Confira em escala de cinza.</strong> Se a hierarquia desaparece sem cor, ela estava apoiada no acento, não em peso e espaço.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Dois pesos costumam bastar.</strong> Regular para conteúdo, semibold para o que lidera. Medium como terceiro degrau para labels. Títulos em bold numa UI densa dominam tudo em volta.</li>
+            <li><strong>Cor carrega a importância para baixo.</strong> Texto cheio para a coisa em si, apagado para a descrição, sutil para metadados como horário. Três níveis, usados com consistência.</li>
+            <li><strong>Proximidade agrupa, distância separa.</strong> Espaço apertado prende um título à sua descrição; o vão maior antes do próximo item é o que faz cada grupo ser lido como unidade.</li>
+            <li><strong>Deixe o número ser o herói.</strong> Num KPI ou num preço, o algarismo pode ser o único lugar onde o tamanho sobe, com o label pequeno e apagado ao lado.</li>
+            <li><strong>Não encolha para rebaixar.</strong> Deixar metadados em 11px e cinza claro ao mesmo tempo os torna ilegíveis. Rebaixe uma dimensão por vez: cor mais clara no mesmo tamanho, ou tamanho menor na cor cheia.</li>
+            <li><strong>Confira no celular.</strong> Hierarquia construída em diferenças sutis de peso e cor precisa sobreviver a uma tela pequena e clara ao ar livre.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> Adam Wathan e Steve Schoger, <em>Refactoring UI</em> (hierarchy is everything) · <a href="https://practicaltypography.com/" target="_blank" rel="noopener">Butterick's Practical Typography</a> · <a href="https://rsms.me/inter/" target="_blank" rel="noopener">Inter</a> (faixa de pesos)</footer>
+        </article>
+              <article class="lesson" id="font-metrics">
+          <span class="eyebrow">Typography · 09</span>
+          <h2>Font Metrics</h2>
+          <p class="lede">A caixa que o navegador desenha em volta do texto não corresponde à forma das letras. Todo hack de 1px de padding em toda base de código existe por causa dessa distância.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="metrics">
+            <div class="demo-stage">
+            <div class="fm-wrap"><div class="fm-box"><span class="fm-glyphs">Ahxg</span><i class="fm-line fm-top"></i><i class="fm-line fm-cap"><b>cap</b></i><i class="fm-line fm-x"><b>x</b></i><i class="fm-line fm-base"><b>base</b></i><i class="fm-line fm-bottom"></i><i class="fm-half fm-half-top"></i><i class="fm-half fm-half-bot"></i></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Altura de linha</span><input type="range" name="lh" min="1.0" max="2.0" step="0.1" value="1.5" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Mostrar a caixa</span><input type="checkbox" name="box" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Arraste a altura de linha. A caixa cresce igualmente acima e abaixo, mas as letras nunca estiveram centralizadas nela: a folga acima das maiúsculas não é a folga abaixo da linha de base. Essa diferença é todo hack de 1px de padding.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Um arquivo de fonte declara um ascent e um descent, os limites verticais da sua caixa. Esses números são escolhas do designer de tipos, não medidas. Quase sempre incluem folga acima das ascendentes e abaixo das descendentes, e a folga varia enormemente entre fontes. Então duas fontes no mesmo tamanho em pixels ocupam alturas diferentes e carregam quantidades diferentes de espaço morto. Troque a fonte e o espaçamento do produto inteiro quebra. Um botão com padding simétrico parece ter o rótulo baixo demais. Um título parece ter mais espaço em cima do que embaixo, com margens iguais.</p>
+          <p>Quando você define uma altura de linha maior que a altura de conteúdo da fonte, o navegador divide a diferença igualmente acima e abaixo: o meio-espaço. Como a caixa já era assimétrica em relação às letras visíveis, o resultado também é assimétrico. Texto centralizado numa caixa raramente parece centralizado.</p>
+          <p>A métrica que governa o tamanho percebido é a altura-x, o topo das minúsculas. Duas fontes em 16px podem parecer tamanhos diferentes se as alturas-x diferirem. Fontes com altura-x alta parecem maiores e leem melhor pequenas. Ao trocar de fonte, iguale a altura-x, não o font-size.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Coloque um fundo atrás de um título</strong> e olhe o espaço morto. É o problema inteiro, visível.</li>
+            <li><strong>Iguale a altura-x ao trocar de fonte.</strong> A nova fonte vai precisar de um número diferente para parecer do mesmo tamanho.</li>
+            <li><strong>Espere assimetria do meio-espaço.</strong> Corrija com leading trim, não com padding.</li>
+            <li><strong>Fontes de interface querem altura-x alta.</strong> A maior parte do texto na tela é pequena.</li>
+            <li><strong>Tipo de exibição e tipo de texto no mesmo produto</strong> raramente compartilham o mesmo tamanho numérico.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Ascent e descent são opiniões.</strong> Duas fontes em 16px podem diferir em vários pixels de altura de caixa.</li>
+            <li><strong>O meio-espaço divide igualmente,</strong> então uma caixa assimétrica continua assimétrica em qualquer altura de linha.</li>
+            <li><strong>Altura-x decide o tamanho percebido.</strong> Iguale ela, não o número, ao trocar de fonte.</li>
+            <li><strong>Teste do fundo colorido.</strong> Pinte a caixa atrás de um título para ver a folga.</li>
+            <li><strong>Ferramentas de design cortavam, navegadores não.</strong> Daí veio a maior parte da diferença de espaçamento entre design e código.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Tipografia para design engineers, handbook</em> (capítulo 2) · <a href="https://seek-oss.github.io/capsize/" target="_blank" rel="noopener">Capsize, métricas de fonte explicadas</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/line-height" target="_blank" rel="noopener">MDN, line-height</a></footer>
+        </article>
+
+        <article class="lesson" id="leading-trim">
+          <span class="eyebrow">Typography · 10</span>
+          <h2>Leading Trim</h2>
+          <p class="lede">O CSS agora consegue cortar o espaço morto acima e abaixo do texto para que a caixa do elemento corresponda ao que o olho vê. O espaçamento vira previsível, botões centralizam de verdade, e trocar de fonte deixa de quebrar o layout.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="trim">
+            <div class="demo-stage">
+            <div class="lt-wrap"><button class="lt-btn" type="button" tabindex="-1"><span>Salvar alterações</span></button><div class="lt-block"><h4 class="lt-h">Resumo semanal</h4><p class="lt-p">Quatro relatórios foram enviados e dois aguardam revisão.</p></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Padding do botão</span><input type="range" name="pad" min="4" max="20" step="1" value="12" data-unit="px"><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">text-box: trim-both cap alphabetic</span><input type="checkbox" name="trim" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Arraste o padding e veja o rótulo baixo no botão. Ligue o corte: a caixa agora termina nas maiúsculas e na linha de base, o padding é simétrico de verdade e o título abraça o fundo.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Durante anos não havia como remover a folga que uma fonte declara. Times subtraíam pixels do padding, adicionavam margens negativas, calculavam offsets por fonte, e refaziam tudo quando o tipo mudava. A propriedade que resolve é <code>text-box</code>, atalho para <code>text-box-trim</code> e <code>text-box-edge</code>. Corte as duas bordas e escolha quais: <code>cap</code> para o topo das maiúsculas, <code>ex</code> para a altura-x, <code>alphabetic</code> para a linha de base.</p>
+          <p>Com o corte ativo, uma margem de 24px entre um título e um parágrafo são 24 pixels visuais, não 24 mais uma quantidade desconhecida de folga da fonte. Um botão com 12px em cima e embaixo tem o rótulo opticamente centralizado sem correção. O layout deixa de depender de números arbitrários num arquivo de fonte. E ferramentas de design já cortavam verticalmente, então design e código finalmente concordam.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Títulos, botões, rótulos:</strong> <code>text-box: trim-both cap alphabetic</code>. Botões são onde rende primeiro.</li>
+            <li><strong>Texto corrido:</strong> <code>text-box: trim-both ex alphabetic</code> corta só o excesso.</li>
+            <li><strong>Cuidado com descendentes e acentos.</strong> Com o corte ativo, g, p, y e diacríticos podem encostar nas bordas ou ser cortados por <code>overflow: hidden</code>. Teste com "ação", "português", "Ângulo".</li>
+            <li><strong>Aprimoramento progressivo.</strong> Navegadores antigos ignoram e mostram o espaçamento antigo. Aplique de forma aditiva, ou proteja os novos espaçamentos com <code>@supports</code> quando a identidade visual é rígida.</li>
+            <li><strong>Produtos traduzidos: corte com suavidade.</strong> Algumas escritas excedem as métricas latinas e recortam.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copiar" data-copied="Copiado" aria-label="Copiar"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copiar</span></button></div><pre><code><span class="k">h1, h2, h3, button, .label</span> { text-box: trim-both cap alphabetic; }
+<span class="k">p</span> { text-box: trim-both ex alphabetic; }</code></pre></figure>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Botões primeiro.</strong> O problema do padding simétrico desaparece com cap alphabetic.</li>
+            <li><strong>Títulos com cap, prosa com ex.</strong> A prosa mantém as descendentes respirando.</li>
+            <li><strong>Teste acentos e descendentes</strong> contra qualquer contêiner com overflow: hidden.</li>
+            <li><strong>Adoção aditiva em produtos novos,</strong> @supports em identidades rígidas.</li>
+            <li><strong>Ícones alinham de graça.</strong> Altura de capitular à linha de base é o que o olho sempre quis.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Tipografia para design engineers, handbook</em> (capítulo 3) · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/text-box" target="_blank" rel="noopener">MDN, text-box</a> · <a href="https://developer.chrome.com/blog/css-text-box-trim" target="_blank" rel="noopener">Chrome for Developers, CSS text-box-trim</a></footer>
+        </article>
+
+        <article class="lesson" id="choosing-a-typeface">
+          <span class="eyebrow">Typography · 11</span>
+          <h2>Choosing a Typeface</h2>
+          <p class="lede">Critérios de interface não são critérios editoriais. Altura-x alta, caracteres inconfundíveis, algarismos tabulares, três pesos utilizáveis, os acentos que o seu idioma exige e uma licença que cubra onde a fonte vai de fato aparecer.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="glyphs">
+            <div class="demo-stage">
+            <div class="gy-wrap"><span class="gy-sample">Il1| 0OQ rn/m 5S 8B</span><span class="gy-id">ID: I1lO0 · <span class="gy-pw">l1Il0O</span></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Conjunto de desambiguação (ss02)</span><input type="checkbox" name="disamb" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Tamanho pequeno</span><input type="checkbox" name="small" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">A string de teste que toda fonte de interface precisa passar. Ligue o conjunto estilístico e o I maiúsculo ganha serifas, o l ganha cauda e o zero uma barra. Encolha: é assim que identificadores aparecem de fato.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Oitenta por cento do texto de interface é pequeno, então altura-x vem primeiro. Depois desambiguação: um I maiúsculo idêntico ao l minúsculo é um defeito sério em qualquer produto que mostre identificadores, códigos ou senhas. Teste o conjunto <code>Il1| 0OQ rn/m 5S 8B</code> antes de qualquer coisa. Um zero cortado ou pontuado resolve o par mais crítico. Algarismos tabulares não são opcionais; sem eles, tudo que muda treme. Você precisa de pelo menos três pesos visivelmente diferentes, e muitas famílias vêm com sete pesos com degraus imperceptíveis entre vizinhos. Português exige ã õ ç e os acentos agudo, circunflexo e grave bem desenhados, não como remendo que colide com a linha acima. Um arquivo variável costuma pesar menos que três estáticos e abre eixos. E a licença precisa cobrir web, aplicativo e imagens de marketing; esse item mata projetos tarde com frequência surpreendente.</p>
+          <p>Fontes de sistema têm vantagens reais: zero bytes, zero deslocamento, renderização da plataforma, familiaridade nativa. O custo é que o produto parece diferente em cada sistema e você perde controle sobre métricas e recursos. Uma divisão razoável: fonte de sistema para utilitários densos, fonte própria para produtos com identidade, e a pilha do sistema como reserva calibrada em qualquer caso.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Uma família bem explorada</strong> vence duas mal combinadas. Uma segunda se justifica para mono em dados, exibição de marca ou leitura longa. Se você não sabe explicar por que existem duas, existe uma a mais.</li>
+            <li><strong>Combinar exige algo em comum e algo diferente.</strong> Altura-x e largura parecidas; estrutura e contraste diferentes. Duas sem serifa geométricas parecidas leem como inconsistência.</li>
+            <li><strong>Tipos diferentes na mesma altura-x precisam de tamanhos diferentes.</strong> Ajuste até parecerem iguais, não até os números baterem.</li>
+            <li><strong>Leia a documentação da fonte.</strong> Conjuntos estilísticos costumam conter exatamente a correção que você precisa, e a maioria dos times nunca olha.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Digite Il1| 0OQ antes de qualquer coisa.</strong> Se parecem iguais, siga adiante.</li>
+            <li><strong>Três pesos distinguíveis,</strong> não sete quase idênticos.</li>
+            <li><strong>Confira ã õ ç e acentos empilhados</strong> contra a linha acima.</li>
+            <li><strong>Licença cobre web, app e marketing.</strong> Pergunte antes de se apaixonar.</li>
+            <li><strong>Pilha de sistema para ferramentas densas;</strong> fonte própria para identidade; reserva calibrada em qualquer caso.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Tipografia para design engineers, handbook</em> (capítulo 4) · <a href="https://practicaltypography.com/system-fonts.html" target="_blank" rel="noopener">Matthew Butterick, Practical Typography</a> · <a href="https://rsms.me/inter/#features" target="_blank" rel="noopener">Inter, recursos OpenType</a></footer>
+        </article>
+
+        <article class="lesson" id="type-scale">
+          <span class="eyebrow">Typography · 12</span>
+          <h2>The Type Scale</h2>
+          <p class="lede">Uma escala modular pura produz pixels fracionários e degraus grandes demais justamente onde a interface precisa de mais granularidade. Use uma híbrida: densa e arredondada embaixo, geométrica em cima.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="scale">
+            <div class="demo-stage">
+            <div class="sc2-bars"></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Razão</span><input type="range" name="ratio" min="1.125" max="1.5" step="0.025" value="1.25" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Escala híbrida</span><input type="checkbox" name="hybrid" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Arraste a razão. Uma escala modular dá tamanhos fracionários e pula os degraus de 1px que texto pequeno precisa. A híbrida mantém inteiros, densa embaixo e proporcional em cima.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>O método clássico escolhe uma razão e multiplica: 1,125, 1,2, 1,25, 1,333 e assim por diante. Com 1,25 a partir de 16 você obtém 12,8, 16, 20, 25, 31,25, 39. Números fracionários renderizam borrados, e os saltos na ponta pequena são grandes demais: a diferença entre 11 e 12 pixels importa numa tabela, e a escala modular pula isso. Uma escala híbrida mantém degraus de 1px na base, onde importam, e cresce proporcionalmente em cima: 11, 12, 13, 14, 16, 18, 20, 24, 30, 38, 48. Onze passos cobrem qualquer produto. Este site usa cinco deles de propósito.</p>
+          <p>O corpo é a âncora. Catorze para ferramentas densas e painéis, dezesseis para produtos gerais e qualquer coisa com leitura. No mobile, dezesseis é o piso por um motivo técnico além da legibilidade: campos abaixo de 16px disparam zoom automático no iOS ao receber foco, um dos atritos mais irritantes de formulário mobile.</p>
+          <p>Tipografia fluida escala tamanhos com a viewport via <code>clamp()</code>. A armadilha de acessibilidade: se o valor do meio usar só unidades de viewport, o texto deixa de responder ao zoom. Sempre inclua um componente em rem. E o julgamento: fluida é excelente em páginas de marketing e frequentemente desnecessária em interface de aplicação, onde a densidade deve ser estável. Ali, escalone por ponto de quebra.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Só inteiros.</strong> Tamanhos fracionários rasterizam borrados em telas de baixa densidade.</li>
+            <li><strong>Corpo primeiro, depois para cima e para baixo.</strong> Catorze ou dezesseis, escolhido pela densidade.</li>
+            <li><strong>Campos em 16px no mobile,</strong> sempre.</li>
+            <li><strong>Três pesos.</strong> 400 no corpo, 500 em rótulos e ênfase sutil, 600 em títulos e ação primária. Pule o 700 se o 600 está carregado.</li>
+            <li><strong><code>font-synthesis: none</code>.</strong> Nunca deixe o navegador falsificar peso ou itálico.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copiar" data-copied="Copiado" aria-label="Copiar"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copiar</span></button></div><pre><code>/* fluida, mas ainda com zoom: o termo em rem mantém honesto */
+<span class="k">h1</span> { font-size: <span class="f">clamp</span>(<span class="n">1.75rem</span>, <span class="n">1.2rem</span> + <span class="n">2</span>.5vw, <span class="n">3rem</span>); }</code></pre></figure>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>11 · 12 · 13 · 14 · 16 · 18 · 20 · 24 · 30 · 38 · 48.</strong> Escolha um subconjunto e pare.</li>
+            <li><strong>Degraus de 1px na base</strong> são a granularidade que tabelas e rótulos precisam.</li>
+            <li><strong>Âncora no corpo:</strong> 14 denso, 16 geral, nunca abaixo de 16 em campos no mobile.</li>
+            <li><strong>Tipo fluido precisa de um termo em rem</strong> ou deixa de dar zoom.</li>
+            <li><strong>400 / 500 / 600.</strong> Pule o 700, desligue a síntese.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Tipografia para design engineers, handbook</em> (capítulo 5) · <a href="https://utopia.fyi/" target="_blank" rel="noopener">Utopia, calculadora de tipo fluido</a> · <a href="https://www.w3.org/WAI/WCAG22/Understanding/resize-text.html" target="_blank" rel="noopener">WCAG 2.2, Resize Text</a></footer>
+        </article>
+
+        <article class="lesson" id="line-height-and-measure">
+          <span class="eyebrow">Typography · 13</span>
+          <h2>Line Height and Measure</h2>
+          <p class="lede">Uma altura de linha para tudo é o erro mais comum em sistemas tipográficos. A altura de linha diminui conforme o tamanho cresce. A medida fica entre 45 e 75 caracteres. As duas existem pelo mesmo motivo: o olho precisa achar a próxima linha.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="measure">
+            <div class="demo-stage">
+            <p class="ms-text">Medida é o comprimento de uma linha. Entre quarenta e cinco e setenta e cinco caracteres o olho volta para a próxima linha sem esforço; mais longa e ele perde o lugar na volta, mais curta e o ritmo quebra com frequência demais. A unidade ch amarra o limite à fonte, então ele acompanha o tipo em vez de ser um número mágico.</p>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Medida</span><input type="range" name="measure" min="30" max="95" step="1" value="65" data-unit="ch"><output></output></label><label class="ctl"><span class="ctl-label">Altura de linha</span><input type="range" name="lh" min="1.1" max="1.9" step="0.05" value="1.5" data-unit=""><output></output></label></div>
+          </div>
+            <figcaption class="demo-caption">Arraste a medida além de 75 e sinta a volta ficar mais difícil. Abaixo de 45 o ritmo gagueja. Altura de linha em torno de 1,5 neste tamanho; mais apertado lê espremido, mais solto se desmancha.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Texto pequeno e denso precisa proporcionalmente de mais espaço entre linhas para o olho voltar ao início da seguinte. Cerca de 1,5 em 14 a 16px. Títulos grandes com a mesma razão ficam visivelmente soltos e deixam de ler como bloco; 1,3 em 24px, 1,15 em 38px, até 1,05 em tamanhos de exibição. Sempre sem unidade: um valor com unidade é herdado como número absoluto e quebra em filhos com tamanho diferente.</p>
+          <p>Medida é o comprimento da linha. Entre 45 e 75 caracteres para leitura contínua, ideal em torno de 65. Mais longa, o olho perde o lugar na volta. Mais curta, o ritmo quebra com frequência demais. Controle com <code>max-width: 65ch</code>, porque a unidade ch é a largura do zero na fonte atual, então o limite acompanha a tipografia em vez de ser um número mágico em pixels. Vale para prosa; rótulos, células de tabela e itens de lista não têm o problema.</p>
+          <p>O espaço entre parágrafos fica entre uma e duas alturas de linha, em torno de 1,4 vezes. Recuo e espaço entre parágrafos são alternativas, não complementos; usar os dois é erro clássico.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Altura de linha por tamanho.</strong> 1,5 em 16, 1,4 em 20, 1,3 em 24, 1,25 em 30, 1,15 em 38, 1,05 a 1,1 de 48 para cima.</li>
+            <li><strong>Sem unidade, sempre.</strong></li>
+            <li><strong><code>max-width</code> em ch</strong> para tudo que as pessoas leem de forma contínua.</li>
+            <li><strong>Espaço entre parágrafos de cerca de 1,4 altura de linha.</strong> Nunca recuo e espaço juntos.</li>
+            <li><strong>CJK adiciona cerca de 0,2</strong> a todo valor de altura de linha.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Altura de linha cai conforme o tamanho sobe.</strong> 1,5 no corpo, 1,3 em 24, 1,1 em exibição.</li>
+            <li><strong>Só sem unidade.</strong> Uma unidade congela o valor para todo filho.</li>
+            <li><strong>max-width: 65ch</strong> acompanha a fonte em vez de chutar pixels.</li>
+            <li><strong>Espaço entre parágrafos de cerca de 1,4 altura de linha.</strong> Recuo ou espaço, nunca os dois.</li>
+            <li><strong>Rótulos e células estão isentos</strong> de medida; prosa não.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Tipografia para design engineers, handbook</em> (capítulo 6) · Robert Bringhurst, <em>Elementos do Estilo Tipográfico</em> · <a href="https://practicaltypography.com/line-length.html" target="_blank" rel="noopener">Matthew Butterick, Line length</a></footer>
+        </article>
+
+        <article class="lesson" id="variable-fonts">
+          <span class="eyebrow">Typography · 14</span>
+          <h2>Variable Fonts</h2>
+          <p class="lede">Um arquivo, um espaço contínuo de variações. Peso 450 quando 400 é fraco e 500 é pesado. E o ganho mais valioso e menos usado: tamanho óptico que redesenha as letras para tamanhos pequenos e grandes automaticamente.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="varfont">
+            <div class="demo-stage" data-on="opsz auto" data-off="opsz desligado">
+            <span class="vf-text">Peso agora é um número</span><span class="vf-read"><span class="vf-w"></span> · <span class="vf-opsz"></span></span>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Peso</span><input type="range" name="wght" min="300" max="800" step="10" value="400" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Tamanho óptico</span><input type="checkbox" name="opsz" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Arraste o peso por valores que nunca existiram como arquivo: 450, 530, 610. Desligue o tamanho óptico e o corte de exibição neste tamanho dá lugar ao desenho de texto, mais largo e mais solto.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Uma fonte variável com o eixo de peso completo costuma custar menos que três arquivos estáticos, e todo peso intermediário vem de graça. Os eixos registrados são peso, largura, tamanho óptico, itálico e inclinação, mais os eixos personalizados que o designer adicionar. Peso pode ser animado de forma contínua; use com muita parcimônia, a regra de frequência e novidade da seção de Motion se aplica.</p>
+          <p>Historicamente cada tamanho de um tipo era cortado separadamente: tamanhos pequenos ganhavam traços mais robustos, contraformas abertas e espacejamento mais largo; tamanhos grandes ganhavam mais contraste e refinamento. Isso se perdeu na fotocomposição e voltou com o eixo de tamanho óptico. Quando a fonte o tem, <code>font-optical-sizing: auto</code> está ligado por padrão e o navegador aplica o desenho certo para o tamanho. O efeito é sutil por elemento e substancial na tela inteira: texto pequeno lê melhor, títulos grandes ficam mais nítidos, sem trabalho. Verifique que um reset de CSS não o desligou; muitos produtos perdem esse ganho por acidente.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Meça o arquivo.</strong> Uma variável com muitos eixos pode pesar mais que os dois estáticos que você de fato usa.</li>
+            <li><strong>Use propriedades de alto nível</strong> para eixos registrados, <code>font-weight</code> e <code>font-stretch</code>, e <code>font-variation-settings</code> só para eixos personalizados. Misturar produz conflitos difíceis de rastrear.</li>
+            <li><strong>Mantenha o tamanho óptico ligado.</strong> Verifique depois de qualquer reset.</li>
+            <li><strong>Subconjunto funciona,</strong> mas remover eixos exige ferramenta específica.</li>
+            <li><strong>Ajuste fino de peso no dark mode</strong> em 20 a 50 unidades em vez de um degrau inteiro.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Pese o arquivo</strong> contra os estáticos que você de fato usa.</li>
+            <li><strong>font-weight para wght, font-stretch para wdth.</strong> Variation settings só para eixos personalizados.</li>
+            <li><strong>Tamanho óptico ligado.</strong> Confira todo reset por font-optical-sizing: none.</li>
+            <li><strong>450 existe agora.</strong> Use quando 400 e 500 erram.</li>
+            <li><strong>Anime peso raramente.</strong> As regras de frequência e novidade valem.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Tipografia para design engineers, handbook</em> (capítulo 7) · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_fonts/Variable_fonts_guide" target="_blank" rel="noopener">MDN, Variable fonts guide</a> · <a href="https://v-fonts.com/" target="_blank" rel="noopener">v-fonts.com</a></footer>
+        </article>
+
+        <article class="lesson" id="opentype-features">
+          <span class="eyebrow">Typography · 15</span>
+          <h2>OpenType Features</h2>
+          <p class="lede">Fontes vêm com recursos desligados por padrão que resolvem problemas reais: algarismos de largura fixa, zero cortado, frações reais, pontuação para maiúsculas, conjuntos estilísticos. Um dos maiores retornos por esforço em tipografia de interface.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="otf">
+            <div class="demo-stage">
+            <div class="ot-wrap"><span class="ot-line">Vendido <span class="ot-frac">1/2</span> do lote a <span class="ot-frac">3/4</span></span><span class="ot-line ot-caps">(LOT-04) [A-Z] «BATCH»</span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Frações reais</span><input type="checkbox" name="frac" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Pontuação para maiúsculas</span><input type="checkbox" name="case" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Ligue frações e 1/2 vira um ½ desenhado. Ligue case e os parênteses, hífens e aspas angulares em volta do código em maiúsculas subem para a altura de capitular em vez de ficarem penduradas no nível das minúsculas.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Prefira as propriedades semânticas à de baixo nível. <code>font-variant-numeric</code> cuida de algarismos tabulares, zero cortado, frações diagonais e numerais antigos; <code>font-variant-caps</code> dá versalete real em vez de maiúscula reduzida; <code>font-variant-ligatures</code> controla ligaduras. Elas leem bem, cascateiam corretamente e são otimizadas pelo navegador. Para recursos sem propriedade dedicada, conjuntos estilísticos, variantes de caractere, pontuação para maiúsculas, use <code>font-feature-settings</code>.</p>
+          <p>Duas armadilhas. A propriedade de baixo nível não cascateia por recurso: redeclarar substitui a lista inteira, então defina uma vez na raiz e evite sobrescrever. E desligar alternâncias contextuais quebra o comportamento de ligaduras de fontes de programação. Em fontes de código, ligaduras que transformam um operador de seta numa seta são divisivas: ajudam a leitura para alguns e atrapalham contagem de caracteres e depuração para outros. Se as pessoas vão copiar ou depurar o código, desligue; se é decorativo, tanto faz; se é um editor, torne configurável.</p>
+
+          <h3>Onde cada coisa se aplica</h3>
+          <ul>
+            <li><strong>Interface geral:</strong> os padrões, kerning, ligaduras comuns, alternâncias contextuais.</li>
+            <li><strong>Tabelas e métricas:</strong> algarismos tabulares e zero cortado.</li>
+            <li><strong>Identificadores:</strong> zero cortado mais o conjunto que desambigua I, l e 1.</li>
+            <li><strong>Títulos em maiúsculas:</strong> pontuação ajustada e tracking positivo.</li>
+            <li><strong>Prosa:</strong> ligaduras, opcionalmente numerais antigos.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copiar" data-copied="Copiado" aria-label="Copiar"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copiar</span></button></div><pre><code>font-variant-numeric: tabular-nums slashed-zero;
+font-variant-caps: small-caps;
+font-feature-settings: <span class="s">"ss02"</span> <span class="n">1</span>, <span class="s">"case"</span> <span class="n">1</span>;   /* substitui a lista inteira: defina uma vez */</code></pre></figure>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>font-variant-* primeiro,</strong> font-feature-settings só para o que não tem propriedade.</li>
+            <li><strong>Defina feature-settings uma vez, na raiz.</strong> Redeclarar substitui a lista inteira.</li>
+            <li><strong>Tabular mais zero cortado</strong> onde números se alinham ou identificam.</li>
+            <li><strong>case para pontuação em maiúsculas,</strong> para parênteses e hífens ficarem na altura de capitular.</li>
+            <li><strong>Ligaduras de código: desligadas se as pessoas copiam ou depuram.</strong> Configuráveis em editores.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Tipografia para design engineers, handbook</em> (capítulo 9) · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric" target="_blank" rel="noopener">MDN, font-variant-numeric</a> · <a href="https://wakamaifondue.com/" target="_blank" rel="noopener">Wakamai Fondue</a></footer>
+        </article>
+
+        <article class="lesson" id="formatting-numbers">
+          <span class="eyebrow">Typography · 16</span>
+          <h2>Formatting Numbers</h2>
+          <p class="lede">Números aparecem em toda interface de produto e são tratados como detalhe na maioria. Alinhamento, precisão e formato regional são correção, não polimento.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="numfmt">
+            <div class="demo-stage">
+            <table class="nf-table"><thead><tr><th>Fatura</th><th class="nf-num">Valor</th><th class="nf-num">Parcela</th></tr></thead><tbody><tr><td class="nf-id">INV-2041</td><td class="nf-num" data-v="1234.5">1234.5</td><td class="nf-num nf-pct" data-p="12.5">12.5%</td></tr><tr><td class="nf-id">INV-2042</td><td class="nf-num" data-v="98.25">98.25</td><td class="nf-num nf-pct" data-p="3">3%</td></tr><tr><td class="nf-id">INV-2043</td><td class="nf-num" data-v="15300">15300</td><td class="nf-num nf-pct" data-p="41.75">41.75%</td></tr></tbody></table>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Números à direita</span><input type="checkbox" name="right" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Locale pt-BR</span><input type="checkbox" name="locale" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Desligue o alinhamento à direita e a coluna deixa de ser comparável. Troque o locale: separadores invertem e a moeda muda de lugar. Identificadores ficam à esquerda porque são texto, não quantidade.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Inteiros alinham à direita. Decimais alinham pelo separador. Identificadores alinham à esquerda, porque são texto, não quantidade. Percentuais à direita com o símbolo colado. Cabeçalhos de colunas numéricas alinham à direita junto com os dados; um cabeçalho à esquerda sobre números à direita é desalinhamento gratuito. Nunca centralize uma coluna numérica: a comparação vertical depende de um eixo estável.</p>
+          <p>Formato regional é correção. Separador decimal, separador de milhar, posição da moeda e formato de data variam por região, e mostrar 1,234.56 para uma pessoa brasileira é simplesmente errado. Use a API de internacionalização da plataforma em vez de formatar à mão; ela resolve plural, moeda, unidades e datas relativas de uma vez.</p>
+          <p>A precisão exibida deve corresponder à decisão, não ao dado. Listas de escaneamento arredondam e abreviam. Relatórios financeiros mostram precisão completa, sempre. Métricas de painel mostram duas casas no máximo com o valor exato no hover. Valores muito grandes abreviam com unidade e mantêm o número completo acessível. Nunca exiba mais dígitos do que a decisão exige; precisão excessiva é ruído e sugere falsa exatidão. Dígitos animados, cada posição rolando, são bonitos e caros em atenção: um placar sim, o contador do carrinho não, e só com algarismos tabulares, ou a largura muda também.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Direita para quantidades, esquerda para identificadores,</strong> cabeçalho alinhado com os dados.</li>
+            <li><strong><code>Intl.NumberFormat</code> e companhia.</strong> Nada de separador feito à mão.</li>
+            <li><strong>Duas casas em painéis, precisão completa em finanças.</strong></li>
+            <li><strong>Abrevie números grandes</strong> com o valor exato a um gesto de distância.</li>
+            <li><strong>Tabulares em tudo que muda ou se alinha.</strong> Proporcionais na prosa.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Quantidades à direita, identificadores à esquerda,</strong> decimais pelo separador, cabeçalho com os dados.</li>
+            <li><strong>Intl.NumberFormat para região,</strong> moeda, unidades e plurais.</li>
+            <li><strong>Precisão igual à decisão.</strong> Duas casas em painéis, completa em finanças.</li>
+            <li><strong>Valor exato a um hover</strong> de qualquer número arredondado ou abreviado.</li>
+            <li><strong>Dígitos rolando precisam de tabulares</strong> ou a largura anima também.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Tipografia para design engineers, handbook</em> (capítulo 10) · <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat" target="_blank" rel="noopener">MDN, Intl.NumberFormat</a></footer>
+        </article>
+
+        <article class="lesson" id="hyphenation-and-breaks">
+          <span class="eyebrow">Typography · 17</span>
+          <h2>Hyphenation and Line Breaks</h2>
+          <p class="lede">Nunca justifique sem hifenizar. Um espaço inseparável entre um número e sua unidade. URLs longas que quebram só quando precisam. Quebra de linha é onde regras pequenas evitam resultados feios, e às vezes errados.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="hyph">
+            <div class="demo-stage">
+            <p class="hy-text" lang="en">Justificação sem hifenização esticaria os espaços entre palavras até rios brancos descerem pelo parágrafo, principalmente numa coluna estreita com palavras longas como internacionalização e responsabilidade.</p>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Justificar</span><input type="checkbox" name="justify" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Hifenizar</span><input type="checkbox" name="hyphens" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Justificado sem hífens: rios. Ligue a hifenização e os espaços se nivelam. Desligue a justificação e nada disso é problema, e por isso alinhado à esquerda é o padrão.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Texto justificado sem hifenização produz vãos enormes entre palavras e rios brancos descendo pelo parágrafo. <code>hyphens: auto</code> resolve, mas só quando o documento declara o idioma certo, porque o navegador precisa das regras do idioma, e o português tem as suas. Hifenize em colunas estreitas, texto justificado e idiomas com palavras longas; evite em títulos, colunas largas e interfaces feitas de strings curtas.</p>
+          <p>Algumas quebras são erros de significado. Um número não deve se separar da unidade, um símbolo de moeda do valor, uma abreviação do número, iniciais do sobrenome, a última palavra de um título do ícone. Um espaço inseparável mantém tudo junto. E strings longas sem espaço, URLs, identificadores, nomes de arquivo, estouram o contêiner; <code>overflow-wrap: break-word</code> quebra só quando necessário, enquanto <code>word-break: break-all</code> quebra palavras arbitrariamente mesmo quando havia opção melhor.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Justifique só com hífens,</strong> e hífens só com o <code>lang</code> certo.</li>
+            <li><strong><code>&amp;nbsp;</code> entre número e unidade,</strong> moeda e valor, abreviação e número.</li>
+            <li><strong><code>white-space: nowrap</code> em nomes de produto</strong> que precisam ficar inteiros.</li>
+            <li><strong><code>overflow-wrap: break-word</code></strong> em contêineres que podem receber URLs ou ids. Nunca <code>break-all</code> em texto normal.</li>
+            <li><strong>Alinhado à esquerda por padrão.</strong> Justificação é escolha editorial com custos, não ajuste de arrumação.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>hyphens: auto precisa de lang.</strong> Sem idioma, sem regras, sem hífens.</li>
+            <li><strong>Justifique só com hífens.</strong> Senão, rios.</li>
+            <li><strong>nbsp entre número e unidade, moeda e valor, abreviação e número.</strong></li>
+            <li><strong>overflow-wrap: break-word para URLs e ids.</strong> Nunca word-break: break-all em prosa.</li>
+            <li><strong>nowrap em nomes</strong> que não podem se partir.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Tipografia para design engineers, handbook</em> (capítulo 11) · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/hyphens" target="_blank" rel="noopener">MDN, hyphens</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-wrap" target="_blank" rel="noopener">MDN, overflow-wrap</a></footer>
+        </article>
+
+        <article class="lesson" id="truncation">
+          <span class="eyebrow">Typography · 18</span>
+          <h2>Truncation and Hostile Content</h2>
+          <p class="lede">Quando o texto não cabe, alguém decide o que acontece. Se não for você, é o padrão, e o padrão costuma ser a pior opção. A regra sem exceção: o texto completo precisa continuar acessível.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="truncate">
+            <div class="demo-stage" data-strings="Q3|Revisão trimestral de receita|Revisão trimestral de receita e projeção para a expansão europeia do marketplace|Zusammenfassung der Quartalsumsatzprüfung für die europäische Marktplatzerweiterung|Relatorio_final_v3_REALMENTE_final_aprovado_juridico_2026_09_04_export.pdf|Recap do lançamento 🚀: o que saiu, o que atrasou 🐢">
+            <div class="tc-card"><span class="tc-kicker">Relatório</span><h4 class="tc-title" title=""></h4><span class="tc-meta">Atualizado há 2 horas</span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Conteúdo</span><input type="range" name="content" min="1" max="6" step="1" value="2" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Limitar a duas linhas</span><input type="checkbox" name="clamp" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Arraste por conteúdo hostil: duas letras, um título normal, um longo, alemão, um nome de arquivo sem espaços, emoji. Reticências em uma linha versus duas linhas. Passe o mouse no título: o texto completo está sempre no tooltip.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Reticências no fim para rótulos, títulos de card e itens de menu. Reticências no meio para nomes de arquivo, onde a extensão importa. Duas linhas e corte para títulos importantes e descrições. Encolher a fonte para números em destaque. Rolagem no hover, quase nunca. Qualquer que seja a estratégia, o texto completo precisa estar disponível por atributo de título, tooltip ou tela de detalhe. Truncar sem recuperação é esconder informação.</p>
+          <p>Truncamento de várias linhas usa uma sintaxe antiga e feia que funciona em todo lugar: <code>display: -webkit-box</code>, <code>-webkit-line-clamp</code>, <code>-webkit-box-orient: vertical</code>, <code>overflow: hidden</code>. O corte é por caixa, então descendentes da última linha podem ser cortados quando a altura de linha é apertada.</p>
+          <p>Todo componente com texto precisa sobreviver a conteúdo hostil: nome de duas letras, nome de 80 caracteres sem espaço, uma palavra maior que o contêiner, alemão 30% mais longo, japonês sem espaços, emoji no meio, espaços no início ou no fim, texto vazio, quebras de linha embutidas, texto que parece marcação. Cada um desses já quebrou um produto real. A lista pertence ao ambiente de desenvolvimento de componentes, não a uma auditoria posterior.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Escolha a estratégia por componente,</strong> e registre.</li>
+            <li><strong>Texto completo sempre acessível.</strong> Título, tooltip ou detalhe.</li>
+            <li><strong>Reserve espaço para texto que muda.</strong> "Salvar" e "Salvando…" compartilham a largura maior; contadores reservam dígitos com tabulares; conteúdo carregando ganha esqueleto com as dimensões certas.</li>
+            <li><strong>Strings hostis no arquivo de stories.</strong> Teste em todo estado.</li>
+            <li><strong>Min-height, não height,</strong> em tudo que contém texto.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copiar" data-copied="Copiado" aria-label="Copiar"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copiar</span></button></div><pre><code><span class="k">.clamp-2</span> {
+  display: -webkit-box;
+  <span class="p">-webkit-line-clamp</span>: <span class="n">2</span>;
+  <span class="p">-webkit-box-orient</span>: vertical;
+  overflow: hidden;
+}</code></pre></figure>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Reticências no fim para rótulos, no meio para arquivos,</strong> duas linhas para títulos.</li>
+            <li><strong>Texto completo via título, tooltip ou detalhe.</strong> Sem exceção.</li>
+            <li><strong>Strings hostis em toda story:</strong> 2 letras, 80 sem espaço, alemão, emoji, vazio.</li>
+            <li><strong>Reserve o rótulo mais largo</strong> em botões que mudam de texto.</li>
+            <li><strong>Clamp corta pela caixa.</strong> Dê espaço à última linha para as descendentes.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Tipografia para design engineers, handbook</em> (capítulo 12) · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-line-clamp" target="_blank" rel="noopener">MDN, -webkit-line-clamp</a></footer>
+        </article>
+
+        <article class="lesson" id="font-loading">
+          <span class="eyebrow">Typography · 19</span>
+          <h2>Font Loading</h2>
+          <p class="lede">Entre a primeira pintura e a chegada do arquivo de fonte, o navegador precisa fazer algo com o texto. Texto invisível ou uma troca brusca: os dois estragam a primeira impressão. A correção é uma estratégia de exibição mais uma reserva calibrada nas mesmas métricas.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="fontload">
+            <div class="demo-stage" data-loading="carregando…" data-swapped="trocou · deslocamento" data-kept="reserva mantida nesta visita (optional)" data-shift="px">
+            <div class="fl-card" role="button" tabindex="0" data-reload><b>Fontes chegam atrasadas</b><p>Clique para recarregar. A reserva aparece primeiro, a fonte web chega e cada linha que quebra em outro lugar move o layout abaixo dela.</p><span class="fl-status"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Reserva calibrada</span><input type="checkbox" name="calibrated" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">font-display: optional</span><input type="checkbox" name="optional" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Clique no card para recarregar. Reserva Arial pura: a troca move o layout. Reserva calibrada: as métricas batem e o deslocamento cai a zero. font-display: optional: nenhuma troca nesta visita.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p><code>font-display</code> decide o comportamento. <code>swap</code> mostra a reserva imediatamente e troca quando a fonte chega; é a escolha padrão para produtos com identidade tipográfica, e exige métricas calibradas para não deslocar o layout. <code>optional</code> mostra a reserva na primeira visita e nunca troca nessa visita; a partir da segunda, com a fonte em cache, as pessoas veem a sua fonte. É a opção que zera o deslocamento. <code>block</code> esconde o texto por até três segundos; evite, salvo em fontes de ícone.</p>
+          <p>Reduza o que precisa carregar. Só WOFF2. Subconjunto para os glifos que você usa; um arquivo de cobertura completa pode ser dez vezes maior que latino estendido, e verifique que os diacríticos sobreviveram. Divida por intervalo unicode para o navegador buscar só o que a página precisa. Três pesos no máximo, ou um arquivo variável. Pré-carregue só as uma ou duas faces críticas acima da dobra. E hospede você mesmo: o particionamento de cache dos navegadores acabou com o benefício de cache compartilhado dos hosts de fonte de terceiros, que hoje só adicionam uma conexão e uma dependência.</p>
+          <p>Calibrar a reserva é o que separa carregamento profissional de amador. Sobrescreva as métricas da reserva para que ela ocupe o mesmo espaço da fonte real: <code>size-adjust</code>, <code>ascent-override</code>, <code>descent-override</code>, <code>line-gap-override</code>. A ressalva importante, frequentemente omitida: <code>size-adjust</code> tem suporte amplo, mas os três descritores de override ainda não são suportados no Safari. A técnica reduz muito o deslocamento em Chromium e Firefox e não o elimina em WebKit. Se estabilidade de layout é crítica e o público é majoritariamente Apple, <code>optional</code> é mais confiável.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong><code>swap</code> com reserva calibrada,</strong> ou <code>optional</code> quando estabilidade vence identidade na primeira visita.</li>
+            <li><strong>WOFF2, subconjunto, unicode-range, três pesos, hospedagem própria.</strong></li>
+            <li><strong>Pré-carregue um ou dois arquivos,</strong> não todos.</li>
+            <li><strong>Escolha uma reserva com estrutura parecida:</strong> altura-x, classificação, largura. Depois calibre. Ferramentas calculam os overrides a partir dos dois arquivos.</li>
+            <li><strong>A disponibilidade de fontes locais varia por sistema.</strong> A reserva que renderiza no Android pode não ser a que você testou no macOS.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copiar" data-copied="Copiado" aria-label="Copiar"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copiar</span></button></div><pre><code><span class="a">@font-face</span> {
+  font-family: <span class="s">"Reserva Calibrada"</span>;
+  src: <span class="f">local</span>(<span class="s">"Arial"</span>);
+  size-adjust: <span class="n">107.4</span>%;
+  ascent-override: <span class="n">90.2</span>%;      /* ainda não no Safari */
+  descent-override: <span class="n">22.5</span>%;
+  line-gap-override: <span class="n">0</span>%;
+}
+<span class="k">body</span> { font-family: <span class="s">"Minha Fonte"</span>, <span class="s">"Reserva Calibrada"</span>, sans-serif; }</code></pre></figure>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>swap + reserva calibrada,</strong> ou optional quando a estabilidade da primeira visita importa mais.</li>
+            <li><strong>WOFF2, subconjunto, unicode-range, três pesos.</strong> Hospedagem própria.</li>
+            <li><strong>Pré-carregue um ou dois arquivos</strong> acima da dobra. Não mais.</li>
+            <li><strong>Os descritores de override não estão no Safari.</strong> size-adjust está; planeje para WebKit.</li>
+            <li><strong>Escolha uma reserva estruturalmente parecida</strong> antes de calibrar.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Tipografia para design engineers, handbook</em> (capítulo 13) · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display" target="_blank" rel="noopener">MDN, font-display</a> · <a href="https://web.dev/articles/css-size-adjust" target="_blank" rel="noopener">web.dev, Improved font fallbacks</a> · <a href="https://github.com/unjs/fontaine" target="_blank" rel="noopener">Fontaine</a></footer>
+        </article>
+
+        <article class="lesson" id="rendering-and-weight">
+          <span class="eyebrow">Typography · 20</span>
+          <h2>Rendering and Weight</h2>
+          <p class="lede">O mesmo arquivo de fonte renderiza mais pesado num sistema e mais leve em outro. Texto claro sobre escuro parece mais bold do que é. E o navegador fabrica alegremente um bold que você nunca carregou. Nada disso se corrige no arquivo; tudo isso se gerencia.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="darkweight">
+            <div class="demo-stage">
+            <div class="dw-wrap"><div class="dw-card dw-light"><b>Mesmo peso, dois temas</b><p>Texto claro sobre fundo escuro parece mais pesado que texto escuro sobre claro. A luz se espalha sobre o entorno escuro e engorda cada traço.</p></div><div class="dw-card dw-dark"><b>Mesmo peso, dois temas</b><p>Texto claro sobre fundo escuro parece mais pesado que texto escuro sobre claro. A luz se espalha sobre o entorno escuro e engorda cada traço.</p></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Peso no tema escuro</span><input type="range" name="dwght" min="300" max="500" step="10" value="400" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Texto branco puro</span><input type="checkbox" name="white" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Os dois cards estão em peso 400. O escuro lê mais bold. Arraste o peso dele para 360 ou 370 e os dois se igualam. Branco puro piora a halação.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Sistemas operacionais rasterizam, suavizam e ajustam à grade de forma diferente. Revise decisões de peso em pelo menos dois sistemas, nunca escolha um peso que só funciona no seu monitor, e desconfie de decisões tomadas só em telas de alta densidade. Tamanhos fracionários rasterizam aproximadamente e podem ficar borrados em telas de baixa densidade; prefira pixels inteiros para texto de interface e aceite frações só em títulos grandes fluidos.</p>
+          <p>Texto claro sobre fundo escuro parece mais pesado porque a luz se espalha sobre o entorno escuro e engorda as formas. Baixe um degrau de peso no tema escuro, ou 20 a 50 unidades num eixo variável, e evite branco puro no texto, que agrava. Em telas com muito texto é uma diferença clara de conforto, não um detalhe.</p>
+          <p>Síntese é a culpada silenciosa por trás de "está estranho e não sei por quê". Peça um peso ou itálico que não foi carregado e o navegador fabrica, engrossando ou inclinando as formas. O resultado é sempre pior que o desenho real. Desligue com <code>font-synthesis: none</code> e carregue os arquivos reais.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Dois sistemas operacionais antes de qualquer decisão de peso.</strong></li>
+            <li><strong>Tamanhos inteiros em pixels</strong> em interface de aplicação.</li>
+            <li><strong>Um peso mais leve no dark mode,</strong> texto quase branco.</li>
+            <li><strong><code>font-synthesis: none</code></strong> no body. Forneça todo peso e estilo que usar.</li>
+            <li><strong>Ajuste de suavização não é correção de peso.</strong> Se o texto parece pesado demais, mude o peso ou o tamanho.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Dois sistemas operacionais</strong> antes de qualquer decisão de peso.</li>
+            <li><strong>Pixels inteiros na UI de aplicação.</strong> Frações só em títulos grandes fluidos.</li>
+            <li><strong>Dark mode: um degrau mais leve,</strong> ou 20 a 50 unidades num eixo variável.</li>
+            <li><strong>font-synthesis: none.</strong> Carregue o bold e o itálico reais.</li>
+            <li><strong>Texto quase branco no dark mode</strong> reduz halação e peso aparente.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Tipografia para design engineers, handbook</em> (capítulo 14) · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-synthesis" target="_blank" rel="noopener">MDN, font-synthesis</a></footer>
+        </article>
+
+        <article class="lesson" id="type-tokens">
+          <span class="eyebrow">Typography · 21</span>
+          <h2>Type Tokens</h2>
+          <p class="lede">Um token tipográfico é um conjunto, não um tamanho. Tamanho, altura de linha, peso e tracking viajam juntos sob um nome de papel, para que ninguém precise lembrar que "corpo é 16 com 1,5" e nenhum componente improvise.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="toktype">
+            <div class="demo-stage">
+            <div class="tt-card"><span class="tt-over">Relatório semanal<i class="tt-tag">overline</i></span><h4 class="tt-h">A receita cresceu em toda região<i class="tt-tag">heading-md</i></h4><p class="tt-p">A Europa liderou o trimestre com um segundo semestre mais forte, enquanto o marketplace manteve a margem durante o período promocional.<i class="tt-tag">body-sm</i></p><span class="tt-cap">Atualizado há 2 horas · 4 min de leitura<i class="tt-tag">caption</i></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Tokens só de tamanho</span><input type="checkbox" name="sizeonly" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Mostrar nomes dos tokens</span><input type="checkbox" name="tags" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Ligue tokens só de tamanho: os tamanhos sobrevivem, mas altura de linha, peso e tracking caem para o que o componente tinha. O título afrouxa, o overline perde o tracking, a legenda perde o peso. Um token é o conjunto.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>O erro estrutural mais comum é um sistema de tokens que define só font-size e deixa altura de linha, peso e tracking para cada componente. O resultado é um produto onde cada título tem uma altura de linha um pouco diferente e ninguém sabe qual é a certa. Um token carrega tudo que define o papel. Nomeie por papel, nunca por aparência: um token chamado text-16 ou font-large vira mentira no momento em que o valor muda, e um nome mentiroso é pior que nenhum.</p>
+          <p>Treze tokens cobrem a maioria dos produtos: dois tamanhos de exibição, três títulos, três corpos, dois rótulos, uma legenda, um overline em maiúsculas com tracking largo e um mono. Se você tem cinquenta, há duplicação disfarçada. Semântica e aparência ficam independentes: um título de seção que é h2 no documento pode vestir o token heading-sm. Acoplar os dois força escolhas ruins, ou quebrar a hierarquia de títulos para conseguir o visual, ou aceitar o visual errado para preservar a estrutura. Leitores de tela navegam por essa hierarquia, então ela precisa estar correta independentemente do tamanho visual.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Quatro propriedades por token.</strong> Tamanho, altura de linha, peso, tracking. Nada menos.</li>
+            <li><strong>Papéis nos nomes.</strong> body-md, heading-lg, label-emphasis, overline.</li>
+            <li><strong>Cerca de treze tokens.</strong> Audite duplicatas a cada trimestre.</li>
+            <li><strong>Nível de título pela estrutura, token pela aparência.</strong> Decisões independentes.</li>
+            <li><strong>Uma fonte de verdade</strong> que gera CSS, variáveis da ferramenta de design, estilos nativos e documentação.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copiar" data-copied="Copiado" aria-label="Copiar"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copiar</span></button></div><pre><code>heading-md   <span class="n">24</span> / <span class="n">1.30</span> / <span class="n">600</span> / <span class="n">-0.01em</span>
+body-md      <span class="n">16</span> / <span class="n">1.50</span> / <span class="n">400</span> / <span class="n">0</span>
+label-sm     <span class="n">12</span> / <span class="n">1.40</span> / <span class="n">500</span> / +<span class="n">0.01em</span>
+overline     <span class="n">11</span> / <span class="n">1.45</span> / <span class="n">600</span> / +<span class="n">0.06em</span>   (maiúsculas)</code></pre></figure>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Tamanho, altura de linha, peso, tracking.</strong> Os quatro, em todo token.</li>
+            <li><strong>Nomes de papel sobrevivem a redesigns.</strong> Nomes de aparência não.</li>
+            <li><strong>Treze tokens cobrem a maioria dos produtos.</strong> Cinquenta significa duplicação.</li>
+            <li><strong>Nível de título ≠ token.</strong> Estrutura para leitores de tela, token para o olho.</li>
+            <li><strong>Gere toda saída de uma definição.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Tipografia para design engineers, handbook</em> (capítulo 15) · <a href="https://www.w3.org/WAI/tutorials/page-structure/headings/" target="_blank" rel="noopener">W3C WAI, Headings</a></footer>
+        </article>
+
+        <article class="lesson" id="text-accessibility">
+          <span class="eyebrow">Typography · 22</span>
+          <h2>Text Accessibility</h2>
+          <p class="lede">Texto precisa sobreviver a zoom de 200%, à preferência de tamanho da pessoa e aos ajustes de espaçamento que quem tem baixa visão ou dislexia de fato aplica. Alturas fixas são a primeira coisa a falhar, e "fontes para dislexia" não são a resposta.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="spacing">
+            <div class="demo-stage">
+            <div class="sp-card"><b>Teste de espaçamento de texto</b><p>Pessoas com baixa visão ou dislexia sobrescrevem a altura de linha para 1,5, o espaço entre parágrafos para 2em, o espaçamento entre letras para 0,12em e entre palavras para 0,16em.</p><p>Nada pode perder função com esses valores. Alturas fixas falham primeiro.</p></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Aplicar espaçamento WCAG</span><input type="checkbox" name="wcag" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Altura fixa</span><input type="checkbox" name="fixed" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Aplique os ajustes de espaçamento. Com min-height o card cresce e continua legível. Ligue a altura fixa e as últimas linhas são cortadas: o mesmo conteúdo, agora inacessível.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Use rem para tamanhos de fonte; pixels absolutos ignoram o tamanho que a pessoa configurou no navegador. O conteúdo precisa continuar utilizável com zoom de 200% sem perder função nem rolar em duas direções; o que quebra é layout com altura fixa, overflow escondido, truncamento agressivo e barras de navegação que não se reorganizam. O critério de espaçamento de texto é esquecido e fácil de testar: nada pode perder função quando a altura de linha vai a 1,5, o espaço entre parágrafos a 2em, o espaçamento entre letras a 0,12em e entre palavras a 0,16em. Aplique esses valores no DevTools e veja o que estoura. A implicação de design: evite alturas fixas em qualquer coisa que contenha texto. Use min-height.</p>
+          <p>Mínimos práticos: 16px para corpo no mobile, 14px como piso para o que se lê com atenção, 12px só para metadados secundários, nada que importe abaixo de 11px. Peso e tamanho afetam legibilidade tanto quanto contraste de cor: texto fino e claro pode passar na razão e ser ilegível; quanto mais leve o peso, mais contraste é preciso. Fontes vendidas como específicas para dislexia não têm suporte empírico consistente; estudos não encontraram vantagem sobre uma sem serifa comum bem composta. O que ajuda é o que ajuda todo mundo: tamanho generoso, altura de linha ampla, medida controlada, alinhamento à esquerda, bom contraste sem branco puro sobre preto puro, linguagem simples e parágrafos curtos.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>rem para tipo, px para bordas.</strong></li>
+            <li><strong>Zoom a 200% e os ajustes de espaçamento</strong> como parte da revisão, não da auditoria.</li>
+            <li><strong>Min-height em todo lugar onde mora texto.</strong></li>
+            <li><strong>Peso mais leve, mais contraste.</strong> Peso 300 precisa de mais que o mínimo formal.</li>
+            <li><strong>Boa tipografia, não fonte especial,</strong> para leitores com dislexia.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>rem para tamanhos de texto.</strong> Respeite a preferência do navegador.</li>
+            <li><strong>Teste de espaçamento no DevTools:</strong> 1,5 / 2em / 0,12em / 0,16em.</li>
+            <li><strong>min-height, nunca height,</strong> em contêineres de texto.</li>
+            <li><strong>16 corpo mobile, 14 piso, 12 metadado, nada abaixo de 11.</strong></li>
+            <li><strong>Pesos leves precisam de contraste extra.</strong> A razão sozinha não garante legibilidade.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Tipografia para design engineers, handbook</em> (capítulo 16) · <a href="https://www.w3.org/WAI/WCAG22/Understanding/text-spacing.html" target="_blank" rel="noopener">WCAG 2.2, Text Spacing</a> · Rello e Baeza-Yates, <em>Good fonts for dyslexia</em> (2013) e replicações posteriores</footer>
+        </article>
+
+        <article class="lesson" id="internationalization">
+          <span class="eyebrow">Typography · 23</span>
+          <h2>Internationalization</h2>
+          <p class="lede">Traduções mudam o comprimento em 30% ou mais, o idioma do documento muda como o texto quebra e soa, e outras escritas têm métricas que suposições latinas recortam. Nunca dimensione um componente pelo texto no seu próprio idioma.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="i18n">
+            <div class="demo-stage">
+            <div class="i18n-row"><button class="i18n-btn i18n-primary" type="button" tabindex="-1" data-en="Salvar" data-de="Speichern">Salvar</button><button class="i18n-btn" type="button" tabindex="-1" data-en="Cancelar" data-de="Abbrechen">Cancelar</button><button class="i18n-btn" type="button" tabindex="-1" data-en="Baixar relatório" data-de="Bericht herunterladen">Baixar relatório</button></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Strings em alemão</span><input type="checkbox" name="german" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Larguras fixas</span><input type="checkbox" name="fixedw" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Mude para alemão e todo rótulo cresce. Com larguras flexíveis os botões se adaptam. Com larguras fixas, dimensionadas para o português, os rótulos truncam. Nunca dimensione um componente pelo texto no seu idioma.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Do português para o alemão, espere expansão de 20 a 35%; para idiomas do leste asiático, contração. Botões de largura fixa quebram, rótulos de tabela quebram, uma linha vira duas. Teste com strings artificialmente alongadas antes de a tradução real chegar. O atributo de idioma no documento afeta hifenização, quebra de linha, seleção de fonte, aspas tipográficas e a pronúncia em leitores de tela; uma página em português declarada como inglês hifeniza errado e é lida errado. Declare na raiz e localmente em trechos de outro idioma.</p>
+          <p>Escritas diferem. CJK não usa espaço entre palavras, então a quebra segue outras regras, a altura de linha precisa ser maior, em torno de 1,7 a 1,8, e tamanhos pequenos ficam ilegíveis mais cedo. Árabe e hebraico correm da direita para a esquerda, o que afeta o layout inteiro, e as métricas verticais diferem bastante. Escritas índicas e do sudeste asiático combinam glifos e excedem as métricas típicas, então corte vertical agressivo as recorta. Regra defensiva: se o produto pode ser traduzido, sem leading trim agressivo e sem alturas fixas em componentes de texto. A fonte da marca provavelmente não cobre toda escrita: declare intervalos unicode por escrita apontando para fontes adequadas, escolha reservas com peso visual compatível e ajuste o tamanho por escrita quando preciso.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Strings de teste com +35%</strong> em todo componente antes da tradução.</li>
+            <li><strong><code>lang</code> na raiz e em trechos estrangeiros.</strong></li>
+            <li><strong>Sem largura fixa em botões, sem altura fixa em texto.</strong></li>
+            <li><strong>Altura de linha +0,2 para CJK,</strong> reservas separadas por escrita, RTL considerado no layout.</li>
+            <li><strong>Corte com suavidade ou não corte</strong> em componentes que podem mostrar outras escritas.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Strings com +35% antes de traduzir.</strong> Alemão é o teste de estresse.</li>
+            <li><strong>lang no html e em trechos estrangeiros.</strong> Hifenização, aspas e fala dependem disso.</li>
+            <li><strong>Sem largura fixa em botões, sem altura fixa em texto.</strong></li>
+            <li><strong>CJK: altura de linha +0,2,</strong> tamanhos mínimos maiores, quebra diferente.</li>
+            <li><strong>unicode-range por escrita</strong> com reservas de peso compatível.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Tipografia para design engineers, handbook</em> (capítulo 17) · <a href="https://www.w3.org/International/questions/qa-html-language-declarations" target="_blank" rel="noopener">W3C i18n, Declaring language in HTML</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/unicode-range" target="_blank" rel="noopener">MDN, unicode-range</a></footer>
+        </article>
+      </section>
+      <footer class="footer"><p>Biblioteca de estudo pessoal. Conteúdo sintetizado a partir das fontes listadas em cada aula; nomes de cursos e autores pertencem aos seus respectivos donos. Hierarquia só por tamanho, peso e espaço.</p></footer>
+    </div>
+  </main>
+</div>
+<script src="../app.js"></script>
+</body>
+</html>

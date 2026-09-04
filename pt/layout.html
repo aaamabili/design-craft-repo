@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-lang="pt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Layout — Interface Craft</title>
+  <meta name="description" content="Geometria que o usuário sente sem ver: raios que se encaixam, áreas de toque generosas, bordas de scroll que respiram.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#fcfcfc" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
+  <script>
+    // Applies the saved theme before first paint to avoid a flash
+    try { var t = localStorage.getItem('theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script>
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <div>
+        <div class="brand-name">Interface Craft</div>
+        <div class="brand-sub">Biblioteca viva</div>
+      </div>
+      <div class="controls">
+        <nav class="lang-switch" aria-label="Idioma"><a class="lang-opt" href="../layout.html" data-lang="en" hreflang="en">EN</a><a class="lang-opt" href="#" data-lang="pt" hreflang="pt" aria-current="true">PT</a></nav>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Alternar tema claro e escuro" title="Alternar tema claro e escuro"><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+      </div>
+    </div>
+    <a class="back-link" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>Início</a>
+    <nav class="nav-groups" aria-label="Sumário da seção">
+      <div class="nav-group" data-section="layout" style="margin-top:0">
+        <div class="nav-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>Layout</div>
+        <ul class="nav-list"><li><a class="nav-link" href="#nested-border-radius">Nested Border Radius</a></li><li><a class="nav-link" href="#continuous-curvature">Continuous Curvature</a></li><li><a class="nav-link" href="#hit-areas">Hit Areas</a></li><li><a class="nav-link" href="#fitts-law">Fitts's Law</a></li><li><a class="nav-link" href="#html-background">HTML Background</a></li><li><a class="nav-link" href="#clip-path">Clip-Path</a></li><li><a class="nav-link" href="#scroll-fades">Scroll Fades</a></li><li><a class="nav-link" href="#spacing-rhythm">Spacing Rhythm</a></li><li><a class="nav-link" href="#density">Density</a></li><li><a class="nav-link" href="#zero-one-many">Zero, One, Many</a></li><li><a class="nav-link" href="#adversarial-content">Adversarial Content</a></li></ul>
+      </div>
+      <div class="nav-group nav-other" data-section="layout">
+        <div class="nav-title">Outras seções</div>
+        <ul class="nav-list"><li><a class="nav-link" href="craft.html">Craft</a></li><li><a class="nav-link" href="typography.html">Typography</a></li><li><a class="nav-link" href="color.html">Color</a></li><li><a class="nav-link" href="motion.html">Motion</a></li><li><a class="nav-link" href="ux.html">UX</a></li><li><a class="nav-link" href="referencias.html">Referências</a></li></ul>
+      </div>
+    </nav>
+  </aside>
+  <main class="content">
+    <div class="container">
+<section class="section" data-section="layout">
+        <div class="section-head" id="layout">
+          <span class="eyebrow">Seção 04</span>
+          <h2>Layout</h2>
+          <p>Geometria que o usuário sente sem ver: raios que se encaixam, áreas de toque generosas, bordas de scroll que respiram.</p>
+        </div>
+
+        <article class="lesson" id="nested-border-radius">
+          <span class="eyebrow">Layout · 01</span>
+          <h2>Nested Border Radius</h2>
+          <p class="lede">Um elemento arredondado dentro de outro não pode ter o mesmo raio. O raio interno é o externo menos o padding.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="nest">
+            <div class="demo-stage">
+            <div class="nest"><div class="inner"></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Raio externo</span><input type="range" name="outer" min="4" max="32" step="1" value="20" data-unit="px"><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Concêntrico</span><input type="checkbox" name="concentric" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Arraste o raio externo com 8px de padding. Concêntrico mantém interno = externo − padding, com piso de 4px; desligue para ver os cantos gordos.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Cantos arredondados são arcos de círculo. Se o container tem raio R e padding P, o arco interno concêntrico tem raio R − P. Se você usa R nos dois, o arco interno é maior do que deveria, o espaçamento nos cantos fica desigual e o olho lê como "algo está torto", mesmo sem saber o quê. É um dos erros mais comuns em cards com imagem, botões dentro de inputs e modais com header.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Fórmula:</strong> <code>raio-interno = raio-externo − padding</code>. Se der negativo ou menor que ~4px, use 4px ou zero.</li>
+            <li><strong>Use variáveis e <code>calc()</code></strong> para o raio interno acompanhar mudanças de padding automaticamente.</li>
+            <li><strong>Vale para o inverso:</strong> um container que envolve um elemento com raio R e padding P deve ter R + P.</li>
+            <li><strong>Imagens em cards:</strong> se a imagem toca a borda (padding 0), mesmo raio. Se tem padding, subtraia.</li>
+            <li><strong>Existe uma proposta no CSSWG</strong> para um valor de <code>border-radius</code> que calcule isso sozinho. Enquanto não chega, <code>calc()</code>.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copiar" data-copied="Copiado" aria-label="Copiar"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copiar</span></button></div><pre><code><span class="k">.card</span> { <span class="p">--r</span>: <span class="n">16px</span>; <span class="p">--p</span>: <span class="n">8px</span>; border-radius: <span class="f">var</span>(--r); padding: <span class="f">var</span>(--p); }
+<span class="k">.card > .media</span> { border-radius: <span class="f">calc</span>(<span class="f">var</span>(--r) - <span class="f">var</span>(--p)); }  <span class="c">/* 8px */</span>
+
+<span class="k">.input</span> { <span class="p">--r</span>: <span class="n">10px</span>; <span class="p">--p</span>: <span class="n">4px</span>; border-radius: <span class="f">var</span>(--r); padding: <span class="f">var</span>(--p); }
+<span class="k">.input > .btn</span> { border-radius: <span class="f">calc</span>(<span class="f">var</span>(--r) - <span class="f">var</span>(--p)); }   <span class="c">/* 6px */</span></code></pre></figure>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Mesma regra para anéis de foco.</strong> Um anel 2px fora de um elemento com raio 8px deve ter raio 10px. Anéis de <code>outline</code> e <code>box-shadow</code> seguem o raio do elemento automaticamente; anéis desenhados com pseudo-elemento precisam de <code>calc(var(--r) + 2px)</code>.</li>
+            <li><strong>Mídia de ponta a ponta.</strong> Uma imagem encostada no topo de um card recebe <code>border-radius: R R 0 0</code>; os cantos inferiores ficam retos, e o raio do próprio card cuida do resto.</li>
+            <li><strong>A altura segue a mesma subtração.</strong> Um botão dentro de um input de 40px com padding de 4px tem 32px de altura, não "um pouco menor".</li>
+            <li><strong>Pills quebram a fórmula.</strong> Dentro de um pill de 999px, o elemento interno também é 999px. A matemática concêntrica só vale para raios finitos.</li>
+            <li><strong>Raio escala com o tamanho.</strong> Um chip de 24px com raio 12px é um pill; com 6px é um retângulo arredondado. Escolha o raio relativo ao elemento, não a partir de um único valor global.</li>
+            <li><strong>Clipping esconde sombras.</strong> <code>overflow: hidden</code> para o raio também corta as sombras dos filhos. Use <code>clip-path: inset(0 round R)</code> em um wrapper interno, ou mova a sombra para o elemento externo.</li>
+            <li><strong>Serrilhado de canto no Safari.</strong> Containers arredondados com filhos transformados podem mostrar cantos serrilhados. <code>isolation: isolate</code> ou um inset arredondado com <code>clip-path</code> resolve.</li>
+            <li><strong>Aninhado em três níveis.</strong> Card 16, mídia 8, badge sobre a mídia 4. Cada nível subtrai seu padding; abaixo de 4px, use 4px.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://github.com/w3c/csswg-drafts/issues/7707" target="_blank" rel="noopener">CSSWG, issue #7707: matching nested radii</a> · <a href="https://www.30secondsofcode.org/css/s/nested-border-radius/" target="_blank" rel="noopener">30 seconds of code, nested border radius</a> · Prática recorrente em Rauno Freiberg e Emil Kowalski</footer>
+        </article>
+
+<article class="lesson" id="continuous-curvature">
+          <span class="eyebrow">Layout · 02</span>
+          <h2>Continuous Curvature</h2>
+          <p class="lede">Um canto arredondado comum é um arco de círculo, e no ponto em que encontra a reta a curvatura salta de zero para o valor total. O olho lê isso como uma leve dureza.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="squircle">
+            <div class="demo-stage">
+            <div class="sq-row"><div class="sq-shape"></div><span class="sq-unsupported">Seu navegador ainda não suporta corner-shape; a forma mostra cantos circulares.</span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Raio</span><input type="range" name="r" min="8" max="64" step="4" value="40" data-unit="px"><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Curvar o croma</span><input type="checkbox" name="squircle" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Arraste o matiz. Com croma constante os passos claros viram neon e os escuros ficam sujos. Com o arco, um matiz produz uma escala de doze passos utilizável em qualquer ângulo.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Curvatura contínua, a forma que as pessoas chamam de squircle, suaviza essa transição: a curva começa de leve, aperta e relaxa de novo na reta. É o que a Apple usa em ícones de app e hardware, e a razão de essas formas parecerem orgânicas enquanto retângulos arredondados comuns parecem recortados. O efeito cresce com o raio: em 4 a 8px quase ninguém percebe; a partir de 16px a diferença é visível e vale buscar.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Só raios grandes.</strong> Cards, sheets, tiles no estilo ícone de app, botões grandes. Deixe controles pequenos com raio comum.</li>
+            <li><strong>Em CSS, <code>corner-shape: squircle</code></strong> onde o navegador suporta, com <code>border-radius</code> comum como fallback. Em ferramentas de design, suavização de canto em torno de 60% aproxima a forma do iOS.</li>
+            <li><strong>Mantenha a família consistente.</strong> Misturar squircles e cantos circulares na mesma tela é mais perceptível do que qualquer um dos dois sozinho.</li>
+            <li><strong>Raios aninhados continuam valendo.</strong> Raio externo igual ao interno mais o padding, seja qual for a curvatura.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>De 16px para cima.</strong> Abaixo disso a diferença é invisível; acima, cantos circulares começam a parecer recortados.</li>
+            <li><strong>Melhoria progressiva.</strong> <code>corner-shape: squircle</code> onde há suporte, raio comum no resto. Ninguém vê uma forma quebrada.</li>
+            <li><strong>Não misture na mesma tela.</strong> Um card squircle ao lado de um com canto circular chama atenção para os dois.</li>
+            <li><strong>Ícones e tiles primeiro.</strong> Formas tipo ícone de app, cards de hero e sheets são onde compensa; botões e inputs raramente.</li>
+            <li><strong>Ferramentas de design chamam de suavização.</strong> Perto de 60% aproxima a forma do iOS.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Craft de interfaces, handbook</em> (seção 10.3) · <a href="https://www.figma.com/blog/desperately-seeking-squircles/" target="_blank" rel="noopener">Figma, Desperately seeking squircles</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/corner-shape" target="_blank" rel="noopener">MDN, corner-shape</a></footer>
+        </article>
+
+<article class="lesson" id="hit-areas">
+          <span class="eyebrow">Layout · 03</span>
+          <h2>Hit Areas</h2>
+          <p class="lede">O ícone pode ter 16px. A área que responde ao clique precisa ter pelo menos 44px. As duas coisas não precisam coincidir.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="hit">
+            <div class="demo-stage">
+            <div class="hit-row">
+              <div class="oa-item"><span class="cap">Botão de ícone 16px</span><button class="icon-btn" type="button" aria-label="Fechar" data-hover><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
+              <div class="oa-item"><span class="cap">Handle de redimensionar de 1px</span><div class="handle" role="separator" aria-orientation="vertical" tabindex="0" data-hover></div></div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Área de toque</span><input type="range" name="hit" min="16" max="48" step="4" value="44" data-unit="px"><output></output></label></div>
+          </div>
+            <figcaption class="demo-caption">Passe o mouse no ícone ou no handle para ver o alvo. O desenho continua com 16px e 1px; só a área invisível cresce. 24px é o mínimo da WCAG, 44px o confortável para toque.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Dedos têm em média 10 a 14mm de largura. A Apple recomenda alvos de pelo menos 44×44pt; o Material, 48dp; a WCAG 2.2 exige 24×24px como mínimo absoluto (critério 2.5.8). Um "x" de 16px que só responde nos seus 16px é uma frustração garantida em mobile e um alvo apertado até para mouse. Mas um "x" de 44px desenhado fica gigante. A solução é separar: desenho pequeno, alvo grande e invisível.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Pseudo-elemento expandido.</strong> <code>::before</code> com <code>position: absolute; inset: -14px</code> aumenta o alvo sem mudar o layout.</li>
+            <li><strong>Ou padding + margem negativa.</strong> <code>padding: 12px; margin: -12px</code> dá o mesmo efeito, com o botão ocupando o espaço visual original.</li>
+            <li><strong>Linhas e handles:</strong> um divisor arrastável de 1px precisa de alvo de 8 a 12px. Sliders, resize handles e bordas de coluna são os casos mais esquecidos.</li>
+            <li><strong>Itens de lista e menu:</strong> a linha inteira é clicável, não só o texto. Altura mínima de 36 a 44px.</li>
+            <li><strong>Espaçamento entre alvos:</strong> pelo menos 8px, senão o alvo grande de um invade o do vizinho.</li>
+            <li><strong>Visualize.</strong> Durante o desenvolvimento, dê <code>outline</code> aos pseudo-elementos para conferir (como o toggle "Mostrar áreas" acima).</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copiar" data-copied="Copiado" aria-label="Copiar"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copiar</span></button></div><pre><code><span class="k">.icon-btn</span> { position: relative; width: <span class="n">16px</span>; height: <span class="n">16px</span>; }
+<span class="k">.icon-btn::before</span> { content: <span class="s">""</span>; position: absolute; inset: <span class="n">-14px</span>; }  <span class="c">/* alvo de 44px */</span>
+
+<span class="k">.resize-handle</span> { width: <span class="n">1px</span>; position: relative; }
+<span class="k">.resize-handle::before</span> { content: <span class="s">""</span>; position: absolute; inset: <span class="n">0</span> <span class="n">-6px</span>; cursor: col-resize; }</code></pre></figure>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Três números.</strong> 24px é o mínimo legal (WCAG 2.5.8), 32px é confortável para mouse, 44 a 48px para toque. Aumente os alvos sob <code>@media (pointer: coarse)</code> em vez de em todo lugar.</li>
+            <li><strong>Link esticado em cards.</strong> Torne o card inteiro clicável com <code>::after { position: absolute; inset: 0 }</code> no link primário, e eleve botões secundários com <code>position: relative; z-index: 1</code>.</li>
+            <li><strong>Sem zonas mortas entre itens.</strong> Itens de menu e lista se separam com padding, nunca margin ou gap, para o ponteiro nunca cair no nada.</li>
+            <li><strong>Menus por hover precisam de triângulo seguro.</strong> Dropdowns que abrem no hover precisam de 100 a 150ms de atraso para fechar e tolerância a movimento diagonal em direção ao painel, ou fecham no caminho.</li>
+            <li><strong>Sliders.</strong> Um thumb de 16px com área de 28 a 44px, e toda a altura da trilha clicável. O thumb visual nunca é o alvo.</li>
+            <li><strong>Especificidades de toque.</strong> <code>touch-action: manipulation</code> remove o atraso de 300ms do tap; deixe <code>-webkit-tap-highlight-color</code> transparente e forneça seu próprio estado pressionado.</li>
+            <li><strong>Anel de foco no visual, não na área de toque.</strong> O pseudo-elemento ampliado não é focável, então o anel abraça o ícone de 16px. Ajuste <code>outline-offset</code> para dar 2 a 4px de folga.</li>
+            <li><strong>Botões de fechar no canto.</strong> Mantenha o ícone a pelo menos 8px da borda; a área de toque pode se estender até ela.</li>
+            <li data-craftbook><strong>Frequente perto, perigoso longe.</strong> Pelo menos 24px entre uma ação destrutiva e qualquer coisa usada com frequência. Distância protege tanto quanto tamanho.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://developer.apple.com/design/human-interface-guidelines/accessibility#Buttons-and-controls" target="_blank" rel="noopener">Apple HIG, 44×44pt</a> · <a href="https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html" target="_blank" rel="noopener">WCAG 2.2, 2.5.8 Target Size (Minimum)</a> · <a href="https://m3.material.io/foundations/designing/structure#dab862b1-e042-4c40-b680-b484b9f077f6" target="_blank" rel="noopener">Material Design, 48dp touch targets</a></footer>
+        </article>
+
+<article class="lesson" id="fitts-law">
+          <span class="eyebrow">Layout · 04</span>
+          <h2>Fitts's Law</h2>
+          <p class="lede">O tempo para atingir um alvo depende de quão longe ele está e de quão grande ele é. Cantos e bordas são infinitamente grandes, e um submenu que fecha no caminho é a lei sendo ignorada.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="fitts">
+            <div class="demo-stage">
+            <div class="ft-menu" data-fitts>
+              <div class="ft-item">Renomear</div>
+              <div class="ft-item ft-parent" data-parent>Compartilhar<span class="sp-chev">›</span>
+                <div class="ft-sub" data-sub><div class="ft-item">Copiar link</div><div class="ft-item">E-mail</div><div class="ft-item">Slack</div><div class="ft-item">Exportar</div></div>
+              </div>
+              <div class="ft-item">Duplicar</div>
+              <div class="ft-item">Excluir</div>
+              <svg class="ft-tri" aria-hidden="true"><polygon points="0,0 0,0 0,0"/></svg>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Triângulo de segurança</span><input type="checkbox" name="safe" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Passe o mouse em Compartilhar e vá na diagonal até um item do submenu. Com o triângulo, o submenu fica aberto enquanto você vai até ele; sem, cruzar Duplicar o fecha.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>A relação é logarítmica: dobrar um alvo pequeno ajuda muito, dobrar um já grande quase não ajuda. Por isso aumentar a área clicável é quase sempre a melhoria de usabilidade mais barata disponível, e a área clicável não precisa coincidir com a visual. Um alvo na borda é efetivamente infinito naquela direção porque o cursor não passa dele; um canto é infinito em duas. É por isso que sistemas operacionais colocam menus importantes em cantos, e por isso itens encostados na borda de uma sidebar são muito mais rápidos de atingir que itens alguns pixels para dentro.</p>
+          <p>A falha clássica é o submenu. Movendo na diagonal em direção a ele, o cursor sai do item pai, passa por outros itens, e o submenu fecha antes de você chegar. A correção certa é o triângulo de segurança: enquanto o cursor estiver indo para a área do submenu, mantenha-o aberto mesmo com o ponteiro fora do item pai. Um atraso de fechamento de 200 a 300ms ou uma ponte invisível são aproximações aceitáveis.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Alvos:</strong> toque 44px mínimo e 48 confortável; ponteiro 24 mínimo e 32 confortável; pelo menos 8px entre alvos.</li>
+            <li><strong>O que é usado junto fica junto;</strong> o que é perigoso fica longe do frequente, a pelo menos 24px.</li>
+            <li><strong>Reserve a borda para o mais usado.</strong> Numa sidebar ou toolbar encostada na borda da tela, os itens que tocam a borda são os mais rápidos.</li>
+            <li><strong>Aumente a área, não o desenho.</strong> Um ícone de 20px com 12px de padding transparente de cada lado é um alvo de 44px que parece exatamente igual.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Bordas são infinitas.</strong> Coloque os itens mais usados encostados na borda de uma sidebar ou toolbar; não há como passar do alvo.</li>
+            <li><strong>Triângulo de segurança em vez de atraso.</strong> Mantenha o submenu aberto enquanto o ponteiro vai em direção a ele; 200 a 300ms de atraso é o fallback aceitável.</li>
+            <li><strong>Aumente o alvo, não o ícone.</strong> Padding transparente transforma um ícone de 20px num alvo de 44px sem mudança visual.</li>
+            <li><strong>Frequente perto, perigoso longe.</strong> Pelo menos 24px entre uma ação destrutiva e qualquer coisa usada com frequência.</li>
+            <li><strong>Ganhos logarítmicos.</strong> Dobrar um alvo minúsculo é um ganho grande; dobrar um grande, não. Gaste os pixels nos pequenos.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Craft de interfaces, handbook</em> (capítulo 8) · Paul M. Fitts, <em>The information capacity of the human motor system</em> (1954) · <a href="https://www.nngroup.com/articles/fitts-law/" target="_blank" rel="noopener">Nielsen Norman Group, Fitts's Law and Its Applications in UX</a></footer>
+        </article>
+
+<article class="lesson" id="html-background">
+          <span class="eyebrow">Layout · 05</span>
+          <h2>HTML Background</h2>
+          <p class="lede">Se o fundo está só no body, o overscroll no macOS e iOS mostra branco atrás do seu dark mode. Coloque o fundo no html.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="htmlbg">
+            <div class="demo-stage">
+            <div class="win" tabindex="0" data-hover>
+              <div class="win-bar"><span></span><span></span><span></span></div>
+              <div class="win-canvas"><div class="win-page"><div class="win-line" style="width:60%"></div><div class="win-line" style="width:90%"></div><div class="win-line" style="width:75%"></div></div></div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Validar enquanto digita</span><input type="checkbox" name="htmlbg" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Digite uma senha. Os requisitos vão sendo marcados ao vivo; o vermelho só aparece quando você sai do campo. Ligue a validação ansiosa para sentir a diferença: ela repreende antes de você terminar.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>O navegador pinta o canvas (a área atrás de tudo, incluindo o que aparece quando você puxa a página além do fim) com o fundo do elemento raiz, o <code>html</code>. Se ele não tem fundo, propaga o do <code>body</code>. Mas em vários cenários (body com altura menor que a viewport, overscroll elástico, barras de rolagem, transições de página) o que aparece é o fundo do html. Sem ele, um tema escuro pisca branco nas bordas.</p>
+          <p>O mesmo vale para <code>color-scheme</code>: declarado no <code>html</code>, ele avisa o navegador para desenhar scrollbars, form controls e o próprio canvas na paleta certa.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong><code>html { background: var(--bg) }</code></strong> sempre, além do body.</li>
+            <li><strong><code>color-scheme: light dark</code></strong> no html, e <code>color-scheme: dark</code> quando o tema for forçado. Isso corrige scrollbar, checkbox, select e a cor de overscroll.</li>
+            <li><strong><code>&lt;meta name="theme-color"&gt;</code></strong> para a barra do navegador em mobile acompanhar o tema (com <code>media="(prefers-color-scheme: dark)"</code> para duas cores).</li>
+            <li><strong>Aplique o tema antes do primeiro paint.</strong> Um script inline mínimo no <code>&lt;head&gt;</code> lendo a preferência salva evita o flash de tema errado.</li>
+            <li><strong>Evite <code>overscroll-behavior: none</code> só para esconder o problema.</strong> Ele mata o pull-to-refresh e a sensação nativa.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">HTML</span><button class="code-copy" type="button" data-copy data-label="Copiar" data-copied="Copiado" aria-label="Copiar"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copiar</span></button></div><pre><code><span class="k">html</span> { background: <span class="f">var</span>(--bg); color: <span class="f">var</span>(--fg); color-scheme: light; }
+<span class="k">html[data-theme="dark"]</span> { color-scheme: dark; }
+
+<span class="t">&lt;meta name="theme-color" content="#fcfcfc" media="(prefers-color-scheme: light)"&gt;</span>
+<span class="t">&lt;meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)"&gt;</span></code></pre></figure>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Use <code>dvh</code>, não <code>vh</code>.</strong> <code>min-height: 100dvh</code> acompanha a barra de URL que recolhe no mobile; <code>100vh</code> deixa uma faixa do fundo do html visível ou transborda.</li>
+            <li><strong>Pinte sob o notch.</strong> <code>viewport-fit=cover</code> na meta viewport mais padding com <code>env(safe-area-inset-*)</code> deixa o fundo chegar às bordas sem conteúdo escondido atrás do hardware.</li>
+            <li><strong>Calha de scrollbar estável.</strong> <code>scrollbar-gutter: stable</code> no container de scroll impede o layout de deslocar quando uma scrollbar aparece ou um modal trava o scroll.</li>
+            <li><strong>Estilize scrollbars com leveza.</strong> <code>scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent</code> combina com os dois temas sem trilhas pesadas customizadas.</li>
+            <li><strong>Autofill briga com color-scheme.</strong> O autofill do navegador pinta inputs de amarelo ou azul; sobrescreva com uma regra <code>:-webkit-autofill</code> usando box-shadow inset na cor do seu input.</li>
+            <li><strong>Transicione o tema, não tudo.</strong> Adicione uma classe de <code>transition</code> curta ao root só durante o clique do toggle e remova depois; uma transição global em todo elemento deixa a troca de tema lenta.</li>
+            <li><strong>Controles nativos seguem o acento.</strong> <code>accent-color: var(--accent)</code> tinge checkboxes, radios e barras de progresso; <code>::selection</code> deve usar o mesmo hue em baixa opacidade.</li>
+            <li><strong>Barra de status para PWAs.</strong> <code>&lt;meta name="apple-mobile-web-app-status-bar-style"&gt;</code> e um <code>theme-color</code> por esquema completam a ilusão de superfície nativa.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color-scheme" target="_blank" rel="noopener">MDN, color-scheme</a> · <a href="https://www.w3.org/TR/css-backgrounds-3/#special-backgrounds" target="_blank" rel="noopener">CSS Backgrounds 3, the canvas background and the root element</a> · <a href="https://web.dev/articles/color-scheme" target="_blank" rel="noopener">web.dev, Improved dark mode default styling with color-scheme</a></footer>
+        </article>
+
+<article class="lesson" id="clip-path">
+          <span class="eyebrow">Layout · 06</span>
+          <h2>Clip-Path</h2>
+          <p class="lede">Recortar em vez de esconder. Clip-path revela, mascara e dá forma sem mexer no layout e sem custo de repaint pesado.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="clip">
+            <div class="demo-stage">
+            <div class="clip-wrap"><div class="clip-card" tabindex="0" data-hover><div class="reveal"><div class="reveal-inner">Conteúdo revelado</div></div></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Raio dos cantos</span><input type="range" name="r" min="0" max="24" step="2" value="12" data-unit="px"><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Contramovimento</span><input type="checkbox" name="counter" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Passe o mouse num achado para lê-lo como observação, impacto e direção. Depois ordene por severidade: a sombra pode esperar atrás do bug que perde dados.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Para revelar um painel de cima para baixo, o instinto é animar <code>height</code>. Isso dispara layout a cada frame e o conteúdo se comprime. Com <code>clip-path: inset()</code> o elemento já tem seu tamanho final; você só muda a janela pela qual ele é visto. É composto na GPU, não afeta vizinhos e o conteúdo não deforma. Emil Kowalski usa isso para reveals, comparadores "antes/depois" e transições entre estados de um mesmo componente.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Reveal direcional:</strong> <code>inset(0 0 100% 0)</code> → <code>inset(0 0 0 0)</code> revela de cima para baixo. Troque o lado para outras direções.</li>
+            <li><strong>Reveal com raio:</strong> <code>inset(0 round 12px)</code> mantém os cantos arredondados durante a animação.</li>
+            <li><strong>Circle reveal:</strong> <code>circle(0% at 50% 50%)</code> → <code>circle(150% at …)</code> para transições a partir de um ponto (como o toggle de tema de alguns apps).</li>
+            <li><strong>Formas não retangulares:</strong> <code>polygon()</code> para tags, hexágonos, setas. Funciona com imagens e vídeos.</li>
+            <li><strong>Substitui <code>overflow: hidden</code></strong> quando você precisa de <code>position: sticky</code> ou de sombras que não podem ser cortadas.</li>
+            <li><strong>Só anime entre funções iguais</strong> com o mesmo número de argumentos (inset com inset, polygon com polygon de mesmos vértices).</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copiar" data-copied="Copiado" aria-label="Copiar"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copiar</span></button></div><pre><code><span class="k">.panel</span> { clip-path: <span class="f">inset</span>(<span class="n">0</span> <span class="n">0</span> <span class="n">100</span>% <span class="n">0</span> round <span class="n">12px</span>); transition: clip-path <span class="n">320ms</span> <span class="f">cubic-bezier</span>(<span class="n">0.23</span>, <span class="n">1</span>, <span class="n">0.32</span>, <span class="n">1</span>); }
+<span class="k">.open .panel</span> { clip-path: <span class="f">inset</span>(<span class="n">0</span> <span class="n">0</span> <span class="n">0</span> <span class="n">0</span> round <span class="n">12px</span>); }
+
+<span class="k">.tag</span> { clip-path: <span class="f">polygon</span>(<span class="n">0</span> <span class="n">0</span>, <span class="f">calc</span>(<span class="n">100</span>% - <span class="n">10px</span>) <span class="n">0</span>, <span class="n">100</span>% <span class="n">50</span>%, <span class="f">calc</span>(<span class="n">100</span>% - <span class="n">10px</span>) <span class="n">100</span>%, <span class="n">0</span> <span class="n">100</span>%); }</code></pre></figure>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Clipping corta sombras também.</strong> Um <code>clip-path</code> no elemento remove seu <code>box-shadow</code>. Coloque a sombra em um wrapper e o clip no filho.</li>
+            <li><strong>Áreas cortadas não são clicáveis.</strong> Eventos de ponteiro não disparam na região cortada, exatamente o que você quer em um painel de reveal.</li>
+            <li><strong>Adicione contramovimento.</strong> Combine a animação do inset com um <code>transform</code> de 8 a 12px na direção oposta no conteúdo para dar sensação de profundidade.</li>
+            <li><strong>Substitua overflow + raio em filhos transformados.</strong> <code>clip-path: inset(0 round var(--r))</code> evita o glitch de canto do Safari que <code>overflow: hidden</code> mostra durante transforms.</li>
+            <li><strong>Indicador de aba deslizante com inversão de texto.</strong> Duplique os labels das abas na cor invertida e recorte essa camada na posição do indicador. O label parece mudar de cor conforme o pill passa por cima.</li>
+            <li><strong>Comparações antes/depois.</strong> Duas imagens empilhadas, a de cima com <code>inset(0 X% 0 0)</code> controlado por um input range. Sem canvas, sem JavaScript além de definir uma variável.</li>
+            <li><strong><code>polygon()</code> é responsivo, <code>path()</code> não.</strong> Porcentagens em polygon escalam com a caixa; coordenadas de path são pixels fixos.</li>
+            <li><strong>Esconda direito o conteúdo totalmente cortado.</strong> Quando um painel está completamente cortado, defina também <code>visibility: hidden</code> ou <code>inert</code>, para ele sair da árvore de acessibilidade e da ordem de tab.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://emilkowal.ski/ui/the-magic-of-clip-path" target="_blank" rel="noopener">Emil Kowalski, The magic of clip-path</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path" target="_blank" rel="noopener">MDN, clip-path</a></footer>
+        </article>
+
+<article class="lesson" id="scroll-fades">
+          <span class="eyebrow">Layout · 07</span>
+          <h2>Scroll Fades</h2>
+          <p class="lede">Conteúdo cortado abruptamente na borda de um scroll parece bug. Um fade de 24 a 40px diz "tem mais aqui" sem precisar de seta.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="fades">
+            <div class="demo-stage">
+            <div class="scroller faded" tabindex="0" aria-label="Tópicos"><span class="chip">Tipografia</span><span class="chip">Cor</span><span class="chip">Layout</span><span class="chip">Motion</span><span class="chip">Acessibilidade</span><span class="chip">Performance</span><span class="chip">Design systems</span><span class="chip">Ícones</span><span class="chip">Sombras</span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Largura do fade</span><input type="range" name="fade" min="0" max="64" step="4" value="32" data-unit="px"><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">mask-image</span><input type="checkbox" name="fade" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Role a fileira. O fade só aparece do lado que tem mais conteúdo; no fim, a borda direita volta a ser um corte seco.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>O fade faz dois trabalhos: suaviza o corte (o conteúdo desaparece em vez de ser guilhotinado) e sinaliza continuidade (o usuário entende que pode rolar). Ele é especialmente importante em scrolls horizontais, onde não há scrollbar visível para dar a dica, e em sidebars longas, onde o texto cortado no meio de uma linha parece quebrado. A sidebar deste site usa exatamente isso.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong><code>mask-image</code> com gradiente linear</strong> no próprio container de scroll. Funciona em qualquer fundo, inclusive imagens e gradientes, porque é transparência de verdade e não uma sobreposição colorida.</li>
+            <li><strong>Alternativa:</strong> pseudo-elementos com gradiente da cor do fundo. Mais simples, mas quebra se o fundo mudar.</li>
+            <li><strong>Tamanho do fade:</strong> 24 a 48px. Pequeno demais não se nota; grande demais come conteúdo.</li>
+            <li><strong>O ideal é o fade só aparecer quando há mais conteúdo naquela direção.</strong> Com <code>animation-timeline: scroll()</code> dá para fazer em CSS puro nos navegadores que suportam; senão, um listener de scroll que troca uma classe.</li>
+            <li><strong>Esconda a scrollbar</strong> em scrollers horizontais de chips (<code>scrollbar-width: none</code>), mas garanta que dá para rolar com teclado e trackpad.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copiar" data-copied="Copiado" aria-label="Copiar"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copiar</span></button></div><pre><code><span class="k">.scroller</span> {
+  overflow-x: auto;
+  mask-image: <span class="f">linear-gradient</span>(to right, transparent, #<span class="n">000</span> <span class="n">32px</span>, #<span class="n">000</span> <span class="f">calc</span>(<span class="n">100</span>% - <span class="n">32px</span>), transparent);
+}
+<span class="k">.sidebar</span> {
+  overflow-y: auto;
+  mask-image: <span class="f">linear-gradient</span>(to bottom, transparent, #<span class="n">000</span> <span class="n">24px</span>, #<span class="n">000</span> <span class="f">calc</span>(<span class="n">100</span>% - <span class="n">32px</span>), transparent);
+}</code></pre></figure>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Esmaeça só onde há mais.</strong> Com scroll-driven animations, <code>animation-timeline: scroll(self inline)</code> pode controlar uma propriedade customizada que rege o fade de cada borda; sem suporte, um listener de scroll alterna <code>data-at-start</code> e <code>data-at-end</code>.</li>
+            <li><strong>Pixels, não porcentagens.</strong> Um fade de 32px deve continuar 32px em um scroller de 300px e em um de 1200px.</li>
+            <li><strong>Snap dentro da área visível.</strong> <code>scroll-snap-type: x mandatory</code> mais <code>scroll-padding-inline: 32px</code> para os itens encaixarem depois do fade, não embaixo dele.</li>
+            <li><strong>Mantenha headers sticky fora da máscara.</strong> Um container mascarado esmaece o header sticky também. Estruture o header como irmão acima do scroller.</li>
+            <li><strong>Contenha o overscroll.</strong> <code>overscroll-behavior-x: contain</code> em scrollers horizontais impede que swipes de trackpad disparem a navegação de voltar do navegador.</li>
+            <li><strong>O foco precisa escapar do fade.</strong> <code>scroll-margin-inline: 32px</code> nos filhos focáveis para o foco por teclado rolá-los para fora da borda esmaecida.</li>
+            <li><strong>Scrollbar escondida, affordance visível.</strong> Se você esconde a scrollbar, o fade é a única dica. Mantenha também o container rolável por teclado com <code>tabindex="0"</code> e um rótulo.</li>
+            <li><strong>Dialogs também.</strong> Um fade acima das ações do rodapé de um dialog longo sinaliza mais conteúdo melhor que uma linha divisória.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/mask-image" target="_blank" rel="noopener">MDN, mask-image</a> · <a href="https://developer.chrome.com/docs/css-ui/scroll-driven-animations" target="_blank" rel="noopener">Chrome for Developers, scroll-driven animations</a> · <a href="https://rauno.me/craft" target="_blank" rel="noopener">Rauno Freiberg, Craft</a></footer>
+        </article>
+
+<article class="lesson" id="spacing-rhythm">
+          <span class="eyebrow">Layout · 08</span>
+          <h2>Spacing Rhythm</h2>
+          <p class="lede">Espaçamento é a parte do layout que ninguém nota quando está certa e todo mundo sente quando está errada. Um conjunto pequeno de distâncias repetidas é o que faz uma tela parecer composta.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="spacing">
+            <div class="demo-stage">
+            <div class="sp-form">
+              <div class="sp-field"><span class="sp-label">Nome do projeto</span><span class="sp-input"></span><span class="sp-help">Visível para todo o time</span></div>
+              <div class="sp-field"><span class="sp-label">Descrição</span><span class="sp-input"></span></div>
+              <div class="sp-actions"><span class="sp-btn primary"></span><span class="sp-btn"></span></div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Unidade base</span><input type="range" name="unit" min="2" max="8" step="1" value="4" data-unit="px"><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Espaçamento arbitrário</span><input type="checkbox" name="arbitrary" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Arraste a unidade base: toda distância é um múltiplo dela. Troque para espaçamento arbitrário para ver o mesmo formulário com vãos de 7, 13 e 19px.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Olhe uma tela que parece levemente errada sem você conseguir dizer por quê. Muitas vezes é espaçamento: 13px aqui, 19px ali, 7px entre um label e o campo. Nenhum deles está errado sozinho, mas juntos não têm ritmo, como música sem batida constante. Agora refaça a mesma tela usando só múltiplos de uma unidade, digamos 4px: 4, 8, 12, 16, 24, 32. Nada mais muda e de repente ela parece intencional. O olho percebe a repetição mesmo sem medir.</p>
+          <p>Uma escala também acelera decisões. Em vez de perguntar "quanto espaço aqui?", você pergunta "qual degrau?", e a resposta costuma ser óbvia: apertado para coisas que pertencem juntas, largo para as que não pertencem.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Escolha uma unidade e uma escada curta.</strong> Base de 4px, degraus em 4, 8, 12, 16, 24, 32, 48, 64. Isso cobre quase tudo, de gap entre ícones a seções de página.</li>
+            <li><strong>Proximidade significa relação.</strong> Um label fica de 4 a 8px do seu campo; dois campos ficam de 16 a 24px um do outro; duas seções, de 48 a 64px. As distâncias contam a história de quem pertence a quem.</li>
+            <li><strong>Dentro é menor que fora.</strong> O padding dentro de um card é menor que o vão entre cards, senão os cards parecem se fundir.</li>
+            <li><strong>Exceções ópticas são permitidas.</strong> Texto tem espaço interno próprio por causa da entrelinha; às vezes um degrau precisa de um ou dois pixels de ajuste para parecer uniforme. A escala é um padrão, não uma lei.</li>
+            <li><strong>Tokenize.</strong> Degraus nomeados no código (space-1 a space-8) impedem o ritmo de derivar conforme mais pessoas mexem no produto.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Quatro é uma boa base.</strong> Divide bem, combina com a maioria dos grids de ícone e dá controle fino onde 8 seria grosso demais. Produtos maiores costumam usar 8 para layout e 4 para componentes.</li>
+            <li><strong>Saltos maiores no topo da escada.</strong> 4, 8, 12, 16, 24, 32, 48, 64. Os degraus crescem porque distâncias grandes precisam de diferenças maiores para serem percebidas como diferentes.</li>
+            <li><strong>Label, campo, texto de ajuda.</strong> Label 6 a 8px acima do campo, ajuda 6px abaixo, 20 a 24px antes do próximo campo. Esse padrão sozinho conserta a maioria dos formulários.</li>
+            <li><strong>Padding do card mais ou menos igual ao raio.</strong> Um raio de 16px quer cerca de 16 a 20px de padding; 8px de padding dentro de um raio de 16px parece apertado nos cantos.</li>
+            <li><strong>Vão entre seções é o dobro do vão entre blocos.</strong> Se itens dentro de uma seção estão a 16px, seções estão a 32 a 48px. O dobro é o mínimo para o olho ver um grupo novo.</li>
+            <li><strong>Audite com uma régua por cima.</strong> Ligue um grid de 4px na ferramenta de design ou um overlay de dev e procure qualquer coisa caindo entre as linhas.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> Adam Wathan e Steve Schoger, <em>Refactoring UI</em> (establish a spacing and sizing system) · <a href="https://m3.material.io/foundations/layout/understanding-layout/spacing" target="_blank" rel="noopener">Material Design, Spacing</a> · <a href="https://developer.apple.com/design/human-interface-guidelines/layout" target="_blank" rel="noopener">Apple HIG, Layout</a></footer>
+        </article>
+
+<article class="lesson" id="density">
+          <span class="eyebrow">Layout · 09</span>
+          <h2>Density</h2>
+          <p class="lede">Quanto cabe numa tela é uma decisão de design, não um efeito colateral. A densidade certa depende de quem está olhando e com que frequência.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="density">
+            <div class="demo-stage">
+            <div class="dn-table"><div class="dn-row dn-head"><span>Issue</span><span>Status</span><span>Atualizado</span></div><div class="dn-row"><span class="dn-name">Botão de login desalinhado no Safari</span><span class="dn-tag">Em andamento</span><span class="dn-time">2m</span></div><div class="dn-row"><span class="dn-name">Exportar CSV perde a linha de cabeçalho</span><span class="dn-tag">A fazer</span><span class="dn-time">1h</span></div><div class="dn-row"><span class="dn-name">Dark mode pisca ao carregar</span><span class="dn-tag">Revisão</span><span class="dn-time">3h</span></div><div class="dn-row"><span class="dn-name">Atalho conflita com o navegador</span><span class="dn-tag">A fazer</span><span class="dn-time">1d</span></div><div class="dn-row"><span class="dn-name">Toast sobrepõe o compositor</span><span class="dn-tag">Feito</span><span class="dn-time">2d</span></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Altura da linha</span><input type="range" name="row" min="32" max="56" step="4" value="40" data-unit="px"><output></output></label></div>
+          </div>
+            <figcaption class="demo-caption">Arraste a altura da linha entre compacto e confortável. O texto continua do mesmo tamanho; só o espaço muda. Passe o mouse numa linha: a largura inteira é o alvo.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Uma planilha usada o dia inteiro por uma analista e uma página de configurações aberta uma vez por mês querem coisas opostas. A analista quer ver quarenta linhas sem rolar e as lê de relance; padding generoso seria só rolagem disfarçada. A página de configurações é lida devagar, uma vez, e quer espaço para respirar, para cada opção ser entendida antes de ser mudada. As duas estão certas. O errado é aplicar uma densidade a tudo, que é o que acontece quando uma biblioteca de componentes vem com um único tamanho "confortável".</p>
+          <p>Densidade também é sobre o que está visível de uma vez. Ver mais linhas significa comparar mais, achar padrões, sentir controle. Ver menos significa focar. A escolha pertence à tarefa, e muitas vezes à pessoa, e é por isso que as melhores ferramentas de dados deixam trocar.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Duas ou três densidades, não uma.</strong> Compacta perto de 32px por linha, padrão perto de 40, confortável perto de 48. Deixe usuários avançados escolherem.</li>
+            <li><strong>Reduza espaço antes de reduzir texto.</strong> Compacto significa padding mais apertado e gaps menores; o texto continua legível no mesmo tamanho.</li>
+            <li><strong>Mantenha as áreas de toque.</strong> Uma linha de 32px continua clicável em toda a largura; linhas pequenas nunca podem significar alvos pequenos.</li>
+            <li><strong>A frequência decide.</strong> Telas usadas muitas vezes por dia tendem ao compacto; telas usadas raramente tendem ao confortável.</li>
+            <li><strong>Teste com quantidades reais.</strong> Dez linhas de dados de exemplo escondem problemas de densidade. Carregue duzentas e veja se a tela ainda se lê.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Alturas de linha que caem no grid.</strong> 32, 40, 48. Alturas quebradas como 37px estragam o ritmo vertical assim que as linhas empilham.</li>
+            <li><strong>Compacto esconde menos, não mais.</strong> No modo compacto mostre as mesmas colunas com menos padding; não retire informação que a pessoa escolheu ver.</li>
+            <li><strong>O tamanho do texto fica.</strong> Os mesmos 13px em toda densidade; só espaçamento e tamanho de ícone mudam. Encolher texto para caber é outra decisão, pior.</li>
+            <li><strong>Persista a escolha.</strong> Se alguém escolhe compacto, lembre por visualização. Resetar a densidade a cada visita apaga o motivo da escolha.</li>
+            <li><strong>Hover revela, densidade esconde.</strong> Em linhas compactas, ações secundárias podem aparecer só no hover, deixando o resto da linha para o conteúdo.</li>
+            <li><strong>Mobile é a própria densidade.</strong> Alvos de toque obrigam linhas de pelo menos 44px, então compacto não existe ali; confortável é o padrão e a única opção.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://m2.material.io/design/layout/applying-density.html" target="_blank" rel="noopener">Material Design, Applying density</a> · <a href="https://linear.app/docs" target="_blank" rel="noopener">Linear</a> (configuração de densidade) · <a href="https://www.nngroup.com/articles/information-density/" target="_blank" rel="noopener">Nielsen Norman Group, Information density</a></footer>
+        </article>
+
+<article class="lesson" id="zero-one-many">
+          <span class="eyebrow">Layout · 10</span>
+          <h2>Zero, One, Many</h2>
+          <p class="lede">Toda lista, contador e coleção precisa ser desenhada quatro vezes: com nada, com um, com poucos e com muitos demais. Todo mundo desenha a terceira.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="cardinality">
+            <div class="demo-stage">
+            <div class="zm-wrap">
+              <div class="zm-grid"><div class="zm-item"><span class="zm-thumb"></span><span class="zm-t">Projeto 1</span></div><div class="zm-item"><span class="zm-thumb"></span><span class="zm-t">Projeto 2</span></div><div class="zm-item"><span class="zm-thumb"></span><span class="zm-t">Projeto 3</span></div><div class="zm-item"><span class="zm-thumb"></span><span class="zm-t">Projeto 4</span></div><div class="zm-item"><span class="zm-thumb"></span><span class="zm-t">Projeto 5</span></div><div class="zm-item"><span class="zm-thumb"></span><span class="zm-t">Projeto 6</span></div><div class="zm-item"><span class="zm-thumb"></span><span class="zm-t">Projeto 7</span></div><div class="zm-item"><span class="zm-thumb"></span><span class="zm-t">Projeto 8</span></div><div class="zm-item"><span class="zm-thumb"></span><span class="zm-t">Projeto 9</span></div><div class="zm-item"><span class="zm-thumb"></span><span class="zm-t">Projeto 10</span></div><div class="zm-item"><span class="zm-thumb"></span><span class="zm-t">Projeto 11</span></div><div class="zm-item"><span class="zm-thumb"></span><span class="zm-t">Projeto 12</span></div></div>
+              <div class="zm-empty"><b>Nenhum projeto ainda</b><span>Crie um para vê-lo aqui.</span></div>
+              <div class="zm-more">+ 4 mais</div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Itens</span><input type="range" name="items" min="0" max="12" step="1" value="3" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Desenhado para cada caso</span><input type="checkbox" name="designed" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Arraste de 0 a 12. Desenhado: estado vazio no zero, um card largo no um, grid limitado com contagem depois de oito. Padrão: uma célula solitária e um grid sem fim.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>O caso "poucos" é o que está em todo mockup. Zero precisa de um estado vazio com explicação e ação. Muitos precisa de paginação, virtualização, busca ou agrupamento, e de um número real: pergunte ao time qual é o percentil 99 e desenhe para ele, não para o valor típico. O mais esquecido é o um: um grid de três colunas com um card só, um carrossel com um slide, um gráfico com um ponto. Todos ficam esquisitos por padrão, e nenhum é raro.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Zero:</strong> explique por que está vazio (nunca teve nada, filtro escondeu, erro), ensine o que vai morar aqui, ofereça a saída. E distinga erro de vazio; confundir os dois faz a pessoa achar que perdeu os dados.</li>
+            <li><strong>Um:</strong> um layout que não pareça um grid com as outras células faltando. Muitas vezes um card largo único, ou a variante de lista do mesmo componente.</li>
+            <li><strong>Poucos:</strong> o caso normal, já desenhado.</li>
+            <li><strong>Muitos:</strong> mostre um número limitado e diga quantos mais, com um jeito de vê-los. Decida se a superfície rola, pagina ou busca.</li>
+            <li><strong>Carregamento tem as próprias cardinalidades:</strong> inicial, parcial, mais itens, revalidação. Cada um é um estado.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Desenhe o um.</strong> Um card sozinho num grid de três colunas é a tela quebrada mais comum em produção.</li>
+            <li><strong>Peça o p99.</strong> Desenhe o "muitos" para o máximo real, não para os dados de demonstração.</li>
+            <li><strong>Erro não é vazio.</strong> Ícone diferente, palavras diferentes, um tentar de novo. Confundir os dois faz a pessoa achar que perdeu dados.</li>
+            <li><strong>Limite e conte.</strong> Mostre oito e "mais 12", com um jeito de vê-los. Nunca uma lista sem limite e sem plano.</li>
+            <li><strong>Mantenha a altura.</strong> Zero, um e muitos devem reservar mais ou menos a mesma região para o layout não pular entre eles.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Craft de interfaces, handbook</em> (seções 7.1, 7.2, apêndice B) · <a href="https://www.nngroup.com/articles/empty-state-interface-design/" target="_blank" rel="noopener">Nielsen Norman Group, Designing Empty States</a></footer>
+        </article>
+
+<article class="lesson" id="adversarial-content">
+          <span class="eyebrow">Layout · 11</span>
+          <h2>Adversarial Content</h2>
+          <p class="lede">Teste toda tela com conteúdo hostil. Um nome com 80 caracteres sem espaço já quebrou mais produtos que qualquer bug.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="adversarial">
+            <div class="demo-stage" data-cases="Marina Costa|Bartholomew-Featherstonehaugh-Cholmondeley-Montgomery-Fitzwilliam|Li|Geschwindigkeitsbegrenzung Straßenverkehrsordnung|田中太郎の新しいプロジェクト計画書|Marina 🎨✨ Costa">
+            <div class="ad-card">
+              <span class="ad-avatar"><span class="ad-initials">MC</span></span>
+              <div class="ad-text"><b class="ad-name"></b><span class="ad-role">Product designer</span></div>
+              <span class="ad-badge">Admin</span>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Caso</span><input type="range" name="case" min="0" max="5" step="1" value="0" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Robusto</span><input type="checkbox" name="hardened" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Percorra os casos: nome normal, 80 caracteres sem espaço, duas letras, alemão, japonês, emoji. Depois ligue o robusto: min-width zero, truncamento, um fallback que mantém o tamanho.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Mockups são preenchidos com nomes que cabem, números redondos e imagens que carregam. Dados reais não são nada disso. Robustez é o eixo de craft de maior impacto e menos glamour, e o Rauno a chama de multiplicador de confiança maior que qualquer refinamento visual, porque a confiança quebra na primeira vez que o layout quebra.</p>
+
+          <h3>A lista mínima</h3>
+          <ul>
+            <li>Um nome com 80 caracteres sem espaço, e um nome com 2 caracteres.</li>
+            <li>Texto em alemão (cerca de 30% mais longo que o português) e em japonês (mais curto, sem espaços, quebra diferente).</li>
+            <li>Um número na casa dos bilhões, um negativo, zero e nulo.</li>
+            <li>Emoji no meio do nome, e texto que parece HTML.</li>
+            <li>Data de 1900 e de 2100.</li>
+            <li>Imagem que não carregou, e imagem em proporção inesperada.</li>
+          </ul>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Truncamento é decisão.</strong> Reticências no fim para rótulos e títulos de card; no meio para nomes de arquivo, porque a extensão importa; duas linhas para títulos importantes; fonte menor para números em destaque. Se você não decidir, o comportamento padrão decide, e costuma ser a pior opção.</li>
+            <li><strong>O texto completo sempre está acessível</strong> em algum lugar: tooltip, hover, tela de detalhe. Truncar sem recuperação é esconder informação.</li>
+            <li><strong>Rede também é conteúdo.</strong> Offline, lento, parcial, obsoleto, edições em conflito, reconectando. Cada um é uma tela ou um comportamento, e a maioria dos arquivos de design não tem nenhum.</li>
+            <li><strong>Faça parte do pronto.</strong> Uma checagem de estados na definição de pronto, não uma fase de polimento depois.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>80 caracteres, sem espaço.</strong> O único teste que pega mais bugs. Adicione min-width 0 nos filhos de flex e uma estratégia de truncamento.</li>
+            <li><strong>Alemão e japonês.</strong> Um estica, o outro não tem espaço para quebrar. Os dois quebram layouts ajustados para inglês.</li>
+            <li><strong>Imagem que faltou é um estado.</strong> Um fallback com iniciais ou um tile neutro, do mesmo tamanho, com o mesmo contorno.</li>
+            <li><strong>Reticências no meio para arquivos.</strong> Mantenha a extensão e o fim distintivo do nome.</li>
+            <li><strong>Números também.</strong> Bilhões, negativos, zero e nulo precisam de decisão, principalmente em colunas tabulares.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Craft de interfaces, handbook</em> (seções 7.4 a 7.6) · <a href="https://rauno.me/craft/interaction-design" target="_blank" rel="noopener">Rauno Freiberg, Invisible Details of Interaction Design</a> (robustez)</footer>
+        </article>
+      </section>
+      <footer class="footer"><p>Biblioteca de estudo pessoal. Conteúdo sintetizado a partir das fontes listadas em cada aula; nomes de cursos e autores pertencem aos seus respectivos donos. Hierarquia só por tamanho, peso e espaço.</p></footer>
+    </div>
+  </main>
+</div>
+<script src="../app.js"></script>
+</body>
+</html>

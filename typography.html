@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Typography — Interface Craft</title>
+  <meta name="description" content="Text is 90% of any interface. These lessons are about the mechanics and the small adjustments that separate &quot;rendered&quot; text from &quot;set&quot; text.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#fcfcfc" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
+  <script>
+    // Applies the saved theme before first paint to avoid a flash
+    try { var t = localStorage.getItem('theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script>
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <div>
+        <div class="brand-name">Interface Craft</div>
+        <div class="brand-sub">Living library</div>
+      </div>
+      <div class="controls">
+        <nav class="lang-switch" aria-label="Language"><a class="lang-opt" href="#" data-lang="en" hreflang="en" aria-current="true">EN</a><a class="lang-opt" href="pt/typography.html" data-lang="pt" hreflang="pt">PT</a></nav>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle light and dark theme" title="Toggle light and dark theme"><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+      </div>
+    </div>
+    <a class="back-link" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>Home</a>
+    <nav class="nav-groups" aria-label="Section contents">
+      <div class="nav-group" data-section="type" style="margin-top:0">
+        <div class="nav-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h16"/><path d="M6 16l6-12 6 12"/><path d="M8.5 11h7"/></svg>Typography</div>
+        <ul class="nav-list"><li><a class="nav-link" href="#letter-spacing">Letter Spacing</a></li><li><a class="nav-link" href="#text-wrapping">Text Wrapping</a></li><li><a class="nav-link" href="#tabular-numbers">Tabular Numbers</a></li><li><a class="nav-link" href="#relative-time">Relative Time</a></li><li><a class="nav-link" href="#optical-alignment">Optical Alignment</a></li><li><a class="nav-link" href="#icons">Icons</a></li><li><a class="nav-link" href="#font-smoothing">Font Smoothing</a></li><li><a class="nav-link" href="#hierarchy-without-size">Hierarchy Without Size</a></li><li><a class="nav-link" href="#font-metrics">Font Metrics</a></li><li><a class="nav-link" href="#leading-trim">Leading Trim</a></li><li><a class="nav-link" href="#choosing-a-typeface">Choosing a Typeface</a></li><li><a class="nav-link" href="#type-scale">The Type Scale</a></li><li><a class="nav-link" href="#line-height-and-measure">Line Height and Measure</a></li><li><a class="nav-link" href="#variable-fonts">Variable Fonts</a></li><li><a class="nav-link" href="#opentype-features">OpenType Features</a></li><li><a class="nav-link" href="#formatting-numbers">Formatting Numbers</a></li><li><a class="nav-link" href="#hyphenation-and-breaks">Hyphenation and Line Breaks</a></li><li><a class="nav-link" href="#truncation">Truncation and Hostile Content</a></li><li><a class="nav-link" href="#font-loading">Font Loading</a></li><li><a class="nav-link" href="#rendering-and-weight">Rendering and Weight</a></li><li><a class="nav-link" href="#type-tokens">Type Tokens</a></li><li><a class="nav-link" href="#text-accessibility">Text Accessibility</a></li><li><a class="nav-link" href="#internationalization">Internationalization</a></li></ul>
+      </div>
+      <div class="nav-group nav-other" data-section="type">
+        <div class="nav-title">Other sections</div>
+        <ul class="nav-list"><li><a class="nav-link" href="craft.html">Craft</a></li><li><a class="nav-link" href="color.html">Color</a></li><li><a class="nav-link" href="layout.html">Layout</a></li><li><a class="nav-link" href="motion.html">Motion</a></li><li><a class="nav-link" href="ux.html">UX</a></li><li><a class="nav-link" href="references.html">References</a></li></ul>
+      </div>
+    </nav>
+  </aside>
+  <main class="content">
+    <div class="container">
+<section class="section" data-section="type">
+        <div class="section-head" id="typography">
+          <span class="eyebrow">Section 02</span>
+          <h2>Typography</h2>
+          <p>Text is 90% of any interface. These lessons are about the mechanics and the small adjustments that separate "rendered" text from "set" text.</p>
+        </div>
+
+        <article class="lesson" id="letter-spacing">
+          <span class="eyebrow">Typography · 01</span>
+          <h2>Letter Spacing</h2>
+          <p class="lede">Fonts are drawn for body-text sizes. When you scale them far up or down, the spacing between letters needs adjustment.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="tracking">
+            <div class="demo-stage">
+            <div class="tr-block"><div class="tr-heading">Interface craft</div>
+            <div class="tr-label">Account settings</div>
+            <p class="tr-body">Body text is drawn for this size and needs no tracking at all.</p></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">letter-spacing</span><input type="range" name="tracking" min="-0.06" max="0.12" step="0.005" value="0" data-unit="em"><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">text-transform: uppercase</span><input type="checkbox" name="uppercase" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Drag letter-spacing. One value hits a 32px heading, an 11px label and 16px body: the heading wants about −0.025em, the label +0.06em, the body zero.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>At large sizes, the space between letters that looks right at 15px becomes visually wide, and the heading looks "loose". At small sizes in all caps, capital letters need more air to be read as a word rather than a block. The general rule: the bigger the text, the tighter; the smaller and taller (uppercase), the looser.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Large headings (28px+):</strong> <code>letter-spacing: -0.02em</code> to <code>-0.04em</code>. Inter tends to look good between -0.02em and -0.03em.</li>
+            <li><strong>Body text (14 to 17px):</strong> leave it at zero. The font was drawn for this.</li>
+            <li><strong>Uppercase labels (10 to 12px):</strong> <code>letter-spacing: 0.04em</code> to <code>0.1em</code>.</li>
+            <li><strong>Use <code>em</code>, not <code>px</code>.</strong> The adjustment then scales with the font size.</li>
+            <li><strong>Trust the eye, not the formula.</strong> Adjust until the heading reads as a solid unit and the label feels breathable.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copy" data-copied="Copied" aria-label="Copy"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copy</span></button></div><pre><code><span class="k">h1</span> { font-size: <span class="n">32px</span>; letter-spacing: <span class="n">-0.025em</span>; }
+<span class="k">.eyebrow</span> { font-size: <span class="n">11px</span>; text-transform: uppercase; letter-spacing: <span class="n">0.06em</span>; }</code></pre></figure>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Inter has a formula.</strong> The Inter site's Dynamic Metrics calculator gives tracking per size: roughly −0.006em at 14px, −0.019em at 24px, −0.021em at 32px. Use it as a starting point.</li>
+            <li><strong>Never track lowercase positively.</strong> Positive letter-spacing on lowercase body text destroys word shapes and slows reading. Positive tracking is for caps and small caps only.</li>
+            <li><strong>Weight changes the answer.</strong> Bold display text needs slightly tighter tracking than regular at the same size; light weights need slightly more air.</li>
+            <li><strong>Tracking pairs with leading.</strong> Tight tracking wants tight line-height: display 1.05 to 1.15, headings 1.2 to 1.3, body 1.5 to 1.6.</li>
+            <li><strong>Numbers in large KPIs.</strong> Big figures read tighter than words: −0.02em to −0.03em, combined with tabular figures.</li>
+            <li><strong>Buttons and labels at 13 to 14px medium.</strong> Zero or −0.005em. Anything tighter makes medium-weight labels clump.</li>
+            <li><strong>Leave code alone.</strong> Never add letter-spacing to monospaced or code-styled text; the fixed advance is the point.</li>
+            <li><strong>Check kerning is on.</strong> <code>font-kerning: normal</code> is the default, but some resets disable ligatures and kerning via <code>font-variant-ligatures: none</code>. Do not.</li>
+            <li data-craftbook><strong>Line height falls as size rises.</strong> 12 to 16px around 1.5, 24px around 1.3, 32px around 1.2, 48px around 1.1. Tracking follows: +0.01em at 12px, 0 at 16, −0.02em at 32, −0.03em at 48. Those two tables alone fix most typography.</li>
+            <li data-typebook><strong>By size, in em.</strong> +0.01 to +0.02 at 11 to 12px, +0.005 at 14, 0 at 16, −0.01 at 20 to 24, −0.02 at 30 to 38, −0.03 at 48 and up.</li>
+            <li data-typebook><strong>All caps always positive,</strong> +0.03 to +0.08em: spacing is calibrated for lowercase.</li>
+            <li data-typebook><strong>Never in px.</strong> Tracking must scale with the size it corrects.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <a href="https://rsms.me/inter/" target="_blank" rel="noopener">Rasmus Andersson, Inter</a> (dynamic metrics) · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/letter-spacing" target="_blank" rel="noopener">MDN, letter-spacing</a> · <a href="https://practicaltypography.com/letterspacing.html" target="_blank" rel="noopener">Butterick's Practical Typography</a></footer>
+        </article>
+
+<article class="lesson" id="text-wrapping">
+          <span class="eyebrow">Typography · 02</span>
+          <h2>Text Wrapping</h2>
+          <p class="lede">A single word alone on the last line of a heading ruins the composition. CSS now fixes this in one line.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="wrap">
+            <div class="demo-stage">
+            <div class="wrap-box">
+              <div class="tw-title">How to train your eye for interface details</div>
+              <p class="tw-body">A good reference is not a pretty screenshot. It is understanding why something works well enough to rebuild it in a playground.</p>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">max-width</span><input type="range" name="width" min="200" max="440" step="10" value="250" data-unit="px"><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">text-wrap: balance / pretty</span><input type="checkbox" name="wrap" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Narrow the box until one word is left alone on the last line, then switch text-wrap on.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>The default line-breaking algorithm is greedy: it fills each line to the maximum and pushes the rest to the next one. The result is headings with an orphaned word and paragraphs whose last line is two letters long. Typographers have adjusted this by hand for centuries; <code>text-wrap</code> does it automatically.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong><code>text-wrap: balance</code></strong> on headings and short text (up to 4 to 6 lines). It equalizes line lengths. It has a layout cost, which is why browsers cap it at a few lines.</li>
+            <li><strong><code>text-wrap: pretty</code></strong> on paragraphs. It avoids orphans on the last line at a lower cost. Support is still partial (Chrome, Safari 18+); it degrades gracefully to the default.</li>
+            <li><strong>Limit the measure.</strong> <code>max-width: 60ch</code> on body text. Lines of 45 to 75 characters are the most comfortable.</li>
+            <li><strong>Avoid bad breaks in names and values.</strong> <code>white-space: nowrap</code> on "$1,200.00", dates and product names.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copy" data-copied="Copied" aria-label="Copy"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copy</span></button></div><pre><code><span class="k">h1, h2, h3</span> { text-wrap: balance; }
+<span class="k">p</span> { text-wrap: pretty; max-width: <span class="n">60ch</span>; }
+<span class="k">.price</span> { white-space: nowrap; }</code></pre></figure>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Glue numbers to units.</strong> <code>&amp;nbsp;</code> between "24" and "px", "iPhone" and "15", a first and last name in a byline. Otherwise the line breaks in the worst place.</li>
+            <li><strong>Hyphenate body, not headings.</strong> <code>hyphens: auto</code> needs a correct <code>lang</code> attribute and helps narrow mobile columns; on headings it looks like an error.</li>
+            <li><strong>User content can overflow.</strong> URLs, emails and long tokens need <code>overflow-wrap: anywhere</code>, or they push the layout sideways.</li>
+            <li><strong>The flex truncation bug.</strong> <code>text-overflow: ellipsis</code> needs <code>overflow: hidden</code>, <code>white-space: nowrap</code> and, inside flex or grid, <code>min-width: 0</code> on the child. Missing the last one is the most common truncation failure.</li>
+            <li><strong>Multi-line clamp with a way out.</strong> <code>-webkit-line-clamp: 2</code> plus a <code>title</code> or an expand affordance. Never clamp text the user needs to compare across rows.</li>
+            <li><strong>Middle ellipsis for file names.</strong> "annual-report…final.pdf" keeps the extension and the distinguishing end; a trailing ellipsis hides both.</li>
+            <li><strong>Button labels never wrap.</strong> <code>white-space: nowrap</code> on buttons, tabs and chips. If a label does not fit, shorten the copy or widen the control.</li>
+            <li><strong>Measure independent of container.</strong> A paragraph inside a wide card still gets <code>max-width: 60ch</code>. Wide cards do not justify 120-character lines.</li>
+            <li data-typebook><strong>Balance has a line cap.</strong> Six lines in Chromium, ten in Firefox; beyond that it is silently ignored. Headings only.</li>
+            <li data-typebook><strong>Pretty is not in Firefox yet.</strong> Progressive enhancement: no support, default wrapping, nothing breaks.</li>
+            <li data-typebook><strong>Recomputed on every resize.</strong> Cheap on a heading, wasteful on a paragraph.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <a href="https://developer.chrome.com/docs/css-ui/css-text-wrap-balance" target="_blank" rel="noopener">Chrome for Developers, text-wrap: balance</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/text-wrap" target="_blank" rel="noopener">MDN, text-wrap</a></footer>
+        </article>
+
+<article class="lesson" id="tabular-numbers">
+          <span class="eyebrow">Typography · 03</span>
+          <h2>Tabular Numbers</h2>
+          <p class="lede">In Inter and most modern fonts, the "1" is narrower than the "8". In lists, timers and tables, that makes numbers dance.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="tnum">
+            <div class="demo-stage">
+            <div class="tn-grid">
+              <ul class="num-list">
+                <li><span>Revenue</span><span>1,111.11</span></li>
+                <li><span>Costs</span><span>8,888.88</span></li>
+                <li><span>Margin</span><span>2,417.05</span></li>
+              </ul>
+              <button class="num-clock" type="button" data-toggle="is-running" aria-label="Timer"></button>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">font-variant-numeric: tabular-nums</span><input type="checkbox" name="tabular" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Click the timer to start and stop it. Without tabular figures the decimals drift between rows and the timer jitters on every tick.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Proportional figures have different widths so that text looks good in prose. But in any column of numbers, vertical alignment is what lets you compare values at a glance. And in any number that changes (timer, counter, live price), variable width makes the layout jitter on every tick.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Tables, value lists, dashboards:</strong> <code>font-variant-numeric: tabular-nums</code>.</li>
+            <li><strong>Any number that animates or updates:</strong> tabular, always. That includes clocks, counters, progress and prices.</li>
+            <li><strong>Body text:</strong> leave it proportional. "In 2024 we shipped 3 releases" looks better with natural widths.</li>
+            <li><strong>Slashed zero</strong> (<code>font-feature-settings: "zero"</code>) helps tell 0 from O in codes and IDs.</li>
+            <li><strong>Check that the font has the feature.</strong> Inter, SF, Roboto, Geist and most modern grotesques do. Not every display font does.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copy" data-copied="Copied" aria-label="Copy"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copy</span></button></div><pre><code><span class="k">table, .timer, .price</span> { font-variant-numeric: tabular-nums; }
+<span class="k">.code-id</span> { font-feature-settings: <span class="s">"tnum"</span>, <span class="s">"zero"</span>; }</code></pre></figure>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Right-align numbers, left-align text.</strong> Column headers follow their column's alignment. Centered numeric columns cannot be compared.</li>
+            <li><strong>Same precision everywhere.</strong> 2.50, not 2.5 next to 3.25. Format with <code>Intl.NumberFormat</code> so decimals, separators and currency follow the locale.</li>
+            <li><strong>Reserve width in <code>ch</code>.</strong> A timer going from 9:59 to 10:00 shifts everything to its right. Set <code>min-width: 5ch</code> based on the maximum digit count.</li>
+            <li><strong>True minus sign.</strong> Use U+2212 (−) instead of a hyphen for negatives. It has digit-compatible width and proper vertical position.</li>
+            <li><strong>Let the digits dominate.</strong> Units, currency symbols and percent signs in a muted color or lighter weight, never a different size that breaks the scale.</li>
+            <li><strong>Animated counters.</strong> Tabular figures plus a fixed-width container; with CSS <code>@property</code> you can animate an integer custom property and render it via <code>counter()</code> without layout shift.</li>
+            <li><strong>Dates and times too.</strong> Timestamps in a feed or log align only with tabular figures. Never use <code>oldstyle-nums</code> in UI.</li>
+            <li><strong>Slashed zero in identifiers.</strong> IDs, hashes and codes: <code>font-feature-settings: "zero"</code> so 0 and O cannot be confused.</li>
+            <li data-typebook><strong>Quantities right, identifiers left,</strong> decimals aligned on the separator, header aligned with the data.</li>
+            <li data-typebook><strong>Locale formatting is correctness.</strong> 1,234.56 is wrong for a Brazilian reader; use Intl.</li>
+            <li data-typebook><strong>Precision matches the decision,</strong> exact value one hover away.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric" target="_blank" rel="noopener">MDN, font-variant-numeric</a> · <a href="https://rsms.me/inter/#features" target="_blank" rel="noopener">Inter, OpenType features</a></footer>
+        </article>
+
+<article class="lesson" id="relative-time">
+          <span class="eyebrow">Typography · 04</span>
+          <h2>Relative Time</h2>
+          <p class="lede">"2 minutes ago" is great for scanning and useless for reference. Good timestamps are relative when recent, absolute when not, and always let you reach the exact date.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="reltime">
+            <div class="demo-stage">
+            <div class="rt-list"><div class="rt-row"><span class="rt-what">Ana commented</span><span class="rt-time" title="Sep 4, 2026, 09:14" tabindex="0"><span class="rel">now</span><span class="abs">Sep 4, 2026, 09:14</span></span></div><div class="rt-row"><span class="rt-what">Build passed</span><span class="rt-time" title="Sep 4, 2026, 09:02" tabindex="0"><span class="rel">12 min ago</span><span class="abs">Sep 4, 2026, 09:02</span></span></div><div class="rt-row"><span class="rt-what">Roadmap updated</span><span class="rt-time" title="Sep 4, 2026, 06:10" tabindex="0"><span class="rel">3 h ago</span><span class="abs">Sep 4, 2026, 06:10</span></span></div><div class="rt-row"><span class="rt-what">Invoice paid</span><span class="rt-time" title="Sep 3, 2026, 16:40" tabindex="0"><span class="rel">yesterday</span><span class="abs">Sep 3, 2026, 16:40</span></span></div><div class="rt-row"><span class="rt-what">Project created</span><span class="rt-time" title="Mar 12, 2026, 11:00" tabindex="0"><span class="rel">March 12</span><span class="abs">Mar 12, 2026, 11:00</span></span></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Relative time</span><input type="checkbox" name="relative" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Hover a timestamp for the exact date. Switch relative off to see why “3 h ago” scans faster in a feed, and why the absolute date must stay one gesture away.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Relative time answers the question people actually have in a feed: is this fresh? Past a few days the question changes to "when exactly", and "23 days ago" forces arithmetic. The scale below is the one most well-made products converge on, and the detail that separates careful from lazy is the hover: the absolute date and time are always one gesture away.</p>
+          <table>
+            <thead><tr><th>Age</th><th>Show</th></tr></thead>
+            <tbody>
+              <tr><td>under 1 minute</td><td>"now"</td></tr>
+              <tr><td>under 1 hour</td><td>"12 min ago"</td></tr>
+              <tr><td>under 24 hours</td><td>"3 h ago"</td></tr>
+              <tr><td>under 7 days</td><td>"yesterday", "Saturday"</td></tr>
+              <tr><td>under 1 year</td><td>"March 12"</td></tr>
+              <tr><td>1 year or more</td><td>"March 12, 2024"</td></tr>
+            </tbody>
+          </table>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Absolute on hover or tap,</strong> always, with the full timestamp and time zone if it matters.</li>
+            <li><strong>Regional formats are not optional.</strong> Decimal and thousands separators, currency symbol position, date order. Showing 1,234.56 to a Brazilian user is wrong, not a style choice.</li>
+            <li><strong>Precision follows use.</strong> Four decimals in a list is noise; "R$ 1.2k" in an accounting report is unacceptable.</li>
+            <li><strong>Correct plurals.</strong> "1 items" is the classic symptom; languages with complex rules need real pluralization.</li>
+            <li><strong>Typographic details that signal care:</strong> curly quotes, the right dash for the job (hyphen to compose, en dash for ranges, em dash for asides), no centered paragraphs, no justification without hyphenation.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Hover gives the exact date.</strong> Every relative timestamp carries the absolute one as a title or tooltip.</li>
+            <li><strong>Switch to absolute after a week.</strong> "23 days ago" makes people calculate; "March 12" does not.</li>
+            <li><strong>Year only when it is not this year.</strong> "March 12, 2024" once the year changes.</li>
+            <li><strong>Use the platform formatter.</strong> Intl.RelativeTimeFormat and Intl.DateTimeFormat handle plurals, locales and edge cases you will get wrong by hand.</li>
+            <li><strong>Tabular figures in timestamp columns,</strong> so a feed does not jitter as times update.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Craft de interfaces, handbook</em> (sections 11.2 to 11.4) · <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/RelativeTimeFormat" target="_blank" rel="noopener">MDN, Intl.RelativeTimeFormat</a> · <a href="https://practicaltypography.com/" target="_blank" rel="noopener">Butterick's Practical Typography</a></footer>
+        </article>
+
+<article class="lesson" id="optical-alignment">
+          <span class="eyebrow">Typography · 05</span>
+          <h2>Optical Alignment</h2>
+          <p class="lede">Mathematically centered and visually centered are different things. The eye beats the ruler.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="optical">
+            <div class="demo-stage">
+            <div class="oa-row" data-hover>
+              <div class="oa-item"><span class="cap">Play icon</span><div class="play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></div></div>
+              <div class="oa-item"><span class="cap">Icon button</span><button class="btn oa-btn" type="button" tabindex="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>New item</button></div>
+              <div class="oa-item oa-quote"><span class="cap">Quote</span><p class="oa-text">“Punctuation on the margin looks indented.”</p><p class="oa-text">A plain line for comparison.</p></div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Play nudge</span><input type="range" name="nudge" min="0" max="3" step="0.5" value="1.5" data-unit="px"><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Optical corrections</span><input type="checkbox" name="optical" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Hover the row to see the guides. The nudge moves the triangle to its visual center; corrections trim the icon-side padding and hang the opening quote.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>The eye reads visual mass, not bounding boxes. A play triangle has more weight on the left, so when centered it looks shifted to the left. An icon inside a button has less "ink" than the text, so it looks like it has more padding on its side. Quotes and dashes on the left margin read as an indent. None of these is wrong on the ruler, and all of them look wrong.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Icons with asymmetric shapes</strong> (play, arrows, send): nudge 1 to 2px toward the mass. Use <code>transform: translateX()</code> or adjust the path.</li>
+            <li><strong>Buttons with icons:</strong> reduce the padding on the icon side by 2 to 4px, or give the icon a negative <code>margin-left</code>.</li>
+            <li><strong>Punctuation on the margin:</strong> <code>hanging-punctuation: first</code> (Safari) or a negative <code>text-indent</code> on quotes.</li>
+            <li><strong>Text and icon on the same line:</strong> align by baseline or x-height, not by box center. 1em icons with <code>vertical-align: -0.125em</code> usually land right.</li>
+            <li><strong>Letters with round or pointed shapes</strong> (O, A, V) in left-aligned headings may need a negative <code>margin-left</code> of 1 to 2px.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copy" data-copied="Copied" aria-label="Copy"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copy</span></button></div><pre><code><span class="k">.play svg</span> { transform: <span class="f">translateX</span>(<span class="n">1.5px</span>); }  <span class="c">/* compensates for the triangle's mass */</span>
+<span class="k">.btn--icon-left</span> { padding-left: <span class="n">10px</span>; padding-right: <span class="n">14px</span>; }
+<span class="k">blockquote</span> { hanging-punctuation: first; }</code></pre></figure>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Center on the cap height, not the line box.</strong> Text has half-leading above and below. Icons next to text look right when centered on the caps (about 0.7em), which usually means nudging them up 0.5 to 1px.</li>
+            <li><strong>Side bearings shift the left edge.</strong> Glyphs carry 0.05 to 0.1em of built-in space. A heading over a paragraph, or text inside a bordered button, looks indented; a negative margin of 1 to 2px fixes it.</li>
+            <li><strong>Circles look smaller than squares.</strong> A round avatar next to a square thumbnail of the same size looks 5 to 10% smaller. Bump the circle.</li>
+            <li><strong>Vertical centering in buttons.</strong> Fonts with tall ascenders make text look low. Use <code>line-height: 1</code> with an explicit height, and check with a horizontal guide; sometimes 1px of extra bottom padding is the fix.</li>
+            <li><strong>Checkboxes align to the first line.</strong> Next to a multi-line label, align the control to the first baseline, not to the center of the block.</li>
+            <li><strong>Digits are cap-height.</strong> In a row of chips mixing "12" and "draft", the number looks higher because it has no descender or x-height. Give numbers-only chips 1px more top padding, or accept it consciously.</li>
+            <li><strong>Chevrons and arrows sit low.</strong> Directional glyphs from a 24px grid read low next to lowercase text. Nudge 0.5 to 1px up.</li>
+            <li><strong>Fix the path, not the layout.</strong> With SVG you can shift the artwork inside the viewBox once, so every instance is aligned without per-use hacks.</li>
+            <li data-typebook><strong>Align icon to cap height and baseline,</strong> not to the text box. Leading trim makes it automatic.</li>
+            <li data-typebook><strong>The 1px button fix</strong> is a symptom of half-leading; trim the box instead.</li>
+            <li data-typebook><strong>Columns of different sizes align on the first baseline,</strong> not on the box.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <a href="https://medium.com/design-bridges/optical-effects-9fca82b4cd9a" target="_blank" rel="noopener">Slava Shestopalov, Optical Effects in User Interfaces</a> · <a href="https://en.wikipedia.org/wiki/Optical_margin_alignment" target="_blank" rel="noopener">Wikipedia, Optical margin alignment</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/hanging-punctuation" target="_blank" rel="noopener">MDN, hanging-punctuation</a></footer>
+        </article>
+
+<article class="lesson" id="icons">
+          <span class="eyebrow">Typography · 06</span>
+          <h2>Icons</h2>
+          <p class="lede">Icons are typography: they need the same weight, the same optical size and the same baseline as the text next to them.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="icons">
+            <div class="demo-stage">
+            <div class="icons-block"><div class="icon-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h18M3 6h18M3 18h18"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg></div>
+            <div class="icon-inline-row">
+              <span class="icon-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg>Notifications</span>
+              <span class="icon-inline icon-inline--lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg>Notifications</span>
+            </div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Size</span><input type="range" name="size" min="12" max="28" step="2" value="16" data-unit="px"><output></output></label><label class="ctl"><span class="ctl-label">stroke-width</span><input type="range" name="stroke" min="1" max="2.5" step="0.25" value="1.75" data-unit="px"><output></output></label></div>
+          </div>
+            <figcaption class="demo-caption">Drag size and stroke. Next to 13px text, 16px with a 1.75px stroke sits right; at 28px the same icons start to shout.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>An icon set with 1.5px strokes next to another with 2px strokes is as noticeable as mixing two typefaces. The same goes for size: a 24px icon next to 14px text weighs too much. Well-set icons disappear into the reading; badly set icons shout.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>One family only.</strong> Lucide, Phosphor, SF Symbols, Heroicons. If you need an icon that does not exist, draw it following the family's grid and stroke.</li>
+            <li><strong>Stroke matched to text weight.</strong> Regular 14px text pairs with a 1.5 to 1.75px stroke. Medium or semibold text pairs with a 2px stroke.</li>
+            <li><strong>Size by context.</strong> 16px next to 13 to 14px text; 20px in toolbars; 24px only in primary navigation. Inline, use <code>1em</code>.</li>
+            <li><strong>Inherit the color.</strong> <code>stroke: currentColor</code> or <code>fill: currentColor</code>, so the icon follows the text state (hover, disabled).</li>
+            <li><strong>Align optically.</strong> Icons with asymmetric shapes need the same nudge as in the previous lesson.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copy" data-copied="Copied" aria-label="Copy"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copy</span></button></div><pre><code><span class="k">.icon</span> { width: <span class="n">1em</span>; height: <span class="n">1em</span>; vertical-align: <span class="n">-0.125em</span>; stroke: currentColor; stroke-width: <span class="n">1.75</span>; }
+<span class="k">.toolbar .icon</span> { width: <span class="n">20px</span>; height: <span class="n">20px</span>; }</code></pre></figure>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Optical sizes exist.</strong> The same glyph at 16px needs less detail and a relatively thicker stroke. Sets with dedicated small variants (Phosphor, Radix, Heroicons mini) look crisper than scaled 24px icons.</li>
+            <li><strong>Gap by text size.</strong> 6 to 8px between icon and 13 to 14px text; 8 to 10px at 16px. Too much gap detaches the icon from its label.</li>
+            <li><strong>Icon-only button sizes.</strong> 16px icon in a 32px button, 20px in 36 to 40px. The icon occupies about half the control.</li>
+            <li><strong>Fill means selected.</strong> Use the outline glyph for default and its filled twin for the active state (tab bars, toggles). Consistent semantics, no color needed.</li>
+            <li><strong>Color only with meaning.</strong> <code>currentColor</code> for actionable, muted gray for secondary, red or green only for status. Decorative color on icons is noise.</li>
+            <li><strong>Pixel-snap the stroke.</strong> A 1.5px stroke from a 24 viewBox rendered at 16px lands on half pixels and blurs at 1× DPR. Prefer sizes that keep the stroke on whole pixels, and test on a non-retina screen.</li>
+            <li><strong>Direction has conventions.</strong> Chevron right navigates, chevron down expands, arrow up-right opens externally. Mixing them confuses without anyone knowing why.</li>
+            <li><strong>Hide from screen readers, label the button.</strong> <code>aria-hidden="true"</code> on decorative icons; an explicit <code>aria-label</code> on every icon-only button.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <a href="https://developer.apple.com/design/human-interface-guidelines/sf-symbols" target="_blank" rel="noopener">Apple HIG, SF Symbols</a> (weights and scales aligned to text) · <a href="https://lucide.dev/guide/design/icon-design-guide" target="_blank" rel="noopener">Lucide, Icon design guide</a></footer>
+        </article>
+
+<article class="lesson" id="font-smoothing">
+          <span class="eyebrow">Typography · 07</span>
+          <h2>Font Smoothing</h2>
+          <p class="lede">On macOS, light text on a dark background looks heavier than it should. One rendering tweak fixes it, but only there.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="smooth">
+            <div class="demo-stage">
+            <div class="fs-pair">
+              <div class="fs-box sp"><span class="cap">-webkit-font-smoothing: auto</span>Light text on a dark background renders heavier because of the luminance bleed of lit pixels.</div>
+              <div class="fs-box aa"><span class="cap">-webkit-font-smoothing: antialiased</span>Light text on a dark background renders heavier because of the luminance bleed of lit pixels.</div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">font-weight</span><input type="range" name="weight" min="300" max="700" step="100" value="400" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Dark surface</span><input type="checkbox" name="darksurface" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Drag the weight and switch the surface. Visible in WebKit and Blink on macOS only; on a light surface with a low weight, antialiased text goes faint.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>macOS slightly thickens text when rendering (a leftover from the old subpixel antialiasing, which Apple removed in Mojave, though the "extra weight" stayed). On a light background this helps legibility. On a dark background, light pixels radiate over the surrounding black and the text looks bloated. <code>-webkit-font-smoothing: antialiased</code> forces grayscale antialiasing without the thickening, and the text returns to the weight the type designer intended.</p>
+          <p>The community debate is whether to apply it everywhere. The risk: on a light background, small regular text can get too thin. That is why the more careful recommendation is to apply it on dark surfaces, or globally only after checking the result on 13 to 14px text.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Dark mode:</strong> <code>-webkit-font-smoothing: antialiased</code> and <code>-moz-osx-font-smoothing: grayscale</code> on the body. That is what this site does.</li>
+            <li><strong>Light mode:</strong> test. Inter at 14px regular is usually fine; thinner fonts may suffer.</li>
+            <li><strong>Light text on dark inside a light theme</strong> (primary buttons, tooltips, toasts): apply it locally on the component.</li>
+            <li><strong>macOS only.</strong> Windows and Linux ignore the property. Do not rely on it to "fix" font weight cross-platform.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copy" data-copied="Copied" aria-label="Copy"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copy</span></button></div><pre><code><span class="c">/* Applied only where the background is dark */</span>
+:root[data-theme=<span class="s">"dark"</span>] body,
+<span class="k">.btn-primary, .tooltip</span> {
+  <span class="p">-webkit-font-smoothing</span>: antialiased;
+  <span class="p">-moz-osx-font-smoothing</span>: grayscale;
+}</code></pre></figure>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Text that animates flickers.</strong> On macOS Chrome, text on a layer animated with <code>transform</code> or <code>opacity</code> switches rendering mode mid-flight. Keep <code>-webkit-font-smoothing: antialiased</code> constant on animated text so it does not snap at the end.</li>
+            <li><strong>Light weights go faint.</strong> Weight 300 on a light background with antialiased rendering nearly disappears. Use 400 as the minimum in light mode.</li>
+            <li><strong>Windows renders thinner.</strong> ClearType makes the same font look lighter and rougher. Check small labels on Windows; 500 instead of 400 often rescues them.</li>
+            <li><strong>Avoid pure white on pure black.</strong> #fff on #000 halates. This site uses #ededef on #0e0e10 to reduce glow before any smoothing tweak.</li>
+            <li><strong>Text over blur needs a base.</strong> Type on <code>backdrop-filter</code> surfaces looks muddy; add a thin translucent background behind the text.</li>
+            <li><strong>Check 1× displays.</strong> Most rules are tuned on retina. On a 1× monitor, 13px regular with antialiased can be too light; test before shipping globally.</li>
+            <li><strong><code>optimizeLegibility</code>, not <code>geometricPrecision</code>.</strong> The first enables kerning and ligatures; the second disables hinting and can make small text look worse.</li>
+            <li><strong>Scope it.</strong> Prefer applying the property to dark surfaces and components (primary buttons, tooltips) over a global rule, then expand only after visual checks.</li>
+            <li data-typebook><strong>The handbook's position: not by default.</strong> Since macOS dropped subpixel rendering, the tweak mostly thins text and lowers effective contrast.</li>
+            <li data-typebook><strong>If text looks heavy, change weight or size.</strong> Antialiasing is not a weight control.</li>
+            <li data-typebook><strong>Dark mode weight: one step lighter,</strong> or 20 to 50 variable units, and off-white text.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-smooth" target="_blank" rel="noopener">MDN, font-smooth</a> · <a href="https://www.zachleat.com/web/font-smooth/" target="_blank" rel="noopener">Zach Leatherman, Laissez-faire font smoothing and anti-aliasing</a> · <a href="https://www.makingsoftware.com/" target="_blank" rel="noopener">Dan Hollick, Making Software</a> (Rasterisation and anti-aliasing chapter)</footer>
+        </article>
+
+<article class="lesson" id="hierarchy-without-size">
+          <span class="eyebrow">Typography · 08</span>
+          <h2>Hierarchy Without Size</h2>
+          <p class="lede">The instinct for making something important is to make it bigger. Weight, color and space do the same job more quietly.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="hier">
+            <div class="demo-stage">
+            <div class="hier-card">
+              <div class="hier-title">Quarterly review</div>
+              <div class="hier-meta">Design · Due Friday · 4 people</div>
+              <p class="hier-body">Walk through the metrics, decide what to cut and agree on the two bets for next quarter.</p>
+              <div class="hier-foot">Updated 2 hours ago by Ana</div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Size only</span><input type="checkbox" name="sizeonly" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Switch to size only: four font sizes, one weight, one color. Switch back: one size, hierarchy from weight, color and space.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>A screen where every level of importance gets its own font size ends up shouting. Titles are huge, labels are tiny, and the eye bounces between them without resting. Look at the interfaces you find calm, a well-made email client, a good notes app, and you will notice that most of the text is the same size. What separates a title from a caption is that one is heavier and darker, the other lighter and grayer, and there is air between them.</p>
+          <p>This is also why a fixed set of five sizes is enough for an entire product. Size marks the big jumps: a page title, a section, body text. Everything in between is weight, color and spacing.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Start with one size.</strong> Set a card or a list row entirely in body size, then create the hierarchy with weight (600 for the title, 400 for the rest) and color (full for the title, muted for the description, subtle for metadata).</li>
+            <li><strong>Add size only when weight and color are not enough.</strong> Usually that means the page title and nothing else on a dense screen.</li>
+            <li><strong>Space is part of it.</strong> A title with 4px below it belongs to the text beneath; with 16px below, it becomes a heading for a group.</li>
+            <li><strong>Three text colors cover most screens.</strong> Primary, muted, subtle. A fourth level usually means the content needs editing, not another shade.</li>
+            <li><strong>Check it in grayscale.</strong> If the hierarchy disappears without color, it was leaning on the accent, not on weight and space.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Two weights are usually enough.</strong> Regular for content, semibold for what leads. Medium as a third step for labels. Bold headlines in a dense UI overpower everything around them.</li>
+            <li><strong>Color carries importance downward.</strong> Full text for the thing itself, muted for the description, subtle for metadata like timestamps. Three levels, used consistently.</li>
+            <li><strong>Proximity groups, distance separates.</strong> Tight space binds a title to its description; the larger gap before the next item is what makes each group readable as a unit.</li>
+            <li><strong>Let the number be the hero.</strong> In a KPI or a price, the figure can be the one place where size steps up, with its label small and muted beside it.</li>
+            <li><strong>Do not shrink to demote.</strong> Making metadata 11px and light gray at once makes it unreadable. Demote with one dimension at a time: lighter color at the same size, or smaller size at full color.</li>
+            <li><strong>Check on a phone.</strong> Hierarchy built on subtle weight and color differences must survive a small, bright screen outdoors.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> Adam Wathan and Steve Schoger, <em>Refactoring UI</em> (hierarchy is everything) · <a href="https://practicaltypography.com/" target="_blank" rel="noopener">Butterick's Practical Typography</a> · <a href="https://rsms.me/inter/" target="_blank" rel="noopener">Inter</a> (weight range)</footer>
+        </article>
+              <article class="lesson" id="font-metrics">
+          <span class="eyebrow">Typography · 09</span>
+          <h2>Font Metrics</h2>
+          <p class="lede">The box the browser draws around text does not match the shape of the letters. Every 1px padding hack in every codebase exists because of that gap.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="metrics">
+            <div class="demo-stage">
+            <div class="fm-wrap"><div class="fm-box"><span class="fm-glyphs">Ahxg</span><i class="fm-line fm-top"></i><i class="fm-line fm-cap"><b>cap</b></i><i class="fm-line fm-x"><b>x</b></i><i class="fm-line fm-base"><b>baseline</b></i><i class="fm-line fm-bottom"></i><i class="fm-half fm-half-top"></i><i class="fm-half fm-half-bot"></i></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Line height</span><input type="range" name="lh" min="1.0" max="2.0" step="0.1" value="1.5" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Show the box</span><input type="checkbox" name="box" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Drag the line height. The box grows equally above and below, but the letters were never centered in it: the slack above the capitals is not the slack below the baseline. That gap is every 1px padding hack.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>A font file declares an ascent and a descent, the vertical limits of its box. Those numbers are choices of the type designer, not measurements. They almost always include slack above the ascenders and below the descenders, and the slack varies wildly between fonts. So two fonts at the same pixel size occupy different heights and carry different amounts of dead space. Swap the font and the spacing of the whole product breaks. A button with symmetric padding looks like its label sits too low. A heading looks like it has more room above than below, with equal margins.</p>
+          <p>When you set a line height larger than the font's content height, the browser splits the difference equally above and below: half-leading. Because the box was already asymmetric relative to the visible letters, the result is asymmetric too. Text centered in a box rarely looks centered.</p>
+          <p>The metric that governs perceived size is x-height, the top of the lowercase letters. Two fonts at 16px can look like different sizes if their x-heights differ. Fonts with a tall x-height look bigger and read better small. When you change fonts, match the x-height, not the font-size.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Put a background behind a heading</strong> and look at the dead space. That is the whole problem, visible.</li>
+            <li><strong>Match x-height when swapping fonts.</strong> The new font will need a different number to look the same size.</li>
+            <li><strong>Expect asymmetry from half-leading.</strong> Fix it with leading trim, not with padding.</li>
+            <li><strong>Interface fonts want a tall x-height.</strong> Most of the text on a screen is small.</li>
+            <li><strong>Display and text faces in one product</strong> rarely share the same numeric size.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Ascent and descent are opinions.</strong> Two fonts at 16px can differ by several pixels of box height.</li>
+            <li><strong>Half-leading splits evenly,</strong> so an asymmetric box stays asymmetric at any line height.</li>
+            <li><strong>x-height decides perceived size.</strong> Match it, not the number, when switching fonts.</li>
+            <li><strong>Background-color test.</strong> Paint the box behind a heading to see the slack.</li>
+            <li><strong>Design tools trim, browsers did not.</strong> That is where most of the design-to-code gap in spacing came from.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Typography for design engineers, handbook</em> (chapter 2) · <a href="https://seek-oss.github.io/capsize/" target="_blank" rel="noopener">Capsize, font metrics explained</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/line-height" target="_blank" rel="noopener">MDN, line-height</a></footer>
+        </article>
+
+        <article class="lesson" id="leading-trim">
+          <span class="eyebrow">Typography · 10</span>
+          <h2>Leading Trim</h2>
+          <p class="lede">CSS can now cut the dead space above and below text so the element's box matches what the eye sees. Spacing becomes predictable, buttons center for real, and swapping fonts stops breaking the layout.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="trim">
+            <div class="demo-stage">
+            <div class="lt-wrap"><button class="lt-btn" type="button" tabindex="-1"><span>Save changes</span></button><div class="lt-block"><h4 class="lt-h">Weekly summary</h4><p class="lt-p">Four reports were sent and two are waiting for review.</p></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Button padding</span><input type="range" name="pad" min="4" max="20" step="1" value="12" data-unit="px"><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">text-box: trim-both cap alphabetic</span><input type="checkbox" name="trim" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Drag the padding and watch the label sit low in the button. Turn on the trim: the box now ends at the capitals and the baseline, the padding is truly symmetric and the heading hugs its background.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>For years there was no way to remove the slack a font declares. Teams subtracted pixels from padding, added negative margins, computed offsets per font, and redid it all when the type changed. The property that fixes it is <code>text-box</code>, shorthand for <code>text-box-trim</code> and <code>text-box-edge</code>. Trim both edges, and choose which edges: <code>cap</code> for the top of capitals, <code>ex</code> for x-height, <code>alphabetic</code> for the baseline.</p>
+          <p>With the trim on, a 24px margin between a heading and a paragraph is 24 visual pixels, not 24 plus an unknown amount of font slack. A button with 12px above and below has an optically centered label with no correction. The layout no longer depends on arbitrary numbers in a font file. And design tools already trimmed vertically, so design and code finally agree.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Headings, buttons, labels:</strong> <code>text-box: trim-both cap alphabetic</code>. Buttons are where it pays first.</li>
+            <li><strong>Running text:</strong> <code>text-box: trim-both ex alphabetic</code> trims only the excess.</li>
+            <li><strong>Watch descenders and accents.</strong> With the trim on, g, p, y and diacritics can touch the edges or be clipped by <code>overflow: hidden</code>. Test with "ação", "português", "Ângulo".</li>
+            <li><strong>Progressive enhancement.</strong> Old browsers ignore it and show the old spacing. Apply it additively, or gate the new spacings behind <code>@supports</code> when the visual identity is strict.</li>
+            <li><strong>Translated products: trim gently.</strong> Some scripts exceed the Latin metrics and clip.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copy" data-copied="Copied" aria-label="Copy"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copy</span></button></div><pre><code><span class="k">h1, h2, h3, button, .label</span> { text-box: trim-both cap alphabetic; }
+<span class="k">p</span> { text-box: trim-both ex alphabetic; }</code></pre></figure>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Buttons first.</strong> The symmetric-padding problem disappears with cap alphabetic.</li>
+            <li><strong>Headings get cap, prose gets ex.</strong> Prose keeps its descenders breathing.</li>
+            <li><strong>Test accents and descenders</strong> against any overflow: hidden container.</li>
+            <li><strong>Additive rollout for new products,</strong> @supports gating for strict identities.</li>
+            <li><strong>Icons align for free.</strong> Cap height to baseline is what the eye wanted all along.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Typography for design engineers, handbook</em> (chapter 3) · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/text-box" target="_blank" rel="noopener">MDN, text-box</a> · <a href="https://developer.chrome.com/blog/css-text-box-trim" target="_blank" rel="noopener">Chrome for Developers, CSS text-box-trim</a></footer>
+        </article>
+
+        <article class="lesson" id="choosing-a-typeface">
+          <span class="eyebrow">Typography · 11</span>
+          <h2>Choosing a Typeface</h2>
+          <p class="lede">Interface criteria are not editorial criteria. Tall x-height, unambiguous characters, tabular figures, three usable weights, the accents your language needs, and a license that covers where the font will actually appear.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="glyphs">
+            <div class="demo-stage">
+            <div class="gy-wrap"><span class="gy-sample">Il1| 0OQ rn/m 5S 8B</span><span class="gy-id">ID: I1lO0 · <span class="gy-pw">l1Il0O</span></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Disambiguation set (ss02)</span><input type="checkbox" name="disamb" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Small size</span><input type="checkbox" name="small" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">The test string every interface font must pass. Turn on the stylistic set and the capital I grows serifs, the l gets a tail and the zero a slash. Shrink it: that is how identifiers actually appear.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Eighty percent of interface text is small, so x-height comes first. Then disambiguation: a capital I identical to a lowercase l is a serious defect in any product that shows identifiers, codes or passwords. Test the set <code>Il1| 0OQ rn/m 5S 8B</code> before anything else. A slashed or dotted zero fixes the most critical pair. Tabular figures are not optional; without them anything that changes trembles. You need at least three weights that are visibly different, and many families ship seven weights with imperceptible steps between neighbours. Portuguese needs ã õ ç and the acute, circumflex and grave accents drawn properly, not as afterthoughts that collide with the line above. A variable file usually weighs less than three statics and opens axes. And the license has to cover web, app and marketing images; this item kills projects late with surprising frequency.</p>
+          <p>System fonts have real advantages: zero bytes, zero layout shift, platform rendering, native familiarity. The cost is that the product looks different on every OS and you lose control of metrics and features. A reasonable split: system fonts for dense utility products, your own face for products with identity, and the system stack as a calibrated fallback either way.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>One family, explored fully,</strong> beats two poorly combined. A second one is justified for mono data, brand display or long-form reading. If you cannot explain why there are two, there is one too many.</li>
+            <li><strong>Pairing needs something shared and something different.</strong> Similar x-height and width; different structure and contrast. Two similar geometric sans read as inconsistency.</li>
+            <li><strong>Different faces at the same x-height need different sizes.</strong> Adjust until they look the same, not until the numbers match.</li>
+            <li><strong>Read the font's documentation.</strong> Stylistic sets often contain exactly the fix you need, and most teams never look.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Type Il1| 0OQ before anything else.</strong> If they look alike, move on.</li>
+            <li><strong>Three distinguishable weights,</strong> not seven near-identical ones.</li>
+            <li><strong>Check ã õ ç and stacked accents</strong> against the line above.</li>
+            <li><strong>License covers web, app and marketing.</strong> Ask before falling in love.</li>
+            <li><strong>System stack for dense tools;</strong> own face for identity; calibrated fallback either way.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Typography for design engineers, handbook</em> (chapter 4) · <a href="https://practicaltypography.com/system-fonts.html" target="_blank" rel="noopener">Matthew Butterick, Practical Typography</a> · <a href="https://rsms.me/inter/#features" target="_blank" rel="noopener">Inter, OpenType features</a></footer>
+        </article>
+
+        <article class="lesson" id="type-scale">
+          <span class="eyebrow">Typography · 12</span>
+          <h2>The Type Scale</h2>
+          <p class="lede">A pure modular scale produces fractional pixels and steps that are too big exactly where the interface needs the most granularity. Use a hybrid: dense and rounded at the bottom, geometric at the top.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="scale">
+            <div class="demo-stage">
+            <div class="sc2-bars"></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Ratio</span><input type="range" name="ratio" min="1.125" max="1.5" step="0.025" value="1.25" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Hybrid scale</span><input type="checkbox" name="hybrid" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Drag the ratio. A modular scale gives fractional sizes and skips the 1px steps small text needs. The hybrid keeps integers, dense at the bottom and proportional at the top.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>The classic method picks a ratio and multiplies: 1.125, 1.2, 1.25, 1.333 and so on. With 1.25 from 16 you get 12.8, 16, 20, 25, 31.25, 39. Fractional numbers render soft, and the jumps at the small end are too large: the difference between 11 and 12 pixels is meaningful in a table, and the modular scale skips it. A hybrid scale keeps 1px steps at the bottom, where they matter, and grows proportionally at the top: 11, 12, 13, 14, 16, 18, 20, 24, 30, 38, 48. Eleven steps cover any product. This site uses five of them on purpose.</p>
+          <p>The body size is the anchor. Fourteen for dense tools and dashboards, sixteen for general products and anything with reading. On mobile, sixteen is the floor for a technical reason on top of legibility: inputs below 16px trigger automatic zoom on iOS when focused, one of the most irritating frictions in mobile forms.</p>
+          <p>Fluid type scales sizes with the viewport through <code>clamp()</code>. The accessibility trap: if the middle value uses only viewport units, text stops responding to user zoom. Always include a rem component. And a judgment call: fluid type is excellent on marketing pages and often unnecessary in application interfaces, where density should be stable. Step by breakpoint there.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Integers only.</strong> Fractional sizes rasterize soft on low-density screens.</li>
+            <li><strong>Body first, then up and down.</strong> Fourteen or sixteen, chosen by density.</li>
+            <li><strong>Inputs at 16px on mobile,</strong> always.</li>
+            <li><strong>Three weights.</strong> 400 for body, 500 for labels and subtle emphasis, 600 for headings and the primary action. Skip 700 if 600 is loaded.</li>
+            <li><strong><code>font-synthesis: none</code>.</strong> Never let the browser fake a weight or an italic.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copy" data-copied="Copied" aria-label="Copy"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copy</span></button></div><pre><code>/* fluid, but still zoomable: the rem term keeps it honest */
+<span class="k">h1</span> { font-size: <span class="f">clamp</span>(<span class="n">1.75rem</span>, <span class="n">1.2rem</span> + <span class="n">2</span>.5vw, <span class="n">3rem</span>); }</code></pre></figure>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>11 · 12 · 13 · 14 · 16 · 18 · 20 · 24 · 30 · 38 · 48.</strong> Pick a subset and stop.</li>
+            <li><strong>1px steps at the bottom</strong> are the granularity tables and labels need.</li>
+            <li><strong>Anchor on body:</strong> 14 dense, 16 general, never below 16 in mobile inputs.</li>
+            <li><strong>Fluid type needs a rem term</strong> or it stops zooming.</li>
+            <li><strong>400 / 500 / 600.</strong> Skip 700, disable synthesis.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Typography for design engineers, handbook</em> (chapter 5) · <a href="https://utopia.fyi/" target="_blank" rel="noopener">Utopia, fluid type calculator</a> · <a href="https://www.w3.org/WAI/WCAG22/Understanding/resize-text.html" target="_blank" rel="noopener">WCAG 2.2, Resize Text</a></footer>
+        </article>
+
+        <article class="lesson" id="line-height-and-measure">
+          <span class="eyebrow">Typography · 13</span>
+          <h2>Line Height and Measure</h2>
+          <p class="lede">One line height for everything is the most common mistake in type systems. Line height shrinks as size grows. Measure stays between 45 and 75 characters. Both exist for the same reason: the eye has to find the next line.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="measure">
+            <div class="demo-stage">
+            <p class="ms-text">Measure is the length of a line. Between forty-five and seventy-five characters the eye returns to the next line without effort; longer and it loses its place on the way back, shorter and the rhythm breaks too often. The ch unit ties the limit to the font, so it follows the type instead of being a magic number.</p>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Measure</span><input type="range" name="measure" min="30" max="95" step="1" value="65" data-unit="ch"><output></output></label><label class="ctl"><span class="ctl-label">Line height</span><input type="range" name="lh" min="1.1" max="1.9" step="0.05" value="1.5" data-unit=""><output></output></label></div>
+          </div>
+            <figcaption class="demo-caption">Drag the measure past 75 and feel the return trip get harder. Drag it under 45 and the rhythm stutters. Line height around 1.5 at this size; tighter reads cramped, looser falls apart.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Small dense text needs proportionally more space between lines so the eye can track back to the start of the next one. About 1.5 at 14 to 16px. Large headings with the same ratio come out visibly loose and stop reading as a block; 1.3 at 24px, 1.15 at 38px, down to 1.05 at display sizes. Always unitless: a value with a unit is inherited as an absolute number and breaks in children with a different size.</p>
+          <p>Measure is the length of a line. Between 45 and 75 characters for continuous reading, ideally around 65. Longer, and the eye loses its place on the return trip. Shorter, and the rhythm breaks too often. Control it with <code>max-width: 65ch</code>, because the ch unit is the width of the zero in the current font, so the limit follows the type instead of being a magic number in pixels. It applies to prose; labels, table cells and list items do not have the problem.</p>
+          <p>Paragraph spacing sits between one and two line heights, around 1.4 times. Indent and paragraph space are alternatives, not complements; using both is a classic error.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Line height by size.</strong> 1.5 at 16, 1.4 at 20, 1.3 at 24, 1.25 at 30, 1.15 at 38, 1.05 to 1.1 at 48 and up.</li>
+            <li><strong>Unitless, always.</strong></li>
+            <li><strong><code>max-width</code> in ch</strong> for anything people read continuously.</li>
+            <li><strong>Paragraph gap around 1.4 line heights.</strong> Never indent and gap together.</li>
+            <li><strong>CJK adds about 0.2</strong> to every line-height value.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Line height falls as size rises.</strong> 1.5 body, 1.3 at 24, 1.1 at display.</li>
+            <li><strong>Unitless only.</strong> A unit freezes the value for every child.</li>
+            <li><strong>max-width: 65ch</strong> follows the font instead of guessing pixels.</li>
+            <li><strong>Paragraph gap about 1.4 line heights.</strong> Indent or gap, never both.</li>
+            <li><strong>Labels and cells are exempt</strong> from measure; prose is not.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Typography for design engineers, handbook</em> (chapter 6) · Robert Bringhurst, <em>The Elements of Typographic Style</em> · <a href="https://practicaltypography.com/line-length.html" target="_blank" rel="noopener">Matthew Butterick, Line length</a></footer>
+        </article>
+
+        <article class="lesson" id="variable-fonts">
+          <span class="eyebrow">Typography · 14</span>
+          <h2>Variable Fonts</h2>
+          <p class="lede">One file, a continuous space of variations. Weight 450 when 400 is weak and 500 is heavy. And the most valuable, least used gain: optical sizing that redraws letters for small and large sizes automatically.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="varfont">
+            <div class="demo-stage" data-on="opsz auto" data-off="opsz off">
+            <span class="vf-text">Weight is a number now</span><span class="vf-read"><span class="vf-w"></span> · <span class="vf-opsz"></span></span>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Weight</span><input type="range" name="wght" min="300" max="800" step="10" value="400" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Optical sizing</span><input type="checkbox" name="opsz" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Drag the weight through values that never existed as files: 450, 530, 610. Turn optical sizing off and the display cut at this size gives way to the text design, wider and looser.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>A variable font with the full weight axis usually costs less than three static files, and every intermediate weight comes free. The registered axes are weight, width, optical size, italic and slant, plus whatever custom axes the designer adds. Weight can be animated continuously; use that with great restraint, the frequency and novelty rule from the Motion section applies.</p>
+          <p>Historically each size of a typeface was cut separately: small sizes got sturdier strokes, open counters and wider spacing; large sizes got more contrast and refinement. That was lost in photocomposition and came back with the optical size axis. When the font has it, <code>font-optical-sizing: auto</code> is on by default and the browser applies the right design for the size. The effect is subtle per element and substantial across a screen: small text reads better, big headings look sharper, with no work. Check that a CSS reset has not turned it off; many products lose this gain by accident.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Measure the file.</strong> A variable font with many axes can outweigh the two statics you actually use.</li>
+            <li><strong>Use high-level properties</strong> for registered axes, <code>font-weight</code> and <code>font-stretch</code>, and the low-level <code>font-variation-settings</code> only for custom axes. Mixing them produces conflicts that are hard to trace.</li>
+            <li><strong>Keep optical sizing on.</strong> Verify it after any reset.</li>
+            <li><strong>Subsetting works,</strong> but removing axes needs a specific tool.</li>
+            <li><strong>Fine-tune weight in dark mode</strong> by 20 to 50 units instead of a whole step.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Weigh the file</strong> against the statics you actually use.</li>
+            <li><strong>font-weight for wght, font-stretch for wdth.</strong> Variation settings only for custom axes.</li>
+            <li><strong>Optical sizing on.</strong> Check every reset for font-optical-sizing: none.</li>
+            <li><strong>450 exists now.</strong> Use it when 400 and 500 both miss.</li>
+            <li><strong>Animate weight rarely.</strong> Frequency and novelty rules apply.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Typography for design engineers, handbook</em> (chapter 7) · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_fonts/Variable_fonts_guide" target="_blank" rel="noopener">MDN, Variable fonts guide</a> · <a href="https://v-fonts.com/" target="_blank" rel="noopener">v-fonts.com</a></footer>
+        </article>
+
+        <article class="lesson" id="opentype-features">
+          <span class="eyebrow">Typography · 15</span>
+          <h2>OpenType Features</h2>
+          <p class="lede">Fonts ship with features that are off by default and solve real problems: fixed-width figures, slashed zeros, real fractions, case-sensitive punctuation, stylistic sets. One of the highest returns per effort in interface typography.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="otf">
+            <div class="demo-stage">
+            <div class="ot-wrap"><span class="ot-line">Sold <span class="ot-frac">1/2</span> of the lot at <span class="ot-frac">3/4</span></span><span class="ot-line ot-caps">(LOT-04) [A-Z] «BATCH»</span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Real fractions</span><input type="checkbox" name="frac" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Case-sensitive punctuation</span><input type="checkbox" name="case" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Turn on fractions and 1/2 becomes a drawn ½. Turn on case and the brackets, hyphens and guillemets around the uppercase code rise to cap height instead of hanging at lowercase level.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Prefer the semantic properties to the low-level one. <code>font-variant-numeric</code> handles tabular figures, slashed zero, diagonal fractions and old-style numerals; <code>font-variant-caps</code> gives real small caps instead of shrunken capitals; <code>font-variant-ligatures</code> controls ligatures. They read well, cascade correctly and are optimized by the browser. For features without a dedicated property, stylistic sets, character variants, case punctuation, use <code>font-feature-settings</code>.</p>
+          <p>Two traps. The low-level property does not cascade per feature: redeclaring it replaces the whole list, so define it once at the root and avoid overriding. And turning off contextual alternates breaks the ligature behavior of programming fonts. On code fonts, ligatures that turn an arrow operator into an arrow are divisive: they help reading for some and hurt character counting and debugging for others. If people will copy or debug the code, turn them off; if it is decorative, either; if it is an editor, make it configurable.</p>
+
+          <h3>Where each applies</h3>
+          <ul>
+            <li><strong>General interface:</strong> the defaults, kerning, common ligatures, contextual alternates.</li>
+            <li><strong>Tables and metrics:</strong> tabular figures and slashed zero.</li>
+            <li><strong>Identifiers:</strong> slashed zero plus the set that disambiguates I, l and 1.</li>
+            <li><strong>Uppercase headings:</strong> case-sensitive punctuation and positive tracking.</li>
+            <li><strong>Prose:</strong> ligatures, optionally old-style figures.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copy" data-copied="Copied" aria-label="Copy"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copy</span></button></div><pre><code>font-variant-numeric: tabular-nums slashed-zero;
+font-variant-caps: small-caps;
+font-feature-settings: <span class="s">"ss02"</span> <span class="n">1</span>, <span class="s">"case"</span> <span class="n">1</span>;   /* replaces the whole list: set once */</code></pre></figure>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>font-variant-* first,</strong> font-feature-settings only for what has no property.</li>
+            <li><strong>Set feature-settings once, at the root.</strong> Redeclaring replaces the whole list.</li>
+            <li><strong>Tabular plus slashed zero</strong> anywhere numbers line up or identify.</li>
+            <li><strong>case for uppercase punctuation,</strong> so brackets and hyphens sit at cap height.</li>
+            <li><strong>Code ligatures: off if people copy or debug.</strong> Configurable in editors.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Typography for design engineers, handbook</em> (chapter 9) · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric" target="_blank" rel="noopener">MDN, font-variant-numeric</a> · <a href="https://wakamaifondue.com/" target="_blank" rel="noopener">Wakamai Fondue</a></footer>
+        </article>
+
+        <article class="lesson" id="formatting-numbers">
+          <span class="eyebrow">Typography · 16</span>
+          <h2>Formatting Numbers</h2>
+          <p class="lede">Numbers appear in every product interface and are treated as an afterthought in most. Alignment, precision and regional format are correctness, not polish.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="numfmt">
+            <div class="demo-stage">
+            <table class="nf-table"><thead><tr><th>Invoice</th><th class="nf-num">Amount</th><th class="nf-num">Share</th></tr></thead><tbody><tr><td class="nf-id">INV-2041</td><td class="nf-num" data-v="1234.5">1234.5</td><td class="nf-num nf-pct" data-p="12.5">12.5%</td></tr><tr><td class="nf-id">INV-2042</td><td class="nf-num" data-v="98.25">98.25</td><td class="nf-num nf-pct" data-p="3">3%</td></tr><tr><td class="nf-id">INV-2043</td><td class="nf-num" data-v="15300">15300</td><td class="nf-num nf-pct" data-p="41.75">41.75%</td></tr></tbody></table>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Right-align numbers</span><input type="checkbox" name="right" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Locale pt-BR</span><input type="checkbox" name="locale" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Turn right alignment off and the column becomes uncomparable. Switch locale: separators swap and the currency moves. Identifiers stay left because they are text, not quantity.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Whole numbers align right. Decimals align on the separator. Identifiers align left, because they are text, not quantity. Percentages align right with the symbol attached. Column headers of numeric columns align right with the data; a left header over right-aligned numbers is free misalignment. Never center a numeric column: vertical comparison depends on a stable axis.</p>
+          <p>Regional format is correctness. Decimal separator, thousands separator, currency position and date format vary by locale, and showing 1,234.56 to a Brazilian is simply wrong. Use the platform's internationalization API rather than formatting by hand; it handles plurals, currency, units and relative dates at once.</p>
+          <p>Displayed precision should match the decision, not the data. Scan lists round and abbreviate. Financial reports show full precision, always. Dashboard metrics show two decimals at most with the exact value on hover. Very large values abbreviate with a unit and keep the full number reachable. Never show more digits than the decision requires; excess precision is noise and implies false exactness. Animated digits, each position rolling, are beautiful and expensive in attention: a scoreboard yes, a cart count no, and only with tabular figures or the width changes too.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Right for quantities, left for identifiers,</strong> header aligned with the data.</li>
+            <li><strong><code>Intl.NumberFormat</code> and friends.</strong> No hand-rolled separators.</li>
+            <li><strong>Two decimals on dashboards, full precision in finance.</strong></li>
+            <li><strong>Abbreviate large numbers</strong> with the exact value one gesture away.</li>
+            <li><strong>Tabular figures on anything that changes or lines up.</strong> Proportional in prose.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Quantities right, identifiers left,</strong> decimals on the separator, header with the data.</li>
+            <li><strong>Intl.NumberFormat for locale,</strong> currency, units and plurals.</li>
+            <li><strong>Precision matches the decision.</strong> Two decimals on dashboards, full in finance.</li>
+            <li><strong>Exact value one hover away</strong> from any rounded or abbreviated figure.</li>
+            <li><strong>Rolling digits need tabular figures</strong> or the width animates too.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Typography for design engineers, handbook</em> (chapter 10) · <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat" target="_blank" rel="noopener">MDN, Intl.NumberFormat</a></footer>
+        </article>
+
+        <article class="lesson" id="hyphenation-and-breaks">
+          <span class="eyebrow">Typography · 17</span>
+          <h2>Hyphenation and Line Breaks</h2>
+          <p class="lede">Never justify without hyphenating. A non-breaking space between a number and its unit. Long URLs that wrap only when they must. Line breaking is where small rules prevent ugly, and sometimes wrong, results.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="hyph">
+            <div class="demo-stage">
+            <p class="hy-text" lang="en">Justification without hyphenation stretches the spaces between words until white rivers run down the paragraph, especially in a narrow column with long words like internationalization and responsibility.</p>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Justify</span><input type="checkbox" name="justify" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Hyphenate</span><input type="checkbox" name="hyphens" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Justified without hyphens: rivers. Turn hyphenation on and the spaces even out. Turn justification off and none of this is a problem, which is why left alignment is the default.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Justified text without hyphenation produces huge gaps between words and white rivers running down the paragraph. <code>hyphens: auto</code> fixes it, but only when the document declares the right language, because the browser needs the language's rules, and Portuguese has its own. Hyphenate in narrow columns, justified text and languages with long words; avoid it in headings, wide columns and interfaces made of short strings.</p>
+          <p>Some breaks are errors of meaning. A number should not separate from its unit, a currency symbol from its value, an abbreviation from its number, initials from a surname, the last word of a title from its icon. A non-breaking space holds them together. And long unbroken strings, URLs, identifiers, file names, overflow their container; <code>overflow-wrap: break-word</code> breaks them only when necessary, while <code>word-break: break-all</code> breaks words arbitrarily even when a better option existed.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Justify only with hyphens,</strong> and hyphens only with the right <code>lang</code>.</li>
+            <li><strong><code>&amp;nbsp;</code> between number and unit,</strong> currency and value, abbreviation and number.</li>
+            <li><strong><code>white-space: nowrap</code> on product names</strong> that must stay whole.</li>
+            <li><strong><code>overflow-wrap: break-word</code></strong> on containers that may hold URLs or ids. Never <code>break-all</code> on normal text.</li>
+            <li><strong>Left-aligned by default.</strong> Justification is an editorial choice with costs, not a neatness setting.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>hyphens: auto needs lang.</strong> No language, no rules, no hyphens.</li>
+            <li><strong>Justify only with hyphens.</strong> Otherwise rivers.</li>
+            <li><strong>nbsp for number + unit, currency + value, abbreviation + number.</strong></li>
+            <li><strong>overflow-wrap: break-word for URLs and ids.</strong> Never word-break: break-all on prose.</li>
+            <li><strong>nowrap on names</strong> that must not split.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Typography for design engineers, handbook</em> (chapter 11) · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/hyphens" target="_blank" rel="noopener">MDN, hyphens</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-wrap" target="_blank" rel="noopener">MDN, overflow-wrap</a></footer>
+        </article>
+
+        <article class="lesson" id="truncation">
+          <span class="eyebrow">Typography · 18</span>
+          <h2>Truncation and Hostile Content</h2>
+          <p class="lede">When text does not fit, somebody decides what happens. If it is not you, it is the default, and the default is usually the worst option. The one rule with no exceptions: the full text must stay reachable.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="truncate">
+            <div class="demo-stage" data-strings="Q3|Quarterly revenue review|Quarterly revenue review and forecast for the European expansion of the marketplace|Zusammenfassung der Quartalsumsatzprüfung für die europäische Marktplatzerweiterung|Report_final_v3_REALLY_final_approved_by_legal_2026_09_04_export.pdf|Launch 🚀 recap: what shipped, what slipped 🐢">
+            <div class="tc-card"><span class="tc-kicker">Report</span><h4 class="tc-title" title=""></h4><span class="tc-meta">Updated 2 hours ago</span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Content</span><input type="range" name="content" min="1" max="6" step="1" value="2" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Clamp to two lines</span><input type="checkbox" name="clamp" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Drag through hostile content: two letters, a normal title, a long one, German, a file name with no spaces, emoji. Single-line ellipsis versus two-line clamp. Hover the title: the full text is always in the tooltip.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Ellipsis at the end for labels, card titles and menu items. Ellipsis in the middle for file names, where the extension matters. Two lines then cut for important titles and descriptions. Shrink the font for featured numbers. Marquee on hover, almost never. Whatever the strategy, the complete text must be available through a title attribute, a tooltip or a detail screen. Truncating without recovery is hiding information.</p>
+          <p>Multi-line clamping uses an old, ugly syntax that works everywhere: <code>display: -webkit-box</code>, <code>-webkit-line-clamp</code>, <code>-webkit-box-orient: vertical</code>, <code>overflow: hidden</code>. The cut is by box, so descenders on the last line can be clipped when line height is tight.</p>
+          <p>Every component with text has to survive hostile content: a two-letter name, an 80-character name with no spaces, a single word longer than the container, German at 30% longer, Japanese with no spaces, an emoji in the middle, leading or trailing spaces, empty text, embedded line breaks, text that looks like markup. Each of these has broken a real product. The list belongs in the component development environment, not in a later audit.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Pick the strategy per component,</strong> and write it down.</li>
+            <li><strong>Full text always reachable.</strong> Title, tooltip or detail.</li>
+            <li><strong>Reserve space for text that changes.</strong> "Save" and "Saving…" share the wider width; counters reserve digits with tabular figures; loading content gets a skeleton with the right dimensions.</li>
+            <li><strong>Hostile strings in the story file.</strong> Test them on every state.</li>
+            <li><strong>Min-height, not height,</strong> on anything that contains text.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copy" data-copied="Copied" aria-label="Copy"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copy</span></button></div><pre><code><span class="k">.clamp-2</span> {
+  display: -webkit-box;
+  <span class="p">-webkit-line-clamp</span>: <span class="n">2</span>;
+  <span class="p">-webkit-box-orient</span>: vertical;
+  overflow: hidden;
+}</code></pre></figure>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>End ellipsis for labels, middle ellipsis for file names,</strong> two-line clamp for titles.</li>
+            <li><strong>Full text via title, tooltip or detail.</strong> No exceptions.</li>
+            <li><strong>Hostile strings in every story:</strong> 2 letters, 80 no-space, German, emoji, empty.</li>
+            <li><strong>Reserve the wider label</strong> for buttons that change text.</li>
+            <li><strong>Clamp cuts by box.</strong> Give the last line room for descenders.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Typography for design engineers, handbook</em> (chapter 12) · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-line-clamp" target="_blank" rel="noopener">MDN, -webkit-line-clamp</a></footer>
+        </article>
+
+        <article class="lesson" id="font-loading">
+          <span class="eyebrow">Typography · 19</span>
+          <h2>Font Loading</h2>
+          <p class="lede">Between first paint and the arrival of the font file, the browser has to do something with the text. Invisible text or a jarring swap: both ruin the first impression. The fix is a display strategy plus a fallback calibrated to the same metrics.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="fontload">
+            <div class="demo-stage" data-loading="loading…" data-swapped="swapped · shift" data-kept="fallback kept this visit (optional)" data-shift="px">
+            <div class="fl-card" role="button" tabindex="0" data-reload><b>Fonts arrive late</b><p>Click to reload this card. The text appears in the fallback first, and when the web font arrives the layout shifts by the difference in metrics.</p><span class="fl-status"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Calibrated fallback</span><input type="checkbox" name="calibrated" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">font-display: optional</span><input type="checkbox" name="optional" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Click the card to reload. Plain Arial fallback: the swap moves the layout. Calibrated fallback: the metrics match and the shift drops to zero. font-display: optional: no swap at all on this visit.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p><code>font-display</code> decides the behavior. <code>swap</code> shows the fallback immediately and swaps when the font arrives; it is the default choice for products with a typographic identity, and it requires calibrated metrics to avoid layout shift. <code>optional</code> shows the fallback on the first visit and never swaps in that visit; from the second visit, with the font cached, people see your font. It is the option that zeroes layout shift. <code>block</code> hides text for up to three seconds; avoid it except for icon fonts.</p>
+          <p>Reduce what has to load. WOFF2 only. Subset to the glyphs you use; a full-coverage file can be ten times larger than Latin extended, and check that the diacritics survived. Split by unicode range so the browser fetches only what the page needs. Three weights at most, or one variable file. Preload only the one or two critical faces above the fold. And self-host: browser cache partitioning ended the shared-cache benefit of third-party font hosts, so they now add a connection and a dependency for nothing.</p>
+          <p>Calibrating the fallback is what separates professional loading from amateur. Override the fallback's metrics so it occupies the same space as the real font: <code>size-adjust</code>, <code>ascent-override</code>, <code>descent-override</code>, <code>line-gap-override</code>. The important caveat, often omitted: <code>size-adjust</code> is widely supported, but the three override descriptors are still not supported in Safari. The technique cuts the shift on Chromium and Firefox and does not eliminate it on WebKit. If layout stability is critical and the audience is mostly Apple, <code>optional</code> is more reliable.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong><code>swap</code> with a calibrated fallback,</strong> or <code>optional</code> when stability beats identity on first visit.</li>
+            <li><strong>WOFF2, subset, unicode-range, three weights, self-hosted.</strong></li>
+            <li><strong>Preload one or two files,</strong> not all of them.</li>
+            <li><strong>Pick a fallback with similar structure:</strong> x-height, classification, width. Then calibrate. Tools compute the overrides from the two files.</li>
+            <li><strong>Local font availability varies by OS.</strong> The fallback that renders on Android may not be the one you tested on macOS.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copy" data-copied="Copied" aria-label="Copy"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copy</span></button></div><pre><code><span class="a">@font-face</span> {
+  font-family: <span class="s">"Fallback Calibrated"</span>;
+  src: <span class="f">local</span>(<span class="s">"Arial"</span>);
+  size-adjust: <span class="n">107.4</span>%;
+  ascent-override: <span class="n">90.2</span>%;      /* not in Safari yet */
+  descent-override: <span class="n">22.5</span>%;
+  line-gap-override: <span class="n">0</span>%;
+}
+<span class="k">body</span> { font-family: <span class="s">"My Font"</span>, <span class="s">"Fallback Calibrated"</span>, sans-serif; }</code></pre></figure>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>swap + calibrated fallback,</strong> or optional when first-visit stability matters more.</li>
+            <li><strong>WOFF2, subset, unicode-range, three weights.</strong> Self-hosted.</li>
+            <li><strong>Preload one or two files</strong> above the fold. No more.</li>
+            <li><strong>Override descriptors are not in Safari.</strong> size-adjust is; plan for WebKit accordingly.</li>
+            <li><strong>Pick a structurally similar fallback</strong> before calibrating it.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Typography for design engineers, handbook</em> (chapter 13) · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display" target="_blank" rel="noopener">MDN, font-display</a> · <a href="https://web.dev/articles/css-size-adjust" target="_blank" rel="noopener">web.dev, Improved font fallbacks</a> · <a href="https://github.com/unjs/fontaine" target="_blank" rel="noopener">Fontaine</a></footer>
+        </article>
+
+        <article class="lesson" id="rendering-and-weight">
+          <span class="eyebrow">Typography · 20</span>
+          <h2>Rendering and Weight</h2>
+          <p class="lede">The same font file renders heavier on one operating system and lighter on another. Light text on dark looks bolder than it is. And the browser will happily fabricate a bold you never loaded. None of this is fixable in the file; all of it is manageable.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="darkweight">
+            <div class="demo-stage">
+            <div class="dw-wrap"><div class="dw-card dw-light"><b>Same weight, two themes</b><p>Light text on a dark background looks heavier than dark text on light. Light spreads over the dark surround and fattens every stroke.</p></div><div class="dw-card dw-dark"><b>Same weight, two themes</b><p>Light text on a dark background looks heavier than dark text on light. Light spreads over the dark surround and fattens every stroke.</p></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Dark-theme weight</span><input type="range" name="dwght" min="300" max="500" step="10" value="400" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Pure white text</span><input type="checkbox" name="white" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Both cards are weight 400. The dark one reads bolder. Drag its weight down to 360 or 370 and the two match. Pure white makes the halation worse.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Operating systems rasterize, antialias and grid-fit differently. Review weight decisions on at least two systems, never pick a weight that only works on your monitor, and distrust decisions made exclusively on high-density screens. Fractional sizes rasterize approximately and can look soft on low-density displays; prefer integer pixels for interface text and accept fractions only in large fluid headings.</p>
+          <p>Light text on a dark background looks heavier because light spreads over the dark surround and fattens the shapes. Drop one weight step in the dark theme, or 20 to 50 units on a variable axis, and avoid pure white text, which makes it worse. On text-heavy screens this is a clear comfort difference, not a detail.</p>
+          <p>Synthesis is the silent culprit behind "it looks weird and I don't know why". Ask for a weight or italic that was not loaded and the browser fabricates it by thickening or slanting the shapes. The result is always worse than the real drawing. Turn it off with <code>font-synthesis: none</code> and load the real files.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Two operating systems before any weight decision.</strong></li>
+            <li><strong>Integer pixel sizes</strong> in application interfaces.</li>
+            <li><strong>One weight lighter in dark mode,</strong> off-white text.</li>
+            <li><strong><code>font-synthesis: none</code></strong> on the body. Provide every weight and style you use.</li>
+            <li><strong>Antialiasing tweaks are not a weight fix.</strong> If text looks too heavy, change the weight or size.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Two operating systems</strong> before any weight decision.</li>
+            <li><strong>Integer pixels in app UI.</strong> Fractions only in large fluid headings.</li>
+            <li><strong>Dark mode: one step lighter,</strong> or 20 to 50 units on a variable axis.</li>
+            <li><strong>font-synthesis: none.</strong> Load the real bold and italic.</li>
+            <li><strong>Off-white text in dark mode</strong> reduces halation and apparent weight.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Typography for design engineers, handbook</em> (chapter 14) · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-synthesis" target="_blank" rel="noopener">MDN, font-synthesis</a></footer>
+        </article>
+
+        <article class="lesson" id="type-tokens">
+          <span class="eyebrow">Typography · 21</span>
+          <h2>Type Tokens</h2>
+          <p class="lede">A type token is a set, not a size. Size, line height, weight and tracking travel together under a role name, so nobody has to remember that "body is 16 with 1.5" and no component gets to improvise.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="toktype">
+            <div class="demo-stage">
+            <div class="tt-card"><span class="tt-over">Weekly report<i class="tt-tag">overline</i></span><h4 class="tt-h">Revenue grew in every region<i class="tt-tag">heading-md</i></h4><p class="tt-p">Europe led the quarter with a stronger second half, while the marketplace kept its margin through the promotional period.<i class="tt-tag">body-sm</i></p><span class="tt-cap">Updated 2 hours ago · 4 min read<i class="tt-tag">caption</i></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Size-only tokens</span><input type="checkbox" name="sizeonly" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Show token names</span><input type="checkbox" name="tags" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Turn on size-only tokens: the sizes survive but line height, weight and tracking fall back to whatever the component had. The heading loosens, the overline loses its tracking, the caption its weight. A token is the set.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>The most common structural error is a token system that defines only font-size and leaves line height, weight and tracking to each component. The result is a product where every heading has a slightly different line height and nobody can say which is right. A token carries everything that defines the role. Name it by role, never by appearance: a token called text-16 or font-large becomes a lie the moment the value changes, and a lying name is worse than none.</p>
+          <p>Thirteen tokens cover most products: two display sizes, three headings, three body sizes, two labels, a caption, an overline in capitals with wide tracking, and a mono size. If you have fifty, there is disguised duplication. Semantics and appearance stay independent: a section title that is an h2 in the document can wear the heading-sm token. Coupling them forces bad choices, either breaking the heading hierarchy to get the look or accepting the wrong look to keep the structure. Screen readers navigate by that hierarchy, so it has to be correct regardless of visual size.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Four properties per token.</strong> Size, line height, weight, tracking. Nothing less.</li>
+            <li><strong>Roles in names.</strong> body-md, heading-lg, label-emphasis, overline.</li>
+            <li><strong>Around thirteen tokens.</strong> Audit for duplicates quarterly.</li>
+            <li><strong>Heading level by structure, token by look.</strong> Independent decisions.</li>
+            <li><strong>One source of truth</strong> that generates CSS, design tool variables, native styles and docs.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copy" data-copied="Copied" aria-label="Copy"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copy</span></button></div><pre><code>heading-md   <span class="n">24</span> / <span class="n">1.30</span> / <span class="n">600</span> / <span class="n">-0.01em</span>
+body-md      <span class="n">16</span> / <span class="n">1.50</span> / <span class="n">400</span> / <span class="n">0</span>
+label-sm     <span class="n">12</span> / <span class="n">1.40</span> / <span class="n">500</span> / +<span class="n">0.01em</span>
+overline     <span class="n">11</span> / <span class="n">1.45</span> / <span class="n">600</span> / +<span class="n">0.06em</span>   (uppercase)</code></pre></figure>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Size, line height, weight, tracking.</strong> All four, every token.</li>
+            <li><strong>Role names survive redesigns.</strong> Appearance names do not.</li>
+            <li><strong>Thirteen tokens cover most products.</strong> Fifty means duplication.</li>
+            <li><strong>Heading level ≠ token.</strong> Structure for screen readers, token for the eye.</li>
+            <li><strong>Generate every output from one definition.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Typography for design engineers, handbook</em> (chapter 15) · <a href="https://www.w3.org/WAI/tutorials/page-structure/headings/" target="_blank" rel="noopener">W3C WAI, Headings</a></footer>
+        </article>
+
+        <article class="lesson" id="text-accessibility">
+          <span class="eyebrow">Typography · 22</span>
+          <h2>Text Accessibility</h2>
+          <p class="lede">Text must survive 200% zoom, user font-size preferences and the spacing overrides people with low vision or dyslexia actually apply. Fixed heights are the first thing to fail, and "dyslexia fonts" are not the answer.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="spacing">
+            <div class="demo-stage">
+            <div class="sp-card"><b>Text spacing test</b><p>People with low vision or dyslexia override line height to 1.5, paragraph spacing to 2em, letter spacing to 0.12em and word spacing to 0.16em.</p><p>Nothing may lose function under those values. Fixed heights fail first.</p></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Apply WCAG text spacing</span><input type="checkbox" name="wcag" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Fixed height</span><input type="checkbox" name="fixed" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Apply the spacing overrides. With min-height the card grows and stays readable. Turn on fixed height and the last lines are clipped: the same content, now inaccessible.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Use rem for font sizes; absolute pixels ignore the size the person configured in their browser. Content must stay usable at 200% zoom without losing function or scrolling in two directions; what breaks is fixed-height layouts, hidden overflow, aggressive truncation and navigation bars that do not reflow. The text spacing criterion is forgotten and easy to test: nothing may lose function when line height goes to 1.5, paragraph spacing to 2em, letter spacing to 0.12em and word spacing to 0.16em. Apply those in DevTools and see what overflows. The design implication: avoid fixed heights on anything that contains text. Use min-height.</p>
+          <p>Practical minimums: 16px for body on mobile, 14px as the floor for anything read with attention, 12px only for secondary metadata, nothing that matters below 11px. Weight and size affect legibility as much as color contrast: thin light text can pass the ratio and be unreadable; the lighter the weight, the more contrast it needs. Fonts marketed for dyslexia have no consistent empirical support; studies found no advantage over a well-set ordinary sans. What helps is what helps everyone: generous size, ample line height, controlled measure, left alignment, good contrast without pure white on pure black, plain language and short paragraphs.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>rem for type, px for borders.</strong></li>
+            <li><strong>Zoom to 200% and apply the spacing overrides</strong> as part of review, not audit.</li>
+            <li><strong>Min-height everywhere text lives.</strong></li>
+            <li><strong>Lighter weight, more contrast.</strong> Weight 300 needs more than the formal minimum.</li>
+            <li><strong>Good typography, not special fonts,</strong> for readers with dyslexia.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>rem for text sizes.</strong> Respect the browser preference.</li>
+            <li><strong>Text-spacing test in DevTools:</strong> 1.5 / 2em / 0.12em / 0.16em.</li>
+            <li><strong>min-height, never height,</strong> on text containers.</li>
+            <li><strong>16 mobile body, 14 floor, 12 metadata, nothing below 11.</strong></li>
+            <li><strong>Light weights need extra contrast.</strong> The ratio alone does not guarantee legibility.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Typography for design engineers, handbook</em> (chapter 16) · <a href="https://www.w3.org/WAI/WCAG22/Understanding/text-spacing.html" target="_blank" rel="noopener">WCAG 2.2, Text Spacing</a> · Rello and Baeza-Yates, <em>Good fonts for dyslexia</em> (2013) and later replications</footer>
+        </article>
+
+        <article class="lesson" id="internationalization">
+          <span class="eyebrow">Typography · 23</span>
+          <h2>Internationalization</h2>
+          <p class="lede">Translations change length by 30% or more, the document language changes how text breaks and sounds, and other scripts have metrics that Latin assumptions clip. Never size a component by the text in your own language.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="i18n">
+            <div class="demo-stage">
+            <div class="i18n-row"><button class="i18n-btn i18n-primary" type="button" tabindex="-1" data-en="Save" data-de="Speichern">Save</button><button class="i18n-btn" type="button" tabindex="-1" data-en="Cancel" data-de="Abbrechen">Cancel</button><button class="i18n-btn" type="button" tabindex="-1" data-en="Download report" data-de="Bericht herunterladen">Download report</button></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">German strings</span><input type="checkbox" name="german" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Fixed widths</span><input type="checkbox" name="fixedw" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Switch to German and every label grows. With flexible widths the buttons adapt. With fixed widths, sized for English, the labels truncate. Never size a component by the text in your own language.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>From Portuguese to German, expect 20 to 35% expansion; to East Asian languages, contraction. Fixed-width buttons break, table labels break, one line becomes two. Test with artificially lengthened strings before the real translation arrives. The language attribute on the document affects hyphenation, line breaking, font selection, typographic quotes and screen reader pronunciation; a Portuguese page declared as English hyphenates wrong and is read wrong. Declare it at the root and locally on passages in another language.</p>
+          <p>Scripts differ. CJK has no spaces between words, so breaking follows other rules, line height needs to be higher, around 1.7 to 1.8, and small sizes become illegible sooner. Arabic and Hebrew run right to left, which affects the whole layout, and their vertical metrics differ a lot. Indic and Southeast Asian scripts combine glyphs and exceed typical metrics, so aggressive vertical trimming clips them. Defensive rule: if the product may be translated, no aggressive leading trim and no fixed heights on text components. The brand font probably does not cover every script: declare unicode ranges per script pointing at appropriate fonts, choose fallbacks with compatible visual weight, and adjust size per script where needed.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>+35% test strings</strong> on every component before translation.</li>
+            <li><strong><code>lang</code> on the root and on foreign passages.</strong></li>
+            <li><strong>No fixed widths on buttons, no fixed heights on text.</strong></li>
+            <li><strong>Line height +0.2 for CJK,</strong> separate fallbacks per script, RTL considered in layout.</li>
+            <li><strong>Trim gently or not at all</strong> on components that may show other scripts.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>+35% strings before translating.</strong> German is the stress test.</li>
+            <li><strong>lang on html and on foreign passages.</strong> Hyphenation, quotes and speech depend on it.</li>
+            <li><strong>No fixed button widths, no fixed text heights.</strong></li>
+            <li><strong>CJK: line height +0.2,</strong> larger minimum sizes, different breaking.</li>
+            <li><strong>unicode-range per script</strong> with weight-matched fallbacks.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Typography for design engineers, handbook</em> (chapter 17) · <a href="https://www.w3.org/International/questions/qa-html-language-declarations" target="_blank" rel="noopener">W3C i18n, Declaring language in HTML</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/unicode-range" target="_blank" rel="noopener">MDN, unicode-range</a></footer>
+        </article>
+      </section>
+      <footer class="footer"><p>Personal study library. Content synthesized from the sources listed in each lesson; course and author names belong to their respective owners. Hierarchy through size, weight and space only.</p></footer>
+    </div>
+  </main>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-lang="pt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Color — Interface Craft</title>
+  <meta name="description" content="Cor em interface é menos sobre paleta e mais sobre superfície: como separar camadas, dar matéria e manter consistência entre light e dark.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#fcfcfc" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
+  <script>
+    // Applies the saved theme before first paint to avoid a flash
+    try { var t = localStorage.getItem('theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script>
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <div>
+        <div class="brand-name">Interface Craft</div>
+        <div class="brand-sub">Biblioteca viva</div>
+      </div>
+      <div class="controls">
+        <nav class="lang-switch" aria-label="Idioma"><a class="lang-opt" href="../color.html" data-lang="en" hreflang="en">EN</a><a class="lang-opt" href="#" data-lang="pt" hreflang="pt" aria-current="true">PT</a></nav>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Alternar tema claro e escuro" title="Alternar tema claro e escuro"><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+      </div>
+    </div>
+    <a class="back-link" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>Início</a>
+    <nav class="nav-groups" aria-label="Sumário da seção">
+      <div class="nav-group" data-section="color" style="margin-top:0">
+        <div class="nav-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="7.5" r="4"/><circle cx="7.5" cy="15.5" r="4"/><circle cx="16.5" cy="15.5" r="4"/></svg>Color</div>
+        <ul class="nav-list"><li><a class="nav-link" href="#oklch">OKLCH</a></li><li><a class="nav-link" href="#noise">Noise</a></li><li><a class="nav-link" href="#shadows-not-borders">Shadows, Not Borders</a></li><li><a class="nav-link" href="#image-outlines">Image Outlines</a></li><li><a class="nav-link" href="#neutrals-are-not-gray">Neutrals Are Not Gray</a></li><li><a class="nav-link" href="#dark-mode-is-not-inversion">Dark Mode Is Not Inversion</a></li><li><a class="nav-link" href="#chroma-curve">Curve the Chroma</a></li><li><a class="nav-link" href="#gamut-clipping">Gamut and Silent Clipping</a></li><li><a class="nav-link" href="#two-contrast-algorithms">Contrast: WCAG 2 and APCA</a></li><li><a class="nav-link" href="#contrast-beyond-text">Contrast Is Not Only Text</a></li><li><a class="nav-link" href="#perceptual-effects">Effects That Break the Math</a></li><li><a class="nav-link" href="#twelve-step-scale">The 12-Step Scale</a></li><li><a class="nav-link" href="#token-architecture">Tokens by Role</a></li><li><a class="nav-link" href="#semantic-color">Semantic Color and the Yellow Problem</a></li><li><a class="nav-link" href="#interpolation-and-gradients">Interpolation and Gradients</a></li><li><a class="nav-link" href="#alpha-vs-solid">Alpha vs Solid</a></li><li><a class="nav-link" href="#color-blindness">Color Blindness</a></li><li><a class="nav-link" href="#color-in-data">Color in Data</a></li><li><a class="nav-link" href="#brand-vs-system">Brand vs System</a></li></ul>
+      </div>
+      <div class="nav-group nav-other" data-section="color">
+        <div class="nav-title">Outras seções</div>
+        <ul class="nav-list"><li><a class="nav-link" href="craft.html">Craft</a></li><li><a class="nav-link" href="typography.html">Typography</a></li><li><a class="nav-link" href="layout.html">Layout</a></li><li><a class="nav-link" href="motion.html">Motion</a></li><li><a class="nav-link" href="ux.html">UX</a></li><li><a class="nav-link" href="referencias.html">Referências</a></li></ul>
+      </div>
+    </nav>
+  </aside>
+  <main class="content">
+    <div class="container">
+<section class="section" data-section="color">
+        <div class="section-head" id="color">
+          <span class="eyebrow">Seção 03</span>
+          <h2>Color</h2>
+          <p>Cor em interface é menos sobre paleta e mais sobre superfície: como separar camadas, dar matéria e manter consistência entre light e dark.</p>
+        </div>
+
+        <article class="lesson" id="oklch">
+          <span class="eyebrow">Color · 01</span>
+          <h2>OKLCH</h2>
+          <p class="lede">Um espaço de cor onde "mesma luminosidade" significa a mesma luminosidade percebida. Paletas consistentes deixam de ser tentativa e erro.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="oklch">
+            <div class="demo-stage">
+            <div class="swatches">
+              <div class="swatch" style="--h:25; --hh:0">Aa</div><div class="swatch" style="--h:90; --hh:60">Aa</div><div class="swatch" style="--h:145; --hh:120">Aa</div>
+              <div class="swatch" style="--h:200; --hh:180">Aa</div><div class="swatch" style="--h:265; --hh:240">Aa</div><div class="swatch" style="--h:330; --hh:300">Aa</div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Luminosidade</span><input type="range" name="l" min="30" max="90" step="1" value="70" data-unit="%"><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">OKLCH</span><input type="checkbox" name="oklch" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Arraste a luminosidade. Em OKLCH os seis pills pesam igual e o “Aa” branco mantém o mesmo contraste; em HSL o amarelo e o ciano estouram.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>HSL foi desenhado para ser fácil de calcular, não para bater com a percepção humana. Um amarelo com L=50% parece muito mais claro que um azul com L=50%. Isso torna impossível gerar uma paleta consistente só variando o hue. OKLCH (lightness, chroma, hue no espaço Oklab) é perceptualmente uniforme: mesma L, mesma claridade percebida; mesmo C, mesma saturação percebida. Além disso, alcança cores fora do sRGB em telas P3.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Defina tokens em OKLCH.</strong> <code>oklch(L C H)</code>, com L em % (0 a 100), C de 0 a ~0.37 e H em graus. Suporte em todos os navegadores modernos desde 2023.</li>
+            <li><strong>Gere variantes mudando um eixo só.</strong> Hover: L −5%. Disabled: C ÷ 3. Dark mode: inverta L e reduza C um pouco (cores saturadas em fundo escuro cansam).</li>
+            <li><strong>Neutros com um pingo de chroma</strong> (0.003 a 0.01) na direção do acento ficam mais vivos que cinza puro sem parecer coloridos.</li>
+            <li><strong>Use <code>color-mix()</code></strong> com <code>in oklch</code> para misturas: <code>color-mix(in oklch, var(--accent) 20%, transparent)</code>.</li>
+            <li><strong>Cuidado com o gamut.</strong> C alto em alguns hues não existe em sRGB; o navegador aproxima. Confira em <a href="https://oklch.com" target="_blank" rel="noopener">oklch.com</a>.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copiar" data-copied="Copiado" aria-label="Copiar"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copiar</span></button></div><pre><code><span class="k">:root</span> {
+  <span class="p">--accent</span>:        <span class="f">oklch</span>(<span class="n">60</span>% <span class="n">0.17</span> <span class="n">255</span>);
+  <span class="p">--accent-hover</span>:  <span class="f">oklch</span>(<span class="n">55</span>% <span class="n">0.17</span> <span class="n">255</span>);           <span class="c">/* só L muda */</span>
+  <span class="p">--accent-soft</span>:   <span class="f">color-mix</span>(in oklch, <span class="f">var</span>(--accent) <span class="n">15</span>%, transparent);
+  <span class="p">--gray-1</span>:        <span class="f">oklch</span>(<span class="n">99</span>% <span class="n">0.003</span> <span class="n">260</span>);
+  <span class="p">--gray-12</span>:       <span class="f">oklch</span>(<span class="n">12</span>% <span class="n">0.01</span> <span class="n">260</span>);
+}</code></pre></figure>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Chroma no pico no meio.</strong> Em uma rampa, C é mais alto perto de L 55 a 65% e diminui em direção às duas pontas. Chroma constante produz claros lamacentos e escuros neon.</li>
+            <li><strong>Desloque o hue ao longo da rampa.</strong> Gire levemente para o amarelo nos passos claros e para o azul nos escuros. Radix Colors e as paletas mais novas do Tailwind fazem isso; lê como luz natural.</li>
+            <li><strong>Regras de bolso de contraste.</strong> Texto branco em botão colorido precisa de L abaixo de cerca de 60%; texto escuro precisa de L acima de cerca de 75%. Depois verifique com APCA ou WCAG mesmo assim.</li>
+            <li><strong>L igual entre acentos.</strong> Badges, tags e cores de categoria com o mesmo L têm o mesmo peso e o mesmo contraste com o texto. Esse é o principal ganho prático.</li>
+            <li><strong>Dark mode não é L invertido.</strong> Fundos em L 12 a 18%, cada superfície elevada +3 a 4%. Acentos subem cerca de 10% em L e descem cerca de 15% em C.</li>
+            <li><strong>Gradientes em OKLCH.</strong> <code>linear-gradient(in oklch, …)</code> evita a zona morta cinza que a interpolação sRGB produz entre hues complementares.</li>
+            <li><strong>Sintaxe de cor relativa.</strong> <code>oklch(from var(--accent) calc(l - 0.05) c h)</code> deriva estados de hover sem um segundo token; suportado em todos os navegadores modernos desde 2024.</li>
+            <li><strong>Cuidado com fora do gamut em telas sRGB.</strong> Chroma alto em alguns hues (ciano, verde) satura em displays não P3. Confira nos dois, ou limite C perto de 0,2 para cores de UI.</li>
+            <li data-colorbook><strong>Faixas úteis.</strong> L 0,45 a 0,65 para ações sólidas, 0,92 a 0,99 para fundos claros, 0,15 a 0,22 para escuros. C 0,003 a 0,015 para neutros tingidos, 0,18 a 0,26 para sólidos de marca.</li>
+            <li data-colorbook><strong>Marcos de matiz.</strong> Vermelho ~25, laranja ~55, amarelo ~90, verde ~140, teal ~185, azul ~250, roxo ~300, rosa ~340.</li>
+            <li data-colorbook><strong>Sintaxe de cor relativa</strong> deriva estados de um token: <code>oklch(from var(--brand) calc(l - 0.06) c h)</code>.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://evilmartians.com/chronicles/oklch-in-css-why-quit-rgb-hsl" target="_blank" rel="noopener">Evil Martians, OKLCH in CSS: why we moved from RGB and HSL</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/oklch" target="_blank" rel="noopener">MDN, oklch()</a> · <a href="https://bottosson.github.io/posts/oklab/" target="_blank" rel="noopener">Björn Ottosson, A perceptual color space for image processing</a> · <a href="https://www.makingsoftware.com/" target="_blank" rel="noopener">Dan Hollick, Making Software</a> (What is a color space?)</footer>
+        </article>
+
+        <article class="lesson" id="noise">
+          <span class="eyebrow">Color · 02</span>
+          <h2>Noise</h2>
+          <p class="lede">Gradientes digitais são perfeitos demais. Uma camada fina de ruído dá textura, disfarça banding e faz a superfície parecer material.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="noise">
+            <div class="demo-stage">
+            <div class="noise-card"><span class="cap">superfície de hero</span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Opacidade do grão</span><input type="range" name="grain" min="0" max="0.8" step="0.05" value="0.5" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Fonte de luz</span><input type="checkbox" name="light" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Clique num número para abrir uma observação. Depois troque para prescrições e note como cada uma chuta um conserto antes de entender o problema.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Gradientes em 8 bits produzem faixas visíveis (banding), especialmente entre tons escuros próximos. Ruído quebra as faixas e, como efeito colateral, adiciona a irregularidade que o olho associa a materiais reais: papel, tinta, filme. Isso dá "matéria" para hero sections, cards de destaque e fundos sem mudar a paleta. Dan Hollick dedica um capítulo do Making Software a como blurs e ruído funcionam por baixo dos panos.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>SVG inline com <code>feTurbulence</code></strong> em um pseudo-elemento sobre o fundo. Zero requests, tamanho ínfimo.</li>
+            <li><strong>Opacidade baixa:</strong> 0.2 a 0.5. Se dá para "ver" o ruído de longe, está forte demais.</li>
+            <li><strong><code>mix-blend-mode: overlay</code> ou <code>soft-light</code></strong> para o ruído afetar luz sem sujar a cor.</li>
+            <li><strong>Use <code>isolation: isolate</code></strong> no container para o blend não vazar para elementos vizinhos.</li>
+            <li><strong>Reserve para superfícies grandes.</strong> Em botões e inputs, ruído vira sujeira. Em heros e backgrounds, vira textura.</li>
+            <li><strong>Performance:</strong> feTurbulence é caro se animado. Mantenha estático, ou use um PNG pequeno em <code>background-repeat</code>.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copiar" data-copied="Copiado" aria-label="Copiar"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copiar</span></button></div><pre><code><span class="k">.surface</span> { position: relative; isolation: isolate; }
+<span class="k">.surface::after</span> {
+  content: <span class="s">""</span>; position: absolute; inset: <span class="n">0</span>; pointer-events: none;
+  opacity: <span class="n">0.4</span>; mix-blend-mode: overlay;
+  background-image: <span class="f">url</span>("data:image/svg+xml,<span class="t">&lt;svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'&gt;</span>\
+    <span class="t">&lt;filter id='n'&gt;</span><span class="t">&lt;feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/&gt;</span>\
+    <span class="t">&lt;feColorMatrix type='saturate' values='0'/&gt;</span><span class="t">&lt;/filter&gt;</span>\
+    <span class="t">&lt;rect width='100%' height='100%' filter='url(%23n)'/&gt;</span><span class="t">&lt;/svg&gt;</span>");
+}</code></pre></figure>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Escale o grão à densidade de pixels.</strong> <code>baseFrequency</code> 0,6 a 0,9 lê como grão fino em 1×; em retina pode sumir. Use um tile SVG maior (240 a 320px) para a repetição não aparecer.</li>
+            <li><strong>Blend mode por superfície.</strong> <code>overlay</code> clareia, então em superfícies escuras use <code>soft-light</code> a 0,15 a 0,3; em superfícies claras <code>multiply</code> a 0,05 a 0,1.</li>
+            <li><strong>Adicione uma fonte de luz.</strong> Ruído sozinho é textura; ruído mais um brilho radial suave em um canto é material.</li>
+            <li><strong>Nunca embaixo de texto.</strong> Mantenha o grão em um pseudo-elemento com <code>pointer-events: none</code> e coloque o texto em uma camada acima. Grão atravessando letras lê como baixa resolução.</li>
+            <li><strong>Sempre <code>stitchTiles</code>.</strong> Sem ele, as bordas do tile aparecem como costuras leves em superfícies largas.</li>
+            <li><strong>Navegadores diferem.</strong> feTurbulence renderiza levemente diferente no Safari e no Chrome. Para grão idêntico entre navegadores, um PNG de 128px (cerca de 2KB) com <code>background-blend-mode</code> é a escolha mais segura.</li>
+            <li><strong>Grão mata compressão.</strong> Screenshots e imagens OG com ruído ficam grandes e manchadas. Mantenha a opacidade baixa ou omita o ruído em assets exportados.</li>
+            <li><strong>Combine com dithering para banding.</strong> Se o objetivo é só esconder banding em um gradiente, 3 a 5% de ruído basta; mais que isso começa a ler como escolha de estilo.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://css-tricks.com/grainy-gradients/" target="_blank" rel="noopener">Jimmy Chion, Grainy Gradients (CSS-Tricks)</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/feTurbulence" target="_blank" rel="noopener">MDN, feTurbulence</a> · <a href="https://www.makingsoftware.com/" target="_blank" rel="noopener">Dan Hollick, Making Software</a> (Blurs, noise and other effects)</footer>
+        </article>
+
+        <article class="lesson" id="shadows-not-borders">
+          <span class="eyebrow">Color · 03</span>
+          <h2>Shadows, Not Borders</h2>
+          <p class="lede">Bordas de 1px sólidas dividem. Sombras sutis elevam. Para separar superfícies, quase sempre a sombra é a resposta mais silenciosa.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="shadow">
+            <div class="demo-stage">
+            <div class="sh-wrap">
+              <div class="card sh-card" tabindex="0" data-hover>
+                <div class="card-title">Revisão de design</div>
+                <div class="card-sub">Hoje, 15:00 · 4 participantes</div>
+              </div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Elevação</span><input type="range" name="elev" min="0" max="3" step="1" value="1" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Borda sólida no lugar</span><input type="checkbox" name="border" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Passe o mouse no card: ele sobe um nível. Elevação 0 é um card em repouso, 1 um hover, 2 um dropdown, 3 um dialog. A borda tem o mesmo peso em toda a volta e nenhuma profundidade.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Uma borda sólida tem o mesmo peso visual em toda a volta e compete com o conteúdo. Uma sombra comunica a mesma coisa (isto é uma superfície separada) e ainda diz algo a mais: o quanto está elevada. Sombras curtas e escuras para coisas próximas do fundo; sombras longas e difusas para coisas que flutuam (popovers, modais). Bordas não têm essa dimensão.</p>
+          <p>O detalhe que faz a diferença é combinar as duas ideias: uma sombra em camadas mais um "ring" de 1px com cor translúcida (<code>0 0 0 1px rgba(0,0,0,.06)</code>). O ring garante contorno em fundos onde a sombra some, e a translucidez faz ele se adaptar à cor atrás.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Camadas.</strong> Uma sombra curta e uma longa juntas parecem mais naturais que uma só: <code>0 1px 2px … , 0 8px 24px -4px …</code>.</li>
+            <li><strong>Cor da sombra, não preto.</strong> Sombras têm a cor do ambiente. Use um azul-escuro dessaturado em vez de <code>#000</code> puro, com opacidade baixa.</li>
+            <li><strong>Escala de elevação.</strong> Três níveis bastam: repouso (card), flutuando (dropdown), modal. Tokenize.</li>
+            <li><strong>Dark mode:</strong> sombras somem em fundo escuro. Aumente a opacidade e conte mais com o ring translúcido claro (<code>rgba(255,255,255,.08)</code>). Ou use uma superfície ligeiramente mais clara para elevar.</li>
+            <li><strong>Bordas ainda servem</strong> em inputs (affordance de campo) e em tabelas (divisores). Aí, use cores translúcidas em vez de cinza sólido.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copiar" data-copied="Copiado" aria-label="Copiar"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copiar</span></button></div><pre><code><span class="k">:root</span> {
+  <span class="p">--shadow-color</span>: <span class="n">220</span> <span class="n">20</span>% <span class="n">10</span>%;
+  <span class="p">--ring</span>: <span class="n">0</span> <span class="n">0</span> <span class="n">0</span> <span class="n">1px</span> <span class="f">rgba</span>(<span class="n">0</span>, <span class="n">0</span>, <span class="n">0</span>, <span class="n">0.06</span>);
+  <span class="p">--shadow-md</span>:
+    <span class="n">0</span> <span class="n">1px</span> <span class="n">2px</span> <span class="f">hsl</span>(<span class="f">var</span>(--shadow-color) / <span class="n">0.05</span>),
+    <span class="n">0</span> <span class="n">4px</span> <span class="n">12px</span> <span class="n">-2px</span> <span class="f">hsl</span>(<span class="f">var</span>(--shadow-color) / <span class="n">0.08</span>),
+    <span class="f">var</span>(--ring);
+}
+<span class="k">.card</span> { box-shadow: <span class="f">var</span>(--shadow-md); border: <span class="n">0</span>; }</code></pre></figure>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>A luz vem de cima.</strong> Só offsets y positivos. Um offset negativo lê como objeto iluminado por baixo, o que nada em uma UI deveria ser.</li>
+            <li><strong>Blur em torno de duas vezes o offset.</strong> <code>0 4px 8px</code> e <code>0 12px 24px</code> parecem físicos. Spread negativo (−2 a −8px) mantém a sombra longa recolhida sob o elemento.</li>
+            <li><strong>Realce interno no topo em dark mode.</strong> <code>inset 0 1px 0 rgba(255,255,255,.04)</code> simula uma borda iluminada e separa superfícies escuras empilhadas melhor que qualquer sombra projetada.</li>
+            <li><strong>Elevação por cor de superfície no dark mode.</strong> Cada nível é 3 a 5% mais claro. Sombras são secundárias ali; o ring e a superfície fazem o trabalho.</li>
+            <li><strong>Elementos coloridos projetam sombras coloridas.</strong> A sombra de um botão azul em azul de baixa opacidade parece intencional; em cinza parece suja.</li>
+            <li><strong>Foco não é elevação.</strong> Um anel duplo, <code>0 0 0 2px var(--bg), 0 0 0 4px var(--accent)</code>, fica visível em qualquer fundo e nunca briga com a sombra.</li>
+            <li><strong>Proporcional à distância.</strong> Linhas de lista não têm, cards têm uma curta, dropdowns uma média, dialogs a longa. Se tudo flutua, nada flutua.</li>
+            <li><strong>Hover sobe um nível.</strong> Passe de shadow-sm para shadow-md e <code>translateY(-1px)</code> em 150 a 200ms, animando a opacidade de um pseudo-elemento em vez da sombra em si.</li>
+            <li data-craftbook><strong>A camada de luz.</strong> Uma borda de 1px mais um realce interno no topo, inset 0 1px 0 branco a uns 6%, mais uma sombra externa lê como um objeto com espessura e não como um retângulo pintado. É o que faz interfaces escuras de produtos caros parecerem caras.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://www.joshwcomeau.com/css/designing-shadows/" target="_blank" rel="noopener">Josh W. Comeau, Designing Beautiful Shadows in CSS</a> · <a href="https://github.com/emilkowalski/skills" target="_blank" rel="noopener">Emil Kowalski, design engineering skills</a> (semi-transparent shadow over solid border) · <a href="https://www.interfacecraft.dev/" target="_blank" rel="noopener">Josh Puckett, Interface Craft</a> (shadows/strokes no critique)</footer>
+        </article>
+
+        <article class="lesson" id="image-outlines">
+          <span class="eyebrow">Color · 04</span>
+          <h2>Image Outlines</h2>
+          <p class="lede">Imagens com fundo branco desaparecem em fundo branco. Um contorno de 1px translúcido por dentro resolve, sem parecer moldura.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="outline">
+            <div class="demo-stage">
+            <div class="demo-grid">
+              <div class="img-tile">imagem com fundo claro</div>
+              <div class="io-avatars"><div class="avatar">JP</div><div class="avatar">EK</div><div class="avatar">RF</div></div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Opacidade do contorno</span><input type="range" name="o" min="0" max="0.24" step="0.02" value="0.08" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">outline</span><input type="checkbox" name="outline" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Arraste a opacidade. O contorno é desenhado por dentro da borda, segue o raio e nunca muda o layout. Perto de 0,08 define a forma sem parecer moldura.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Você não controla o conteúdo das imagens dos usuários: logos com fundo branco, screenshots claros, fotos de produto em fundo neutro. Em uma interface clara, essas imagens perdem a borda e flutuam sem forma. Em uma escura, o mesmo acontece com imagens escuras. Um contorno translúcido sobre a imagem (não ao redor) define a forma sem criar uma moldura visível, porque ele se mistura com a cor da própria imagem.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong><code>outline</code> com offset negativo</strong> desenha por dentro da borda e respeita <code>border-radius</code>. Não afeta layout.</li>
+            <li><strong>Alternativa:</strong> um wrapper com <code>::after</code> e <code>box-shadow: inset 0 0 0 1px …</code>. Necessário porque <code>inset</code> não aparece sobre <code>&lt;img&gt;</code> diretamente.</li>
+            <li><strong>Opacidade baixa:</strong> 6% a 10% de preto no light; 8% a 12% de branco no dark.</li>
+            <li><strong>Aplique em tudo que o usuário envia:</strong> avatares, logos, capas, anexos. Mantenha imagens ilustrativas suas (que você controla) sem contorno.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copiar" data-copied="Copiado" aria-label="Copiar"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copiar</span></button></div><pre><code><span class="k">.user-img</span> { border-radius: <span class="n">8px</span>; outline: <span class="n">1px</span> solid <span class="f">rgba</span>(<span class="n">0</span>,<span class="n">0</span>,<span class="n">0</span>,<span class="n">0.08</span>); outline-offset: <span class="n">-1px</span>; }
+<span class="k">:root[data-theme="dark"] .user-img</span> { outline-color: <span class="f">rgba</span>(<span class="n">255</span>,<span class="n">255</span>,<span class="n">255</span>,<span class="n">0.1</span>); }
+
+<span class="c">/* Alternativa com wrapper, para quando outline não bastar */</span>
+<span class="k">.frame</span> { position: relative; }
+<span class="k">.frame::after</span> { content: <span class="s">""</span>; position: absolute; inset: <span class="n">0</span>; border-radius: inherit;
+  box-shadow: inset <span class="n">0</span> <span class="n">0</span> <span class="n">0</span> <span class="n">1px</span> <span class="f">rgba</span>(<span class="n">0</span>,<span class="n">0</span>,<span class="n">0</span>,<span class="n">0.08</span>); pointer-events: none; }</code></pre></figure>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Outline, não border.</strong> Bordas mudam o tamanho da caixa e deslocam o layout ao alternar; outlines não participam do layout.</li>
+            <li><strong>Suporte a raio.</strong> <code>outline</code> segue <code>border-radius</code> no Chrome 94+, Safari 16.4+ e Firefox 88+. Para Safari antigo, use o wrapper com box-shadow inset.</li>
+            <li><strong>Logos transparentes precisam de palco.</strong> Um logo escuro em PNG transparente desaparece no dark mode. Dê aos logos um tile neutro (<code>var(--bg-sunken)</code>) mais o outline, e <code>object-fit: contain</code> com padding.</li>
+            <li><strong>Avatares cortam, logos cabem.</strong> <code>object-fit: cover</code> com <code>object-position</code> para rostos; <code>contain</code> para marcas.</li>
+            <li><strong>Mesmo outline no placeholder.</strong> Skeleton e estados vazios recebem o ring idêntico, para a forma não pular quando a imagem carrega. Reserve o tamanho com <code>aspect-ratio</code>.</li>
+            <li><strong>Avatares empilhados invertem o truque.</strong> <code>outline: 2px solid var(--bg)</code> separa avatares sobrepostos com um vão da cor da página.</li>
+            <li><strong>Mantenha 1px.</strong> Outlines de meio pixel desfocam em telas 1× e somem em alguns arredondamentos de 2×. Um pixel de dispositivo em toda densidade é o objetivo.</li>
+            <li><strong>Screenshots em documentação.</strong> Outline mais uma sombra curta; no dark mode troque para um ring claro. Sem isso, um screenshot claro sangra em uma página clara.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/outline-offset" target="_blank" rel="noopener">MDN, outline-offset</a> · <a href="https://rauno.me/craft" target="_blank" rel="noopener">Rauno Freiberg, Craft</a> · Padrão observável em Linear, Vercel e GitHub (avatares e logos)</footer>
+        </article>
+        <article class="lesson" id="neutrals-are-not-gray">
+          <span class="eyebrow">Color · 05</span>
+          <h2>Neutrals Are Not Gray</h2>
+          <p class="lede">Noventa por cento de uma interface é "cinza": fundos, bordas, texto secundário. Cinza puro deixa tudo isso morto. Um toque de cor deixa vivo.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="neutral">
+            <div class="demo-stage">
+            <div class="nt-card">
+              <div class="nt-head"><span class="nt-avatar"></span><span class="nt-name">Marina Costa<span>Product designer</span></span></div>
+              <div class="nt-line"></div>
+              <div class="nt-line short"></div>
+              <div class="nt-actions"><span class="nt-chip">Design</span><span class="nt-chip">Pesquisa</span></div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">chroma</span><input type="range" name="chroma" min="0" max="0.03" step="0.002" value="0.012" data-unit=""><output></output></label><label class="ctl"><span class="ctl-label">hue</span><input type="range" name="hue" min="0" max="360" step="5" value="260" data-unit=""><output></output></label></div>
+          </div>
+            <figcaption class="demo-caption">Arraste o chroma até zero para cinza puro, depois volte. Arraste o hue para sentir a temperatura mudar enquanto os cinzas continuam “cinzas”.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Coloque duas versões da mesma tela lado a lado. Em uma, todo neutro é cinza verdadeiro, vermelho, verde e azul iguais. Na outra, os neutros puxam de leve para o azul, ou para o lado quente, tão de leve que ninguém chamaria de colorido. A segunda parece mais cara. É difícil dizer por quê à primeira vista; ela só parece mais material e menos placeholder. Papel nunca é branco puro e sombra nunca é cinza puro. Nossos olhos esperam isso.</p>
+          <p>O tom também dá temperatura ao produto. Neutros frios leem como precisos e técnicos, quentes como amigáveis e editoriais. Escolher isso é uma decisão de marca escondida dentro das cores mais chatas da tela.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Escolha um hue para todos os neutros.</strong> Normalmente o hue do seu acento, ou o oposto para contraste. Mantenha o mesmo na escala inteira para os cinzas parecerem uma família.</li>
+            <li><strong>Mantenha o tom quase invisível.</strong> Poucas unidades de chroma bastam. Se alguém consegue nomear a cor do seu cinza, é demais.</li>
+            <li><strong>Tinja bordas e sombras também.</strong> Uma borda cinza pura sobre uma superfície tingida parece suja. Derive do mesmo hue.</li>
+            <li><strong>Dark mode leva o mesmo hue.</strong> Fundos azul-marinho profundo leem como mais escuros e mais calmos que preto puro, e mantêm a temperatura do tema claro.</li>
+            <li><strong>Teste com conteúdo real.</strong> Fotos e dados coloridos podem brigar com o tom; confira que os neutros continuam recuando atrás deles.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Empreste o hue do acento.</strong> Um produto azul com cinzas levemente azulados parece inteiro; os mesmos cinzas sob um acento laranja parecem frios. Teste a temperatura contra a cor da marca.</li>
+            <li><strong>Abaixo do perceptível.</strong> Duas a seis unidades de chroma em termos de OKLCH. Screenshots lado a lado com cinza puro devem parecer diferentes; sozinho, ninguém deve notar o tom.</li>
+            <li><strong>Quente para ler, frio para trabalhar.</strong> Produtos editoriais, de muita leitura, puxam para o quente (areia, pedra); ferramentas e dashboards puxam para o frio (ardósia, aço).</li>
+            <li><strong>O texto segue o tom.</strong> Texto quase preto com o mesmo hue lê mais macio que preto puro e combina com as superfícies em que está.</li>
+            <li><strong>Não tinja cores semânticas.</strong> Vermelho de erro e verde de sucesso continuam eles mesmos; só a escala de neutros carrega o hue da marca.</li>
+            <li><strong>Superfícies escuras também.</strong> O fundo escuro é uma versão muito escura do mesmo cinza tingido, nunca #000.</li>
+            <li data-colorbook><strong>Croma de 0,003 a 0,015</strong> é toda a faixa de um neutro tingido. Além disso lê como cor.</li>
+            <li data-colorbook><strong>Suba o croma nas pontas.</strong> O meio da escala mostra o tom facilmente; os extremos precisam de mais para aparecer.</li>
+            <li data-colorbook><strong>Use o matiz da marca em croma muito baixo.</strong> Amarra o sistema sem que ninguém perceba.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> Adam Wathan e Steve Schoger, <em>Refactoring UI</em> (greys don't have to be grey) · <a href="https://www.radix-ui.com/colors" target="_blank" rel="noopener">Radix Colors</a> (Slate, Mauve, Sage, Olive, Sand) · <a href="https://evilmartians.com/chronicles/oklch-in-css-why-quit-rgb-hsl" target="_blank" rel="noopener">Evil Martians, OKLCH in CSS</a></footer>
+        </article>
+
+        <article class="lesson" id="dark-mode-is-not-inversion">
+          <span class="eyebrow">Color · 06</span>
+          <h2>Dark Mode Is Not Inversion</h2>
+          <p class="lede">Inverter todas as cores produz um tema escuro que tecnicamente funciona e parece errado em todo lugar. Dark mode é um segundo design, não um filtro.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="darkmode">
+            <div class="demo-stage">
+            <div class="dm-card">
+              <div class="dm-top"><span class="dm-title">Pagamento recebido</span><span class="dm-badge">Pago</span></div>
+              <p class="dm-text">A fatura #2041 foi paga integralmente. O recibo foi enviado ao cliente.</p>
+              <div class="dm-foot"><button class="dm-btn" type="button" tabindex="-1">Ver fatura</button><span class="dm-meta">Hoje, 09:14</span></div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Inversão ingênua</span><input type="checkbox" name="inverted" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Troque para inversão: preto puro, branco brilhando, verde neon, sem profundidade. Volte para o card escuro desenhado, com superfícies mais claras e acentos suavizados.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Inverta uma interface clara e três coisas quebram de uma vez. Texto branco em preto puro brilha e cansa os olhos. As sombras, que faziam os cards flutuar no tema claro, desaparecem contra um fundo escuro, e tudo achata. E as cores de acento, ajustadas para ficar sobre branco, agora parecem neon sobre preto. O layout é o mesmo, mas a hierarquia que o tema claro construiu com luz e sombra se foi.</p>
+          <p>Um dark mode desenhado reconstrói essa hierarquia com outras ferramentas. Superfícies ficam mais claras conforme sobem, em vez de projetar sombra. Texto é quase branco, não branco. Acentos ganham um pouco de luminosidade e perdem um pouco de saturação para continuar legíveis sem vibrar. É o mesmo produto com o mesmo caráter, só iluminado de outro jeito.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Comece pelos tokens, não pelos pixels.</strong> Fundo, superfície, texto, borda, acento. Dê a cada um o próprio valor escuro em vez de calcular a partir do claro.</li>
+            <li><strong>Eleve com luminosidade.</strong> Cada camada que fica por cima é um passo mais clara. A sombra vira uma borda fina de luz no topo.</li>
+            <li><strong>Baixe o branco.</strong> Texto primário perto de 92% de luminosidade, nunca 100%. Texto apagado continua claramente legível; dark mode é onde texto cinza de baixo contraste falha primeiro.</li>
+            <li><strong>Reajuste os acentos.</strong> Um pouco mais claros, um pouco menos saturados. Confira que botões com branco sobre acento ainda passam no contraste.</li>
+            <li><strong>Imagens e ilustrações pedem cuidado.</strong> Imagens de fundo claro ganham contorno; ilustrações podem precisar de uma variante escura em vez de uma invertida.</li>
+            <li><strong>Respeite o sistema, ofereça escolha.</strong> Siga a preferência do SO por padrão e deixe a pessoa sobrescrever, lembrando a escolha.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Fundos não são pretos.</strong> Cinza muito escuro com o tom da marca. Preto puro não deixa espaço para uma cor de sombra mais escura e impede empilhar superfícies.</li>
+            <li><strong>Mais alto significa mais claro.</strong> Base, card, popover, dialog: cada um alguns por cento mais claro que o de baixo. Essa ordem substitui a ordem de sombras do tema claro.</li>
+            <li><strong>Borda fina de luz no topo.</strong> Uma linha clara de um pixel, quase invisível, no topo das superfícies elevadas lê como luz batendo numa borda e vende o empilhamento.</li>
+            <li><strong>Texto em 90 a 93% de luminosidade.</strong> Branco puro sobre escuro reverbera e parece bold mesmo quando não é.</li>
+            <li><strong>Acentos mudam, bordas amolecem.</strong> Acentos ficam mais claros e menos saturados; bordas viram branco translúcido em baixa opacidade em vez de um cinza fixo.</li>
+            <li><strong>Teste os dois na mesma sala.</strong> Alterne entre os temas na mesma tela e confira que hierarquia, espaçamento e ênfase leem igual. Se algo está mais proeminente em um tema, os tokens estão errados.</li>
+            <li data-colorbook><strong>Escada de elevação.</strong> App L 0,17, card 0,20, popover 0,23, modal e tooltip 0,26. A profundidade mora na luminosidade.</li>
+            <li data-colorbook><strong>Texto em L 0,85 a 0,92,</strong> nunca branco puro. A halação borra as letras para quem tem astigmatismo.</li>
+            <li data-colorbook><strong>Menos croma em superfícies, mais em acentos pequenos.</strong> Áreas grandes saturadas cansam; marcas pequenas precisam de presença.</li>
+            <li data-colorbook><strong>Cores semânticas e de gráfico ganham valores escuros próprios.</strong> Transformações automáticas colapsam séries que eram distintas.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://m2.material.io/design/color/dark-theme.html" target="_blank" rel="noopener">Material Design, Dark theme</a> · <a href="https://developer.apple.com/design/human-interface-guidelines/dark-mode" target="_blank" rel="noopener">Apple HIG, Dark Mode</a> · <a href="https://www.radix-ui.com/colors/docs/overview/usage" target="_blank" rel="noopener">Radix Colors, uso em dark mode</a></footer>
+        </article>
+              <article class="lesson" id="chroma-curve">
+          <span class="eyebrow">Color · 07</span>
+          <h2>Curve the Chroma</h2>
+          <p class="lede">Uma escala não é doze luminosidades de uma cor. É um matiz, uma sequência de degraus de luminosidade e um croma que sobe no meio e cai nas duas pontas. A curva de croma é o passo que a maioria das paletas erra.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="chroma">
+            <div class="demo-stage">
+            <div class="cc-scale"><span class="cc-step" style="--l:0.99;--cc:0.01"><i>1</i></span><span class="cc-step" style="--l:0.98;--cc:0.02"><i>2</i></span><span class="cc-step" style="--l:0.95;--cc:0.04"><i>3</i></span><span class="cc-step" style="--l:0.93;--cc:0.06"><i>4</i></span><span class="cc-step" style="--l:0.9;--cc:0.08"><i>5</i></span><span class="cc-step" style="--l:0.86;--cc:0.1"><i>6</i></span><span class="cc-step" style="--l:0.8;--cc:0.13"><i>7</i></span><span class="cc-step" style="--l:0.72;--cc:0.16"><i>8</i></span><span class="cc-step" style="--l:0.6;--cc:0.2"><i>9</i></span><span class="cc-step" style="--l:0.55;--cc:0.19"><i>10</i></span><span class="cc-step" style="--l:0.5;--cc:0.15"><i>11</i></span><span class="cc-step" style="--l:0.28;--cc:0.08"><i>12</i></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Matiz</span><input type="range" name="hue" min="0" max="360" step="5" value="260" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Curvar o croma</span><input type="checkbox" name="curve" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Arraste o matiz. Com croma constante os passos claros viram neon e os escuros ficam sujos. Com o arco, um matiz produz uma escala de doze passos utilizável em qualquer ângulo.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Mantenha o croma constante numa escala e duas coisas acontecem. Os passos claros viram neon: uma cor pálida com croma alto lê como marca-texto, não como fundo. Os passos escuros ficam sujos, e muitas vezes saem do gamut, então o navegador os substitui em silêncio por algo mais apagado. As cores que parecem certas, as que você colocaria num botão, vivem no meio da faixa de luminosidade. É ali que o pico de croma pertence.</p>
+          <p>O método é curto. Fixe o matiz: todos os passos compartilham o mesmo H. Distribua a luminosidade em degraus perceptualmente uniformes, cerca de 0,08 entre passos adjacentes. Depois desenhe o croma como um arco, perto de zero nas pontas e com pico em torno do passo 9, a cor sólida da escala. Com o arco no lugar, os mesmos três números por passo produzem uma escala coerente para qualquer matiz, e uma segunda cor de marca vira uma tarde de trabalho em vez de uma semana.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Mesmo matiz em todos os passos.</strong> Se o matiz deriva ao longo da escala, os passos claros deixam de parecer a mesma cor dos escuros.</li>
+            <li><strong>Luminosidade primeiro, cerca de 0,08 de distância.</strong> Passos mais próximos que isso colapsam em telas reais.</li>
+            <li><strong>Croma em arco.</strong> Perto de 0,01 no passo 1, pico em torno de 0,20 no passo 9, de volta a 0,08 no passo 12.</li>
+            <li><strong>A curva é por matiz.</strong> Amarelo não segura croma quando escuro e azul não segura quando claro, então o mesmo arco não serve para todos. Ancore cada matiz no próprio máximo.</li>
+            <li><strong>Confira no olho depois da conta.</strong> Amarelos e cianos parecem mais brilhantes do que o L indica. Baixe um pouco.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copiar" data-copied="Copiado" aria-label="Copiar"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copiar</span></button></div><pre><code>/* um matiz, doze luminosidades, um arco de croma */
+<span class="p">--blue-1</span>:  <span class="f">oklch</span>(<span class="n">0.99</span> <span class="n">0.01</span> <span class="n">260</span>);
+<span class="p">--blue-5</span>:  <span class="f">oklch</span>(<span class="n">0.90</span> <span class="n">0.08</span> <span class="n">260</span>);
+<span class="p">--blue-9</span>:  <span class="f">oklch</span>(<span class="n">0.60</span> <span class="n">0.20</span> <span class="n">260</span>);   /* o sólido: pico de croma */
+<span class="p">--blue-11</span>: <span class="f">oklch</span>(<span class="n">0.50</span> <span class="n">0.15</span> <span class="n">260</span>);
+<span class="p">--blue-12</span>: <span class="f">oklch</span>(<span class="n">0.28</span> <span class="n">0.08</span> <span class="n">260</span>);</code></pre></figure>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Passos 1 a 4 quase não têm croma.</strong> 0,01 a 0,06. Mais que isso e os fundos parecem marcados.</li>
+            <li><strong>Pico no passo 9, não no fim.</strong> Os passos mais escuros voltam a cerca de 0,08.</li>
+            <li><strong>Escreva a escala como três listas,</strong> L, C e H, e gere. Hexadecimais escolhidos à mão nunca ficam consistentes.</li>
+            <li><strong>Um arco por família de matiz.</strong> Copie a lista de luminosidade, redesenhe a de croma.</li>
+            <li><strong>Visualize em componentes,</strong> não numa faixa de quadrados.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Cor para design engineers, handbook</em> (capítulo 3) · <a href="https://bottosson.github.io/posts/oklab/" target="_blank" rel="noopener">Björn Ottosson, A perceptual color space for image processing</a> · <a href="https://evilmartians.com/chronicles/oklch-in-css-why-quit-rgb-hsl" target="_blank" rel="noopener">Evil Martians, OKLCH in CSS</a></footer>
+        </article>
+
+        <article class="lesson" id="gamut-clipping">
+          <span class="eyebrow">Color · 08</span>
+          <h2>Gamut and Silent Clipping</h2>
+          <p class="lede">Você pode escrever qualquer combinação de luminosidade, croma e matiz. Nem toda combinação existe na tela. Quando não existe, o navegador a substitui pela cor mais próxima que consegue mostrar, e não avisa ninguém.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="gamut">
+            <div class="demo-stage" data-clipped-label="recortados">
+            <div class="gm-scale"><span class="gm-step" data-l="0.99" data-c="0.004" style="--l:0.99;--c:0.004"><i>1</i></span><span class="gm-step" data-l="0.98" data-c="0.008" style="--l:0.98;--c:0.008"><i>2</i></span><span class="gm-step" data-l="0.95" data-c="0.02" style="--l:0.95;--c:0.02"><i>3</i></span><span class="gm-step" data-l="0.93" data-c="0.035" style="--l:0.93;--c:0.035"><i>4</i></span><span class="gm-step" data-l="0.9" data-c="0.05" style="--l:0.9;--c:0.05"><i>5</i></span><span class="gm-step" data-l="0.86" data-c="0.07" style="--l:0.86;--c:0.07"><i>6</i></span><span class="gm-step" data-l="0.8" data-c="0.09" style="--l:0.8;--c:0.09"><i>7</i></span><span class="gm-step" data-l="0.72" data-c="0.11" style="--l:0.72;--c:0.11"><i>8</i></span><span class="gm-step" data-l="0.6" data-c="0.14" style="--l:0.6;--c:0.14"><i>9</i></span><span class="gm-step" data-l="0.55" data-c="0.13" style="--l:0.55;--c:0.13"><i>10</i></span><span class="gm-step" data-l="0.5" data-c="0.1" style="--l:0.5;--c:0.1"><i>11</i></span><span class="gm-step" data-l="0.28" data-c="0.05" style="--l:0.28;--c:0.05"><i>12</i></span></div><span class="gm-count"></span>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Matiz</span><input type="range" name="hue" min="0" max="360" step="5" value="95" data-unit=""><output></output></label><label class="ctl"><span class="ctl-label">Croma ×</span><input type="range" name="scale" min="0.5" max="2" step="0.1" value="1.3" data-unit=""><output></output></label></div>
+          </div>
+            <figcaption class="demo-caption">Amplie o arco de croma no amarelo e os passos escuros recortam primeiro; vá para o azul e os claros recortam. Passos recortados são marcados: numa tela sRGB renderizam como a cor mais próxima e vizinhos colapsam.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>A consequência aparece como uma escala que perdeu um degrau. Dois vizinhos que você definiu como diferentes renderizam como a mesma cor, ou uma cor que você definiu com croma alto aparece lavada e você não entende por quê. Nada dá erro. A matemática continua no arquivo; a tela só não consegue desenhar.</p>
+          <p>O motivo é que o croma máximo não é constante. Depende de matiz e luminosidade ao mesmo tempo. Amarelos só alcançam croma alto quando claros; um amarelo escuro e saturado não existe e vira marrom. Azuis alcançam croma alto em luminosidade média-baixa; um azul muito claro e saturado vira lavanda pálida. Vermelhos têm pico no meio. Então uma curva de croma copiada da sua escala de azul para a de amarelo vai recortar onde o azul nunca recortou. Cada matiz precisa do próprio teto.</p>
+          <p>Telas Display P3 mostram cerca de um quarto a mais de cores que sRGB, principalmente em vermelhos e verdes saturados. Parte do seu público tem uma e parte não. A estratégia equilibrada é base em sRGB, idêntica em todo lugar, com acentos autorizados a entrar no P3 onde a tela suporta.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Confira cada passo numa tela sRGB.</strong> Se dois passos parecem iguais, um deles recortou.</li>
+            <li><strong>Trabalhe como fração do máximo.</strong> Para cada matiz e luminosidade, descubra o maior croma dentro do gamut e fique abaixo.</li>
+            <li><strong>Cores fora do gamut só em acentos.</strong> Nunca em texto, borda ou qualquer coisa funcional.</li>
+            <li><strong>Consulte o gamut</strong> com <code>@media (color-gamut: p3)</code> para servir acentos mais ricos só onde existem.</li>
+            <li><strong>Prefira mapeamento perceptual</strong> quando precisar: reduza croma, mantenha luminosidade. É o que o CSS faz hoje para <code>oklch()</code>.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Amarelo recorta quando escuro, azul quando claro.</strong> As duas surpresas mais comuns.</li>
+            <li><strong>Dois vizinhos idênticos é um passo perdido.</strong> Baixe o croma do recortado até separar.</li>
+            <li><strong>Croma acima de cerca de 0,26 costuma estar fora do sRGB.</strong> Trate como território só P3.</li>
+            <li><strong>Teste numa tela não P3</strong> antes de lançar. A maioria dos notebooks de escritório é sRGB.</li>
+            <li><strong>Cores funcionais ficam em sRGB.</strong> Texto, bordas, fundos, estados. P3 é para acentos.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Cor para design engineers, handbook</em> (capítulo 4) · <a href="https://www.w3.org/TR/css-color-4/#gamut-mapping" target="_blank" rel="noopener">CSS Color Module Level 4, Gamut Mapping</a> · <a href="https://oklch.com" target="_blank" rel="noopener">oklch.com</a></footer>
+        </article>
+
+        <article class="lesson" id="two-contrast-algorithms">
+          <span class="eyebrow">Color · 09</span>
+          <h2>Contrast: WCAG 2 and APCA</h2>
+          <p class="lede">WCAG 2 é a lei. APCA prediz melhor o que as pessoas conseguem ler. Times sérios projetam com o segundo e validam com o primeiro, e sabem exatamente por que precisam dos dois.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="apca">
+            <div class="demo-stage" data-pass="passa" data-fail="reprova">
+            <div class="ap-card"><b>A fatura #2041 foi paga</b><p class="ap-text">O recibo foi enviado e o saldo está em dia. Nada mais a fazer aqui.</p></div>
+            <div class="ap-read"><span class="ap-pill ap-wcag"><em>WCAG 2</em><span class="ap-val"></span><span class="ap-tag"></span></span><span class="ap-pill ap-apca"><em>APCA</em><span class="ap-val"></span><span class="ap-tag"></span></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Luminosidade do texto</span><input type="range" name="tl" min="0.3" max="0.95" step="0.01" value="0.62" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Fundo escuro</span><input type="checkbox" name="darkbg" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Arraste a luminosidade do texto sobre fundo escuro. Perto de 0,62 o WCAG 2 passa de 4,5:1 enquanto o APCA fica bem abaixo de Lc 75: o par é conforme e difícil de ler. Mude para fundo claro e os dois concordam.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>O WCAG 2 calcula uma razão entre duas luminâncias relativas, com limiares de 4,5:1 para texto normal e 3:1 para texto grande e componentes. É aritmética, não percepção, e falha de formas conhecidas. Superestima o contraste entre cores escuras, o que significa que duas cores perto do preto podem passar de 4,5:1 e ser ilegíveis: o WCAG 2 nunca serviu para dark mode. Ignora polaridade, embora texto claro sobre escuro leia mais pesado que escuro sobre claro. Conhece só um tamanho, "grande", e trata um rótulo fino de 14px e um título bold de 32px do mesmo jeito. E maltrata laranja e amarelo, reprovando combinações que leem bem e aprovando algumas que não.</p>
+          <p>O APCA devolve um contraste de luminosidade, Lc, de 0 a cerca de 106, com sinal para polaridade. É perceptualmente uniforme, corrige o erro dos pares escuros e define limiares por tamanho e peso de fonte: Lc 90 para texto corrido, 75 como mínimo prático, 60 para texto de apoio, 45 para títulos grandes, 30 para elementos não textuais.</p>
+          <p>O status, sem entusiasmo: a seção de contraste visual foi retirada do rascunho do WCAG 3 em 2023, o rascunho atual diz que o algoritmo está indeterminado, e toda lei e regra de compra do planeta ainda aponta para WCAG 2.x AA. APCA prediz legibilidade melhor e não substitui a obrigação legal.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Projete com APCA.</strong> Leva a escolhas melhores, principalmente em dark mode e matizes quentes.</li>
+            <li><strong>Valide com WCAG 2 e guarde registro.</strong> Conformidade é uma razão, e a razão é o que uma auditoria verifica.</li>
+            <li><strong>Onde discordam, ajuste até passar nos dois.</strong> É quase sempre possível.</li>
+            <li><strong>Se mantiver um par que reprova no WCAG,</strong> documente o motivo, e nunca em texto de conteúdo. Só decorativo e não textual.</li>
+            <li><strong>Automatize os dois.</strong> Um teste que falha quando alguém introduz um par ilegível vale mais que qualquer documento.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>WCAG 4,5:1 é a linha de conformidade.</strong> Lc 75 é a linha de legibilidade. Mire nas duas.</li>
+            <li><strong>Dark mode: confie no APCA.</strong> O WCAG 2 vai aprovar pares que você não consegue ler.</li>
+            <li><strong>Tamanho e peso mudam o limiar.</strong> Lc 60 serve a 24px regular; texto corrido quer 90.</li>
+            <li><strong>Laranja e amarelo são onde mais discordam.</strong> Se um par quente reprova no WCAG mas lê bem, mude a cor, não a regra.</li>
+            <li><strong>Registre os números na documentação de pares,</strong> não na cabeça de alguém.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Cor para design engineers, handbook</em> (capítulo 5) · <a href="https://git.apcacontrast.com/documentation/WhyAPCA" target="_blank" rel="noopener">Myndex, Why APCA</a> · <a href="https://adrianroselli.com/2022/06/wcag-3-is-not-ready-yet.html" target="_blank" rel="noopener">Adrian Roselli, WCAG 3 is not ready yet</a> · <a href="https://www.w3.org/TR/WCAG22/#contrast-minimum" target="_blank" rel="noopener">WCAG 2.2, Contrast (Minimum)</a></footer>
+        </article>
+
+        <article class="lesson" id="contrast-beyond-text">
+          <span class="eyebrow">Color · 10</span>
+          <h2>Contrast Is Not Only Text</h2>
+          <p class="lede">A borda de campo que ninguém vê, o anel de foco que some num fundo, o hover que existe no código e não no olho. Contraste vale para toda marca que carrega significado, e para a diferença entre estados.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="delta">
+            <div class="demo-stage">
+            <div class="dlt-list"><div class="dlt-row"><span>Entrada</span><small></small></div><div class="dlt-row is-hover"><span>Rascunhos</span><small>hover</small></div><div class="dlt-row is-selected"><span>Arquivo</span><small>selecionado</small></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">ΔL do hover</span><input type="range" name="dl" min="0" max="0.1" step="0.01" value="0.02" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Mostrar o estado selecionado</span><input type="checkbox" name="selected" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Arraste o delta do hover. Abaixo de 0,03 a linha está em hover no código e plana no olho. Selecionado precisa de cerca de 0,15, porque ninguém move o mouse para descobri-lo.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Auditorias verificam texto e param. Mas se a borda de um campo de formulário não tem contraste, o campo não existe para quem enxerga pouco. Um anel de foco precisa contrastar com o fundo e com o elemento que envolve. Ícones que carregam significado, divisores que estruturam informação, séries de gráfico, o placeholder que na prática é conteúdo: tudo isso precisa do 3:1 que o WCAG pede para componentes, e a maior parte não recebe.</p>
+          <p>Depois há o contraste entre estados, que quase nenhum sistema trata. Um hover que muda a luminosidade em 0,01 é invisível; a interação acontece e ninguém vê. Cerca de 0,03 a 0,05 de luminosidade em OKLCH é o mínimo notado de forma confiável. Selecionado versus não selecionado precisa de muito mais, em torno de 0,15, porque não há gesto de descoberta envolvido: a pessoa precisa ver o estado sem mover o mouse.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>3:1 para bordas, anéis, ícones e divisores</strong> que significam algo. Linhas decorativas estão isentas; a borda do input não.</li>
+            <li><strong>Anel de foco com dois contrastes.</strong> Contra a página e contra o controle. Um vão branco entre anel e controle resolve a maioria dos casos.</li>
+            <li><strong>Hover: ΔL de 0,03 a 0,05.</strong> Abaixo disso, remova o hover em vez de fingir.</li>
+            <li><strong>Selecionado: ΔL em torno de 0,15,</strong> ou um segundo canal como um check, uma barra ou peso.</li>
+            <li><strong>Placeholder é texto.</strong> Se carrega o formato ou o exemplo, precisa de 4,5:1, ou pertence a um rótulo.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Bordas de input a 3:1</strong> contra o fundo da página. A maioria dos cinzas padrão reprova.</li>
+            <li><strong>Anel de foco: 2px, offset 2px,</strong> numa cor com 3:1 contra os dois vizinhos.</li>
+            <li><strong>Hover ΔL de 0,03 a 0,05,</strong> selecionado em torno de 0,15, passos adjacentes cerca de 0,08.</li>
+            <li><strong>Desabilitado é a exceção</strong> que o WCAG permite, e ainda assim deve dar para ler o que está desabilitado.</li>
+            <li><strong>Ícones que significam algo são texto.</strong> Ícones decorativos não.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Cor para design engineers, handbook</em> (seções 5.6 e 5.7) · <a href="https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html" target="_blank" rel="noopener">WCAG 2.2, Understanding Non-text Contrast</a></footer>
+        </article>
+
+        <article class="lesson" id="perceptual-effects">
+          <span class="eyebrow">Color · 11</span>
+          <h2>Effects That Break the Math</h2>
+          <p class="lede">A mesma cor parece diferente conforme o que a cerca, quão saturada é e quão claro está o ambiente. Nenhum modelo prático captura tudo isso. O número chega perto; o olho termina o trabalho.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="simul">
+            <div class="demo-stage">
+            <div class="sc-wrap"><div class="sc-half sc-left"><span class="sc-sq"></span></div><div class="sc-half sc-right"><span class="sc-sq"></span></div><span class="sc-bridge"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Diferença do entorno</span><input type="range" name="diff" min="0" max="100" step="5" value="70" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Escala híbrida</span><input type="checkbox" name="connect" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Arraste a razão. Uma escala modular dá tamanhos fracionários e pula os degraus de 1px que texto pequeno precisa. A híbrida mantém inteiros, densa embaixo e proporcional em cima.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Contraste simultâneo é o que você vê todo dia: um cinza médio parece claro sobre fundo escuro e escuro sobre fundo claro, e é literalmente o mesmo cinza. Então nunca julgue uma cor isolada. Um swatch numa grade branca não diz nada sobre como a cor se comporta dentro de um componente, e um token usado sobre dois fundos vai parecer duas cores. Revise paletas em componentes reais, não em tabelas de amostras.</p>
+          <p>O efeito Helmholtz-Kohlrausch faz cores saturadas parecerem mais brilhantes do que a luminância indica. Tanto WCAG 2 quanto APCA medem luminosidade, não colorfulness, então um vermelho forte tem mais presença do que a conta mostra. Cores de croma alto costumam precisar de luminosidade um pouco menor para ficarem niveladas ao lado de neutros. O efeito Abney desloca o matiz percebido conforme você adiciona branco: um azul claro deriva para o roxo mesmo com o ângulo constante, e é por isso que escalas de marca às vezes precisam de dois a cinco graus de correção na ponta clara. Bezold-Brücke desloca matiz com brilho, e a adaptação muda tudo com o ambiente: dark mode num escritório claro parece escuro demais; a mesma tela à noite parece clara demais.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Julgue cor em contexto.</strong> Monte o componente, depois decida.</li>
+            <li><strong>Baixe um pouco o L de cores muito saturadas</strong> quando ficam ao lado de neutros do mesmo passo.</li>
+            <li><strong>Ajuste o matiz na ponta clara</strong> das escalas onde fidelidade de marca importa.</li>
+            <li><strong>Não pendure significado em diferenças sutis de matiz.</strong> Brilho e luz ambiente vão movê-las.</li>
+            <li><strong>Dez minutos no escuro, dez sob o sol.</strong> O teste mais barato que acha o que nenhum verificador acha.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Mesmo token, dois fundos, duas cores.</strong> Esse é o argumento para tokens semânticos por contexto.</li>
+            <li><strong>Acentos saturados: baixe o L um pouco</strong> para nivelar com neutros do mesmo passo.</li>
+            <li><strong>Ponta clara de uma escala de marca: ajuste o matiz</strong> 2 a 5 graus contra a deriva.</li>
+            <li><strong>Revise num quarto escuro e sob o sol.</strong> Adaptação é real e não testável num escritório.</li>
+            <li><strong>Nunca julgue uma grade de swatches.</strong> Julgue uma tela.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Cor para design engineers, handbook</em> (capítulo 6) · Mark Fairchild, <em>Color Appearance Models</em> · Josef Albers, <em>A Interação da Cor</em></footer>
+        </article>
+
+        <article class="lesson" id="twelve-step-scale">
+          <span class="eyebrow">Color · 12</span>
+          <h2>The 12-Step Scale</h2>
+          <p class="lede">Cada passo existe para um trabalho, e o mesmo número significa o mesmo trabalho em qualquer matiz. "Que cor é a borda deste card" deixa de ser debate e vira consulta: passo 6 do neutro.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="steps">
+            <div class="demo-stage">
+            <div class="st12-alert"><span class="st12-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg><i class="st12-tag">9</i></span><div><b>Pagamento falhou<i class="st12-tag">12</i></b><span>Seu cartão foi recusado. Atualize para manter a assinatura ativa.<i class="st12-tag">11</i></span></div><i class="st12-tag st12-tag-bg">2</i><i class="st12-tag st12-tag-bd">6</i></div><div class="st12-strip"><span class="st12-cell" style="--n:1" data-n="1"></span><span class="st12-cell" style="--n:2" data-n="2"></span><span class="st12-cell" style="--n:3" data-n="3"></span><span class="st12-cell" style="--n:4" data-n="4"></span><span class="st12-cell" style="--n:5" data-n="5"></span><span class="st12-cell" style="--n:6" data-n="6"></span><span class="st12-cell" style="--n:7" data-n="7"></span><span class="st12-cell" style="--n:8" data-n="8"></span><span class="st12-cell" style="--n:9" data-n="9"></span><span class="st12-cell" style="--n:10" data-n="10"></span><span class="st12-cell" style="--n:11" data-n="11"></span><span class="st12-cell" style="--n:12" data-n="12"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Matiz</span><input type="range" name="hue" min="0" max="360" step="5" value="25" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Rotular os passos</span><input type="checkbox" name="labels" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Arraste o matiz. O alerta é composto de uma escala só: fundo no passo 2, borda no 6, ícone no 9, texto no 11 e 12. O contraste é garantido por construção em qualquer matiz.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Escalas numéricas genéricas de 50 a 900 têm um problema estrutural: ninguém sabe qual passo é borda, então cada componente escolhe um diferente. O modelo consolidado pelo Radix Colors atribui papéis. Passos 1 e 2 são fundos de aplicação e sutil. Passos 3 a 5 são fundos de componente: normal, hover, pressionado ou selecionado. Passos 6 a 8 são bordas: sutil não interativa, sutil interativa, forte e foco. Passos 9 e 10 são a cor sólida e seu hover. Passos 11 e 12 são texto: baixo contraste, mirando Lc 60 sobre o passo 2, e alto contraste, mirando Lc 90.</p>
+          <p>Duas coisas que passam na primeira leitura. O passo 9 é o mais puro da escala, o que tem menos branco ou preto misturado, e não é necessariamente legível com texto branco: amarelos e cianos no passo 9 exigem texto escuro. E os passos 11 e 12 são garantidamente legíveis sobre o passo 2 da mesma escala. É isso que permite compor um alerta inteiro dentro de um matiz, fundo no 2, borda no 6, texto no 11, com contraste garantido por construção.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Regra de composição.</strong> Fundo no 2 ou 3, borda no 6 ou 7, texto no 11 ou 12. Funciona em qualquer matiz.</li>
+            <li><strong>Todo passo tem um gêmeo em alfa.</strong> Componentes que caem em fundos desconhecidos precisam dele.</li>
+            <li><strong>Claro e escuro compartilham nomes.</strong> O componente pede o passo 3 e recebe o valor certo para o tema. Componentes nunca têm lógica de tema.</li>
+            <li><strong>A cor do texto no passo 9 é por matiz.</strong> Decida uma vez no sistema, não em cada botão.</li>
+            <li><strong>A restrição é o valor.</strong> Como uma escala tipográfica: menos escolhas, mais consistência, mudanças mais baratas.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Fundo 2 ou 3, borda 6 ou 7, texto 11 ou 12.</strong> Memorize; compõe qualquer componente.</li>
+            <li><strong>O passo 9 é a cor da marca.</strong> Tudo o mais deriva dele.</li>
+            <li><strong>O passo 8 é o anel de foco.</strong> Forte o bastante para ver, no matiz da ação.</li>
+            <li><strong>Texto sobre o passo 9 é por matiz.</strong> Branco sobre azul, escuro sobre amarelo e ciano. Codifique uma vez.</li>
+            <li><strong>Mesmos nomes no claro e no escuro.</strong> O tema troca valores, nunca seletores.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Cor para design engineers, handbook</em> (capítulo 7 e apêndice B) · <a href="https://www.radix-ui.com/colors/docs/palette-composition/understanding-the-scale" target="_blank" rel="noopener">Radix Colors, Understanding the scale</a></footer>
+        </article>
+
+        <article class="lesson" id="token-architecture">
+          <span class="eyebrow">Color · 13</span>
+          <h2>Tokens by Role</h2>
+          <p class="lede">Primitivos guardam valores e não significam nada. Tokens semânticos guardam significado e nenhum valor literal. Componentes só tocam a camada semântica. Quebre essa regra e trocar a cor da marca significa tocar em todo componente.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="tokens">
+            <div class="demo-stage">
+            <div class="tk-ui"><div class="tk-row"><span class="tk-badge">Beta</span><a class="tk-link" href="#" tabindex="-1">Saiba mais</a></div><div class="tk-input"><span>Buscar projetos</span></div><div class="tk-row"><button class="tk-btn" type="button" tabindex="-1">Criar projeto</button><button class="tk-ghost" type="button" tabindex="-1">Cancelar</button></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Matiz da marca</span><input type="range" name="bhue" min="0" max="360" step="5" value="260" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Componentes referenciam primitivos</span><input type="checkbox" name="primitives" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Arraste o matiz da marca: tudo acompanha porque deriva de um token. Ligue os primitivos e o badge e o link estavam fixos em blue-9: rebrandear agora significa tocar em todo componente.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Três camadas. Primitivos como <code>blue-9</code> e <code>neutral-6</code> são as escalas. Tokens semânticos como <code>bg-surface</code>, <code>text-secondary</code>, <code>border-focus</code> e <code>action-solid</code> apontam para primitivos e descrevem um papel. Tokens de componente como <code>button-primary-bg</code> são opcionais, só para um componente que precisa desviar. A regra de ouro é que componentes nunca referenciam primitivos. Um botão em <code>blue-9</code> amarra a marca a todo arquivo que o usa; um botão em <code>action-solid</code> amarra a uma linha.</p>
+          <p>Nomeie por papel, nunca por aparência. Um token chamado azul-claro vira mentira no momento em que o dark mode inverte a escala ou a marca fica verde, e um nome mentiroso é pior que nenhum. Um refinamento útil é nomear pares: <code>surface-raised</code> com <code>on-surface-raised</code>. Contraste vira propriedade do par, garantida no sistema, e a classe inteira de bugs de "texto branco sobre amarelo" desaparece.</p>
+          <p>A sintaxe de cor relativa transforma derivação em regra em vez de escolha: hover é a ação menos 0,05 de luminosidade, pressionado menos 0,09, ghost a mesma cor a 10% de alfa. Um token de marca, tudo o mais derivado. Duas ressalvas: no dark mode o sinal inverte, hover fica mais claro, e derivação garante a relação, não a legibilidade. Confira os resultados.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Trinta a sessenta tokens semânticos</strong> cobrem a maioria dos produtos. Acima de cem, há duplicação disfarçada.</li>
+            <li><strong>Documente pares, não swatches.</strong> Uma lista de combinações aprovadas com Lc e WCAG responde a pergunta que as pessoas de fato têm.</li>
+            <li><strong>Lint de primitivos em componentes.</strong> É grepável; transforme em teste que falha.</li>
+            <li><strong>Migre em ordem.</strong> Audite, agrupe por papel, defina a camada semântica, aponte para os valores atuais sem mudança visual, e só então troque os primitivos por uma escala em OKLCH. Separar a mudança de arquitetura da mudança visual é o que mantém a migração viva.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copiar" data-copied="Copiado" aria-label="Copiar"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copiar</span></button></div><pre><code><span class="p">--action</span>:       <span class="f">oklch</span>(<span class="n">0.55</span> <span class="n">0.20</span> <span class="n">260</span>);
+<span class="p">--action-hover</span>: <span class="f">oklch</span>(from <span class="f">var</span>(--action) <span class="f">calc</span>(l - <span class="n">0.05</span>) c h);
+<span class="p">--action-press</span>: <span class="f">oklch</span>(from <span class="f">var</span>(--action) <span class="f">calc</span>(l - <span class="n">0.09</span>) c h);
+<span class="p">--action-ghost</span>: <span class="f">oklch</span>(from <span class="f">var</span>(--action) l c h / <span class="n">0.10</span>);
+<span class="p">--action-ring</span>:  <span class="f">oklch</span>(from <span class="f">var</span>(--action) l c h / <span class="n">0.40</span>);</code></pre></figure>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Nenhum primitivo em componentes.</strong> Grep pelo padrão; falhe o build.</li>
+            <li><strong>Papéis, não cores, nos nomes.</strong> text-secondary sobrevive a um rebrand; gray-500 não.</li>
+            <li><strong>Tokens em par</strong> para qualquer coisa com texto por cima: surface e on-surface.</li>
+            <li><strong>Hover inverte o sinal no dark mode.</strong> Um dos poucos lugares em que lógica de tema pertence ao token.</li>
+            <li><strong>Migre a arquitetura primeiro, os valores depois.</strong> Duas revisões, não uma.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Cor para design engineers, handbook</em> (capítulos 8, 12.5 e 17) · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_colors/Relative_colors" target="_blank" rel="noopener">MDN, Using relative colors</a> · <a href="https://m3.material.io/styles/color/roles" target="_blank" rel="noopener">Material Design 3, Color roles</a></footer>
+        </article>
+
+        <article class="lesson" id="semantic-color">
+          <span class="eyebrow">Color · 14</span>
+          <h2>Semantic Color and the Yellow Problem</h2>
+          <p class="lede">Sucesso, erro, aviso, informação. Cada um precisa de uma família inteira, não de um matiz. E um deles é estruturalmente quebrado: um amarelo saturado é sempre claro, então texto branco sobre amarelo nunca funciona, e um amarelo escuro o bastante para carregar texto branco já virou marrom.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="yellow">
+            <div class="demo-stage" data-pass="passa" data-fail="reprova">
+            <div class="yl-wrap"><span class="yl-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22c4 0 7-3 7-7 0-5-7-12-7-12S5 10 5 15c0 4 3 7 7 7z"/><path d="M12 22c2 0 3-1.5 3-3.5S12 14 12 14s-3 2.5-3 4.5S10 22 12 22z"/></svg>Aviso · Pagamento atrasado</span><span class="yl-read"><em>WCAG</em><span class="yl-val"></span><span class="yl-tag"></span></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Luminosidade do amarelo</span><input type="range" name="yl" min="0.45" max="0.95" step="0.05" value="0.85" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Texto escuro</span><input type="checkbox" name="darktext" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Baixe a luminosidade com texto branco. A razão só passa quando a cor já deixou de ser amarelo e virou marrom. Mude para texto escuro: passa em todo amarelo que ainda parece amarelo.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Amarelo só alcança croma alto em luminosidade alta. Baixe a luminosidade para abrir espaço para texto branco e ele escorrega para oliva e marrom enquanto o ângulo de matiz fica exatamente o mesmo. Não há ajuste que resolva, só decisões: texto escuro sobre amarelo, sempre, declarado como exceção no sistema; âmbar ou laranja para avisos, que carregam texto melhor; nunca amarelo como texto sobre fundo claro; e bem menos croma no dark mode, ou ele vibra.</p>
+          <p>A regra mais importante é mais antiga que o amarelo. Um estado comunicado só por cor é invisível para uma parcela relevante de pessoas, e frágil em impressão, em telas ruins e sob o sol. Todo estado semântico precisa de pelo menos dois canais: cor mais ícone, cor mais rótulo, cor mais forma ou posição, cor mais padrão de preenchimento. Vermelho para negativo e verde para positivo é convenção ocidental, e nem lá é uniforme; em vários mercados asiáticos, vermelho é alta. Com seta e sinal, a cor deixa de carregar todo o peso.</p>
+          <p>Por fim, não gaste a cor da marca em estado. Se a marca é azul e "informação" é azul, a pessoa não distingue ação de aviso.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Quatro famílias, cada uma completa.</strong> Fundo sutil, borda, sólido, texto. No claro e no escuro, ajustadas separadamente.</li>
+            <li><strong>Texto escuro sobre amarelo, como política.</strong> Ou mude avisos para âmbar.</li>
+            <li><strong>Dois canais por estado,</strong> sempre. Teste em escala de cinza para provar.</li>
+            <li><strong>Semântica financeira configurável</strong> se o produto cruza mercados.</li>
+            <li><strong>Matizes semânticos longe do matiz da marca.</strong> Ou mantenha a marca fora de contextos de estado.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Âmbar para aviso</strong> se você precisa de texto branco. Amarelo só com texto escuro.</li>
+            <li><strong>Cada estado: quatro tokens por tema.</strong> Fundo sutil, borda, sólido, texto.</li>
+            <li><strong>Dois canais, sempre.</strong> Ícone ou rótulo ao lado da cor.</li>
+            <li><strong>Vermelho e verde financeiros dependem do mercado.</strong> Adicione setas e sinais.</li>
+            <li><strong>Mantenha o matiz da marca fora de estado.</strong> Ou as pessoas não distinguem ação de aviso.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Cor para design engineers, handbook</em> (capítulo 11) · <a href="https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html" target="_blank" rel="noopener">WCAG 2.2, Understanding Use of Color</a></footer>
+        </article>
+
+        <article class="lesson" id="interpolation-and-gradients">
+          <span class="eyebrow">Color · 15</span>
+          <h2>Interpolation and Gradients</h2>
+          <p class="lede">Misturar duas cores significa escolher o espaço em que a mistura acontece, e o resultado muda dramaticamente. Vermelho para azul em sRGB passa por um cinza sujo. O mesmo gradiente em OKLab passa por um roxo vivo.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="interp">
+            <div class="demo-stage">
+            <div class="ip-wrap"><div class="ip-bar"></div><span class="ip-label"><span class="ip-srgb">in srgb</span><span class="ip-oklab">in oklab</span><span class="ip-longer">in oklch longer hue</span></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Interpolar em OKLab</span><input type="checkbox" name="oklab" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">OKLCH, matiz longo</span><input type="checkbox" name="longer" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Vermelho para azul. Em sRGB o meio é um cinza sujo. Em OKLab é um roxo vivo. Em OKLCH com o arco longo de matiz, dá a volta pelo verde.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Todo gradiente, todo <code>color-mix()</code>, toda transição entre duas cores é uma interpolação, e o espaço padrão do CSS é sRGB, o que não tem relação com percepção. Regras práticas: OKLab para gradientes e misturas em geral, uniforme e sem zona morta; OKLCH quando você quer preservar croma ao longo da transição, que interpola o matiz em arco; sRGB linear ou XYZ para simular luz física; sRGB puro só para reproduzir comportamento legado.</p>
+          <p>Armadilhas que quebram em silêncio. Interpolação de matiz só existe em espaços polares; pedir direção de matiz num espaço retangular é erro de sintaxe e a declaração inteira é descartada. Percentagens que não somam 100 viram transparência: misturar duas cores a 30% cada dá a mistura 50/50 com 60% de opacidade. O recorte de gamut acontece depois da mistura, então uma mistura pode sair do gamut e ser recortada. E a palavra-chave transparent é preto com alfa zero; navegadores modernos interpolam com alfa pré-multiplicado e escondem o problema, mas ser explícito com a mesma cor em alfa zero é mais seguro e mais legível.</p>
+          <p>Banding, as faixas visíveis em gradientes longos e suaves, não é problema de mistura, é de profundidade de bits. Uma camada de ruído de baixa opacidade, mais paradas intermediárias, uma transição mais curta ou uma diferença maior entre as pontas ajudam.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong><code>in oklab</code> por padrão</strong> em gradientes e misturas. <code>in oklch</code> quando o caminho do matiz é o ponto.</li>
+            <li><strong>Percentagens somam 100</strong> a menos que você queira transparência.</li>
+            <li><strong>Desvaneça para a mesma cor em alfa zero,</strong> não para <code>transparent</code>.</li>
+            <li><strong>Direção de matiz só com espaços polares.</strong> <code>in oklch longer hue</code> para o caminho longo.</li>
+            <li><strong>Sem overshoot em animação de cor.</strong> Um spring numa cor passa por cores que não existem no design.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copiar" data-copied="Copiado" aria-label="Copiar"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copiar</span></button></div><pre><code>/* passa por cinza */
+background: <span class="f">linear-gradient</span>(red, blue);
+
+/* passa por roxo */
+background: <span class="f">linear-gradient</span>(in oklab, red, blue);
+
+/* o caminho longo, por verde */
+background: <span class="f">linear-gradient</span>(in oklch longer hue, red, blue);</code></pre></figure>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Padrão <code>in oklab</code>.</strong> Remove a zona morta cinza de todo gradiente.</li>
+            <li><strong>Percentagens somando menos de 100 adicionam transparência.</strong> Um bug silencioso e confuso.</li>
+            <li><strong>Direção de matiz precisa de espaço polar.</strong> Senão a declaração inteira é descartada.</li>
+            <li><strong>Desvaneça para a mesma cor em alfa zero.</strong> Não para a palavra-chave transparent.</li>
+            <li><strong>Banding é profundidade de bits.</strong> Ruído, mais paradas, distância menor.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Cor para design engineers, handbook</em> (capítulo 12) · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/color-mix" target="_blank" rel="noopener">MDN, color-mix()</a> · <a href="https://www.w3.org/TR/css-color-4/#interpolation" target="_blank" rel="noopener">CSS Color 4, Interpolation</a></footer>
+        </article>
+
+        <article class="lesson" id="alpha-vs-solid">
+          <span class="eyebrow">Color · 16</span>
+          <h2>Alpha vs Solid</h2>
+          <p class="lede">Sólido é previsível e só funciona no fundo para o qual foi desenhado. Alfa se adapta ao que está embaixo e empilha de jeitos que ninguém planejou. Saiba qual é o fundo e escolha de acordo.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="alpha">
+            <div class="demo-stage">
+            <div class="al-wrap"><div class="al-panel al-plain"><span class="al-row">Revisão de design</span><span class="al-row is-hover">Sync semanal</span><span class="al-row">Roadmap</span></div><div class="al-panel al-tint"><span class="al-row">Revisão de design</span><span class="al-row is-hover">Sync semanal</span><span class="al-row">Roadmap</span></div><div class="al-panel al-img"><span class="al-row">Revisão de design</span><span class="al-row is-hover">Sync semanal</span><span class="al-row">Roadmap</span></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Realce em alfa</span><input type="checkbox" name="alpha" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Empilhar hover no selecionado</span><input type="checkbox" name="stack" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">A linha em hover usa um passo 4 sólido: bom no fundo da aplicação, errado no card tingido e na imagem. Mude para alfa e ele compõe em todo lugar. Empilhe estados e o alfa soma numa cor que ninguém escolheu.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Um item de lista com hover sólido no passo 4 funciona sobre o fundo da aplicação e falha sobre um card colorido, sobre uma imagem, dentro de um painel de outro tom. A versão em alfa funciona em todo lugar porque compõe com o que está embaixo. Daí a regra: alfa quando o fundo é variável ou desconhecido, sólido quando o fundo é fixo e você quer previsibilidade exata. Sólido para fundo da aplicação, superfícies principais, cores de ação, texto. Alfa para hover e seleção em listas, overlays, bordas sobre conteúdo variável, sombras, realces sobre imagens, qualquer componente reutilizável que não sabe onde vai parar.</p>
+          <p>Dois custos. Empilhamento: uma linha selecionada e em hover, dentro de um card com o próprio véu, acumula opacidade numa cor que ninguém escolheu. Defina explicitamente qual estado vence em vez de somar, ou use sólido no estado mais forte e alfa só no mais fraco. E contraste: um erro sistemático de auditoria é calcular contraste na cor com alfa em vez da cor composta que o olho vê. Se o fundo pode variar, verifique no pior fundo, não no do exemplo da documentação.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Sólido onde você conhece o fundo.</strong> Alfa onde não conhece.</li>
+            <li><strong>Um estado vence.</strong> Selecionado substitui hover; não soma.</li>
+            <li><strong>Componha antes de medir.</strong> Contraste é propriedade dos pixels finais.</li>
+            <li><strong>Gêmeos em alfa para todo passo da escala,</strong> para que a escolha exista sem inventar valores.</li>
+            <li><strong>Alfa custa composição.</strong> Ótimo para uma linha, caro para mil.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Fundo conhecido: sólido.</strong> Fundo desconhecido: alfa.</li>
+            <li><strong>Estado mais forte sólido, mais fracos em alfa,</strong> ou os estados empilham em lama.</li>
+            <li><strong>Meça contraste na composição.</strong> Contra o pior fundo em que o componente pode cair.</li>
+            <li><strong>Bordas em alfa se adaptam;</strong> bordas sólidas combinam com um fundo só.</li>
+            <li><strong>Overlays e sombras são sempre alfa.</strong> Existem para compor.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Cor para design engineers, handbook</em> (capítulo 13) · <a href="https://www.radix-ui.com/colors/docs/palette-composition/understanding-the-scale#alpha-colors" target="_blank" rel="noopener">Radix Colors, Alpha colors</a></footer>
+        </article>
+
+        <article class="lesson" id="color-blindness">
+          <span class="eyebrow">Color · 17</span>
+          <h2>Color Blindness</h2>
+          <p class="lede">Cerca de oito por cento dos homens de ascendência do norte europeu veem vermelho e verde de forma diferente, que é exatamente o par que interfaces usam para erro e sucesso. Numa base de cem mil pessoas, são milhares.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="cvd">
+            <div class="demo-stage">
+            <svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="cvd-deuter" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0.625 0.375 0 0 0  0.7 0.3 0 0 0  0 0.3 0.7 0 0  0 0 0 1 0"/></filter></svg><div class="cv-chart"><span class="cv-group"><span class="cv-bar cv-a" style="--h:70%"><i>A</i></span><span class="cv-bar cv-b" style="--h:45%"><i>B</i></span></span><span class="cv-group"><span class="cv-bar cv-a" style="--h:50%"><i>A</i></span><span class="cv-bar cv-b" style="--h:80%"><i>B</i></span></span><span class="cv-group"><span class="cv-bar cv-a" style="--h:85%"><i>A</i></span><span class="cv-bar cv-b" style="--h:60%"><i>B</i></span></span><span class="cv-group"><span class="cv-bar cv-a" style="--h:40%"><i>A</i></span><span class="cv-bar cv-b" style="--h:55%"><i>B</i></span></span><span class="cv-base"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Simular deuteranopia</span><input type="checkbox" name="simulate" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Adicionar um segundo canal</span><input type="checkbox" name="channels" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Duas séries em vermelho e verde com a mesma luminosidade. Simule deuteranopia e elas se fundem. Adicione rótulos, padrão e luminosidade diferente, e o gráfico sobrevive à simulação e a uma impressão em preto e branco.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Deuteranomalia, verde reduzido, é a mais comum; depois protanomalia, vermelho reduzido; depois as ausências completas. Os tipos tritan, que afetam o azul, são raros. Quase tudo cai na distinção vermelho-verde. A consequência é que luminosidade e forma precisam carregar a informação, com a cor como reforço.</p>
+          <p>Este é um dos poucos lugares em que uniformidade perceptual e acessibilidade puxam em direções opostas. Luminosidade igual entre matizes é o que faz categorias pesarem o mesmo, e é também o que torna um vermelho e um verde indistinguíveis para parte do público. A acessibilidade ganha: mantenha luminosidades distintas entre cores que precisam ser diferenciadas, ou adicione um segundo canal. Os pares problemáticos são vermelho e verde, verde e marrom, azul e roxo, verde claro e amarelo, azul e cinza, verde e cinza.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Teste em escala de cinza primeiro.</strong> Se a informação sobrevive em preto e branco, sobrevive a qualquer deficiência de cor. O teste mais rápido e mais revelador.</li>
+            <li><strong>Simule no DevTools</strong> como parte do fluxo, não como auditoria final. Gráficos e estados de formulário merecem atenção especial.</li>
+            <li><strong>Nunca só cor.</strong> Ícone, rótulo, forma, padrão ou posição como segundo canal.</li>
+            <li><strong>Rotule diretamente</strong> em gráficos em vez de depender de legenda por cor.</li>
+            <li><strong>Luminosidade diferente para vermelho e verde</strong> quando precisam ser distinguidos, mesmo ao custo do peso igual.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>O teste em escala de cinza é o mais rápido.</strong> Rode em todo gráfico e formulário.</li>
+            <li><strong>Vermelho e verde precisam de luminosidade diferente</strong> quando precisam ser distinguidos.</li>
+            <li><strong>Azul e laranja é o par seguro</strong> para um gráfico de duas séries.</li>
+            <li><strong>Rótulos diretos vencem legendas</strong> para todo mundo, e especialmente aqui.</li>
+            <li><strong>O painel de rendering do DevTools</strong> simula protanopia, deuteranopia, tritanopia e acromatopsia ao vivo.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Cor para design engineers, handbook</em> (capítulo 14) · <a href="https://developer.chrome.com/docs/devtools/rendering/emulate-css#emulate_vision_deficiencies" target="_blank" rel="noopener">Chrome DevTools, Emulate vision deficiencies</a> · <a href="https://www.nature.com/articles/nmeth.1618" target="_blank" rel="noopener">Bang Wong, Points of view: Color blindness</a></footer>
+        </article>
+
+        <article class="lesson" id="color-in-data">
+          <span class="eyebrow">Color · 18</span>
+          <h2>Color in Data</h2>
+          <p class="lede">Num gráfico, a escolha errada de cor não fica feia; mente. Uma escala sequencial cuja luminosidade não é monotônica faz o olho ordenar os valores na ordem errada. O arco-íris é o infrator clássico.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="dataviz">
+            <div class="demo-stage">
+            <div class="dv-grid"><span class="dv-cell" style="--v:0.3"></span><span class="dv-cell" style="--v:0.54"></span><span class="dv-cell" style="--v:0.7"></span><span class="dv-cell" style="--v:0.71"></span><span class="dv-cell" style="--v:0.6"></span><span class="dv-cell" style="--v:0.44"></span><span class="dv-cell" style="--v:0.34"></span><span class="dv-cell" style="--v:0.36"></span><span class="dv-cell" style="--v:0.11"></span><span class="dv-cell" style="--v:0.36"></span><span class="dv-cell" style="--v:0.6"></span><span class="dv-cell" style="--v:0.75"></span><span class="dv-cell" style="--v:0.76"></span><span class="dv-cell" style="--v:0.65"></span><span class="dv-cell" style="--v:0.49"></span><span class="dv-cell" style="--v:0.39"></span><span class="dv-cell" style="--v:0.01"></span><span class="dv-cell" style="--v:0.16"></span><span class="dv-cell" style="--v:0.41"></span><span class="dv-cell" style="--v:0.65"></span><span class="dv-cell" style="--v:0.8"></span><span class="dv-cell" style="--v:0.8"></span><span class="dv-cell" style="--v:0.69"></span><span class="dv-cell" style="--v:0.54"></span><span class="dv-cell" style="--v:0.03"></span><span class="dv-cell" style="--v:0.06"></span><span class="dv-cell" style="--v:0.22"></span><span class="dv-cell" style="--v:0.47"></span><span class="dv-cell" style="--v:0.7"></span><span class="dv-cell" style="--v:0.85"></span><span class="dv-cell" style="--v:0.85"></span><span class="dv-cell" style="--v:0.74"></span><span class="dv-cell" style="--v:0.18"></span><span class="dv-cell" style="--v:0.08"></span><span class="dv-cell" style="--v:0.11"></span><span class="dv-cell" style="--v:0.27"></span><span class="dv-cell" style="--v:0.52"></span><span class="dv-cell" style="--v:0.76"></span><span class="dv-cell" style="--v:0.9"></span><span class="dv-cell" style="--v:0.9"></span></div><span class="dv-legend"><span>baixo</span><span class="dv-ramp"></span><span>alto</span></span>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Escala perceptual</span><input type="checkbox" name="perceptual" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Teste em cinza</span><input type="checkbox" name="gray" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Um heatmap arco-íris parece rico e não pode ser ordenado: a luminosidade sobe e desce e os saltos de matiz inventam fronteiras. A escala perceptual ordena por luminosidade. Confira os dois em cinza.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Três tipos de escala. Categórica, para categorias sem ordem: matizes distintos, luminosidade e croma parecidos, seis a oito cores no máximo, depois agrupe ou mude a codificação. Sequencial, para valores ordenados: a luminosidade precisa variar monotonicamente, porque luminosidade é o que o olho ordena; o matiz pode derivar junto, mas a ordem vive no L. Divergente, para valores em torno de um ponto neutro: dois matizes em direções opostas a partir de um centro claro, e o centro precisa estar certo, porque um divergente com meio deslocado mente sobre os dados.</p>
+          <p>Escalas arco-íris falham nos três testes para dados contínuos. A luminosidade sobe e desce, então os valores não podem ser ordenados. Transições de matiz criam fronteiras falsas que não existem nos dados. E colapsam em escala de cinza e para deficiências de cor. Famílias perceptualmente uniformes com luminosidade monotônica existem prontas; não há motivo para construir do zero.</p>
+          <p>Uma regra que generaliza além dos gráficos: quanto maior a área, menor o croma. Áreas grandes e saturadas dominam a percepção e distorcem a leitura. Marcas pequenas precisam de mais intensidade para serem vistas.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Cinza para o contexto, cor para o foco.</strong> Uma série colorida sobre séries cinzas é o padrão mais legível que existe.</li>
+            <li><strong>Rotule as séries diretamente.</strong> Legenda obriga o olho a viajar e depende de cor.</li>
+            <li><strong>Mesma entidade, mesma cor</strong> em todo gráfico do produto.</li>
+            <li><strong>Zero não é "sem dado".</strong> Torne-os visivelmente diferentes.</li>
+            <li><strong>Teste todo gráfico em escala de cinza.</strong> E ordene séries por luminosidade quando os dados têm ordem.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Sequencial: luminosidade monotônica.</strong> A única regra que não dobra.</li>
+            <li><strong>Categórica: seis a oito matizes com L e C parecidos.</strong> Depois agrupe.</li>
+            <li><strong>Divergente: o ponto médio precisa ser o neutro verdadeiro</strong> dos dados.</li>
+            <li><strong>Área maior, croma menor.</strong> Marcas pequenas ficam com a saturação.</li>
+            <li><strong>Use uma família perceptual conhecida.</strong> Escalas estilo Viridis são gratuitas e testadas.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Cor para design engineers, handbook</em> (capítulo 15) · <a href="https://matplotlib.org/stable/users/explain/colors/colormaps.html" target="_blank" rel="noopener">Matplotlib, Choosing colormaps</a> · <a href="https://colorbrewer2.org/" target="_blank" rel="noopener">Cynthia Brewer, ColorBrewer</a></footer>
+        </article>
+
+        <article class="lesson" id="brand-vs-system">
+          <span class="eyebrow">Color · 19</span>
+          <h2>Brand vs System</h2>
+          <p class="lede">Uma cor de marca foi escolhida para logo e outdoor: área pequena, isolada, sem texto por cima. Em interface a mesma cor precisa carregar texto em botões, gerar doze passos coerentes, existir em dark mode e não cansar ninguém. Ela costuma falhar em vários desses.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="brand">
+            <div class="demo-stage">
+            <div class="br-screen"><div class="br-side"><span class="br-logo"></span><span class="br-nav is-active">Projetos</span><span class="br-nav">Time</span><span class="br-nav">Cobrança</span></div><div class="br-main"><div class="br-head"><b>Lançamento Q3</b><span class="br-badge">No prazo</span></div><p>Doze tarefas antes do release. Duas bloqueadas na revisão jurídica. <a href="#" tabindex="-1">Ver cronograma</a></p><div class="br-actions"><button class="br-primary" type="button" tabindex="-1">Publicar release</button><button class="br-secondary" type="button" tabindex="-1">Editar plano</button></div></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Marca em tudo</span><input type="checkbox" name="everywhere" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Ajustar marca para interface</span><input type="checkbox" name="adjust" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Ligue a marca em tudo e a ação primária para de apontar o caminho. O ajuste mantém o matiz e baixa luminosidade e croma para o texto branco ler no botão.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>O padrão é manter o matiz e ajustar luminosidade e croma. Uma marca em <code>oklch(0.62 0.24 258)</code> vira um passo 9 de sistema em <code>oklch(0.55 0.20 258)</code>: mais escura, menos saturada, percebida como a mesma cor pelo público, e utilizável sob texto branco. O matiz é o que preserva a identidade; luminosidade e croma são graus de liberdade. Quando a marca exige o valor exato, use-o onde é exibido, no logo, no cabeçalho de marketing, na ilustração, e use a variante ajustada nos componentes.</p>
+          <p>Contraintuitivo e importante: em produtos bons a cor da marca aparece pouco. Marca a ação primária e alguns acentos. Tudo o mais é neutro. Se tudo tem a cor da marca, nada se destaca e a ação primária perde o trabalho de apontar o caminho. Restrição é o que faz a cor funcionar.</p>
+          <p>Mantenha o sistema inteiro numa fonte única de verdade: uma definição em OKLCH que gera CSS, variáveis do Figma, iOS, Android e documentação. Sem isso os valores divergem entre design e código, ninguém sabe qual é o certo, e o sistema morre de entropia. O seletor nativo do Figma não trabalha em OKLCH, então a abordagem robusta é manter a definição canônica em código e tratar o Figma como consumidor.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Mesmo matiz, L e C ajustados</strong> para a versão de interface da marca.</li>
+            <li><strong>Marca exata só em superfícies de exibição.</strong> Logo, marketing, ilustração.</li>
+            <li><strong>Marca na ação primária e pouco mais.</strong> Conte os elementos com cor de marca por tela; a resposta deve ser pequena.</li>
+            <li><strong>Uma fonte, muitas saídas.</strong> Definições em OKLCH no código; tudo o mais gerado.</li>
+            <li><strong>Automatize as verificações.</strong> Pares aprovados contra WCAG e APCA, deltas de estado, detecção de fora do gamut, primitivos em componentes, simulação de deficiência em capturas.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Mantenha H, ajuste L e C.</strong> O público vê a mesma cor; o sistema recebe uma utilizável.</li>
+            <li><strong>Conte os elementos com cor de marca por tela.</strong> Uma ação primária e alguns acentos.</li>
+            <li><strong>Definição em código, Figma como consumidor.</strong> O seletor não fala OKLCH.</li>
+            <li><strong>Gere toda saída de um arquivo.</strong> CSS, nativo, documentação.</li>
+            <li><strong>Verificações automatizadas no CI:</strong> pares, deltas, gamut, primitivos, simulação.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Cor para design engineers, handbook</em> (capítulos 16 e 17) · <a href="https://evilmartians.com/chronicles/harmonizer-generate-accessible-color-palettes" target="_blank" rel="noopener">Evil Martians, Harmonizer</a> · <a href="https://www.radix-ui.com/colors/custom" target="_blank" rel="noopener">Radix Colors, Custom palette generator</a></footer>
+        </article>
+      </section>
+      <footer class="footer"><p>Biblioteca de estudo pessoal. Conteúdo sintetizado a partir das fontes listadas em cada aula; nomes de cursos e autores pertencem aos seus respectivos donos. Hierarquia só por tamanho, peso e espaço.</p></footer>
+    </div>
+  </main>
+</div>
+<script src="../app.js"></script>
+</body>
+</html>

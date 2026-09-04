@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Craft — Interface Craft</title>
+  <meta name="description" content="Before the techniques, the posture. These lessons are about how to think: what to prioritize, where to get references, when to innovate and how to train your eye.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#fcfcfc" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
+  <script>
+    // Applies the saved theme before first paint to avoid a flash
+    try { var t = localStorage.getItem('theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script>
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <div>
+        <div class="brand-name">Interface Craft</div>
+        <div class="brand-sub">Living library</div>
+      </div>
+      <div class="controls">
+        <nav class="lang-switch" aria-label="Language"><a class="lang-opt" href="#" data-lang="en" hreflang="en" aria-current="true">EN</a><a class="lang-opt" href="pt/craft.html" data-lang="pt" hreflang="pt">PT</a></nav>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle light and dark theme" title="Toggle light and dark theme"><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+      </div>
+    </div>
+    <a class="back-link" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>Home</a>
+    <nav class="nav-groups" aria-label="Section contents">
+      <div class="nav-group" data-section="craft" style="margin-top:0">
+        <div class="nav-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>Craft</div>
+        <ul class="nav-list"><li><a class="nav-link" href="#what-craft-is">What Craft Is</a></li><li><a class="nav-link" href="#performance-is-design">Performance Is Design</a></li><li><a class="nav-link" href="#discipline-of-noticing">The Discipline of Noticing</a></li><li><a class="nav-link" href="#how-to-get-references">How to Get References</a></li><li><a class="nav-link" href="#taste-is-trained">Taste Is Trained</a></li><li><a class="nav-link" href="#novelty-budget">Novelty Budget</a></li><li><a class="nav-link" href="#timelessness">Timelessness</a></li><li><a class="nav-link" href="#spatial-consistency">Spatial Consistency</a></li><li><a class="nav-link" href="#every-action-answers">Every Action Answers</a></li><li><a class="nav-link" href="#empty-states">Empty States</a></li><li><a class="nav-link" href="#copy-is-interface">Copy Is Interface</a></li><li><a class="nav-link" href="#help-before-the-error">Help Before the Error</a></li><li><a class="nav-link" href="#destructive-actions">Destructive Actions</a></li><li><a class="nav-link" href="#context-as-input">Context as Input</a></li><li><a class="nav-link" href="#keyboard-and-focus">Keyboard and Focus</a></li><li><a class="nav-link" href="#breadth-before-depth">Breadth Before Depth</a></li><li><a class="nav-link" href="#critique-protocol">Critique Protocol</a></li><li><a class="nav-link" href="#when-craft-is-waste">When Craft Is Waste</a></li></ul>
+      </div>
+      <div class="nav-group nav-other" data-section="craft">
+        <div class="nav-title">Other sections</div>
+        <ul class="nav-list"><li><a class="nav-link" href="typography.html">Typography</a></li><li><a class="nav-link" href="color.html">Color</a></li><li><a class="nav-link" href="layout.html">Layout</a></li><li><a class="nav-link" href="motion.html">Motion</a></li><li><a class="nav-link" href="ux.html">UX</a></li><li><a class="nav-link" href="references.html">References</a></li></ul>
+      </div>
+    </nav>
+  </aside>
+  <main class="content">
+    <div class="container">
+<section class="section" data-section="craft">
+        <div class="section-head" id="craft">
+          <span class="eyebrow">Section 01</span>
+          <h2>Craft</h2>
+          <p>Before the techniques, the posture. These lessons are about how to think: what to prioritize, where to get references, when to innovate and how to train your eye.</p>
+        </div>
+
+        <article class="lesson" id="what-craft-is">
+          <span class="eyebrow">Craft · 01</span>
+          <h2>What Craft Is</h2>
+          <p class="lede">Craft is the accumulation of decisions nobody asked for and almost nobody can name, but everybody feels.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="axes">
+            <div class="demo-stage">
+            <div class="ax-card">
+              <div class="ax-row"><span class="ax-avatar"></span><span class="ax-name">Bartholomew Featherstonehaugh-Cholmondeley</span><span class="ax-role">Engineering</span><button class="ax-btn" type="button" tabindex="-1">Message</button></div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Visual polish</span><input type="checkbox" name="polish" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Handle the long name</span><input type="checkbox" name="robust" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Turn polish off and on: the row looks better, and the long name still breaks it. Now switch on the robustness fix. Form is the least important axis.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>No single detail transforms a product. A hundred of them do. That is why craft never shows up in an A/B test: each item is too small to measure and the sum is too large to attribute. It is also invisible when it works. Rauno Freiberg calls them invisible details, decisions that exist so nobody has to think about them; when you notice one, it usually failed. And it is verifiable, not mystical. Behind every "this feels right" there is a reason: a specific curve, a coherent metaphor, a state that was handled. Being able to say the reason is what turns luck into method.</p>
+          <p>Craft is not visual polish. A beautiful shadow on a broken flow is makeup. It operates on three axes, and the visual one matters least:</p>
+          <table>
+            <thead><tr><th>Axis</th><th>The question</th></tr></thead>
+            <tbody>
+              <tr><td>Form</td><td>Is this visually resolved?</td></tr>
+              <tr><td>Behavior</td><td>Does it respond the way I expect?</td></tr>
+              <tr><td>Robustness</td><td>Does it keep working when reality hits?</td></tr>
+            </tbody>
+          </table>
+          <p>The order of impact is the reverse of the attention most teams give. A product with impeccable form and poor robustness loses trust the first time a long name breaks the layout. Craft is also not perfectionism, which refines everything equally until time runs out; craft is selective, and often shows up as subtraction.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Ask where the uncommon care goes.</strong> Almost never on the happy path. It lives in error states, in the edge cases (zero items, one item, a thousand, an 80-character name), in the tenth repetition, in what happens when the network drops mid-action.</li>
+            <li><strong>Baseline before innovation.</strong> Every category has expectations. A product that innovates on one dimension while below baseline on three others does not look innovative; it looks unfinished. Classify each component as below, at or above baseline, and close the gaps first.</li>
+            <li><strong>Trust is asymmetric.</strong> It is built slowly on the happy path and destroyed quickly on the sad one. Spend accordingly.</li>
+            <li><strong>Generating a working interface got cheap.</strong> What stays hard is making something that feels right. The replicable part of the work is being commoditized; the judgment about what deserves care, and the ability to execute it, is not.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Robustness, then behavior, then form.</strong> When time is short, that is the order to spend it in. A long name that breaks a layout costs more trust than a slightly dull shadow.</li>
+            <li><strong>Craft as subtraction.</strong> The "less, but better" pass removes redundant elements, competing styles and ornaments that fight. Often the crafted version has fewer things in it.</li>
+            <li><strong>Selective, not uniform.</strong> Identify the few moments where extra care pays disproportionately and ignore the rest with conviction. Refining everything equally is perfectionism, not craft.</li>
+            <li><strong>Classify per component.</strong> Below, at or above the category baseline. Do it honestly, and only spend uncommon care after the gaps are closed.</li>
+            <li><strong>The happy path is already fine.</strong> Look at the sad paths: what happens on error, on recovery, on the tenth repetition, when the network drops mid-action.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Craft de interfaces, handbook</em> (chapter 1) · <a href="https://rauno.me/craft/interaction-design" target="_blank" rel="noopener">Rauno Freiberg, Invisible Details of Interaction Design</a> · <a href="https://www.interfacecraft.dev/" target="_blank" rel="noopener">Josh Puckett, Interface Craft</a> · Radilson Gomes, <em>Craft in Design: Why should I care?</em></footer>
+        </article>
+
+<article class="lesson" id="performance-is-design">
+          <span class="eyebrow">Craft · 02</span>
+          <h2>Performance Is Design</h2>
+          <p class="lede">Speed is not an engineering concern that comes after design. It is part of the experience you are designing.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="perf">
+            <div class="demo-stage">
+            <div class="task">
+              <span class="task-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span>
+              <span class="task-label">Publish changes</span>
+              <span class="task-spinner"></span>
+              <span class="task-synced">Synced</span>
+              <button class="task-btn" type="button" data-toggle="is-done" aria-pressed="false"><span class="when-idle">Publish</span><span class="when-done">Undo</span></button>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Latency</span><input type="range" name="latency" min="0" max="800" step="50" value="400" data-unit="ms"><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Optimistic UI</span><input type="checkbox" name="optimistic" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Click Publish. Optimistic: the check is instant and “Synced” confirms later. Pessimistic: a spinner for the whole latency, then the check.</figcaption>
+          </figure>
+
+          <div class="rule">A beautiful layout that takes 400ms to respond feels broken. A plain layout that responds in 50ms feels expensive.
+            <small>Perceived quality comes from the response first, and from the visuals second.</small></div>
+
+          <h3>Why</h3>
+          <p>Users compare your product, even without noticing, against the apps they use every day: Linear, Notion, Figma, iOS. All of them respond instantly. When an interface hesitates, the brain registers friction before it registers any visual detail. Josh Puckett calls this the <em>industry standard</em>: falling below the baseline undermines trust immediately, and no amount of polish makes up for it.</p>
+          <p>Performance is also the raw material of motion. You can only animate smoothly what is already fast. A 200ms animation on top of a 300ms re-render becomes a 500ms animation.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Respond before you resolve.</strong> Click feedback (pressed state, optimistic UI) in under 100ms, even if the real result comes later.</li>
+            <li><strong>Measure what the user feels.</strong> Interaction to Next Paint (INP) under 200ms; Largest Contentful Paint under 2.5s. Lab metrics do not replace feeling the product on a mid-range phone.</li>
+            <li><strong>Animate only <code>transform</code> and <code>opacity</code>.</strong> They are the two properties the browser composites on the GPU without recalculating layout (see the Motion lesson).</li>
+            <li><strong>Treat loading as a screen.</strong> Skeletons with real dimensions, no layout shift. Reserve space for images with <code>aspect-ratio</code>.</li>
+            <li><strong>Cut what does not need to exist.</strong> Every dependency, extra font and effect costs time. "Less, but better" is also a performance decision.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copy" data-copied="Copied" aria-label="Copy"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copy</span></button></div><pre><code><span class="c">/* Reserves space and avoids layout shift */</span>
+<span class="k">.thumb</span> { aspect-ratio: <span class="n">16</span> / <span class="n">9</span>; width: <span class="n">100</span>%; background: <span class="f">var</span>(--bg-sunken); }
+
+<span class="c">/* Immediate click feedback, before the server responds */</span>
+<span class="k">.btn:active</span> { transform: <span class="f">scale</span>(<span class="n">0.97</span>); transition-duration: <span class="n">100ms</span>; }</code></pre></figure>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Optimistic UI with rollback.</strong> Flip the toggle, add the item, mark it done immediately; if the request fails, revert and explain in a toast. Never show a spinner for actions that usually finish in under 300ms.</li>
+            <li><strong>Spinner thresholds.</strong> Delay loading indicators by 300 to 500ms so fast responses never flash one, and once shown keep them for at least 300ms so they do not flicker.</li>
+            <li><strong>Skeletons that match.</strong> Same height, same radius, same number of lines as the real content. A skeleton that is 20px shorter than the result causes a jump that feels slower than the wait itself.</li>
+            <li><strong>Prefetch on intent.</strong> Prefetch the route or data on <code>pointerenter</code> or when the link enters the viewport. Those 100 to 200ms of head start make navigations feel instant.</li>
+            <li><strong>Fonts without a jump.</strong> Preload the one variable font you use, <code>font-display: swap</code>, and a metric-matched fallback via <code>size-adjust</code> so the swap does not reflow the page.</li>
+            <li><strong>Type instantly, fetch lazily.</strong> In a search field, the typed characters render on every keystroke; only the network call is debounced (150 to 200ms). Debouncing the input itself feels broken.</li>
+            <li><strong>Long lists.</strong> <code>content-visibility: auto</code> for long documents; virtualize lists above a few hundred rows. Rendering 2,000 DOM rows is the most common cause of a sluggish first interaction.</li>
+            <li><strong>Test on a slow machine.</strong> Throttle the CPU 4× in DevTools and use a mid-range Android. What feels instant on an M-series Mac is the exception, not the rule.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <a href="https://www.interfacecraft.dev/" target="_blank" rel="noopener">Josh Puckett, Interface Craft</a> (industry standards, uncommon care) · <a href="https://github.com/emilkowalski/skills/blob/main/skills/review-animations/STANDARDS.md" target="_blank" rel="noopener">Emil Kowalski, animation standards</a> · <a href="https://web.dev/articles/inp" target="_blank" rel="noopener">web.dev, Interaction to Next Paint</a></footer>
+        </article>
+
+<article class="lesson" id="discipline-of-noticing">
+          <span class="eyebrow">Craft · 03</span>
+          <h2>The Discipline of Noticing</h2>
+          <p class="lede">Notice before you fix. The urge to jump to "this should be bigger" carries an unexamined guess about what is wrong, and the guess is usually wrong.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="noticing">
+            <div class="demo-stage">
+            <div class="no-wrap">
+              <div class="no-screen">
+                <div class="no-top"><span class="no-title">Rename project</span><span class="no-x">×</span></div>
+                <div class="no-field"><span class="no-label">Name</span><span class="no-input"></span></div>
+                <div class="no-field"><span class="no-label">Slug</span><span class="no-input short"></span></div>
+                <div class="no-actions"><span class="no-ghost">Cancel</span><span class="no-primary">OK</span></div>
+                <button class="nt-dot" type="button" data-toggle="show-1" aria-label="Expectation gap" style="--x:88%; --y:14%">1</button><button class="nt-dot" type="button" data-toggle="show-2" aria-label="Assumption" style="--x:30%; --y:42%">2</button><button class="nt-dot" type="button" data-toggle="show-3" aria-label="Perceived craft" style="--x:78%; --y:58%">3</button><button class="nt-dot" type="button" data-toggle="show-4" aria-label="Hesitation" style="--x:50%; --y:86%">4</button>
+              </div>
+              <div class="no-notes"><div class="nt-note note-1"><b>Expectation gap</b><span class="obs">The close icon sits in the header, but Escape does nothing.</span><span class="rx">Make the icon bigger.</span></div><div class="nt-note note-2"><b>Assumption</b><span class="obs">The field asks for a “slug” without saying what a slug is.</span><span class="rx">Add a tooltip.</span></div><div class="nt-note note-3"><b>Perceived craft</b><span class="obs">The two fields have different widths for no visible reason.</span><span class="rx">Align the fields.</span></div><div class="nt-note note-4"><b>Hesitation</b><span class="obs">The primary button says “OK”, so you reread the title to know what happens.</span><span class="rx">Change the button color.</span></div><span class="no-hint">Click the numbers.</span></div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Show prescriptions instead</span><input type="checkbox" name="prescribe" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Click a number to open an observation. Then switch to prescriptions and notice how each one guesses at a fix before understanding the problem.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>An observation pass separates two things that usually blur together: recording what happens, and deciding what to do about it. You write down what you see without proposing anything. Only afterwards do you diagnose. It is uncomfortable, and it is the single most transformative technique in this whole library, because it turns critique into evidence instead of opinion.</p>
+          <p>Rauno's closing point applies too: explaining why something works does not come as naturally as making something that works, but they are two sides of one coin. "It feels good" is a reaction, not a critique. Every time you approve or reject something, force yourself to name the cause. It is what builds vocabulary, and vocabulary is what lets you decide on purpose instead of by luck.</p>
+
+          <h3>Seven lenses for the observation pass</h3>
+          <ul>
+            <li><strong>Moments of hesitation.</strong> Where does the person pause, unsure what comes next? Hesitation is the most reliable symptom, because it does not depend on opinion.</li>
+            <li><strong>Expectation gaps.</strong> Where did the result differ from what the mental model predicted? A button that does something other than its label; a gesture that does not work where the metaphor suggested it would.</li>
+            <li><strong>Emotional shifts.</strong> Where does confidence drop, irritation appear, pleasure appear? Emotion is signal, and most critiques ignore it.</li>
+            <li><strong>Absences.</strong> What did the person look for and not find? Invisible in a screenshot, obvious in use.</li>
+            <li><strong>Assumptions.</strong> What knowledge does the interface demand without offering?</li>
+            <li><strong>Perceived craft.</strong> Which signals say "made with care" or "made in a hurry"? Alignment, icon consistency, how long text is handled.</li>
+            <li><strong>Felt quality.</strong> Fast or sluggish, solid or fragile. A physical impression, worth recording even without knowing the cause.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Twenty observations, zero solutions.</strong> As an exercise, write twenty things you notice about a screen without proposing one fix. It is harder than it sounds and it rewires how you look.</li>
+            <li><strong>Hesitation is the most honest signal.</strong> It does not depend on taste. If three people pause at the same point, the point is wrong even if they explain it three different ways.</li>
+            <li><strong>Slow motion, inspector, rebuild.</strong> Record at 240fps and step through frames; open the inspector and read the real values; rebuild the interaction you admire and note exactly where you got stuck.</li>
+            <li><strong>The reference library needs a why.</strong> Each item: what, the detail, why it works, where you would use it. Without the why it is a mood board.</li>
+            <li><strong>Name the cause every time.</strong> "It feels good" is a reaction. Turning it into "the overlay is tied to drag position" is the work.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Craft de interfaces, handbook</em> (chapter 2) · <a href="https://www.interfacecraft.dev/" target="_blank" rel="noopener">Josh Puckett, Interface Craft</a> (noticing) · <a href="https://rauno.me/craft/interaction-design" target="_blank" rel="noopener">Rauno Freiberg, Invisible Details of Interaction Design</a></footer>
+        </article>
+
+<article class="lesson" id="how-to-get-references">
+          <span class="eyebrow">Craft · 04</span>
+          <h2>How to Get References</h2>
+          <p class="lede">A good reference is not a pretty screenshot on Pinterest. It is understanding why something works well enough to recreate it.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="states">
+            <div class="demo-stage">
+            <div class="states">
+              <div class="state"><button class="btn" type="button">Save changes</button><span class="cap">live</span></div>
+              <div class="state state--extra"><button class="btn is-hover" type="button" tabindex="-1">Save changes</button><span class="cap">hover</span></div>
+              <div class="state state--extra"><button class="btn is-focus" type="button" tabindex="-1">Save changes</button><span class="cap">focus</span></div>
+              <div class="state state--extra"><button class="btn is-active" type="button" tabindex="-1">Save changes</button><span class="cap">active</span></div>
+              <div class="state state--extra"><button class="btn" type="button" tabindex="-1"><span class="btn-spinner"></span>Save changes</button><span class="cap">loading</span></div>
+              <div class="state state--extra"><button class="btn" type="button" disabled>Save changes</button><span class="cap">disabled</span></div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Show all states</span><input type="checkbox" name="states" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Hover, press or tab to the button: those are its real states. Most references only show the first one.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Everyone who builds excellent interfaces collects and, above all, dissects references. The common mistake is collecting surface: colors, layouts, "vibes". What pays off is collecting decisions: why this popover opens from the button and not from the center, why this table uses tabular numbers, why this card has a shadow instead of a border.</p>
+
+          <h3>How to apply</h3>
+          <ol>
+            <li><strong>Record, don't just screenshot.</strong> Most of the craft lives in behavior: hover, pressed, transitions, empty states. A 10-second recording teaches more than 10 screenshots.</li>
+            <li><strong>Inspect.</strong> In the browser, open DevTools and read the real properties: <code>letter-spacing</code>, <code>box-shadow</code>, <code>transition</code> curves. You will find that the best products use few values, repeated with discipline.</li>
+            <li><strong>Recreate.</strong> Josh Puckett calls it <em>Recreate Everything</em>: rebuild the interaction in a minimal playground, focusing on one technical question at a time. Stop when you have learned, and document the pattern.</li>
+            <li><strong>Catalog by concept, not by product.</strong> A "Linear" folder teaches less than a "scroll fades" folder with 6 examples from different products.</li>
+            <li><strong>Go to primary sources.</strong> Blogs by people who build (Emil Kowalski, Rauno Freiberg, Paco Coursey, Josh Comeau), platform guidelines (Apple HIG, Material) and specs (MDN, CSSWG). Be suspicious of threads that repeat rules without explaining them.</li>
+          </ol>
+          <div class="rule">A reference only becomes knowledge when you can explain the decision without looking at it.</div>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>One note per item.</strong> In your swipe file, write three lines: what it does, why it works, which property drives it. Without the note, the collection is just images.</li>
+            <li><strong>Record at 1×, review at 0.25×.</strong> Slow the recording down in QuickTime or Screen Studio and watch how the pieces are choreographed: what moves first, what fades, what waits.</li>
+            <li><strong>Collect all states.</strong> Default, hover, focus, active, disabled, loading, error, empty. Most references only show the default; the craft is in the other seven.</li>
+            <li><strong>Read their tokens.</strong> Open <code>:root</code> in DevTools on Linear, Vercel or GitHub and read the variables: spacing scale, radii, durations, shadow layers. Steal the constraints, not the pixels.</li>
+            <li><strong>Check the accessibility tree.</strong> Open the Accessibility panel to see how a component is labeled and structured. Good craft is visible there too.</li>
+            <li><strong>Curated libraries, then live products.</strong> Mobbin and Page Flows for flows, Godly and SiteInspire for landing pages; but always confirm on the live product, where you can feel the timing.</li>
+            <li><strong>Platform first.</strong> iOS Settings, macOS Finder, Android's Material components are the baseline your users already know. Reference them before referencing startups.</li>
+            <li><strong>One file per recreation.</strong> Keep a personal playground repo where each rebuilt interaction is a single self-contained file. Searchable, comparable, reusable.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <a href="https://www.dive.club/deep-dives/josh-puckett" target="_blank" rel="noopener">Dive Club, interview with Josh Puckett</a> · <a href="https://rauno.me/craft" target="_blank" rel="noopener">Rauno Freiberg, Craft</a> · <a href="https://emilkowal.ski/" target="_blank" rel="noopener">Emil Kowalski, blog</a></footer>
+        </article>
+
+<article class="lesson" id="taste-is-trained">
+          <span class="eyebrow">Craft · 05</span>
+          <h2>Taste Is Trained</h2>
+          <p class="lede">Taste is not a gift. It is the sum of thousands of conscious observations about what works and why.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="squint">
+            <div class="demo-stage">
+            <div class="mini">
+              <div class="mini-card">
+                <span class="eyebrow">Workspace</span>
+                <div class="mini-title">Invite your team</div>
+                <p class="mini-text">Add people by email or share an invite link. They will see this project immediately.</p>
+                <div class="mini-actions"><button class="btn" type="button" tabindex="-1">Send invites</button><button class="btn btn--ghost" type="button" tabindex="-1">Copy link</button></div>
+              </div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Blur</span><input type="range" name="blur" min="0" max="8" step="0.5" value="4" data-unit="px"><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Grayscale</span><input type="checkbox" name="grayscale" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Press and hold the card to peek. At 4 to 6px of blur only the hierarchy remains; the primary action should still win.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>"Having an eye" looks like talent because the process that forms it is invisible: people with good taste spent years noticing details that others walked past. Josh Puckett calls the base skill <em>noticing</em>: treat your first reaction as shallow data, stay with the artifact longer and log concrete observations. Taste is the accumulated memory of those observations.</p>
+
+          <h3>How to train it</h3>
+          <ul>
+            <li><strong>React, then investigate.</strong> When something feels "good" or "off", don't stop at the adjective. Find the cause: spacing, contrast, timing, alignment.</li>
+            <li><strong>Use real data.</strong> Taste trained on lorem ipsum and perfect avatars breaks on the first long name. Test with real content and edge cases.</li>
+            <li><strong>Tune parameters live.</strong> Emil Kowalski and Josh Puckett both advocate real-time tuning (sliders, DialKit): feeling the difference between 160ms and 240ms teaches more than reading about it.</li>
+            <li><strong>Critique in order.</strong> Structure (architecture, mental model) before behavior (feedback, transitions) before visuals (typography, color, spacing). Polish does not fix a wrong structure.</li>
+            <li><strong>Define facets of quality.</strong> Pick 3 to 5 adjectives the product must have (for example: fast, calm, precise) and score each one. This turns taste into shared language.</li>
+          </ul>
+          <div class="rule">Taste is accumulated attention. You improve yours by paying attention to what you ignore today.</div>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Keep a "what feels off" log.</strong> One line per observation, and one more when you find the cause. After a few months the causes repeat, and that repetition is taste.</li>
+            <li><strong>Squint or blur.</strong> Blur the screenshot 4 to 6px: only hierarchy remains. If the primary action does not stand out blurred, it does not stand out at all.</li>
+            <li><strong>Grayscale and mirror.</strong> View in grayscale to judge contrast and weight without color bias; flip horizontally to judge balance with fresh eyes.</li>
+            <li><strong>Look at 1:1 on the target device.</strong> Taste trained on a zoomed-in Figma canvas lies about 13px text, 1px borders and 6px radii.</li>
+            <li><strong>Side by side with the best.</strong> Open Linear, Things or Stripe in a window next to yours. The gap is obvious in comparison and invisible in isolation.</li>
+            <li><strong>Change one variable at a time.</strong> 160ms or 240ms? Change it, decide, revert, decide again. Judging two variables at once trains nothing.</li>
+            <li><strong>Learn the vocabulary.</strong> Tracking, measure, leading, elevation, easing, affordance. You can only notice reliably what you can name.</li>
+            <li><strong>Rebuild one interface a week.</strong> Pixel-accurate recreation forces you to notice every decision you would otherwise skim past.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <a href="https://www.interfacecraft.dev/" target="_blank" rel="noopener">Josh Puckett, Interface Craft</a> (noticing, facets of quality, live tuning) · <a href="https://animations.dev/" target="_blank" rel="noopener">Emil Kowalski, animations.dev</a> (purpose &amp; taste)</footer>
+        </article>
+
+<article class="lesson" id="novelty-budget">
+          <span class="eyebrow">Craft · 06</span>
+          <h2>Novelty Budget</h2>
+          <p class="lede">Every interface has a limited budget of new things the user will agree to learn. Spend it where it matters and follow convention everywhere else.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="novelty">
+            <div class="demo-stage">
+            <div class="toolbar">
+              <button class="tb" type="button"><span class="conv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>Search</span><span class="novel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>Discover</span></button>
+              <button class="tb" type="button"><span class="conv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg>Settings</span><span class="novel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20L16 8M15 3l1 2 2 1-2 1-1 2-1-2-2-1 2-1zM20 10l.6 1.4L22 12l-1.4.6L20 14l-.6-1.4L18 12l1.4-.6z"/></svg>Tune</span></button>
+              <button class="tb tb--danger" type="button"><span class="conv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg>Delete</span><span class="novel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22c4 0 7-3 7-7 0-5-7-12-7-12S5 10 5 15c0 4 3 7 7 7z"/><path d="M12 22c2 0 3-1.5 3-3.5S12 14 12 14s-3 2.5-3 4.5S10 22 12 22z"/></svg>Vaporize</span></button>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Spend the novelty budget</span><input type="checkbox" name="novelty" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Hover the buttons, then spend the budget. Invented icons and clever verbs make the user relearn what they already knew.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Every decision that departs from the standard charges a cognitive cost: the user has to figure out how it works. If you innovate on the menu, the button, the scroll, the form and the close icon, the whole product becomes a puzzle. If you follow convention in 95% and innovate in one or two things, those things shine. Innovation is only perceived against a background of familiarity.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>List where you are breaking convention.</strong> Navigation, forms, destructive actions, shortcuts. If the list is longer than two or three items, cut.</li>
+            <li><strong>Spend the budget on what differentiates the product.</strong> The core interaction (the editor, the canvas, the feed) deserves novelty. Login and settings do not.</li>
+            <li><strong>Start from platform defaults.</strong> Josh Puckett: start from platform and category standards, then improve intentionally from there.</li>
+            <li><strong>Novelty in motion counts too.</strong> An unexpected animation in a repetitive flow is cost, not delight (see the Frequency lesson).</li>
+          </ul>
+          <div class="rule">Conventional by default, surprising by decision.</div>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Never spend on wayfinding.</strong> Back goes back, Escape closes, Cmd+K opens search, destructive actions are red and confirmed. These are free because they are learned.</li>
+            <li><strong>Every novelty needs a safety net.</strong> Undo, a visible escape hatch, a familiar fallback path. If the user cannot recover, the novelty becomes a trap.</li>
+            <li><strong>Borrow a mental model.</strong> A new interaction should map to something known: a stack of cards, a physical dial, a folder. Metaphor is how you make novelty cheap to learn.</li>
+            <li><strong>Introduce it progressively.</strong> Default to the conventional path, reveal the novel one after first use or via a hint. Linear does this with keyboard shortcuts.</li>
+            <li><strong>The five-second test.</strong> Show the screen to someone for five seconds. Can they say what the novel element does without touching it? If not, add affordance or cut.</li>
+            <li><strong>No new icons for old concepts.</strong> Trash, search, settings, share already have glyphs the whole industry agrees on. Inventing new ones spends budget for nothing.</li>
+            <li><strong>Copy is budget too.</strong> "Delete" and "Save" are free; clever verbs cost comprehension. Playful copy belongs in empty states and success moments, not in actions.</li>
+            <li><strong>Budget the whole product.</strong> A screen may look fine in isolation while the product as a whole has ten novel patterns. Audit across flows, not per screen.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <a href="https://www.interfacecraft.dev/" target="_blank" rel="noopener">Josh Puckett, Interface Craft</a> (industry standards) · <a href="https://lawsofux.com/jakobs-law/" target="_blank" rel="noopener">Laws of UX, Jakob's Law</a></footer>
+        </article>
+
+<article class="lesson" id="timelessness">
+          <span class="eyebrow">Craft · 07</span>
+          <h2>Timelessness</h2>
+          <p class="lede">Trends age in two years. Clear hierarchy, well-set typography and purposeful motion do not age.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="trend">
+            <div class="demo-stage">
+            <div class="trend-card">
+              <div class="trend-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg></div>
+              <div class="trend-title">Weekly digest</div>
+              <p class="trend-text">A summary of what changed in your projects, every Monday morning.</p>
+              <button class="btn trend-btn" type="button" tabindex="-1">Enable</button>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Trendy effects</span><input type="checkbox" name="trendy" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Switch the effects on. Glass, glow, gradient text and pills date within a couple of years; elevation and hierarchy do not.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Glassmorphism, neumorphism, neon gradients, 1px borders on everything: every era has its tics, and all of them date. What survives is what solves human problems that do not change: reading comfortably, knowing what is clickable, knowing where you are, trusting what you see. The minimalist aesthetic is not one trend among others. It is what remains when you remove what is not working.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>One type family, many weights.</strong> Hierarchy through size, weight, color and space. This whole site is set in Inter.</li>
+            <li><strong>Color with a job.</strong> Neutrals for structure, one accent for action, semantic colors for state. Decoration is what ages fastest.</li>
+            <li><strong>Less, but better.</strong> Remove, simplify, refine, repeat. Prefer few elements executed exceptionally over many elements executed adequately.</li>
+            <li><strong>Effects in service of hierarchy.</strong> Shadow to elevate, blur to separate layers, noise to add material. Never because it is in fashion.</li>
+            <li><strong>Run the "five years from now" test.</strong> Look at the layout and ask: if I remove the fashionable effect, does it still work? If yes, the effect is optional.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Neutrals with a hint of hue.</strong> Pure #888 grays look dead; grays with 0.005 chroma toward the accent look alive and do not date the way tinted "off" palettes do.</li>
+            <li><strong>One radius scale.</strong> 4, 8, 12, 16 plus full. Controls get one value, containers another. Pills everywhere or sharp corners everywhere are both period looks.</li>
+            <li><strong>Keep effects out of core UI.</strong> Glass, heavy gradients and glow belong in marketing surfaces. In the product, elevation and hierarchy do the work.</li>
+            <li><strong>Type from a lineage.</strong> Grotesques in the Helvetica/SF/Inter family have stayed neutral for decades. Display and geometric-trend fonts date within a few years.</li>
+            <li><strong>Hierarchy from content, not dividers.</strong> If you remove every line and box, the page should still read correctly through size, weight and space.</li>
+            <li><strong>Outline icons on a 24px grid.</strong> Single stroke, consistent weight. Duotone, 3D and gradient icons are the first thing to look old.</li>
+            <li><strong>Functional, short motion.</strong> Elaborate entrance animations age within a year. 150 to 250ms transitions that explain state changes do not.</li>
+            <li><strong>Study what survived.</strong> Compare iOS 7 to today, or Stripe's dashboard over ten years. Note what changed and what did not; design with the second list.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <a href="https://www.interfacecraft.dev/" target="_blank" rel="noopener">Josh Puckett, Interface Craft</a> (timelessness, less but better) · Dieter Rams, <em>Ten Principles for Good Design</em></footer>
+        </article>
+
+<article class="lesson" id="spatial-consistency">
+          <span class="eyebrow">Craft · 08</span>
+          <h2>Spatial Consistency</h2>
+          <p class="lede">Where something comes from tells you what it is. A screen that left to the left comes back from the left. When that holds, people build a map of your product; when it breaks, they operate by trial and error.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="spatial">
+            <div class="demo-stage">
+            <div class="sp-phone">
+              <div class="sp-list">
+                <div class="sp-li" role="button" tabindex="0" data-toggle="is-detail"><span>Design review</span><span class="sp-chev">›</span></div>
+                <div class="sp-li dim"><span>Roadmap</span><span class="sp-chev">›</span></div>
+                <div class="sp-li dim"><span>Hiring</span><span class="sp-chev">›</span></div>
+              </div>
+              <div class="sp-detail">
+                <button class="sp-back" type="button" data-toggle="is-detail">‹ Back</button>
+                <b>Design review</b><span class="sp-sub">Today, 3:00 PM · 4 people</span>
+                <div class="ph-line"></div><div class="ph-line short"></div>
+              </div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Hybrid scale</span><input type="checkbox" name="consistent" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Drag the ratio. A modular scale gives fractional sizes and skips the 1px steps small text needs. The hybrid keeps integers, dense at the bottom and proportional at the top.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Good interactions borrow knowledge people already have. Swiping sideways turns pages because that is how books have worked for millennia. Pinching zooms because pinching is the human gesture of precision. Every time you invent an interaction you ask someone to learn; every time you reuse a metaphor you draw on credit they already have.</p>
+          <p>The elegant part is that metaphors compose. On iOS the only gesture that is explicitly taught is swipe up to unlock, but it silently teaches that the interface is a stack of layers. Once you know that, you deduce that swiping down reveals system layers and swiping up dismisses an app. One gesture taught, ten deduced. Each exception you introduce does not just create an inconsistency; it weakens the deductive power of the whole model.</p>
+          <p>Origin is information. When you tap the Dynamic Island, the app expands from it; if the Island is already expanded, the app opens from its own icon instead. The origin says where that audio is playing. Menus open from their trigger, new items appear where they were created, deleted items leave in the direction of the gesture that deleted them.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Pick a spatial model and keep it.</strong> If panels come from below, all panels come from below. If hierarchy pushes in from the right, it always pushes from the right.</li>
+            <li><strong>Respect object permanence.</strong> A closed panel reopens from the same place; a collapsed item expands back in the same position; an element that crosses two states keeps its visual identity.</li>
+            <li><strong>Treat origin as content.</strong> The transform origin of a menu, a toast or a new item is a decision about meaning, not decoration.</li>
+            <li><strong>Direct manipulation is the top of the scale.</strong> The object follows the finger one to one, can be interrupted and reversed at any moment, and resists at the edges instead of stopping dead.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>One gesture taught, ten deduced.</strong> Design so the first interaction teaches a model people can extend on their own, and protect that model from exceptions.</li>
+            <li><strong>Same door in, same door out.</strong> Screens return the way they left; panels reopen where they closed; collapsed items expand in place.</li>
+            <li><strong>Origin equals meaning.</strong> The menu grows from its trigger, the toast from the action's region, the new item from where it was created. A wrong origin misinforms.</li>
+            <li><strong>Shared identity across states.</strong> When one thing becomes another, keep its shape, color or position continuous so the eye accepts it as the same object.</li>
+            <li><strong>Desktop bonus.</strong> Pointing devices allow direct manipulation beyond the obvious: scrolling over a slider to adjust it collapses two interactions into one.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Craft de interfaces, handbook</em> (chapter 3) · <a href="https://rauno.me/craft/interaction-design" target="_blank" rel="noopener">Rauno Freiberg, Invisible Details of Interaction Design</a> · <a href="https://developer.apple.com/videos/play/wwdc2018/803/" target="_blank" rel="noopener">Apple WWDC18, Designing Fluid Interfaces</a></footer>
+        </article>
+
+<article class="lesson" id="every-action-answers">
+          <span class="eyebrow">Craft · 09</span>
+          <h2>Every Action Answers</h2>
+          <p class="lede">Press a light switch and the light turns on. People expect interfaces to work the same way: every action gets an answer, immediately.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="feedback">
+            <div class="demo-stage">
+            <div class="fb-row">
+              <button class="btn fb-btn" type="button" data-flash="is-saving" data-flash-ms="1500"><span class="fb-label">Save</span><span class="fb-spin"></span><span class="fb-done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Saved</span></button>
+              <span class="fb-status">Draft</span>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">With feedback</span><input type="checkbox" name="feedback" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Click Save. With feedback the button presses, works and confirms in under two seconds. Without it, nothing visible happens and the doubt begins.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>When you click "Save" and nothing visible happens, the doubt arrives in a fraction of a second. Did it work? Should I click again? That doubt is what makes software feel unreliable, even when it is doing exactly what it should. Feedback closes the loop: the button presses, something shows the work is happening, and something confirms it is done. The whole exchange can take under a second and still feel complete.</p>
+          <p>Good feedback is proportional. A small action deserves a small answer: a pressed state, a quiet checkmark. A big action deserves a bigger one: a toast with an undo, a page-level confirmation. Too much feedback for small things is as tiring as too little for big ones.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Three beats.</strong> Pressed (the button reacts to the touch), working (something shows progress if it takes longer than a blink), done (a confirmation that fades on its own).</li>
+            <li><strong>Feedback near the action.</strong> The answer appears where the person is looking: in the button, next to the field, on the item that changed. Not in a corner of the screen they are not watching.</li>
+            <li><strong>Confirm with a state, not just a message.</strong> The item moved, the checkbox is checked, the count changed. Messages help, but the visible result is the proof.</li>
+            <li><strong>Offer undo instead of asking "are you sure".</strong> Let the action happen, then make it easy to reverse. It is faster and less annoying than a confirmation for every step.</li>
+            <li><strong>Never leave silence.</strong> If a request failed, say so. A button that returns to its idle state with no word is the worst outcome.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Pressed is the first answer.</strong> A slight scale-down or darkening on press tells the finger the tap landed, before any request is made.</li>
+            <li><strong>Show working only if it takes time.</strong> Under about 300ms, skip the spinner; the result will arrive before anyone notices. Past that, show progress, and keep it on screen long enough to be seen.</li>
+            <li><strong>Confirm in place.</strong> The button briefly shows a check, the row briefly highlights, the count updates. Then everything returns to rest on its own.</li>
+            <li><strong>Undo beats confirm.</strong> A toast with "Undo" for 5 to 8 seconds lets people move fast and still recover from a mistake.</li>
+            <li><strong>Failure is louder than success.</strong> Success can be a quiet check; failure needs words, a color, and a next step, near where the action happened.</li>
+            <li><strong>Disabled needs an explanation.</strong> A grayed-out button with no reason is a locked door with no sign. A tooltip or a helper line says why and what unlocks it.</li>
+            <li data-craftbook><strong>Success dies on its own.</strong> Check appears in about 150ms, stays 1.2 to 2 seconds, reverts in 200ms, even if the person does nothing. A "Copied!" that never reverts is a wrong label.</li>
+            <li data-craftbook><strong>Disabled without a reason is hostile.</strong> Explain on hover, or keep the button active and explain the error on click. The second usually gives more agency.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <a href="https://developer.apple.com/design/human-interface-guidelines/feedback" target="_blank" rel="noopener">Apple HIG, Feedback</a> · <a href="https://www.nngroup.com/articles/visibility-system-status/" target="_blank" rel="noopener">Nielsen Norman Group, Visibility of System Status</a> · <a href="https://www.interfacecraft.dev/" target="_blank" rel="noopener">Josh Puckett, Interface Craft</a> (feedback loops in critique)</footer>
+        </article>
+
+<article class="lesson" id="empty-states">
+          <span class="eyebrow">Craft · 10</span>
+          <h2>Empty States</h2>
+          <p class="lede">The first screen most people see in your product is an empty one. It is not a gap to fill later; it is the introduction.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="empty">
+            <div class="demo-stage">
+            <div class="inbox">
+              <div class="in-head"><span>Inbox</span><button class="in-btn" type="button" data-toggle="is-empty" aria-pressed="false"><span class="when-idle">Archive all</span><span class="when-done">Restore</span></button></div>
+              <div class="in-rows"><div class="in-row"><span class="in-dot"></span><span class="in-text"><b>Ana shared a file</b><span>2 min ago</span></span></div><div class="in-row"><span class="in-dot"></span><span class="in-text"><b>Build finished</b><span>14 min ago</span></span></div><div class="in-row"><span class="in-dot"></span><span class="in-text"><b>New comment on Roadmap</b><span>1 h ago</span></span></div></div>
+              <div class="in-empty"><span class="in-empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.5 5.1L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.5-6.9A2 2 0 0 0 16.7 4H7.3a2 2 0 0 0-1.8 1.1z"/></svg></span><b class="in-empty-title">You’re all caught up</b><span class="in-empty-hint">New messages and mentions will land here.</span><span class="in-empty-plain">No items</span><button class="btn btn--ghost in-empty-cta" type="button" tabindex="-1">Invite a teammate</button></div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Helpful empty state</span><input type="checkbox" name="helpful" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Click Archive all. With the switch off you get a blank “No items”; with it on, the empty screen says what lives here and what to do next.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Think about the moment right after someone signs up. No projects, no messages, no data. A blank list with the words "No items" tells them nothing about what this place is for or what they should do next. It feels like walking into a room where the lights are off. A good empty state turns the lights on: it says what will live here, why it matters, and offers the one action that starts things moving.</p>
+          <p>Empty states also show up later, in quieter moments: an inbox you have cleared, a search that found nothing, a filter that excluded everything. Each of those is a small chance to be helpful, or to leave the person stranded.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Say what belongs here.</strong> One line about what the space is for, in the same voice as the rest of the product.</li>
+            <li><strong>Offer the first step.</strong> A single, clear action. Two actions are already a decision; three are a menu.</li>
+            <li><strong>Match the mood.</strong> A cleared inbox is a relief and can celebrate a little. A failed search is a dead end and should help the person turn around.</li>
+            <li><strong>Keep the layout stable.</strong> The empty state should occupy the same region as the content will, so nothing jumps when the first item arrives.</li>
+            <li><strong>Design the illustration last.</strong> Words and action first. Most empty states work with a simple icon and good copy; an illustration is a bonus, not a requirement.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Write it before the first item exists.</strong> Design the empty state at the same time as the list, not after launch. It is the screen every new person sees.</li>
+            <li><strong>Three flavors, three tones.</strong> First use gets an invitation, cleared gets a small celebration, no results gets a way back. One template for all three feels wrong in two of them.</li>
+            <li><strong>No results should keep the query.</strong> Show what was searched, suggest loosening a filter, and keep the field focused so the person can just keep typing.</li>
+            <li><strong>Preview the future.</strong> A faint example row or a sample card shows what the list will look like once it fills. It teaches more than an illustration.</li>
+            <li><strong>One action, the right one.</strong> "Create your first project" in the empty projects list; "Invite a teammate" in an empty team. Never a generic "Get started".</li>
+            <li><strong>Same place, same size.</strong> If the empty state is taller or shorter than the content will be, the first item causes a jump. Reserve the height.</li>
+            <li data-craftbook><strong>Zero, one, many.</strong> The empty state is one of four cardinalities; the single-item layout is the one most often forgotten.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <a href="https://www.nngroup.com/articles/empty-state-interface-design/" target="_blank" rel="noopener">Nielsen Norman Group, Designing Empty States</a> · <a href="https://www.interfacecraft.dev/" target="_blank" rel="noopener">Josh Puckett, Interface Craft</a> (uncommon care in edge cases) · <a href="https://developer.apple.com/design/human-interface-guidelines/" target="_blank" rel="noopener">Apple HIG</a></footer>
+        </article>
+
+<article class="lesson" id="copy-is-interface">
+          <span class="eyebrow">Craft · 11</span>
+          <h2>Copy Is Interface</h2>
+          <p class="lede">Half of what people call "design" is words. A button label, an error message, a confirmation: each one is a tiny conversation.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="copy">
+            <div class="demo-stage">
+            <form class="mini-form" onsubmit="return false">
+              <label class="mf-label">Email<input class="mf-input" type="email" value="ana@studio.co" readonly aria-describedby="mf-error"></label>
+              <p class="mf-error" id="mf-error"><span class="tech">Error 422: duplicate entry</span><span class="human">That email already has an account. <a href="#" tabindex="-1">Sign in instead?</a></span></p>
+              <button class="btn mf-btn" type="button" data-toggle="is-error" aria-pressed="false"><span class="tech">Submit</span><span class="human">Continue</span></button>
+            </form>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Human copy</span><input type="checkbox" name="human" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Click the button to trigger the error. Same layout, two voices: one speaks to the developer, the other to the person.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>When something goes wrong, the interface speaks. If it says "Error 422: duplicate entry", it is speaking to the developer who wrote it, not to the person in front of the screen. If it says "That email already has an account. Want to sign in instead?", it is speaking to a human, explains what happened, and offers a way forward in the same breath. Same pixel layout, completely different experience.</p>
+          <p>Copy is also the cheapest thing to improve. It needs no new components and no engineering time, and it is often the difference between a product that feels cold and one that feels considerate.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Buttons say what happens.</strong> "Save changes", "Send invite", "Delete project". Never "OK", "Submit" or "Yes".</li>
+            <li><strong>Errors say what and what now.</strong> What went wrong, in plain words, and the next step. Skip the codes unless the person will need them for support.</li>
+            <li><strong>Write the way you would speak to a colleague.</strong> Short sentences, no jargon, no exclamation marks in anything routine.</li>
+            <li><strong>Be specific.</strong> "3 files uploaded" beats "Upload complete". "Saved 2 minutes ago" beats "Saved".</li>
+            <li><strong>Keep destructive copy sober.</strong> A confirmation for deleting something should say exactly what is lost and whether it can come back.</li>
+            <li><strong>Read it aloud.</strong> If a message sounds strange when spoken, it will read strange too.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Labels before layout.</strong> Writing the button label first often changes the design: a verb that needs two words wants a wider button, and a scary verb wants distance from the primary action.</li>
+            <li><strong>Numbers are copy too.</strong> "5 unread" is useful; "Some unread messages" is not. When you know the number, say it.</li>
+            <li><strong>Time is relative, then absolute.</strong> "2 minutes ago" for anything recent, the actual date after a day or two, with the full timestamp on hover.</li>
+            <li><strong>Blame the situation, not the person.</strong> "That password is too short" instead of "You entered an invalid password".</li>
+            <li><strong>Sentence case, always.</strong> "Save changes", not "Save Changes". Title case reads as a headline; buttons are speech.</li>
+            <li><strong>One voice for the whole product.</strong> If the onboarding is playful and the settings are formal, it feels like two teams. Pick a register and keep it.</li>
+            <li data-craftbook><strong>Read only the button.</strong> "Delete project" not "OK"; "Discard" and "Keep editing" not "Yes" and "No"; "Publish" not "Submit". The person should know what will happen without rereading the dialog.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> Torrey Podmajersky, <em>Strategic Writing for UX</em> · <a href="https://developer.apple.com/design/human-interface-guidelines/writing" target="_blank" rel="noopener">Apple HIG, Writing</a> · <a href="https://www.nngroup.com/articles/error-message-guidelines/" target="_blank" rel="noopener">Nielsen Norman Group, Error Message Guidelines</a></footer>
+        </article>
+
+<article class="lesson" id="help-before-the-error">
+          <span class="eyebrow">Craft · 12</span>
+          <h2>Help Before the Error</h2>
+          <p class="lede">Help works best before the mistake, not after. Show the rules while the person is still typing, and hold the red until they are done.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="validation">
+            <div class="demo-stage">
+            <form class="mini-form" onsubmit="return false">
+              <label class="mf-label">Password<input class="mf-input" type="text" autocomplete="off" spellcheck="false" data-pw placeholder="At least 8 characters"></label>
+              <ul class="pw-reqs"><li data-req="len"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>8 characters or more</li><li data-req="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>One number</li><li data-req="up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>One capital letter</li></ul>
+              <p class="mf-error pw-error">That password does not meet the rules yet.</p>
+            </form>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Validate while typing</span><input type="checkbox" name="eager" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Type a password. Requirements tick off live; the red only appears when you leave the field. Switch on eager validation to feel the difference: it scolds you before you finish.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>A form that turns red on the first keystroke is scolding someone who simply has not finished yet. A form that only reveals the password rules in the error message made them guess. The considerate version does both things at the right time: requirements visible before typing, checked live as they are met, and the error itself only when the person leaves the field. The exception is a check that can only improve, like password strength, which can update in real time because it never says "wrong".</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Requirements first.</strong> Visible before the first character, ticking off live as each one is met.</li>
+            <li><strong>Format in the field.</strong> The expected shape shown as a placeholder or helper, not only in the error.</li>
+            <li><strong>Validate on blur, not on keystroke.</strong> The red appears when the person leaves the field, near the field, with the three parts of a good error: what happened, why, what to do.</li>
+            <li><strong>Describe, do not blame.</strong> "This email is not registered", not "You typed it wrong".</li>
+            <li><strong>Specific words.</strong> "1 items" is the classic tell. "3 of 47 results" beats "Results". "Project archived" beats "Success".</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Blur, not keystroke.</strong> Validate when the person leaves the field; validating while typing shows errors to someone who is simply not done.</li>
+            <li><strong>Live checks that only improve.</strong> Password strength, character count, availability: these can update as you type because they never say "wrong".</li>
+            <li><strong>Three parts.</strong> What happened, why, what to do next. A message missing the third part leaves the person stranded.</li>
+            <li><strong>Near the cause.</strong> The error sits by the field that produced it, never only at the top of the page.</li>
+            <li><strong>Progress in words.</strong> "Processing 200 of 1,400" beats a silent spinner; "Project archived" beats "Success".</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Craft de interfaces, handbook</em> (sections 7.3, 12.3, 12.4) · <a href="https://www.nngroup.com/articles/errors-forms-design-guidelines/" target="_blank" rel="noopener">Nielsen Norman Group, Error-Message Guidelines for Forms</a></footer>
+        </article>
+
+<article class="lesson" id="destructive-actions">
+          <span class="eyebrow">Craft · 13</span>
+          <h2>Destructive Actions</h2>
+          <p class="lede">Undo beats confirm. Do the thing, then make it easy to take back. It is faster in the common case and safer in the rare one.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="destroy">
+            <div class="demo-stage">
+            <div class="dl-wrap">
+              <div class="dl-list">
+                <div class="dl-row"><span>Q3 report.pdf</span><button class="dl-trash" type="button" data-del aria-label="Delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg></button></div>
+                <div class="dl-row"><span>Brand guidelines.fig</span><button class="dl-trash" type="button" data-del aria-label="Delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg></button></div>
+                <div class="dl-row"><span>Invoice 2041.pdf</span><button class="dl-trash" type="button" data-del aria-label="Delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg></button></div>
+                <div class="dl-empty">All files deleted. <button class="dl-restore" type="button" data-restore>Restore</button></div>
+              </div>
+              <div class="dl-toast"><span class="dl-toast-text"></span><button class="dl-undo" type="button" data-undo>Undo</button><span class="dl-bar"></span></div>
+              <div class="dl-confirm"><span class="dl-confirm-text"></span><div class="dl-confirm-actions"><button class="btn btn--ghost dl-cancel" type="button" data-cancel>Cancel</button><button class="btn dl-yes" type="button" data-confirm>Delete</button></div></div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Confirm instead of undo</span><input type="checkbox" name="confirm" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Delete a file. With undo, it is gone immediately and you have five seconds to take it back. With confirm, every deletion asks first, and you will learn to click through.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>A confirmation dialog interrupts every deletion to guard against the rare mistake, and people learn to click through it without reading. Undo inverts the trade: the common case costs nothing, and the rare mistake still has a way back. Confirmation is for when undo is impossible, and then it has to say exactly what will be destroyed, by name. Typing the name of the thing is reserved for catastrophic, irreversible destruction.</p>
+
+          <h3>How to apply</h3>
+          <ol>
+            <li><strong>Undo first.</strong> Execute immediately, offer reversal for a few seconds. The undo window scales with severity: about 5 seconds for one item, 15 for a batch.</li>
+            <li><strong>Confirm when undo is impossible.</strong> With the real name in the dialog: "Delete Q3 report?", never "Delete this item?".</li>
+            <li><strong>Type the name only for catastrophe.</strong> Deleting an account or a whole workspace.</li>
+          </ol>
+          <ul>
+            <li><strong>The destructive button never sits where the safe button was</strong> in the previous dialog.</li>
+            <li><strong>Distance is safety.</strong> Keep at least 24px between a destructive action and any frequent one; Fitts's law works for protection too.</li>
+            <li><strong>Sober copy.</strong> Serious and specific, no humor, and the label says the result: "Delete project", not "OK".</li>
+            <li><strong>Preserve the work.</strong> A failure on save that clears the form is a failure of respect, not of code.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Undo windows scale.</strong> Around 5 seconds for a single item, 15 for a batch, and the toast pauses while hovered.</li>
+            <li><strong>Name what dies.</strong> "Delete Q3 report?" not "Delete this item?". The person should be able to read only the button and know what will happen.</li>
+            <li><strong>Never inherit position.</strong> If the previous dialog had "Save" on the right, the destructive button does not go there. Muscle memory is real.</li>
+            <li><strong>Type-to-confirm is the last resort.</strong> Only for irreversible, catastrophic actions; on everyday deletions it is theater that trains people to skim.</li>
+            <li><strong>Keep the form alive.</strong> On failure, keep everything the person typed. Losing their work is the most expensive error you can make.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Craft de interfaces, handbook</em> (section 7.7) · <a href="https://www.nngroup.com/articles/confirmation-dialog/" target="_blank" rel="noopener">Nielsen Norman Group, Confirmation Dialogs Can Prevent User Errors</a> · <a href="https://developer.apple.com/design/human-interface-guidelines/undo-and-redo" target="_blank" rel="noopener">Apple HIG, Undo and redo</a></footer>
+        </article>
+
+<article class="lesson" id="context-as-input">
+          <span class="eyebrow">Craft · 14</span>
+          <h2>Context as Input</h2>
+          <p class="lede">The best input is no input. Time, place, device state, what the person just did: the interface already knows a lot, and every fact it knows is a question it does not need to ask.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="context">
+            <div class="demo-stage">
+            <div class="cx-form">
+              <div class="cx-field"><span class="cx-label">Title</span><div class="cx-input"><span class="cx-value cx-title-val">Design tokens for motion · Josh Puckett</span><span class="cx-chip">from link · <u>undo</u></span><button class="cx-paste" type="button" data-toggle="is-pasted">Paste link</button></div></div>
+              <div class="cx-row">
+                <div class="cx-field"><span class="cx-label">Date</span><div class="cx-input"><span class="cx-value cx-ctx">Today</span><span class="cx-chip">today</span></div></div>
+                <div class="cx-field"><span class="cx-label">Amount</span><div class="cx-input"><span class="cx-value cx-ctx">R$</span><span class="cx-chip">from locale</span></div></div>
+              </div>
+              <div class="cx-field"><span class="cx-label">Category</span><div class="cx-input"><span class="cx-value cx-ctx">Software</span><span class="cx-chip">from your last 3 · <u>undo</u></span></div></div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Use context</span><input type="checkbox" name="context" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Click Paste link: the title is extracted from the URL and marked as inferred, with an undo. Switch context off and every field is blank and waiting.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Keyboard, mouse, touch and voice are explicit inputs. Context is the implicit one. Maps show the active route without unlocking the phone; a wallet raises screen brightness when showing a barcode; an app blurs its own content in the app switcher so sensitive data is not exposed. That last one looks like a performance trick and is actually deliberate privacy: uncommon care.</p>
+          <p>Most products use two or three items from a long inventory: time and time zone, approximate location, system language and regional formats, light or dark theme, reduced motion, input type, screen size, network state, first visit or return, what happened last session, what is on the clipboard with permission, historical patterns.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Autofocus with judgment.</strong> Great when the screen exists to fill that field (search, login, a one-field dialog). Bad when it scrolls the page or pops the keyboard in a reading context.</li>
+            <li><strong>Smart paste.</strong> A link pasted into a title field fetches the title. A card number with spaces gets cleaned. A block of text in a tag field splits on commas.</li>
+            <li><strong>Defaults that think.</strong> Today's date, the local currency, the most used category.</li>
+            <li><strong>Repetition detection.</strong> The same action three times in a row earns an offer to do it in batch.</li>
+            <li><strong>Inference must be visible and reversible.</strong> Show that you filled it in, allow undo in one tap, never act without confirmation on anything consequential, and never reveal that you know more than the person expects you to.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Inventory once per product.</strong> List everything you already know without asking. Then look for the questions you can stop asking.</li>
+            <li><strong>Show your work.</strong> A prefilled value looks different from a typed one: a subtle chip, a "from your last expense" note, an undo. Silent inference feels like surveillance.</li>
+            <li><strong>Infer and fill, never infer and execute.</strong> Suggesting the category is helpful; submitting the expense is presumption.</li>
+            <li><strong>Autofocus scrolls.</strong> Before focusing a field automatically, ask whether the person is here to type or to read.</li>
+            <li><strong>Reversible in one tap.</strong> Every inference needs a way back that costs less than the inference saved.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Craft de interfaces, handbook</em> (chapter 9) · <a href="https://rauno.me/craft/interaction-design" target="_blank" rel="noopener">Rauno Freiberg, Invisible Details of Interaction Design</a> (context as input)</footer>
+        </article>
+
+<article class="lesson" id="keyboard-and-focus">
+          <span class="eyebrow">Craft · 15</span>
+          <h2>Keyboard and Focus</h2>
+          <p class="lede">Almost entirely absent from design files, and the line between a professional tool and a toy.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="focus">
+            <div class="demo-stage">
+            <div class="kb-wrap">
+              <div class="kb-toolbar" data-kb>
+                <button class="kb-btn" type="button"><span>Bold</span><kbd>⌘B</kbd></button>
+                <button class="kb-btn" type="button"><span>Italic</span><kbd>⌘I</kbd></button>
+                <button class="kb-btn" type="button"><span>Search</span><kbd>⌘K</kbd></button>
+                <button class="kb-btn" type="button"><span>Send</span><kbd>⌘⏎</kbd></button>
+              </div>
+              <div class="kb-id"><code class="kb-code">inv_9k2m</code><span class="kb-hint">readable ID, selectable, prefixed</span></div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Ring on mouse click too</span><input type="checkbox" name="anyfocus" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Click a button: no ring. Press Tab: ring. Hold ⌘ or Alt: the shortcuts appear on the buttons. Switch on the old behavior to see why people used to remove focus rings.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>The focus ring has to be prominent for someone navigating by keyboard and absent when someone clicks with a mouse. Browsers make that distinction natively, so the old dilemma between accessibility and aesthetics is false. The ring needs contrast against the background and against the element, has to work in both themes, cannot be clipped by its container, and is never removed without a replacement.</p>
+          <p>The other half is conventions people already expect: Tab and Shift+Tab between controls, arrows inside a group, Enter for the primary action, Space to toggle, Escape to close or cancel, Cmd or Ctrl+Enter to submit from a text field, Cmd or Ctrl+K for search or the command palette, slash to focus search. Breaking any of them needs a strong reason; they are the baseline of the category.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Focus order follows visual order.</strong> When CSS rearranges the layout, the two can diverge, and that is a bug.</li>
+            <li><strong>Dialogs trap focus and give it back</strong> to the trigger on close. Focus enters the dialog immediately, without waiting for the animation.</li>
+            <li><strong>Teach shortcuts in place.</strong> Show them inside menu items, reveal them on the buttons when the modifier is held, offer a hint after the person does the same thing manually three times.</li>
+            <li><strong>Selection is content.</strong> Prevent selection on interface elements (button labels, menu items) and allow it on all real content, including IDs, codes and values, with a copy button on anything people will want to copy.</li>
+            <li><strong>Readable IDs.</strong> <code>inv_9k2m</code> says more than <code>9f8e7d6c</code>. A prefix per entity type lets people know what they are talking about when they paste an ID into a support ticket.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Two pixels, two colors.</strong> A ring in the accent plus a 2px offset in the background color stays visible on any surface and in both themes.</li>
+            <li><strong>Escape always means back.</strong> Close, cancel, revert. A dialog that ignores Escape feels locked.</li>
+            <li><strong>Roving focus inside groups.</strong> One Tab stop for the toolbar, arrows inside it. Tabbing through forty buttons is not accessibility.</li>
+            <li><strong>Reveal on hold.</strong> Holding the modifier key shows the shortcut on each button. It teaches every time instead of once.</li>
+            <li><strong>Copy buttons on values.</strong> IDs, keys, commands, links. And a readable prefix on the ID so people know what they are pasting.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Craft de interfaces, handbook</em> (chapter 13) · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-visible" target="_blank" rel="noopener">MDN, :focus-visible</a> · <a href="https://www.w3.org/WAI/ARIA/apg/patterns/" target="_blank" rel="noopener">WAI-ARIA Authoring Practices, keyboard patterns</a></footer>
+        </article>
+
+<article class="lesson" id="breadth-before-depth">
+          <span class="eyebrow">Craft · 16</span>
+          <h2>Breadth Before Depth</h2>
+          <p class="lede">Generate structurally different directions before polishing one. The worst waste in craft is perfecting the wrong solution.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="depth">
+            <div class="demo-stage">
+            <div class="dp-card">
+              <div class="dp-thumb"></div>
+              <div class="dp-body"><span class="dp-title">Weekly digest</span><span class="dp-meta">Product · Mondays</span><span class="dp-text">A summary of what changed in your projects, sent every Monday morning.</span></div>
+              <div class="dp-foot"><span class="dp-count">12 subscribers</span><span class="dp-btn">Enable</span></div>
+              <span class="dp-level">Level <b></b></span>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Depth</span><input type="range" name="level" min="1" max="10" step="1" value="3" data-unit=""><output></output></label></div>
+          </div>
+            <figcaption class="demo-caption">Drag the level. 1 to 3 is a working draft, 4 to 6 coherent and polished, 7 to 10 uncommon care: real states, tabular numbers, truncation, an empty state. Declare where you are before you polish.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Three versions of the same layout in different colors are not breadth. Breadth is: what if this were a list instead of a grid? What if there were no screen and this were a command? What if the flow had one step instead of four? Only after choosing a direction does depth begin, and depth is a ladder from 1 to 10: 1 to 3 is a working draft, 4 to 6 is coherent and polished, 7 to 10 is uncommon care, refined edge cases, distinctive craft. The work is to declare the current level with evidence, set a target, and plan passes: fix the obvious gaps, then consistency and interaction quality, then edge cases and excellence.</p>
+          <p>Behavior has to be judged in a medium that has behavior. Rauno's analogy: nobody evaluates a chair by drawing it; you build it in wood or plastic because the material reveals forces the drawing hides. In software the material is code. A static file can answer "is this pretty?", never "is this good to use?".</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>One question per prototype.</strong> Testing whether a gesture is discoverable needs the gesture, not colors or real copy. Testing hierarchy needs no interactivity. A prototype that tests everything answers nothing.</li>
+            <li><strong>Parameterize and feel.</strong> Expose the critical values (spring, blur, offset, delay, radius) as live controls and tune them while using the thing. You find the right value faster and learn the range each parameter lives in.</li>
+            <li><strong>Every critical value gets a name.</strong> A loose number in the code or the file is a number nobody will review.</li>
+            <li><strong>Rebuild one thing a week</strong> with a time limit. The goal is the learning, not the result; you will get stuck in a specific place, and that is where the craft was.</li>
+            <li><strong>Know when to stop.</strong> When the marginal gain drops, stop. If the concept itself caps the quality, go back to breadth instead of polishing further.</li>
+            <li><strong>System after two or three real cases,</strong> not before. Too much system too early freezes decisions before you know which are right.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Structural, not cosmetic.</strong> List, grid, command, one step, zero screens. If two directions share the same skeleton, they are one direction.</li>
+            <li><strong>Declare the level with evidence.</strong> "This is a 5: consistent spacing and states, but long names break and there is no empty state." Then set the target.</li>
+            <li><strong>Three passes.</strong> Obvious gaps; consistency and interaction quality; edge cases and excellence. Re-critique after each.</li>
+            <li><strong>Minimum fidelity for the question.</strong> Gray boxes are enough to test flow; real copy is required to test hierarchy; running code is required to test feel.</li>
+            <li><strong>A dial beats a spec.</strong> Tune the spring, blur or offset while using the thing. You feel the range and remember it.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Craft de interfaces, handbook</em> (chapter 15) · <a href="https://www.interfacecraft.dev/" target="_blank" rel="noopener">Josh Puckett, Interface Craft</a> (breadth before depth, the 1 to 10 ladder, DialKit) · <a href="https://rauno.me/craft/interaction-design" target="_blank" rel="noopener">Rauno Freiberg</a> (prototype in the right material)</footer>
+        </article>
+
+<article class="lesson" id="critique-protocol">
+          <span class="eyebrow">Craft · 17</span>
+          <h2>Critique Protocol</h2>
+          <p class="lede">Eight steps that produce useful critique instead of opinion, and a way to score quality that turns "I don't like it" into something the team can act on.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="critique">
+            <div class="demo-stage">
+            <div class="cr-list"><div class="cr-item sev-low" style="--o:1; --s:3" tabindex="0"><span class="cr-sev">Low</span><b>Shadow too heavy on cards</b><span class="cr-detail"><em>Observation:</em> Two-layer shadow at 0.2 opacity. <em>Impact:</em> Cards float above the page content. <em>Direction:</em> Halve the opacity, keep the ring.</span></div><div class="cr-item sev-blocker" style="--o:2; --s:0" tabindex="0"><span class="cr-sev">Blocker</span><b>Save fails silently on timeout</b><span class="cr-detail"><em>Observation:</em> Button returns to idle with no message. <em>Impact:</em> Work is lost without the person knowing. <em>Direction:</em> Keep the form, show the three-part error, retry.</span></div><div class="cr-item sev-medium" style="--o:3; --s:2" tabindex="0"><span class="cr-sev">Medium</span><b>Two icon sets in the toolbar</b><span class="cr-detail"><em>Observation:</em> 1.5 and 2px strokes side by side. <em>Impact:</em> Reads as two products. <em>Direction:</em> One family, one stroke.</span></div><div class="cr-item sev-high" style="--o:4; --s:1" tabindex="0"><span class="cr-sev">High</span><b>Submenu closes on the way</b><span class="cr-detail"><em>Observation:</em> Diagonal move leaves the parent. <em>Impact:</em> People miss the target repeatedly. <em>Direction:</em> Safe triangle or 250ms delay.</span></div><div class="cr-item sev-low" style="--o:5; --s:3" tabindex="0"><span class="cr-sev">Low</span><b>Uppercase labels too tight</b><span class="cr-detail"><em>Observation:</em> Tracking at 0 on 11px caps. <em>Impact:</em> Labels read as blocks. <em>Direction:</em> +0.06em.</span></div><div class="cr-item sev-high" style="--o:6; --s:1" tabindex="0"><span class="cr-sev">High</span><b>Delete has no undo</b><span class="cr-detail"><em>Observation:</em> Confirmation dialog on every delete. <em>Impact:</em> Skimmed through; mistakes are final. <em>Direction:</em> Undo toast, 5 seconds.</span></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Sort by severity</span><input type="checkbox" name="severity" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Hover a finding to read it as observation, impact and direction. Then sort by severity: the shadow can wait behind the lost-data bug.</figcaption>
+          </figure>
+
+          <h3>The protocol</h3>
+          <ol>
+            <li><strong>Context.</strong> What is this screen, for whom, in what emotional state does the person arrive, and are we looking at representative data?</li>
+            <li><strong>Observation.</strong> Only recording, zero prescription. The seven lenses.</li>
+            <li><strong>First impression.</strong> One direct, decided paragraph. Vague does not count.</li>
+            <li><strong>Layered audit,</strong> in this order: visual, interface, consistency, user context. Each item as observation, impact, better direction.</li>
+            <li><strong>Uncommon care.</strong> Where are we at "good enough" and what would be exceptional?</li>
+            <li><strong>Less, but better.</strong> What to remove, simplify, unify.</li>
+            <li><strong>Ranked recommendations,</strong> by severity: blocker (prevents the task, loses data, breaks trust), high (causes recurring hesitation or error), medium (perceptible inconsistency, accumulating friction), low (refinement).</li>
+            <li><strong>Baseline gap.</strong> Below, at or above the category standard, and what is missing to reach baseline before innovating.</li>
+          </ol>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Define facets of quality first.</strong> Three to five adjectives the product should be: careful, fast, authentic, dense, trustworthy. Score each from 1 to 5, find the weakest, make it the focus of the next iteration.</li>
+            <li><strong>Structure, then behavior, then visual.</strong> Critique that starts with the visual spends the team's time in the wrong place.</li>
+            <li><strong>Receiving critique:</strong> separate the observation from the prescription. The observation is almost always valid; the proposed solution often is not. Ask what the person noticed before discussing what they suggested. If three people hesitated at the same point, the point is wrong even if they explain it three different ways.</li>
+            <li><strong>Defend with reasons.</strong> Defending a decision is legitimate; defending it without articulating why means it was made by luck.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Facets before findings.</strong> Agree on the five adjectives first, or every finding will be argued from a different standard.</li>
+            <li><strong>Observation, impact, direction.</strong> Every item in that shape. Observations without impact are trivia; directions without observations are opinions.</li>
+            <li><strong>Severity decides order.</strong> Blocker, high, medium, low. A perfect shadow proposal waits behind a lost-data bug.</li>
+            <li><strong>Context frame first.</strong> Who, when, how stressed, with what data. A stressful screen is critiqued differently from a playful one.</li>
+            <li><strong>Separate the noticing from the fix</strong> when receiving critique too. Thank the observation, question the prescription.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Craft de interfaces, handbook</em> (chapter 16 and appendix D) · <a href="https://www.interfacecraft.dev/" target="_blank" rel="noopener">Josh Puckett, Interface Craft</a> (design critique, facets of quality)</footer>
+        </article>
+
+<article class="lesson" id="when-craft-is-waste">
+          <span class="eyebrow">Craft · 18</span>
+          <h2>When Craft Is Waste</h2>
+          <p class="lede">Being honest about this is what gives the rest credibility. Refining everything is indistinguishable from not knowing how to prioritize.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="waste">
+            <div class="demo-stage">
+            <div class="wc-grid"><button class="wc-tile" type="button" data-toggle="show-1"><b>Editor canvas</b><span>used 300× a day</span><span class="wc-verdict v-0">Invest: uncommon care</span></button><button class="wc-tile" type="button" data-toggle="show-2"><b>Promo banner</b><span>lives for two weeks</span><span class="wc-verdict v-2">Skip: not worth it</span></button><button class="wc-tile" type="button" data-toggle="show-3"><b>Login</b><span>once a day, category baseline</span><span class="wc-verdict v-1">Baseline only</span></button><button class="wc-tile" type="button" data-toggle="show-4"><b>Settings</b><span>monthly, rarely seen</span><span class="wc-verdict v-1">Baseline only</span></button></div>
+            </div>
+          </div>
+            <figcaption class="demo-caption">Click each surface to reveal where the care goes. Frequency, lifetime and whether the bottleneck is even here decide it.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Craft is waste when the concept has not been validated yet and you are polishing something that will be thrown away; when the screen will exist for two weeks; when the product's bottleneck is somewhere else, in acquisition, in price, in wrong data; and when it is applied uniformly instead of selectively. Deciding where to invest care is part of the craft, and possibly the hardest part.</p>
+          <p>Craft debt behaves like technical debt. An empty state not built today becomes ten empty states not built in six months, because a pattern that does not exist cannot be reused. The most common anti-pattern is deferring all care to a polish phase that never arrives, because there is always something more urgent.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Demonstrate, do not describe.</strong> Build both versions and put them side by side. Thirty seconds of comparison beat a presentation.</li>
+            <li><strong>Anchor in trust, not beauty.</strong> Handled error states reduce support tickets; robustness reduces bugs. Those arguments survive a priority discussion.</li>
+            <li><strong>Start small and visible.</strong> One refined component everyone uses changes the culture more than one beautiful screen nobody sees.</li>
+            <li><strong>Name the patterns.</strong> When the team has words for "empty state", "uncommon care" and "category baseline", conversations get faster and decisions more consistent.</li>
+            <li><strong>Recurring budget, not a phase.</strong> A fraction of every cycle, always, and a state check as part of the definition of done.</li>
+            <li><strong>Taste is a loop.</strong> Expose yourself to good work, articulate why it is good, try to reproduce it, fail at a specific point, discover what was hidden there, repeat. The step most people skip is the second one. Consuming references without articulating produces mimicry; articulating produces method.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Validate before you polish.</strong> Care spent on an unproven concept is the most expensive kind.</li>
+            <li><strong>Lifetime matters.</strong> A two-week banner does not earn edge cases. A daily-use editor earns all of them.</li>
+            <li><strong>Side by side wins arguments.</strong> Build the careful version next to the current one and let people feel the difference for thirty seconds.</li>
+            <li><strong>Debt compounds.</strong> One missing pattern becomes ten missing instances. Establish empty, error, loading and truncation once and reuse.</li>
+            <li><strong>Budget every cycle.</strong> A small fraction of each sprint, always, beats a polish phase that never comes.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Craft de interfaces, handbook</em> (chapter 17) · <a href="https://www.interfacecraft.dev/" target="_blank" rel="noopener">Josh Puckett, Interface Craft</a> · Radilson Gomes, <a href="https://radilson.com" target="_blank" rel="noopener">Design Craft</a></footer>
+        </article>
+      </section>
+      <footer class="footer"><p>Personal study library. Content synthesized from the sources listed in each lesson; course and author names belong to their respective owners. Hierarchy through size, weight and space only.</p></footer>
+    </div>
+  </main>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

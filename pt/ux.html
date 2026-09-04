@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-lang="pt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UX — Interface Craft</title>
+  <meta name="description" content="Como as pessoas percebem, lembram, decidem e sentem. A camada cognitiva embaixo de toda decisão de interface, com as ressalvas que o folclore deixa de fora.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#fcfcfc" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
+  <script>
+    // Applies the saved theme before first paint to avoid a flash
+    try { var t = localStorage.getItem('theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script>
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <div>
+        <div class="brand-name">Interface Craft</div>
+        <div class="brand-sub">Biblioteca viva</div>
+      </div>
+      <div class="controls">
+        <nav class="lang-switch" aria-label="Idioma"><a class="lang-opt" href="../ux.html" data-lang="en" hreflang="en">EN</a><a class="lang-opt" href="#" data-lang="pt" hreflang="pt" aria-current="true">PT</a></nav>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Alternar tema claro e escuro" title="Alternar tema claro e escuro"><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+      </div>
+    </div>
+    <a class="back-link" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>Início</a>
+    <nav class="nav-groups" aria-label="Sumário da seção">
+      <div class="nav-group" data-section="ux" style="margin-top:0">
+        <div class="nav-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a7 7 0 0 0-4 12.7V18a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.3A7 7 0 0 0 12 3z"/><path d="M10 22h4"/></svg>UX</div>
+        <ul class="nav-list"><li><a class="nav-link" href="#preattentive-perception">Preattentive Perception</a></li><li><a class="nav-link" href="#feedback-where-the-eye-is">Feedback Where the Eye Is</a></li><li><a class="nav-link" href="#proximity-wins">Proximity Wins</a></li><li><a class="nav-link" href="#attention-is-zero-sum">Attention Is Zero-Sum</a></li><li><a class="nav-link" href="#working-memory">Working Memory</a></li><li><a class="nav-link" href="#cognitive-load-and-defaults">Cognitive Load and Defaults</a></li><li><a class="nav-link" href="#the-two-gulfs">The Two Gulfs</a></li><li><a class="nav-link" href="#how-people-decide">How People Decide</a></li><li><a class="nav-link" href="#biases-that-matter">Biases That Matter</a></li><li><a class="nav-link" href="#choice-architecture-and-ethics">Choice Architecture and Ethics</a></li><li><a class="nav-link" href="#ux-laws-with-caveats">UX Laws, With Caveats</a></li><li><a class="nav-link" href="#time-and-progress">Time and Progress</a></li><li><a class="nav-link" href="#peak-and-end">Peak and End</a></li><li><a class="nav-link" href="#friction-and-forms">Friction and Forms</a></li><li><a class="nav-link" href="#information-architecture">Information Architecture</a></li><li><a class="nav-link" href="#onboarding">Onboarding</a></li><li><a class="nav-link" href="#accessibility-as-ux">Accessibility as UX</a></li><li><a class="nav-link" href="#research-which-method">Research: Which Method Answers What</a></li><li><a class="nav-link" href="#metrics-and-experiments">Metrics and Experiments</a></li><li><a class="nav-link" href="#the-replication-crisis">The Replication Crisis</a></li></ul>
+      </div>
+      <div class="nav-group nav-other" data-section="ux">
+        <div class="nav-title">Outras seções</div>
+        <ul class="nav-list"><li><a class="nav-link" href="craft.html">Craft</a></li><li><a class="nav-link" href="typography.html">Typography</a></li><li><a class="nav-link" href="color.html">Color</a></li><li><a class="nav-link" href="layout.html">Layout</a></li><li><a class="nav-link" href="motion.html">Motion</a></li><li><a class="nav-link" href="referencias.html">Referências</a></li></ul>
+      </div>
+    </nav>
+  </aside>
+  <main class="content">
+    <div class="container">
+<section class="section" data-section="ux">
+        <div class="section-head" id="ux">
+          <span class="eyebrow">Seção 06</span>
+          <h2>UX</h2>
+          <p>Como as pessoas percebem, lembram, decidem e sentem. A camada cognitiva embaixo de toda decisão de interface, com as ressalvas que o folclore deixa de fora.</p>
+        </div>
+
+        <article class="lesson" id="preattentive-perception">
+          <span class="eyebrow">UX · 01</span>
+          <h2>Preattentive Perception</h2>
+          <p class="lede">Antes de qualquer pensamento, o sistema visual já decidiu o que vai ser notado. Algumas propriedades saltam em cerca de 200 milissegundos, sem busca nenhuma. São escassas, e fáceis de desperdiçar.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="popout">
+            <div class="demo-stage">
+            <div class="pp-grid"><button class="pp-dot" type="button" data-i="0" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="1" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="2" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="3" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="4" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="5" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="6" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="7" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="8" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="9" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="10" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="11" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="12" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="13" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="14" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="15" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="16" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="17" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="18" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="19" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="20" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="21" aria-label="Ponto"></button><button class="pp-dot pp-target" type="button" data-i="22" data-flash=is-found data-flash-ms=900 aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="23" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="24" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="25" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="26" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="27" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="28" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="29" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="30" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="31" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="32" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="33" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="34" aria-label="Ponto"></button><button class="pp-dot" type="button" data-i="35" aria-label="Ponto"></button></div><span class="pp-found">Achou</span>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Itens</span><input type="range" name="items" min="12" max="36" step="6" value="24" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Adicionar forma como segundo atributo</span><input type="checkbox" name="conjunction" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Clique no diferente. Só com cor ele salta em qualquer quantidade. Adicione forma e o quadrado vermelho se esconde entre círculos vermelhos e quadrados azuis: agora você varre.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Você não procura o ponto vermelho entre os azuis. Ele salta. Matiz, intensidade, orientação, tamanho, curvatura, movimento e agrupamento espacial são detectados em paralelo, antes de a atenção chegar. Duas coisas decorrem disso. O canal é escasso: marque cinco coisas diferentes com cor na mesma tela e nenhuma salta, porque a saliência vem do contraste com o entorno, não da propriedade em si. E combinar atributos quebra tudo: achar "o vermelho" é instantâneo, achar "o vermelho e quadrado" entre vermelhos redondos e azuis quadrados exige varrer item a item, e o tempo cresce com a quantidade. Codificar informação em duas dimensões ao mesmo tempo destrói o benefício da primeira.</p>
+          <p>As pessoas também não leem interfaces; escaneiam. Em texto denso o padrão é algo próximo de um F; em páginas estruturadas, saltos entre pontos salientes. As primeiras duas ou três palavras de cada linha carregam quase todo o peso, blocos longos são pulados inteiros, e negrito funciona exatamente enquanto é raro.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Um trabalho pré-atentivo por tela.</strong> Cor significa uma coisa; se significa cinco, não significa nada.</li>
+            <li><strong>Nunca exija uma conjunção.</strong> Se a pessoa precisa achar o item que é vermelho e quadrado, dê a ele uma terceira pista única.</li>
+            <li><strong>Comece os rótulos pelo que importa.</strong> "Exportar relatório", não "Opções para exportação do relatório".</li>
+            <li><strong>Tudo que parece anúncio é filtrado antes de ser lido.</strong> Informação importante mora no fluxo do conteúdo, não numa caixa colorida à direita.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Saliência é relativa.</strong> Um botão vermelho salta numa tela sem vermelho e some numa tela cheia dele. Audite a página inteira antes de escolher o acento.</li>
+            <li><strong>Gaste cor em um significado.</strong> Status, ou categoria, ou ação. Não os três.</li>
+            <li><strong>Evite busca por conjunção.</strong> "Achar a fatura atrasada do cliente X" precisa de uma pista única, não de vermelho mais um badge.</li>
+            <li><strong>Escreva para as três primeiras palavras.</strong> Títulos, rótulos e itens de lista são escaneados; o começo faz o trabalho.</li>
+            <li><strong>Não empacote informação como anúncio.</strong> Caixas coloridas à direita, banners no topo e qualquer coisa com borda e manchete são filtradas antes da leitura.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>UX, cognição e decisão, handbook</em> (capítulo 1) · Colin Ware, <em>Information Visualization: Perception for Design</em> · <a href="https://www.nngroup.com/articles/f-shaped-pattern-reading-web-content/" target="_blank" rel="noopener">Nielsen Norman Group, F-Shaped Pattern</a></footer>
+        </article>
+
+        <article class="lesson" id="feedback-where-the-eye-is">
+          <span class="eyebrow">UX · 02</span>
+          <h2>Feedback Where the Eye Is</h2>
+          <p class="lede">A visão nítida cobre cerca de dois graus do campo visual, mais ou menos uma unha com o braço estendido. Todo o resto é periferia. Uma mensagem de erro no topo de um formulário longo não existe para quem está olhando o campo lá embaixo.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="errorplace">
+            <div class="demo-stage">
+            <div class="ep-form"><div class="ep-top">Esse domínio de e-mail não é permitido.</div><div class="ep-field"><span class="ep-label">Nome completo</span><span class="ep-input"></span></div><div class="ep-field"><span class="ep-label">Empresa</span><span class="ep-input"></span></div><div class="ep-field"><span class="ep-label">Cargo</span><span class="ep-input"></span></div><div class="ep-field"><span class="ep-label">E-mail de trabalho</span><span class="ep-input ep-bad"></span><span class="ep-inline">Esse domínio de e-mail não é permitido.</span></div><button class="btn ep-submit" type="button" data-toggle="is-submitted" aria-pressed="false">Continuar</button></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Erro ao lado do campo</span><input type="checkbox" name="nearfield" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Clique em Continuar. Por padrão o erro fica no topo enquanto você olha o último campo. Mude para o lado do campo, onde o olho já está.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>A periferia tem baixa resolução e cor pouco confiável, mas é muito sensível a movimento e a contraste de luminosidade. É por isso que movimento é o canal mais confiável para chamar atenção fora do foco, e por isso ele é caro. Texto na periferia não é lido, é reconhecido pela forma, o que explica por que rótulos longos em barras laterais funcionam mal. E o feedback precisa aparecer onde a pessoa está olhando, que quase sempre é onde ela acabou de clicar, não no topo da página.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Erros ao lado do campo</strong> que os causou, e o primeiro campo inválido focado ao reenviar.</li>
+            <li><strong>Confirmação ao lado da ação.</strong> O botão, a linha, o item que mudou; o toast no canto é o fallback, não o padrão.</li>
+            <li><strong>Alertas periféricos precisam de movimento ou contraste,</strong> e de um motivo. Se é importante o bastante para puxar o olho, é importante o bastante para explicar.</li>
+            <li><strong>Rótulos curtos na navegação.</strong> Texto periférico é reconhecido pela silhueta; três palavras sobrevivem, sete não.</li>
+            <li><strong>Cegueira à mudança é o motivo de a animação existir.</strong> Uma mudança durante uma interrupção visual (piscar, corte, recarregamento) passa despercebida; continuidade é o que a mantém visível.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Inline antes do resumo.</strong> Um resumo de erros no topo pode existir, mas a mensagem ao lado do campo é obrigatória.</li>
+            <li><strong>Foque o primeiro problema ao enviar.</strong> Mova o foco e role até o primeiro campo inválido; não deixe a pessoa no botão.</li>
+            <li><strong>Toasts são periféricos.</strong> Bons para confirmações que não exigem ação; errados para qualquer coisa que exija decisão.</li>
+            <li><strong>Movimento na periferia precisa merecer.</strong> Um badge pulsando na borda puxa o olho toda vez; reserve para o que vale puxar.</li>
+            <li><strong>Teste numa página alta.</strong> Erros que parecem bem no mockup ficam fora da tela no celular.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>UX, cognição e decisão, handbook</em> (seções 1.2, 1.4) · <a href="https://www.nngroup.com/articles/errors-forms-design-guidelines/" target="_blank" rel="noopener">Nielsen Norman Group, Error-Message Guidelines for Forms</a></footer>
+        </article>
+
+        <article class="lesson" id="proximity-wins">
+          <span class="eyebrow">UX · 03</span>
+          <h2>Proximity Wins</h2>
+          <p class="lede">De todos os princípios da Gestalt, proximidade é o mais forte e o mais violado. Se um rótulo está mais perto do campo de baixo do que do dele, as pessoas leem como pertencente ao campo de baixo, diga o que disser a cor ou o alinhamento.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="gestalt">
+            <div class="demo-stage">
+            <div class="gs-form">
+              <div class="gs-group"><span class="gs-label">Nome</span><span class="gs-input"></span></div>
+              <div class="gs-group"><span class="gs-label">E-mail</span><span class="gs-input"></span></div>
+              <div class="gs-group"><span class="gs-label">Empresa</span><span class="gs-input"></span></div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Vão dentro do par</span><input type="range" name="inside" min="2" max="20" step="1" value="6" data-unit="px"><output></output></label><label class="ctl"><span class="ctl-label">Vão entre pares</span><input type="range" name="between" min="4" max="40" step="1" value="24" data-unit="px"><output></output></label></div>
+          </div>
+            <figcaption class="demo-caption">Arraste os dois vãos. Quando o de dentro se aproxima do de fora, os rótulos flutuam entre campos e o olho para de saber a quem pertencem. Cerca de 1:3 lê com clareza.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Os achados da Gestalt são os resultados perceptuais mais confiáveis que temos: antigos, replicados exaustivamente, com base fisiológica. Coisas perto são um grupo; coisas parecidas são um grupo; coisas no mesmo contêiner são um grupo; o olho segue linhas e completa formas; coisas que se movem juntas pertencem juntas. Proximidade vence todos os outros. Também é a ferramenta mais barata, porque é feita de nada.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Dentro menor que fora.</strong> O espaço dentro de um grupo deve ser claramente menor que o espaço entre grupos. Uma proporção de 1:2 comunica; 1:1,2 não comunica nada.</li>
+            <li><strong>Rótulo mais perto do próprio campo</strong> do que do anterior. Óbvio, e quebrado na maioria dos formulários.</li>
+            <li><strong>Região comum para conjuntos.</strong> Um card ou um fundo agrupa mais forte que uma borda sozinha.</li>
+            <li><strong>Similaridade para estado e tipo.</strong> Mesma forma para o mesmo tipo de coisa; não gaste com decoração.</li>
+            <li><strong>Destino comum para grupos que se movem.</strong> Arrasto múltiplo, transições em grupo: o que se move junto lê como um.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Proporção, não absoluto.</strong> 8px dentro e 24px entre lê como grupos; 12 e 16 lê como uma coluna indiferenciada.</li>
+            <li><strong>Rótulo 6 a 8px acima do campo,</strong> 20 a 24px antes do próximo. Essa regra sozinha conserta a maioria dos formulários.</li>
+            <li><strong>Bordas são o agrupador mais fraco.</strong> Espaço e fundo compartilhado fazem mais com menos tinta.</li>
+            <li><strong>Confira com desfoque.</strong> Desfoque o screenshot; os grupos que você vê são os que as pessoas veem.</li>
+            <li><strong>Alinhamento é continuidade.</strong> Uma borda esquerda para coisas relacionadas; borda quebrada é grupo quebrado.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>UX, cognição e decisão, handbook</em> (seção 1.3) · <a href="https://www.nngroup.com/articles/gestalt-proximity/" target="_blank" rel="noopener">Nielsen Norman Group, Proximity Principle</a></footer>
+        </article>
+
+        <article class="lesson" id="attention-is-zero-sum">
+          <span class="eyebrow">UX · 04</span>
+          <h2>Attention Is Zero-Sum</h2>
+          <p class="lede">Atenção é um foco único que se desloca. Cada elemento que compete por ela reduz a eficácia de todos os outros. Uma tela com três chamadas para ação converte menos que uma tela com uma, mesmo somando as três.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="isolation">
+            <div class="demo-stage">
+            <div class="pl-row"><div class="pl-card"><span class="pl-name">Starter</span><span class="pl-price">R$ 59</span><span class="pl-desc">Para uma pessoa</span><span class="pl-cta">Escolher</span></div><div class="pl-card"><span class="pl-name">Team</span><span class="pl-price">R$ 149</span><span class="pl-desc">Até 10 pessoas</span><span class="pl-cta">Escolher</span></div><div class="pl-card"><span class="pl-name">Business</span><span class="pl-price">R$ 399</span><span class="pl-desc">SSO e log de auditoria</span><span class="pl-cta">Escolher</span></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Planos destacados</span><input type="range" name="plans" min="0" max="3" step="1" value="1" data-unit=""><output></output></label></div>
+          </div>
+            <figcaption class="demo-caption">Arraste de 0 a 3. Um plano destacado é uma recomendação; três planos destacados são nenhum.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Não existe atender a duas coisas ao mesmo tempo, só alternar, e a alternância custa. Uma interrupção não custa a própria duração; custa isso mais o tempo de reconstruir o contexto mental, que em trabalho complexo pode ser minutos. Notificações durante tarefas focadas, modais sem pedido, tours de onboarding no meio do uso, pedidos de avaliação em momentos aleatórios: antes de interromper, pergunte se isto é mais importante do que aquilo que a pessoa está fazendo agora. Quase nunca é.</p>
+          <p>Toda tela precisa de uma resposta explícita para o que deve ser visto primeiro, segundo e terceiro. Se você não decidir, acidentes de layout decidem. As ferramentas, em ordem aproximada de força: movimento, tamanho e peso, contraste e cor, posição, espaço em volta, forma incomum. A falha comum é usar todas no mesmo elemento e depois inflar o resto para compensar, até a tela inteira gritar e nada ser ouvido.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Uma ação primária por tela.</strong> As demais são secundárias por decisão, não por acidente.</li>
+            <li><strong>Destaque uma coisa.</strong> O efeito de isolamento funciona porque o item diferente é raro. Destacar três de cinco planos não destaca nada.</li>
+            <li><strong>Interrompa só pelo que vence a tarefa atual.</strong> Senão enfileire, sinalize com um badge, ou deixe esperar.</li>
+            <li><strong>Escalada é sintoma.</strong> Se você vive aumentando coisas para serem notadas, remova coisas.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Conte as chamadas para ação.</strong> Mais de uma primária por tela significa nenhuma.</li>
+            <li><strong>Interrupções custam contexto, não segundos.</strong> Pergunte se a interrupção vence a tarefa atual; enfileire se não.</li>
+            <li><strong>Uma ferramenta de hierarquia por vez.</strong> Tamanho, ou peso, ou cor. Empilhar começa a corrida armamentista.</li>
+            <li><strong>Isolamento é orçamento.</strong> Um plano destacado, um badge de "novo", uma opção recomendada.</li>
+            <li><strong>Telas quietas vencem.</strong> Remover elementos concorrentes aumenta a eficácia do que sobra mais do que amplificá-lo.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>UX, cognição e decisão, handbook</em> (capítulo 2) · <a href="https://www.nngroup.com/articles/von-restorff-effect/" target="_blank" rel="noopener">Nielsen Norman Group, Von Restorff Effect</a></footer>
+        </article>
+
+        <article class="lesson" id="working-memory">
+          <span class="eyebrow">UX · 05</span>
+          <h2>Working Memory</h2>
+          <p class="lede">"Sete mais ou menos dois" é o número mais citado e mais mal aplicado do design. A capacidade ativa real fica perto de três ou quatro blocos, e só importa para informação que não está mais na tela.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="chunk">
+            <div class="demo-stage">
+            <div class="ck-wrap">
+              <div class="ck-code"><span class="ck-cap">Enviamos um código</span><b class="ck-digits"><span>482</span><span>913</span></b></div>
+              <label class="mf-label">Código de verificação<input class="mf-input ck-input" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="6 dígitos" data-code></label>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Agrupado</span><input type="checkbox" name="chunked" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Manter o código visível ao digitar</span><input type="checkbox" name="visible" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Digite o código. Agrupado em 3-3 são dois itens, não seis. Desligue “visível” e o código some assim que você foca o campo: agora ele mora na memória de trabalho.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>O trabalho original mediu o span imediato para itens simples em laboratório. Pesquisa posterior coloca a retenção ativa em torno de três a quatro blocos, sem ensaio nem apoio externo. Mais importante: isso não é argumento para menus de sete itens. Um menu está na tela; ninguém o memoriza, lê. O limite morde quando a informação some: instruções de uma tela anterior, um código enviado por outro canal, valores comparados entre abas, um passo que depende de uma escolha feita três passos antes. A solução nunca é "mostre menos"; é "não exija memória".</p>
+          <p>Reconhecer é drasticamente mais fácil que recordar. Ofereça escolhas em vez de campos livres quando o conjunto é conhecido, mostre itens recentes, autocomplete em vez de sintaxe exata, mantenha a seleção visível e não só a contagem. O contraponto: para especialistas em tarefas frequentes, recordar é mais rápido, e é por isso que atalhos ganham de menus para quem já sabe. O ideal oferece os dois caminhos e faz um ensinar o outro.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Agrupe dados longos.</strong> Cartão em quatro grupos de quatro, código em dois grupos de três, chaves em segmentos. A capacidade é medida em blocos de significado, não em caracteres.</li>
+            <li><strong>Mantenha visível o que foi decidido</strong> entre passos; permita comparação lado a lado; preencha o que o sistema já sabe.</li>
+            <li><strong>Começo e fim são lembrados;</strong> o meio é onde as pessoas se perdem. Coloque o importante primeiro ou por último, e indicadores de progresso no meio de fluxos longos.</li>
+            <li><strong>Estados incompletos visíveis motivam conclusão,</strong> não por um mecanismo especial de memória (o efeito Zeigarnik replica mal), mas porque a lacuna é uma pista persistente na tela.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Três a quatro blocos,</strong> e só para o que está fora da tela. Informação na tela não custa memória.</li>
+            <li><strong>Agrupe tudo que é longo.</strong> 4-4-4-4 para cartões, 3-3 para códigos, segmentos para chaves. Menos erro de digitação e conferência, de graça.</li>
+            <li><strong>Mostre a escolha anterior.</strong> No passo 4, a decisão do passo 1 continua visível.</li>
+            <li><strong>Recentes, autocomplete, seletores.</strong> Reconhecimento sobre recordação onde o conjunto é conhecido.</li>
+            <li><strong>Especialistas recordam.</strong> Dê atalhos e sintaxe de comando, e deixe o menu ensinar o atalho.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>UX, cognição e decisão, handbook</em> (capítulo 3) · Nelson Cowan, <em>The magical number 4 in short-term memory</em> (2001) · <a href="https://www.nngroup.com/articles/recognition-and-recall/" target="_blank" rel="noopener">Nielsen Norman Group, Recognition vs Recall</a></footer>
+        </article>
+
+        <article class="lesson" id="cognitive-load-and-defaults">
+          <span class="eyebrow">UX · 06</span>
+          <h2>Cognitive Load and Defaults</h2>
+          <p class="lede">Toda tarefa tem uma quantidade irredutível de complexidade. Você não a remove; escolhe quem a carrega: a pessoa, o designer ou o sistema.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="infer">
+            <div class="demo-stage">
+            <div class="in-form">
+              <label class="mf-label">CEP<input class="mf-input in-zip" type="text" inputmode="numeric" maxlength="9" placeholder="01310-100" data-zip></label>
+              <div class="in-row2"><label class="mf-label">Cidade<input class="mf-input in-city" type="text" readonly></label><label class="mf-label">Estado<input class="mf-input in-state" type="text" readonly></label></div>
+              <span class="in-hint">Tente 01310-100, 20040-020 ou 30130-010</span>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Inferir cidade e estado</span><input type="checkbox" name="infer" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Digite um CEP. Com inferência o sistema preenche o resto, e duas perguntas desaparecem. Sem ela, a mesma complexidade é entregue à pessoa.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Quando algo parece difícil, pergunte que tipo de carga é. Carga intrínseca é a dificuldade da tarefa em si; uma declaração de imposto é complexa e você só pode sequenciar. Carga estranha é esforço causado pela apresentação: layout confuso, rótulos ambíguos, inconsistência, informação espalhada. Essa é bug de design, e é a maior parte do trabalho. Carga relevante é esforço gasto construindo entendimento, a única que você quer aumentar, e só quando aprender é o objetivo. Confundir intrínseca com estranha produz interfaces que escondem complexidade necessária.</p>
+          <p>Um padrão bem escolhido remove uma decisão. Multiplicado por milhares de pessoas, é a intervenção de maior alavancagem que qualquer produto tem. Pelo mesmo motivo é a ferramenta preferida da manipulação; a responsabilidade cresce com o poder.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Mova trabalho para o sistema.</strong> Detecte a operadora pelo número, infira o fuso, aceite o cartão com espaços, deduza o endereço pelo CEP, escolha um padrão sensato em vez de exigir decisão.</li>
+            <li><strong>Revelação progressiva bem feita.</strong> O caminho comum completo no primeiro nível; o nível avançado visível, não escondido; o corte decidido por dados de uso, não por intuição.</li>
+            <li><strong>Padrões que servem à maioria,</strong> medidos e não supostos, que beneficiam a pessoa e não o negócio, fáceis de mudar, e que aprendem com o comportamento.</li>
+            <li><strong>Diagnostique antes de simplificar.</strong> Se a carga é intrínseca, a resposta é estrutura, não remoção.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Nomeie a carga.</strong> Intrínseca ganha estrutura e sequência; estranha é apagada; relevante é só para aprender.</li>
+            <li><strong>Toda inferência é uma pergunta removida.</strong> Operadora pelo número, cidade pelo CEP, moeda pelo locale, categoria pelo histórico.</li>
+            <li><strong>Avançado é visível, não escondido.</strong> Revelação progressiva mostra que existe mais; não enterra.</li>
+            <li><strong>Padrões a partir de dados.</strong> Meça o que a maioria escolhe; não chute, e não escolha o que dá mais dinheiro.</li>
+            <li><strong>Padrões que aprendem.</strong> Último usado, mais usado ou inferido do contexto vencem um padrão fixo.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>UX, cognição e decisão, handbook</em> (capítulo 4) · John Sweller, teoria da carga cognitiva · Larry Tesler, lei de conservação da complexidade</footer>
+        </article>
+
+        <article class="lesson" id="the-two-gulfs">
+          <span class="eyebrow">UX · 07</span>
+          <h2>The Two Gulfs</h2>
+          <p class="lede">Todo problema de usabilidade é um de dois: a pessoa não sabe como pedir o que quer, ou a pessoa não consegue saber o que aconteceu depois de pedir. Diagnosticar qual muda toda a solução.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="signifiers">
+            <div class="demo-stage">
+            <div class="sg-row"><span class="sg-item" role="button" tabindex="0" data-pick="0">Visão geral</span><span class="sg-item" role="button" tabindex="0" data-pick="1">Membros</span><span class="sg-item" role="button" tabindex="0" data-pick="2">Cobrança</span><span class="sg-item" role="button" tabindex="0" data-pick="3">Exportar</span></div><span class="sg-state"></span>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Significantes</span><input type="checkbox" name="signifiers" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Feedback depois do clique</span><input type="checkbox" name="feedback" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Clique nas palavras. Sem significantes não dá para saber que são clicáveis (golfo de execução). Sem feedback não dá para saber se o clique funcionou (golfo de avaliação).</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>O golfo de execução de Don Norman é a distância entre a intenção e a ação necessária; quando é largo, "sei o que quero, mas não sei como pedir". O golfo de avaliação é a distância entre o que o sistema fez e o que a pessoa consegue entender que aconteceu; quando é largo, "cliquei e não sei se funcionou". Problemas de execução aparecem como hesitação e ação errada e se resolvem com rótulos, significantes, menos passos e padrões. Problemas de avaliação aparecem como repetição e incerteza e se resolvem com feedback, estado visível e confirmação. Em teste de usabilidade, classifique cada momento de dificuldade como um ou outro; o padrão que emerge diz onde investir.</p>
+          <p>Interfaces digitais quase não têm affordances reais, só significantes: a sombra que sugere elevação, o sublinhado do link, o cursor. Design plano levado ao extremo removeu os significantes, e as pessoas deixaram de saber o que é clicável. O teste é simples: numa captura estática, sem hover, dá para dizer o que é interativo?</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Classifique, depois conserte.</strong> Execução ganha significantes mais claros e menos passos; avaliação ganha estado e feedback.</li>
+            <li><strong>Mapeamento é espacial.</strong> O controle perto do que afeta, a ordem dos controles espelhando a ordem do resultado, um controle com um efeito.</li>
+            <li><strong>Restrições previnem erro.</strong> Torne o erro impossível primeiro, detectável na hora depois, reversível em seguida, explicado por último. A maioria dos produtos só faz o último.</li>
+            <li><strong>Explicite o modelo conceitual.</strong> Quais são os objetos principais, como se relacionam, o que acontece com o filho quando o pai é apagado, onde as coisas ficam. Se é confuso para o time, é impossível para a pessoa, e vocabulário inconsistente é o primeiro sintoma.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Classifique cada tropeço.</strong> Antes de agir ou depois de agir. A contagem é o seu roadmap.</li>
+            <li><strong>Teste do screenshot.</strong> Sem hover, sem cursor: dá para dizer o que é clicável? Se não, adicione significantes.</li>
+            <li><strong>Um controle, um efeito.</strong> Botões que dependem de contexto são fonte constante de erro.</li>
+            <li><strong>Restrições vencem mensagens de erro.</strong> Desabilite o que não se aplica, limite faixas, mostre a forma esperada.</li>
+            <li><strong>Um nome por objeto.</strong> Vocabulário inconsistente é o primeiro sinal de modelo conceitual não resolvido.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>UX, cognição e decisão, handbook</em> (capítulo 5) · Don Norman, <em>The Design of Everyday Things</em> · <a href="https://www.nngroup.com/articles/two-ux-gulfs-evaluation-execution/" target="_blank" rel="noopener">Nielsen Norman Group, The Two UX Gulfs</a></footer>
+        </article>
+
+        <article class="lesson" id="how-people-decide">
+          <span class="eyebrow">UX · 08</span>
+          <h2>How People Decide</h2>
+          <p class="lede">A maior parte das interações acontece no automático, com atenção mínima. As pessoas não otimizam; pegam a primeira opção que parece boa o suficiente e param. A decisão de design é qual modo você quer ativar.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="structure">
+            <div class="demo-stage">
+            <div class="st-grid"><button class="st-plan" type="button" data-pick="0" style="--o:3"><span class="st-name">Pro</span><span class="st-price">R$ 149 / mês</span><span class="st-dim">10 assentos</span><span class="st-badge">Recomendado</span></button><button class="st-plan" type="button" data-pick="1" style="--o:1"><span class="st-name">Basic</span><span class="st-price">R$ 49 / mês</span><span class="st-dim">1 assento</span><span class="st-badge">Recomendado</span></button><button class="st-plan" type="button" data-pick="2" style="--o:2"><span class="st-name">Team</span><span class="st-price">R$ 99 / mês</span><span class="st-dim">5 assentos</span><span class="st-badge">Recomendado</span></button><button class="st-plan" type="button" data-pick="3" style="--o:6"><span class="st-name">Enterprise</span><span class="st-price">R$ 499 / mês</span><span class="st-dim">Ilimitado</span><span class="st-badge">Recomendado</span></button><button class="st-plan" type="button" data-pick="4" style="--o:4"><span class="st-name">Plus</span><span class="st-price">R$ 249 / mês</span><span class="st-dim">25 assentos</span><span class="st-badge">Recomendado</span></button><button class="st-plan" type="button" data-pick="5" style="--o:0"><span class="st-name">Free</span><span class="st-price">R$ 0</span><span class="st-dim">1 assento, limitado</span><span class="st-badge">Recomendado</span></button></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Estruturar a comparação</span><input type="checkbox" name="structured" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Escolha um plano. Sem estrutura: seis cards em ordem aleatória sem dimensão dominante. Com estrutura: ordenados por preço, assentos como a única coisa a comparar, um padrão recomendado.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>A imagem do rápido e do lento é metáfora útil, não neuroanatomia; não existem dois sistemas, só um contínuo entre processamento automático e controlado. O que sobrevive é prático. Escrever rótulos para leitura atenta é escrever errado. Quando a decisão importa (pagamento, exclusão, permissões), o design deve forçar o modo deliberado com fricção, especificidade e confirmação. Quando não importa, forçar deliberação é crueldade.</p>
+          <p>Quando as pessoas dizem que querem algo e não fazem, o problema não é motivação. Comportamento precisa de motivação, capacidade e gatilho ao mesmo tempo, e o erro típico de produto é atacar a motivação com mais persuasão quando o gargalo é capacidade ou momento. Tornar mais fácil é quase sempre mais barato e mais eficaz do que tornar mais desejável.</p>
+          <p>O folclore da sobrecarga de escolha também é mais fraco do que parece: meta-análises encontram efeito médio perto de zero, aparecendo só quando as opções são difíceis de comparar e a decisão parece consequente. O problema raramente é o número; é a ausência de estrutura.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Ordem carrega peso.</strong> A primeira opção plausível ganha, então ordenar por interesse do negócio em vez do da pessoa é escolha ética, não neutra.</li>
+            <li><strong>Estruture a comparação.</strong> Uma dimensão dominante, ordenação, filtros, agrupamento, um padrão recomendado.</li>
+            <li><strong>Diagnostique o fator que falta.</strong> Motivação, capacidade ou gatilho. Conserte esse.</li>
+            <li><strong>Escolha o modo de propósito.</strong> Sem fricção para o rotineiro, deliberado para o consequente.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Desenhe para o automático,</strong> e interrompa de propósito só quando a decisão é consequente.</li>
+            <li><strong>Ordem é decisão.</strong> A primeira opção plausível ganha; coloque o interesse da pessoa primeiro.</li>
+            <li><strong>Capacidade antes de motivação.</strong> Quando as pessoas dizem que querem e não fazem, facilite em vez de atrair.</li>
+            <li><strong>Estruture, não encolha.</strong> Ordenação, filtros, uma dimensão dominante e um padrão recomendado resolvem sobrecarga melhor que menos opções.</li>
+            <li><strong>Gatilho na hora certa.</strong> O lembrete chega quando a pessoa pode agir, não quando é conveniente enviar.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>UX, cognição e decisão, handbook</em> (capítulo 6) · Daniel Kahneman, <em>Rápido e Devagar</em> · BJ Fogg, modelo de comportamento · Scheibehenne, Greifeneder e Todd, <em>Can There Ever Be Too Many Options?</em> (2010)</footer>
+        </article>
+
+        <article class="lesson" id="biases-that-matter">
+          <span class="eyebrow">UX · 09</span>
+          <h2>Biases That Matter</h2>
+          <p class="lede">Uma lista curta em vez de um catálogo de cem. O primeiro número mostrado ancora tudo depois. Perder pesa mais que ganhar. As pessoas ficam com o que já está selecionado. E o que mais importa para times de produto é o que você não consegue ver de dentro.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="framing">
+            <div class="demo-stage">
+            <div class="fr-card">
+              <span class="fr-anchor">R$ 449</span>
+              <span class="fr-price">R$ 249 / ano</span>
+              <span class="fr-gain">Você mantém 90% do seu armazenamento ao reduzir o plano.</span><span class="fr-loss">Você vai perder 10% do seu armazenamento ao reduzir o plano.</span>
+              <button class="btn fr-btn" type="button" tabindex="-1">Continuar</button>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Mostrar uma âncora</span><input type="checkbox" name="anchor" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Enquadrar como perda</span><input type="checkbox" name="loss" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Mesmo preço, mesmo fato. A âncora riscada faz R$ 249 parecer barato; o enquadramento de perda faz os mesmos 10% pesarem mais. Nenhum é neutro; os dois são decisões.</figcaption>
+          </figure>
+
+          <h3>A lista curta</h3>
+          <ul>
+            <li><strong>Ancoragem.</strong> O primeiro preço define o que parece caro; o plano do meio parece razoável por causa dos extremos. Legítima para calibrar expectativas em domínios desconhecidos; ilegítima como preços "de" que nunca existiram.</li>
+            <li><strong>Aversão à perda.</strong> A direção é sólida; a magnitude clássica de duas vezes é contestada. "Você vai perder seus dados" é mais potente que "salve seus dados", e exatamente por isso pede cuidado. Períodos de teste geram dotação; remover uma funcionalidade gera reação desproporcional ao uso.</li>
+            <li><strong>Padrão e status quo.</strong> O efeito mais forte, mais consistente e mais explorado em interfaces digitais. Consentimento pré-marcado é o abuso canônico, e é ilegal em várias jurisdições por isso.</li>
+            <li><strong>Enquadramento.</strong> "90% de sucesso" e "10% de falha" são o mesmo número e não a mesma decisão. Não existe enquadramento neutro; a questão é se a escolha foi consciente e a favor de quem.</li>
+            <li><strong>Custo afundado.</strong> Progresso investido ajuda a concluir fluxos que beneficiam a pessoa; explorá-lo para obstruir o cancelamento é dark pattern. Também opera dentro dos times, mantendo direções de produto vivas pelo que já foi gasto.</li>
+            <li><strong>Prova social.</strong> Honesta quando o número é real e verificável; desonesta como contadores inventados e urgência fabricada.</li>
+            <li><strong>Maldição do conhecimento.</strong> Quem sabe não consegue simular quem não sabe. É por isso que "isso é óbvio", jargão interno na interface e descrença em teste de usabilidade acontecem. O único antídoto confiável é ver pessoas reais usando. Não perguntar: ver.</li>
+            <li><strong>Efeito estético-usabilidade.</strong> Interfaces bonitas são percebidas como mais usáveis, e a percepção sobrevive a problemas reais. Então, em teste, confie no comportamento observado mais que no relato: quem hesitou oito segundos e disse "achei fácil" hesitou oito segundos.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Ancore com honestidade.</strong> Mostre preços de referência reais; nunca invente um preço "de".</li>
+            <li><strong>Enquadre conscientemente.</strong> Decida se apresenta ganho ou perda, e a favor de quem.</li>
+            <li><strong>Padrões são poder.</strong> Consentimento pré-marcado é o abuso canônico e frequentemente ilegal.</li>
+            <li><strong>Veja, não pergunte.</strong> A maldição do conhecimento torna seu julgamento de "óbvio" pouco confiável.</li>
+            <li><strong>Desconte elogios em teste.</strong> Interfaces bonitas são relatadas como mais fáceis do que foram.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>UX, cognição e decisão, handbook</em> (capítulo 7) · Daniel Kahneman, <em>Rápido e Devagar</em> · <a href="https://www.nngroup.com/articles/aesthetic-usability-effect/" target="_blank" rel="noopener">Nielsen Norman Group, The Aesthetic-Usability Effect</a></footer>
+        </article>
+
+        <article class="lesson" id="choice-architecture-and-ethics">
+          <span class="eyebrow">UX · 10</span>
+          <h2>Choice Architecture and Ethics</h2>
+          <p class="lede">Toda tela apresenta opções em alguma ordem, com algum padrão, em algum enquadramento. Não existe versão sem essas escolhas. A pergunta não é se você está influenciando, mas a favor de quem.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="consent">
+            <div class="demo-stage">
+            <div class="cs-dialog" role="dialog" aria-label="Cookies">
+              <b class="cs-title">Cookies</b>
+              <p class="cs-text"><span class="honest">Usamos cookies para analytics. Escolha o que permitir.</span><span class="dark">Usamos cookies para dar a melhor experiência. Continue aproveitando o site.</span></p>
+              <label class="cs-check"><input type="checkbox" data-consent> <span>Analytics</span></label>
+              <label class="cs-check"><input type="checkbox" data-consent> <span>Anúncios personalizados</span></label>
+              <div class="cs-actions">
+                <button class="cs-decline" type="button" data-flash="is-saved" data-flash-ms="1200"><span class="honest">Recusar</span><span class="dark">Não, prefiro uma experiência pior</span></button>
+                <button class="cs-accept" type="button" data-flash="is-saved" data-flash-ms="1200">Aceitar tudo</button>
+              </div>
+              <span class="cs-saved">Preferência salva</span>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Padrão enganoso</span><input type="checkbox" name="deceptive" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Clique num botão. Honesto: botões iguais, caixas desmarcadas, palavras simples. Enganoso: consentimento pré-marcado, recusa apagada com copy de culpa, um Aceitar gigante. Mesmo diálogo, intenção oposta.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Isso é libertador e responsabilizante ao mesmo tempo: remove a desculpa de "eu só mostrei as opções" e obriga a nomear o interesse servido. Três critérios separam nudge de manipulação, e o design precisa passar nos três. Transparência: a pessoa entenderia e aceitaria o mecanismo se ele fosse explicado? Um nudge que só funciona escondido é manipulação. Reversibilidade: sair é tão fácil quanto entrar? Dois cliques para assinar e nove ligações para cancelar é assimetria deliberada. Alinhamento: o empurrão serve à pessoa ou só ao negócio? Uma versão mais curta costuma bastar: você mostraria essa tela à pessoa explicando por que foi desenhada assim?</p>
+          <p>Padrões enganosos deixaram de ser só questão ética e viraram questão regulatória, com multas reais. Além do risco jurídico há o econômico: manipulação otimiza conversão de curto prazo e degrada retenção e confiança, uma troca ruim que só parece boa porque conversão é medida na semana seguinte e confiança nunca é medida.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Fricção deliberada é legítima</strong> quando protege a pessoa: confirmar uma ação irreversível, digitar um nome antes de destruir algo, uma pausa antes de enviar uma mensagem com raiva, um passo extra numa configuração de segurança. Mesmo mecanismo, propósito oposto ao do dark pattern.</li>
+            <li><strong>Reconheça a taxonomia.</strong> Furtividade (itens adicionados sem aviso, custo revelado no fim), urgência falsa, direção errada (recusa apagada, copy de culpa), prova social falsa, escassez falsa, obstrução (cancelamento assimétrico), ação forçada (conta obrigatória para ver preço, consentimento pré-marcado), interferência (dupla negativa, botões que trocam de posição).</li>
+            <li><strong>Recusa neutra, peso igual.</strong> A opção que não interessa ao negócio recebe o mesmo tamanho e contraste da que interessa.</li>
+            <li><strong>Meça confiança.</strong> Emparelhe toda métrica de conversão com uma de retenção ou reclamação que cairia se você trapaceasse.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Três testes.</strong> Transparente, reversível, alinhado. Falhe em um e é manipulação.</li>
+            <li><strong>Simetria de saída.</strong> Cancelar tem tantos passos quanto assinar, no mesmo canal.</li>
+            <li><strong>Peso igual para recusar.</strong> Mesmo tamanho, mesmo contraste, sem copy de culpa.</li>
+            <li><strong>Fricção protetora fica.</strong> Confirme o irreversível, digite o nome antes da catástrofe, pause a mensagem com raiva.</li>
+            <li><strong>Explique para a pessoa.</strong> Se você não conseguiria dizer em voz alta por que a tela é assim, refaça.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>UX, cognição e decisão, handbook</em> (capítulo 8 e apêndice B) · Richard Thaler e Cass Sunstein, <em>Nudge</em> · <a href="https://www.deceptive.design/" target="_blank" rel="noopener">Harry Brignull, Deceptive Design</a></footer>
+        </article>
+
+        <article class="lesson" id="ux-laws-with-caveats">
+          <span class="eyebrow">UX · 11</span>
+          <h2>UX Laws, With Caveats</h2>
+          <p class="lede">A maior parte das "leis de UX" circula sem o domínio de validade, e aplicá-las fora dele produz decisões ruins com aparência de rigor. Aqui estão elas com as fronteiras anexadas.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="postel">
+            <div class="demo-stage">
+            <form class="mini-form" onsubmit="return false">
+              <label class="mf-label">Telefone<input class="mf-input" type="text" inputmode="tel" autocomplete="off" placeholder="(11) 98765-4321" data-phone></label>
+              <p class="po-result"><span class="po-ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span class="po-norm"></span></span><span class="po-err">Use o formato 11987654321, só dígitos.</span></p>
+            </form>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Entrada liberal</span><input type="checkbox" name="liberal" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Digite um telefone com parênteses, espaços ou traços. Entrada liberal aceita qualquer formato razoável e normaliza; entrada rígida devolve o trabalho de limpeza para você.</figcaption>
+          </figure>
+
+          <h3>A lista</h3>
+          <table>
+            <thead><tr><th>Lei</th><th>Status</th><th>Onde vale</th></tr></thead>
+            <tbody>
+              <tr><td>Fitts</td><td>Sólida</td><td>Apontar para um alvo com mouse, dedo, caneta ou olhar. Maior e mais perto é mais rápido; bordas e cantos são infinitos.</td></tr>
+              <tr><td>Hick-Hyman</td><td>Sólida no domínio, mal aplicada fora</td><td>Reação de escolha simples entre opções conhecidas e equiprováveis. Não é ler um menu pela primeira vez, que é busca visual e cresce mais ou menos linearmente. "Menos opções é mais rápido" é frágil; vinte itens bem agrupados costumam ganhar de quatro menus aninhados de cinco.</td></tr>
+              <tr><td>Miller</td><td>Real, quase sempre citada errado</td><td>Memória imediata, não itens visíveis na tela. Se está na tela, não está na memória de trabalho.</td></tr>
+              <tr><td>Jakob</td><td>Heurística útil, não lei</td><td>As pessoas esperam que seu produto funcione como os outros. Regra de priorização: inove no que o produto faz, não em como a rolagem funciona.</td></tr>
+              <tr><td>Doherty</td><td>Sólida, contexto específico</td><td>Produtividade sobe acentuadamente abaixo de uns 400ms de resposta do sistema. O argumento mais forte para performance percebida.</td></tr>
+              <tr><td>Postel, para entrada</td><td>Princípio de projeto</td><td>Seja liberal no que aceita. Telefone com ou sem traço, cartão com espaços, datas em vários formatos, com ou sem acento na busca. Provavelmente o maior retorno por linha de código desta biblioteca.</td></tr>
+              <tr><td>Weber-Fechner</td><td>Sólida</td><td>A menor diferença perceptível é proporcional à magnitude. Dez milissegundos em 50 é óbvio; em 5 segundos não é nada. Uma mudança precisa de uns 20% para ser notada, e escalas visuais devem crescer geometricamente, e é por isso que boas escalas de tipo e espaço são multiplicativas.</td></tr>
+            </tbody>
+          </table>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Fitts: aumente alvos e use bordas.</strong> A única que dá para aplicar sem ressalvas.</li>
+            <li><strong>Hick não é sobre menus.</strong> Ler um menu é busca visual; agrupe e rotule em vez de cortar.</li>
+            <li><strong>Miller é sobre memória.</strong> Itens visíveis não contam.</li>
+            <li><strong>Postel compensa.</strong> Aceite todo formato razoável; normalize internamente.</li>
+            <li><strong>Weber-Fechner molda escalas.</strong> Degraus que crescem multiplicativamente são os que as pessoas distinguem.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>UX, cognição e decisão, handbook</em> (capítulo 9) · Paul Fitts (1954) · W. E. Hick (1952) e Ray Hyman (1953) · Doherty e Thadani (IBM, 1982) · <a href="https://lawsofux.com/" target="_blank" rel="noopener">Laws of UX</a>, lido com as ressalvas acima</footer>
+        </article>
+
+        <article class="lesson" id="time-and-progress">
+          <span class="eyebrow">UX · 12</span>
+          <h2>Time and Progress</h2>
+          <p class="lede">Tempo percebido tem mais a ver com incerteza e ocupação do que com o relógio. Uma espera com fim conhecido parece mais curta; uma espera injusta parece muito mais longa; uma barra que anda para trás destrói a estimativa e a confiança.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="endowed">
+            <div class="demo-stage">
+            <div class="ed-wrap"><div class="ed-bar"><span class="ed-fill"></span></div><span class="ed-count"></span><div class="todo ed-list"><label class="ed-row"><input type="checkbox" class="ed-input" data-step checked disabled data-endowed><span class="todo-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span>Criar sua conta</span></label><label class="ed-row"><input type="checkbox" class="ed-input" data-step><span class="todo-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span>Adicionar um projeto</span></label><label class="ed-row"><input type="checkbox" class="ed-input" data-step><span class="todo-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span>Convidar alguém do time</span></label><label class="ed-row"><input type="checkbox" class="ed-input" data-step><span class="todo-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span>Conectar uma ferramenta</span></label><label class="ed-row"><input type="checkbox" class="ed-input" data-step><span class="todo-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span>Publicar sua primeira página</span></label></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Começar com um pronto</span><input type="checkbox" name="endow" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Conclua os itens. Com progresso dotado a barra não começa em zero: a conta que você já criou conta, e as pessoas terminam mais.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Progresso determinado vale mais que indeterminado na mesma duração. Explicar o que está acontecendo encurta a espera. Se você não sabe o tempo, etapas nomeadas valem mais que uma porcentagem falsa. O esforço aumenta conforme a meta se aproxima, e uma variação bem estabelecida é o progresso dotado: um cartão com dez selos e dois já carimbados é completado com mais frequência que um cartão de oito vazios, apesar do mesmo esforço. Começar um checklist com um item pronto ("criar a conta") é uso honesto disso: reconhece trabalho que a pessoa de fato fez.</p>
+          <p>Contraintuitivo, mas em alguns contextos mostrar o sistema trabalhando aumenta a satisfação mesmo alongando a espera: buscas que exibem as fontes consultadas são avaliadas melhor que buscas instantâneas. O domínio importa. Funciona quando a tarefa é percebida como complexa e valiosa, o trabalho mostrado é real e a frequência é baixa. Falha em operações corriqueiras e frequentes, onde qualquer atraso é puro custo. Uma versão mais segura é a transparência operacional: mostrar o que está sendo feito sem demorar mais.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Otimize implacavelmente antes da primeira interação.</strong> Esperar antes de se comprometer custa desistência; depois de comprometida, a tolerância é maior.</li>
+            <li><strong>Nunca regrida uma barra.</strong> Passos que vão de 60% para 40% são piores que barra nenhuma.</li>
+            <li><strong>Nomeie as etapas</strong> quando a duração é desconhecida. "Conectando", "buscando resultados" comunicam progresso melhor que uma porcentagem inventada.</li>
+            <li><strong>Comece o checklist em um.</strong> Reconheça o que a pessoa já fez; nunca invente.</li>
+            <li><strong>Sem teatro.</strong> Atrasos artificiais num botão de salvar deixam tudo mais lento, não mais valioso.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Etapas nomeadas em vez de porcentagem falsa.</strong> "Conectando", "buscando", "renderizando" quando você não sabe o tempo.</li>
+            <li><strong>Nunca ande para trás.</strong> Uma barra que regride destrói confiança mais rápido que uma lenta.</li>
+            <li><strong>Dote com honestidade.</strong> Conte a criação da conta como passo um porque foi.</li>
+            <li><strong>Ilusão de trabalho só em tarefas raras e valiosas.</strong> Nunca em operações frequentes.</li>
+            <li><strong>A primeira interação é sagrada.</strong> Otimize o tempo até a primeira ação possível acima de tudo.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>UX, cognição e decisão, handbook</em> (capítulo 10) · Nunes e Drèze, <em>The Endowed Progress Effect</em> (2006) · Buell e Norton, <em>The Labor Illusion</em> (2011)</footer>
+        </article>
+
+        <article class="lesson" id="peak-and-end">
+          <span class="eyebrow">UX · 13</span>
+          <h2>Peak and End</h2>
+          <p class="lede">A memória de uma experiência é dominada pelo momento mais intenso e pelo último, e é notavelmente insensível à duração total. Consertar o pior passo de um fluxo de nove rende mais do que encurtá-lo para sete.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="exit">
+            <div class="demo-stage" data-dark-steps="Tem certeza?|Você vai perder tudo que construiu aqui.|Espere, antes de ir: 40% de desconto por 3 meses.|Conte por que está saindo (obrigatório).|Cancelar mesmo? Isso não pode ser desfeito." data-labels="Continuar|Cancelar mesmo assim">
+            <div class="ex-wrap">
+              <button class="btn btn--ghost ex-start" type="button" data-exit-start>Cancelar assinatura</button>
+              <div class="ex-panel">
+                <div class="ex-honest"><b>Cancelar sua assinatura?</b><span>Você mantém o acesso até 4 de outubro. Seus dados ficam por 30 dias caso você volte.</span><div class="ex-actions"><button class="btn ex-do" type="button" data-exit-do>Cancelar assinatura</button><button class="btn btn--ghost" type="button" data-exit-reset>Manter</button></div></div>
+                <div class="ex-dark"><b class="ex-d-title"></b><span class="ex-d-text"></span><div class="ex-actions"><button class="btn btn--ghost ex-d-next" type="button" data-exit-next></button><button class="btn ex-d-stay" type="button" data-exit-reset>Manter</button></div><span class="ex-step"></span></div>
+                <div class="ex-done"><b>Assinatura cancelada</b><span>Sentiremos sua falta. Você pode desfazer até 4 de outubro.</span><button class="btn btn--ghost" type="button" data-exit-reset>Desfazer</button></div>
+              </div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Saída respeitosa</span><input type="checkbox" name="respectful" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Clique em Cancelar. Respeitosa: uma tela, consequências claras, desfazer. Obstruída: cinco telas de culpa e barganha. O fim é o que as pessoas lembram, e contam para os outros.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>É um dos achados mais bem replicados da psicologia da decisão, incluindo estudos com procedimentos médicos desconfortáveis. Um fluxo com um passo horrível e nove ótimos é lembrado pelo horrível. Finais importam desproporcionalmente: a tela de conclusão, o e-mail de confirmação, o último passo do cancelamento. E duração importa menos do que o time acha. A pergunta operacional é uma que poucos times conseguem responder: qual é o pior momento da experiência do nosso produto, e como ele termina?</p>
+          <p>O fim inclui a saída. Quase ninguém desenha o cancelamento, a exclusão de conta, a exportação de dados ou a despedida, e é literalmente o fim, o momento com peso desproporcional na memória e o que a pessoa vai contar para os outros. Um cancelamento respeitoso e simples produz mais retorno e recomendação do que um obstruído produz retenção; é uma das poucas afirmações daqui que também é boa aposta comercial.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Ache o pior momento</strong> e conserte antes de melhorar a média.</li>
+            <li><strong>Desenhe a última tela</strong> de todo fluxo com o mesmo cuidado da primeira, incluindo as em que a pessoa vai embora.</li>
+            <li><strong>Confiança é assimétrica.</strong> Construída devagar por previsibilidade, honestidade, trabalho preservado e nenhuma surpresa de custo ou dados; destruída numa ocorrência por perda de dados, cobrança inesperada, ação irreversível sem aviso ou mensagem de erro que mente.</li>
+            <li><strong>Recuperação reduz o dano, não substitui não falhar.</strong> O "paradoxo da recuperação" é modesto e limitado a falhas leves e primeiras ocorrências. Não o use para tolerar falhas.</li>
+            <li><strong>Primeiras impressões definem a lente.</strong> Julgamentos estéticos se formam em frações de segundo e enviesam tudo depois, o que torna a primeira tela desproporcionalmente importante.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Mapeie o pior momento.</strong> Conserte antes de melhorar qualquer média.</li>
+            <li><strong>Desenhe a despedida.</strong> Cancelamento, exclusão e exportação são a última coisa de que as pessoas lembram.</li>
+            <li><strong>Duração é superestimada.</strong> Nove passos bons vencem sete com um ruim.</li>
+            <li><strong>Confiança quebra uma vez.</strong> Dados perdidos, cobranças surpresa e erros que mentem são irrecuperáveis na memória.</li>
+            <li><strong>Recuperação não é estratégia.</strong> Boa recuperação limita o dano; não licencia a falha.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>UX, cognição e decisão, handbook</em> (capítulo 11) · Kahneman, Fredrickson, Schreiber e Redelmeier, <em>When More Pain Is Preferred to Less</em> (1993) · Redelmeier e Kahneman (1996)</footer>
+        </article>
+
+        <article class="lesson" id="friction-and-forms">
+          <span class="eyebrow">UX · 14</span>
+          <h2>Friction and Forms</h2>
+          <p class="lede">"Reduzir fricção" é um mau princípio quando aplicado sem discriminação. Fricção é esforço, e esforço tem funções. O trabalho é remover a fricção sem função e preservar a que protege, ensina ou filtra.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="hours">
+            <div class="demo-stage">
+            <div class="hr-wrap"><span class="hr-big"><b class="hr-hours">0</b> horas por mês</span><span class="hr-sub">de vida humana gastas em um campo desnecessário</span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Usuários por mês</span><input type="range" name="users" min="1" max="200" step="1" value="50" data-unit="k"><output></output></label><label class="ctl"><span class="ctl-label">Segundos por campo</span><input type="range" name="seconds" min="1" max="10" step="1" value="4" data-unit="s"><output></output></label></div>
+          </div>
+            <figcaption class="demo-caption">Arraste usuários e segundos. Um campo de quatro segundos num formulário usado por 50 mil pessoas por mês custa 55 horas de vida humana todo mês. Leve esse número para a priorização.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Fricção ruim é um campo redundante, um passo desnecessário, um erro de formato. Fricção protetora impede um erro caro. Fricção formativa cria compreensão ou compromisso. Fricção filtrante separa intenção séria de acidental. A fricção ruim se esconde em campos que poderiam ser inferidos, decisões pedidas antes de a pessoa ter contexto, passos que existem por causa da arquitetura interna, confirmações de ações reversíveis, validação rígida de formato, perguntas cuja resposta não muda nada, recomeço do zero após erro e espera sem explicação.</p>
+          <p>Depois faça a conta que quase ninguém faz: quantas pessoas, vezes quantas vezes, vezes quanto tempo. Um campo desnecessário num formulário usado por cinquenta mil pessoas por mês, custando quatro segundos, consome cinquenta e cinco horas de vida humana por mês. Esse número muda conversas de priorização de um jeito que argumentos estéticos nunca mudam.</p>
+
+          <h3>Formulários, a maior superfície de UX</h3>
+          <ul>
+            <li><strong>Todo campo justifica a existência.</strong> A pergunta não é "que campos precisamos" e sim "o que acontece se removermos este". Remova o que não muda nada agora, torne condicional o que importa para poucos, peça depois o útil não bloqueante, infira o inferível, preencha o que já foi informado.</li>
+            <li><strong>Uma coluna, rótulos acima.</strong> Múltiplas colunas quebram a ordem de leitura. Placeholder como rótulo some ao digitar e destrói a capacidade de revisar.</li>
+            <li><strong>Comprimento do campo sugere o da resposta.</strong> Um campo de CEP não deve ter a largura de um endereço.</li>
+            <li><strong>Marque a minoria.</strong> Os opcionais quando a maioria é obrigatória, não o contrário.</li>
+            <li><strong>Teclado certo no mobile,</strong> autocompletar habilitado e nomeado corretamente, colagem nunca bloqueada (principalmente em senha; derrota gerenciadores de senha), máscaras que ajudam mas nunca impedem, formatos liberais.</li>
+            <li><strong>Formulários longos:</strong> etapas com nome e não só número, posição e restante visíveis, salvamento automático que diz que salvou, voltar sem perder, a parte fácil e motivadora primeiro, revisão final com edição inline.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Faça a conta de horas humanas.</strong> Pessoas × vezes × segundos, por mês. Leve o número para a priorização.</li>
+            <li><strong>Uma coluna, rótulos acima,</strong> opcionais marcados, largura do campo combinando com a resposta.</li>
+            <li><strong>Nunca bloqueie colar.</strong> Principalmente em senhas; derrota gerenciadores e enfraquece a segurança.</li>
+            <li><strong>Teclado certo, autocompletar certo.</strong> Um atributo cada, ganho grande.</li>
+            <li><strong>Mantenha a fricção protetora.</strong> A confirmação numa ação irreversível não é a fricção a remover.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>UX, cognição e decisão, handbook</em> (capítulos 12 e 13) · <a href="https://www.nngroup.com/articles/web-form-design/" target="_blank" rel="noopener">Nielsen Norman Group, Website Forms Usability</a> · Luke Wroblewski, <em>Web Form Design</em></footer>
+        </article>
+
+        <article class="lesson" id="information-architecture">
+          <span class="eyebrow">UX · 15</span>
+          <h2>Information Architecture</h2>
+          <p class="lede">Antes de estrutura, nomes. Se a mesma coisa tem três nomes em três telas, nenhuma estrutura salva. E o sintoma de arquitetura ruim é simples: a pessoa não sabe em qual seção procurar.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="shallow">
+            <div class="demo-stage">
+            <div class="ia-wrap"><span class="ia-task">Encontre <b>Exportar CSV</b> · <span class="ia-clicks">0</span> cliques</span><div class="ia-deep"><div class="ia-menu"><button class="ia-top" type="button" data-ia-top>Arquivo<span class="sp-chev">›</span></button><div class="ia-sub"><button class="ia-item" type="button" data-ia-item>Novo</button><button class="ia-item" type="button" data-ia-item>Abrir</button><button class="ia-item" type="button" data-ia-item>Renomear</button><button class="ia-item" type="button" data-ia-item>Duplicar</button><button class="ia-item" type="button" data-ia-item>Arquivar</button></div></div><div class="ia-menu"><button class="ia-top" type="button" data-ia-top>Dados<span class="sp-chev">›</span></button><div class="ia-sub"><button class="ia-item" type="button" data-ia-item>Importar</button><button class="ia-item ia-goal" type="button" data-ia-item>Exportar CSV</button><button class="ia-item" type="button" data-ia-item>Exportar PDF</button><button class="ia-item" type="button" data-ia-item>Sincronizar</button><button class="ia-item" type="button" data-ia-item>Backup</button></div></div><div class="ia-menu"><button class="ia-top" type="button" data-ia-top>Time<span class="sp-chev">›</span></button><div class="ia-sub"><button class="ia-item" type="button" data-ia-item>Convidar</button><button class="ia-item" type="button" data-ia-item>Papéis</button><button class="ia-item" type="button" data-ia-item>Grupos</button><button class="ia-item" type="button" data-ia-item>Atividade</button><button class="ia-item" type="button" data-ia-item>Cobrança</button></div></div><div class="ia-menu"><button class="ia-top" type="button" data-ia-top>Ajustes<span class="sp-chev">›</span></button><div class="ia-sub"><button class="ia-item" type="button" data-ia-item>Perfil</button><button class="ia-item" type="button" data-ia-item>Notificações</button><button class="ia-item" type="button" data-ia-item>Segurança</button><button class="ia-item" type="button" data-ia-item>Idioma</button><button class="ia-item" type="button" data-ia-item>Tema</button></div></div></div><div class="ia-flat"><div class="ia-group"><span class="ia-gname">Arquivo</span><button class="ia-item" type="button" data-ia-item>Novo</button><button class="ia-item" type="button" data-ia-item>Abrir</button><button class="ia-item" type="button" data-ia-item>Renomear</button><button class="ia-item" type="button" data-ia-item>Duplicar</button><button class="ia-item" type="button" data-ia-item>Arquivar</button></div><div class="ia-group"><span class="ia-gname">Dados</span><button class="ia-item" type="button" data-ia-item>Importar</button><button class="ia-item ia-goal" type="button" data-ia-item>Exportar CSV</button><button class="ia-item" type="button" data-ia-item>Exportar PDF</button><button class="ia-item" type="button" data-ia-item>Sincronizar</button><button class="ia-item" type="button" data-ia-item>Backup</button></div><div class="ia-group"><span class="ia-gname">Time</span><button class="ia-item" type="button" data-ia-item>Convidar</button><button class="ia-item" type="button" data-ia-item>Papéis</button><button class="ia-item" type="button" data-ia-item>Grupos</button><button class="ia-item" type="button" data-ia-item>Atividade</button><button class="ia-item" type="button" data-ia-item>Cobrança</button></div><div class="ia-group"><span class="ia-gname">Ajustes</span><button class="ia-item" type="button" data-ia-item>Perfil</button><button class="ia-item" type="button" data-ia-item>Notificações</button><button class="ia-item" type="button" data-ia-item>Segurança</button><button class="ia-item" type="button" data-ia-item>Idioma</button><button class="ia-item" type="button" data-ia-item>Tema</button></div></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Raso e agrupado</span><input type="checkbox" name="shallow" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Encontre Exportar CSV. Profundo: quatro menus de cinco, cada um um clique e um chute. Raso e agrupado: vinte itens visíveis em quatro grupos nomeados, um clique, e escanear é rápido.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Mantenha um glossário do produto com um nome canônico por conceito e trate divergência como bug; times que fazem isso têm produtos mensuravelmente mais fáceis de aprender. Os nomes vêm do vocabulário da pessoa, não da arquitetura interna: "workspace", "tenant" e "org" costumam ser a mesma coisa nomeada por camadas técnicas diferentes. Categorias devem ser mutuamente exclusivas e vir do modelo mental da pessoa, não do organograma. Card sorting é barato e eficaz: dê os itens a dez pessoas reais, deixe agrupar e nomear, e use os grupos delas.</p>
+          <p>Busca e navegação são complementares, não concorrentes. Quem tem objetivo específico busca; quem explora navega; a mesma pessoa faz os dois em momentos diferentes. Uma boa busca absorve parte da carga da estrutura: tolerante a erro de digitação e falta de acento, buscando no conteúdo e não só nos títulos, resultados com contexto suficiente para escolher, filtros que não zeram a busca, estado de zero resultados que sugere alternativas, sinônimos do vocabulário da pessoa mapeados para o do produto.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Toda tela responde três perguntas sem esforço:</strong> onde estou, o que posso fazer aqui, como volto ou vou para outro lugar. Pessoas usando o voltar do navegador como navegação primária, ou abrindo abas para não perder o lugar, são os sintomas de falha.</li>
+            <li><strong>Raso e agrupado vence profundo e estreito.</strong> Cada nível extra adiciona uma decisão e uma chance de erro, e escanear muitos itens visíveis é rápido. Amplitude sem agrupamento vira lista indiferenciada; o ideal é raso e agrupado.</li>
+            <li><strong>Um nome por conceito,</strong> em todo lugar, inclusive mensagens de erro e e-mails.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Glossário primeiro.</strong> Um nome canônico por conceito; divergência é bug.</li>
+            <li><strong>Card sorting com pessoas reais.</strong> Dez participantes revelam o modelo mental que você deveria usar.</li>
+            <li><strong>Raso e agrupado.</strong> Menos níveis, mais itens visíveis, grupos claros.</li>
+            <li><strong>Busca que perdoa.</strong> Erros de digitação, acentos, sinônimos, conteúdo e não só títulos, filtros que persistem.</li>
+            <li><strong>Três perguntas por tela.</strong> Onde estou, o que posso fazer, como saio.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>UX, cognição e decisão, handbook</em> (capítulo 14) · Louis Rosenfeld, Peter Morville e Jorge Arango, <em>Information Architecture</em> · <a href="https://www.nngroup.com/articles/card-sorting-definition/" target="_blank" rel="noopener">Nielsen Norman Group, Card Sorting</a></footer>
+        </article>
+
+        <article class="lesson" id="onboarding">
+          <span class="eyebrow">UX · 16</span>
+          <h2>Onboarding</h2>
+          <p class="lede">O objetivo não é ensinar o produto. É levar a pessoa até o primeiro momento em que ela obtém valor real. Tudo que não serve a isso é atraso.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="tour">
+            <div class="demo-stage" data-tour-steps="Esta é a barra lateral.|Aqui você pode buscar.|Este botão cria um projeto." data-labels="Próximo|Pronto">
+            <div class="tr-app">
+              <div class="tr-side"><span class="tr-logo"></span><span class="tr-nav"></span><span class="tr-nav"></span><span class="tr-nav"></span></div>
+              <div class="tr-main"><div class="tr-bar"><span class="tr-search"></span><button class="tr-new" type="button" data-tour-new>Novo projeto</button></div><div class="tr-empty"><span>Nenhum projeto ainda</span></div></div>
+              <div class="tr-balloon"><b class="tr-b-title"></b><span class="tr-b-text"></span><button class="btn tr-b-next" type="button" data-tour-next></button></div>
+              <div class="tr-hint">Crie seu primeiro projeto aqui. Leva mais ou menos um minuto.</div>
+              <button class="btn btn--ghost tr-start" type="button" data-tour-start>Começar</button>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Tour guiado em vez disso</span><input type="checkbox" name="tourmode" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Clique em Começar. Aprender fazendo: uma dica contextual no botão real, no momento em que importa. Tour: três balões sobre a interface antes de você ter qualquer motivo para se importar.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Defina esse momento de forma concreta e mensurável: não "entender a ferramenta", mas "enviou a primeira mensagem", "conectou o primeiro repositório", "importou os dados". Depois desenhe o caminho mais curto até ali. O tour guiado, uma sequência de balões explicando a interface antes do uso, é o padrão mais comum e um dos menos eficazes: chega antes de haver contexto para reter, interrompe, ensina a interface em vez da tarefa, e nada do que disse é lembrado quando vira relevante.</p>
+          <p>Todo produto novo começa vazio, e vazio é o pior estado para aprender. Conteúdo de exemplo claramente marcado e fácil de remover, importação de dados existentes como primeiro passo, modelos prontos para o caso mais comum e um estado vazio que ensina em vez de decorar atacam o mesmo obstáculo.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Aprender fazendo.</strong> A primeira tarefa real, guiada no lugar.</li>
+            <li><strong>Ajuda contextual.</strong> A explicação aparece quando o elemento é encontrado, não antes.</li>
+            <li><strong>Progresso visível</strong> com o primeiro item já concluído.</li>
+            <li><strong>Peça permissões e dados no momento da relevância.</strong> Acesso à câmera pedido quando a pessoa toca em "tirar foto" é aceito muito mais do que na abertura. Explique o benefício antes do diálogo do sistema, porque o diálogo do sistema só pode ser respondido uma vez.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Defina o momento de valor</strong> como evento mensurável e desenhe o caminho mais curto até ele.</li>
+            <li><strong>Mate o tour.</strong> Substitua pela primeira tarefa real, guiada no lugar.</li>
+            <li><strong>Preencha o vazio.</strong> Dados de exemplo, importação e modelos tornam um produto vazio aprendível.</li>
+            <li><strong>Peça na relevância.</strong> Permissões quando a pessoa toca na função que precisa delas, nunca na abertura.</li>
+            <li><strong>Pré-explique diálogos do sistema.</strong> Eles só podem ser respondidos uma vez.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>UX, cognição e decisão, handbook</em> (capítulo 15) · <a href="https://www.nngroup.com/articles/mobile-app-onboarding/" target="_blank" rel="noopener">Nielsen Norman Group, Mobile-App Onboarding</a> · Samuel Hulick, <em>The Elements of User Onboarding</em></footer>
+        </article>
+
+        <article class="lesson" id="accessibility-as-ux">
+          <span class="eyebrow">UX · 17</span>
+          <h2>Accessibility as UX</h2>
+          <p class="lede">Acessibilidade não é uma camada adicionada no fim. É a mesma disciplina aplicada a uma faixa maior de capacidades, e quase todo ganho beneficia todo mundo.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="glare">
+            <div class="demo-stage">
+            <div class="gl-wrap"><div class="gl-card"><b>Pagamento recebido</b><span class="gl-meta">Hoje, 09:14 · Fatura #2041</span><p class="gl-text">O recibo foi enviado ao cliente e o saldo foi atualizado.</p></div><div class="gl-sun"></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Luz do sol</span><input type="range" name="sun" min="0" max="100" step="5" value="60" data-unit="%"><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Contraste 4,5:1</span><input type="checkbox" name="contrast" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Arraste a luz do sol sobre o card. O texto cinza apagado some primeiro; o texto em 4,5:1 sobrevive. Todo mundo tem baixa visão numa rua ensolarada.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Contraste alto ajuda quem tem baixa visão e ajuda todo mundo sob sol. Legenda ajuda surdos e ajuda quem está em lugar barulhento. Navegação por teclado ajuda quem não usa mouse e ajuda usuários avançados. Linguagem simples ajuda deficiência cognitiva e ajuda quem está com pressa. Alvo grande ajuda quem tem tremor e ajuda quem está caminhando. Deficiência é permanente, temporária ou situacional: uma pessoa com um braço, uma com o braço quebrado e uma segurando um bebê precisam da mesma coisa. Você não está desenhando para uma minoria; está desenhando para todo mundo em algum momento.</p>
+          <p>A camada menos discutida é a cognitiva. Movimento excessivo, densidade alta, linguagem complexa, tempo limitado e mudanças inesperadas de layout prejudicam desproporcionalmente pessoas com TDAH, autismo, ansiedade ou déficits de memória de trabalho. Não existe checador automático para isso. É o argumento geral por calma, previsibilidade e linguagem clara, que é bom design para qualquer pessoa.</p>
+
+          <h3>O mínimo operacional</h3>
+          <ul>
+            <li>Contraste de pelo menos 4,5:1 em texto e 3:1 em componentes e bordas significativas.</li>
+            <li>Tudo alcançável por teclado, com foco visível; alvos de toque de pelo menos 44px.</li>
+            <li>Estrutura semântica correta: hierarquia de títulos, listas, marcos; rótulos associados a campos; erros anunciados a leitores de tela.</li>
+            <li>Texto alternativo em imagens informativas, vazio nas decorativas.</li>
+            <li>Suporte a movimento reduzido; nada dependendo só de cor; funciona com zoom de 200%.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Situacional é o argumento.</strong> Sol, barulho, uma mão, pressa: todo mundo é deficiente às vezes.</li>
+            <li><strong>Contraste também é hierarquia.</strong> 4,5:1 em texto, 3:1 em componentes e bordas significativas, incluindo bordas de campo e anéis de foco.</li>
+            <li><strong>Teclado e foco não são negociáveis.</strong> Tudo alcançável, foco visível, ordem igual ao layout.</li>
+            <li><strong>Calma é acessibilidade cognitiva.</strong> Menos movimento, menos densidade, linguagem mais simples, sem surpresas.</li>
+            <li><strong>Zoom de 200% e movimento reduzido</strong> fazem parte do pronto, não de uma fase depois.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>UX, cognição e decisão, handbook</em> (capítulo 16) · <a href="https://www.w3.org/WAI/WCAG22/quickref/" target="_blank" rel="noopener">WCAG 2.2</a> · <a href="https://inclusive.microsoft.design/" target="_blank" rel="noopener">Microsoft Inclusive Design, persona spectrum</a></footer>
+        </article>
+
+        <article class="lesson" id="research-which-method">
+          <span class="eyebrow">UX · 18</span>
+          <h2>Research: Which Method Answers What</h2>
+          <p class="lede">O erro mais comum em pesquisa é usar o método errado para a pergunta. Para saber o que as pessoas fazem, observe. Para saber por quê, pergunte, mas só depois de observar. E nunca pergunte se as pessoas usariam algo.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="method">
+            <div class="demo-stage">
+            <div class="mt-list"><button class="mt-q" type="button" data-toggle="show-1"><span class="mt-qtext">As pessoas conseguem fazer X?</span><span class="mt-a">Teste de usabilidade, cinco por perfil</span></button><button class="mt-q" type="button" data-toggle="show-2"><span class="mt-qtext">Por que abandonam na etapa 3?</span><span class="mt-a">Analytics para achar, teste de usabilidade para explicar</span></button><button class="mt-q" type="button" data-toggle="show-3"><span class="mt-qtext">O que elas fazem hoje sem nós?</span><span class="mt-a">Entrevista mais observação em campo</span></button><button class="mt-q" type="button" data-toggle="show-4"><span class="mt-qtext">Quantas são afetadas?</span><span class="mt-a">Analytics</span></button><button class="mt-q" type="button" data-toggle="show-5"><span class="mt-qtext">Qual variante converte mais?</span><span class="mt-a">Teste A/B, com amostra definida antes</span></button><button class="mt-q" type="button" data-toggle="show-6"><span class="mt-qtext">Como elas chamam essa coisa?</span><span class="mt-a">Entrevista, análise de tickets de suporte</span></button><button class="mt-q" type="button" data-toggle="show-7"><span class="mt-qtext">Onde isso deveria ficar?</span><span class="mt-a">Card sorting, tree testing</span></button><button class="mt-q" type="button" data-toggle="show-8"><span class="mt-qtext">Elas gostaram?</span><span class="mt-a">Pergunta errada; observe o comportamento</span></button></div>
+            </div>
+          </div>
+            <figcaption class="demo-caption">Clique numa pergunta para ver o método que de fato a responde. A última não tem método porque é a pergunta errada.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Comportamento e atitude são eixos diferentes, assim como o quê e por quê. Analytics e testes A/B dizem o que as pessoas fazem e quanto; testes de usabilidade e observação em campo dizem por quê e como; questionários dizem o que as pessoas dizem sentir; entrevistas e diários dizem por que dizem isso. Relato de comportamento passado é notoriamente pouco confiável, e intenção declarada correlaciona fraco com comportamento real, então pergunte o que fizeram ontem, não o que fariam.</p>
+          <p>Pesquisa generativa vem antes de existir solução e descobre problemas, contexto, vocabulário e fluxos reais. Pesquisa avaliativa verifica se algo funciona. O desperdício típico é avaliar uma solução para o problema errado; nenhuma quantidade de teste de usabilidade conserta isso.</p>
+
+          <h3>O teste de usabilidade em cinco pontos</h3>
+          <ol>
+            <li><strong>Tarefas, não perguntas.</strong> "Encontre o relatório do mês passado e exporte", não "o que você acha desta tela?".</li>
+            <li><strong>Não ajude.</strong> O silêncio é a ferramenta. Quando a pessoa trava, espere; isso é o dado.</li>
+            <li><strong>Pensar em voz alta,</strong> sabendo que verbalizar deixa a pessoa mais deliberada do que seria.</li>
+            <li><strong>Observe comportamento, desconte relato.</strong> As pessoas relatam menos dificuldade do que tiveram, especialmente em interfaces bonitas e especialmente para quem construiu.</li>
+            <li><strong>Classifique cada dificuldade</strong> como golfo de execução ou de avaliação. Isso transforma anotações em direção.</li>
+          </ol>
+          <p>Sobre "cinco usuários bastam": poucos participantes revelam a maior parte dos problemas graves e frequentes em uma tarefa e um perfil. Não vale para perfis distintos (cinco por perfil), não mede nada quantitativamente, e cinco pessoas três vezes ao longo do desenvolvimento vale mais que quinze de uma vez. Pesquisa é invalidada por perguntas que induzem, participantes não representativos, moderador que resgata, ouvir só quem gosta, respondentes autosselecionados, ler entusiasmo como intenção de compra e abandonar o estudo quando o resultado desagrada.</p>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Observe, depois pergunte.</strong> Comportamento primeiro; explicação depois; intenção nunca.</li>
+            <li><strong>Tarefas, silêncio, comportamento.</strong> As três regras que fazem um teste de usabilidade valer.</li>
+            <li><strong>Cinco por perfil, repetido.</strong> Não cinco no total, e não uma vez só.</li>
+            <li><strong>Classifique com os golfos.</strong> Execução ou avaliação, por dificuldade.</li>
+            <li><strong>Escreva a refutação antes.</strong> O que te faria mudar de ideia, antes do dado chegar.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>UX, cognição e decisão, handbook</em> (capítulo 17 e apêndice C) · Erika Hall, <em>Just Enough Research</em> · <a href="https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/" target="_blank" rel="noopener">Jakob Nielsen, Why You Only Need to Test with 5 Users</a>, com seus limites</footer>
+        </article>
+
+        <article class="lesson" id="metrics-and-experiments">
+          <span class="eyebrow">UX · 19</span>
+          <h2>Metrics and Experiments</h2>
+          <p class="lede">Toda métrica que vira meta deixa de ser boa métrica. Quando um número passa a ser cobrado, o sistema se otimiza para o número, não para o que ele representava. Emparelhe toda métrica primária com uma de guarda que cairia se você trapaceasse.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="guard">
+            <div class="demo-stage">
+            <div class="gd-wrap">
+              <div class="gd-row"><span class="gd-name">Conversão</span><div class="gd-track"><span class="gd-fill gd-conv"></span></div><span class="gd-val gd-conv-val"></span></div>
+              <div class="gd-row gd-guard"><span class="gd-name">Retenção (guarda)</span><div class="gd-track"><span class="gd-fill gd-ret"></span></div><span class="gd-val gd-ret-val"></span></div>
+              <span class="gd-msg">A conversão subiu. A retenção pagou a conta.</span>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Forçar conversão</span><input type="range" name="push" min="0" max="100" step="5" value="20" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Mostrar a métrica de guarda</span><input type="checkbox" name="guardvis" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Force a conversão com urgência, caixas pré-marcadas e recusas escondidas. Ela sobe. Esconda a métrica de guarda e parece vitória; mostre e você vê a retenção pagando a conta.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Um enquadramento utilizável organiza métricas de experiência em cinco dimensões: felicidade, engajamento, adoção, retenção e sucesso na tarefa, e para cada uma define o objetivo, o sinal e só então a métrica. Pular direto para métrica é como times acabam otimizando o que é fácil de medir. Taxa de conclusão de tarefa é a métrica de usabilidade mais importante e a mais ignorada; tempo na tarefa é só comparativo; médias mentem sobre comportamento assimétrico, então use mediana e percentis. Tempo na página é ambíguo por natureza, cliques podem ser interesse ou não achar, ativos diários sem contexto de tarefa medem hábito e não valor, e conversão isolada é otimizável por manipulação à custa de retenção. NPS é uma pergunta única de intenção declarada que prediz comportamento mal; se o time usa, use como tendência interna com metodologia estável, nunca como comparação ou meta individual.</p>
+          <p>Um teste A/B responde uma pergunta estreita: entre duas variantes específicas, qual produz mais de uma métrica específica, nesta população, neste período. Não responde por quê, se existe uma terceira opção melhor, ou se o efeito dura. As armadilhas são conhecidas: espiar e parar quando dá significativo infla falsos positivos; efeito de novidade some na quarta semana; testes sem poder produzem "sem diferença" que não significa nada; otimização incremental converge para um máximo local; resultados agregados podem inverter quando segmentados; métricas de curto prazo premiam dark patterns sistematicamente; vinte métricas garantem um acerto por acaso.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Métricas de guarda.</strong> Conversão com retenção, velocidade com taxa de erro, engajamento com satisfação.</li>
+            <li><strong>Pré-registre.</strong> Escreva a hipótese, a métrica primária, o tamanho da amostra e o que provaria que você errou antes do dado chegar.</li>
+            <li><strong>Não teste</strong> quando o efeito é grande e óbvio, o tráfego é insuficiente, a decisão é ética e não de otimização, ou a pergunta real é por quê.</li>
+            <li><strong>Combine.</strong> Qualitativo para descobrir e explicar, quantitativo para dimensionar e confirmar. Cinco testes de usabilidade dizem qual é o problema, analytics dizem quantos ele afeta, um teste A/B confirma se a correção funcionou.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Objetivo, sinal, métrica.</strong> Nessa ordem, por dimensão.</li>
+            <li><strong>Guarde toda meta.</strong> Conversão com retenção, velocidade com erros, engajamento com satisfação.</li>
+            <li><strong>Medianas e percentis.</strong> Comportamento é assimétrico; médias escondem isso.</li>
+            <li><strong>Pré-registre experimentos.</strong> Hipótese, métrica primária, tamanho da amostra, regra de parada.</li>
+            <li><strong>Qualitativo descobre, quantitativo confirma.</strong> Cada um sozinho responde um terço da pergunta.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>UX, cognição e decisão, handbook</em> (capítulos 18 e 19) · Rodden, Hutchinson e Fu, <em>Measuring the User Experience on a Large Scale</em> (o framework HEART) · Kohavi, Tang e Xu, <em>Trustworthy Online Controlled Experiments</em></footer>
+        </article>
+
+        <article class="lesson" id="the-replication-crisis">
+          <span class="eyebrow">UX · 20</span>
+          <h2>The Replication Crisis</h2>
+          <p class="lede">Muito do que circula como psicologia de UX vem da psicologia social dos anos 1990 e 2000, e uma parte substancial não sobreviveu à replicação. Saber o que é o quê deixa seus argumentos mais fortes, não mais fracos.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="evidence">
+            <div class="demo-stage">
+            <div class="ev-grid"><button class="ev-item" type="button" data-toggle="show-1"><span>Princípios da Gestalt</span><span class="ev-status s-0">Sólido</span></button><button class="ev-item" type="button" data-toggle="show-2"><span>Lei de Fitts</span><span class="ev-status s-0">Sólido</span></button><button class="ev-item" type="button" data-toggle="show-3"><span>Memória de trabalho ≈ 4 blocos</span><span class="ev-status s-0">Sólido</span></button><button class="ev-item" type="button" data-toggle="show-4"><span>Reconhecer > recordar</span><span class="ev-status s-0">Sólido</span></button><button class="ev-item" type="button" data-toggle="show-5"><span>Pico e fim</span><span class="ev-status s-0">Sólido</span></button><button class="ev-item" type="button" data-toggle="show-6"><span>Ancoragem</span><span class="ev-status s-0">Sólido</span></button><button class="ev-item" type="button" data-toggle="show-7"><span>Efeito do padrão</span><span class="ev-status s-0">Sólido</span></button><button class="ev-item" type="button" data-toggle="show-8"><span>Estético-usabilidade</span><span class="ev-status s-0">Sólido</span></button><button class="ev-item" type="button" data-toggle="show-9"><span>Hick-Hyman em menus</span><span class="ev-status s-1">Contextual</span></button><button class="ev-item" type="button" data-toggle="show-10"><span>Limiar de Doherty</span><span class="ev-status s-1">Contextual</span></button><button class="ev-item" type="button" data-toggle="show-11"><span>Ilusão de trabalho</span><span class="ev-status s-1">Contextual</span></button><button class="ev-item" type="button" data-toggle="show-12"><span>Efeito Zeigarnik</span><span class="ev-status s-2">Contestado</span></button><button class="ev-item" type="button" data-toggle="show-13"><span>Sobrecarga de escolha</span><span class="ev-status s-2">Contestado</span></button><button class="ev-item" type="button" data-toggle="show-14"><span>Aversão à perda, 2×</span><span class="ev-status s-2">Contestado</span></button><button class="ev-item" type="button" data-toggle="show-15"><span>Esgotamento do ego</span><span class="ev-status s-2">Contestado</span></button><button class="ev-item" type="button" data-toggle="show-16"><span>Estilos de aprendizagem</span><span class="ev-status s-2">Contestado</span></button></div>
+            </div>
+          </div>
+            <figcaption class="demo-caption">Clique num efeito para revelar quanto ele se sustenta. Argumente com os sólidos; trate os contestados como início de conversa, não fim.</figcaption>
+          </figure>
+
+          <h3>O que caiu ou está seriamente em dúvida</h3>
+          <ul>
+            <li>Esgotamento do ego, a ideia de que força de vontade é um recurso finito: grandes replicações multi-laboratório não encontraram o efeito.</li>
+            <li>Priming social, pistas sutis alterando comportamento complexo: não replica.</li>
+            <li>A parte fisiológica da postura de poder.</li>
+            <li>A magnitude fixa de duas vezes da aversão à perda; a direção se mantém.</li>
+            <li>O efeito Zeigarnik; sobrecarga de escolha como efeito geral; estilos de aprendizagem, que nunca tiveram suporte e continuam citados.</li>
+          </ul>
+
+          <h3>O que se sustenta bem</h3>
+          <p>Princípios da Gestalt, Lei de Fitts, limites da memória de trabalho e o benefício do agrupamento, reconhecimento sobre recordação, regra do pico e do fim, ancoragem, efeito do padrão, efeito de isolamento, efeito estético-usabilidade, cegueira à mudança e por desatenção, progresso dotado.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Prefira achados perceptuais e motores aos de psicologia social.</strong> Os primeiros têm base fisiológica, efeitos grandes e replicam; os segundos têm efeitos pequenos e dependem muito de contexto.</li>
+            <li><strong>Trate "estudos mostram" como início de conversa.</strong> Quantos participantes, replicado por quem, qual o tamanho do efeito, e o domínio é o mesmo do meu problema?</li>
+            <li><strong>Teste no seu contexto.</strong> Mesmo um efeito real pode ser irrelevante para o seu produto, público e escala. A literatura sugere hipóteses; não substitui evidência local.</li>
+            <li><strong>Um honesto "vamos observar cinco pessoas"</strong> vale mais que um viés citado de memória. Times que argumentam com folclore perdem credibilidade no instante em que alguém verifica.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Achados perceptuais e motores se sustentam.</strong> Gestalt, Fitts, limites de memória, reconhecimento, pico e fim.</li>
+            <li><strong>Efeitos de psicologia social são frágeis.</strong> Pequenos, dependentes de contexto, muitas vezes não replicados.</li>
+            <li><strong>Faça quatro perguntas.</strong> Quantos participantes, replicado por quem, qual o tamanho do efeito, mesmo domínio?</li>
+            <li><strong>Evidência local decide.</strong> A literatura sugere; cinco pessoas usando o seu produto confirmam.</li>
+            <li><strong>Incerteza honesta vence.</strong> "Vamos observar" ganha de um viés citado de memória.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>UX, cognição e decisão, handbook</em> (capítulo 20 e apêndice A) · Open Science Collaboration, <em>Estimating the reproducibility of psychological science</em> (2015) · Hagger et al., replicação multi-laboratório do esgotamento do ego (2016)</footer>
+        </article>
+      </section>
+      <footer class="footer"><p>Biblioteca de estudo pessoal. Conteúdo sintetizado a partir das fontes listadas em cada aula; nomes de cursos e autores pertencem aos seus respectivos donos. Hierarquia só por tamanho, peso e espaço.</p></footer>
+    </div>
+  </main>
+</div>
+<script src="../app.js"></script>
+</body>
+</html>

@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Layout — Interface Craft</title>
+  <meta name="description" content="Geometry the user feels without seeing: radii that nest, generous touch targets, scroll edges that breathe.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#fcfcfc" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
+  <script>
+    // Applies the saved theme before first paint to avoid a flash
+    try { var t = localStorage.getItem('theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script>
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <div>
+        <div class="brand-name">Interface Craft</div>
+        <div class="brand-sub">Living library</div>
+      </div>
+      <div class="controls">
+        <nav class="lang-switch" aria-label="Language"><a class="lang-opt" href="#" data-lang="en" hreflang="en" aria-current="true">EN</a><a class="lang-opt" href="pt/layout.html" data-lang="pt" hreflang="pt">PT</a></nav>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle light and dark theme" title="Toggle light and dark theme"><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+      </div>
+    </div>
+    <a class="back-link" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>Home</a>
+    <nav class="nav-groups" aria-label="Section contents">
+      <div class="nav-group" data-section="layout" style="margin-top:0">
+        <div class="nav-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>Layout</div>
+        <ul class="nav-list"><li><a class="nav-link" href="#nested-border-radius">Nested Border Radius</a></li><li><a class="nav-link" href="#continuous-curvature">Continuous Curvature</a></li><li><a class="nav-link" href="#hit-areas">Hit Areas</a></li><li><a class="nav-link" href="#fitts-law">Fitts's Law</a></li><li><a class="nav-link" href="#html-background">HTML Background</a></li><li><a class="nav-link" href="#clip-path">Clip-Path</a></li><li><a class="nav-link" href="#scroll-fades">Scroll Fades</a></li><li><a class="nav-link" href="#spacing-rhythm">Spacing Rhythm</a></li><li><a class="nav-link" href="#density">Density</a></li><li><a class="nav-link" href="#zero-one-many">Zero, One, Many</a></li><li><a class="nav-link" href="#adversarial-content">Adversarial Content</a></li></ul>
+      </div>
+      <div class="nav-group nav-other" data-section="layout">
+        <div class="nav-title">Other sections</div>
+        <ul class="nav-list"><li><a class="nav-link" href="craft.html">Craft</a></li><li><a class="nav-link" href="typography.html">Typography</a></li><li><a class="nav-link" href="color.html">Color</a></li><li><a class="nav-link" href="motion.html">Motion</a></li><li><a class="nav-link" href="ux.html">UX</a></li><li><a class="nav-link" href="references.html">References</a></li></ul>
+      </div>
+    </nav>
+  </aside>
+  <main class="content">
+    <div class="container">
+<section class="section" data-section="layout">
+        <div class="section-head" id="layout">
+          <span class="eyebrow">Section 04</span>
+          <h2>Layout</h2>
+          <p>Geometry the user feels without seeing: radii that nest, generous touch targets, scroll edges that breathe.</p>
+        </div>
+
+        <article class="lesson" id="nested-border-radius">
+          <span class="eyebrow">Layout · 01</span>
+          <h2>Nested Border Radius</h2>
+          <p class="lede">A rounded element inside another cannot have the same radius. The inner radius is the outer radius minus the padding.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="nest">
+            <div class="demo-stage">
+            <div class="nest"><div class="inner"></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Outer radius</span><input type="range" name="outer" min="4" max="32" step="1" value="20" data-unit="px"><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Concentric</span><input type="checkbox" name="concentric" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Drag the outer radius with 8px of padding. Concentric keeps inner = outer − padding, floored at 4px; switch it off to see the fat corners.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Rounded corners are arcs of a circle. If the container has radius R and padding P, the concentric inner arc has radius R − P. If you use R on both, the inner arc is larger than it should be, the spacing at the corners becomes uneven and the eye reads "something is off", even without knowing what. It is one of the most common mistakes in cards with images, buttons inside inputs and modals with headers.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Formula:</strong> <code>inner-radius = outer-radius − padding</code>. If it goes negative or below ~4px, use 4px or zero.</li>
+            <li><strong>Use variables and <code>calc()</code></strong> so the inner radius follows padding changes automatically.</li>
+            <li><strong>It works in reverse:</strong> a container wrapping an element with radius R and padding P should have R + P.</li>
+            <li><strong>Images in cards:</strong> if the image touches the edge (padding 0), same radius. If there is padding, subtract.</li>
+            <li><strong>There is a CSSWG proposal</strong> for a <code>border-radius</code> value that computes this on its own. Until it lands, <code>calc()</code>.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copy" data-copied="Copied" aria-label="Copy"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copy</span></button></div><pre><code><span class="k">.card</span> { <span class="p">--r</span>: <span class="n">16px</span>; <span class="p">--p</span>: <span class="n">8px</span>; border-radius: <span class="f">var</span>(--r); padding: <span class="f">var</span>(--p); }
+<span class="k">.card > .media</span> { border-radius: <span class="f">calc</span>(<span class="f">var</span>(--r) - <span class="f">var</span>(--p)); }  <span class="c">/* 8px */</span>
+
+<span class="k">.input</span> { <span class="p">--r</span>: <span class="n">10px</span>; <span class="p">--p</span>: <span class="n">4px</span>; border-radius: <span class="f">var</span>(--r); padding: <span class="f">var</span>(--p); }
+<span class="k">.input > .btn</span> { border-radius: <span class="f">calc</span>(<span class="f">var</span>(--r) - <span class="f">var</span>(--p)); }   <span class="c">/* 6px */</span></code></pre></figure>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Same rule for focus rings.</strong> A ring 2px outside an 8px-radius element should have a 10px radius. <code>outline</code> and <code>box-shadow</code> rings follow the element's radius automatically; drawn pseudo-element rings need <code>calc(var(--r) + 2px)</code>.</li>
+            <li><strong>Edge-to-edge media.</strong> An image touching the top of a card gets <code>border-radius: R R 0 0</code>; the bottom corners stay square, and the card's own radius handles the rest.</li>
+            <li><strong>Height follows the same subtraction.</strong> A button inside a 40px input with 4px padding is 32px tall, not "a bit smaller".</li>
+            <li><strong>Pills break the formula.</strong> Inside a 999px pill, the inner element is also 999px. Concentric math only applies to finite radii.</li>
+            <li><strong>Radius scales with size.</strong> A 24px chip with a 12px radius is a pill; a 24px chip with 6px is a rounded rect. Pick the radius relative to the element, not from a single global value.</li>
+            <li><strong>Clipping hides shadows.</strong> <code>overflow: hidden</code> for the radius also clips children's shadows. Use <code>clip-path: inset(0 round R)</code> on an inner wrapper, or move the shadow to the outer element.</li>
+            <li><strong>Safari corner jaggies.</strong> Rounded containers with transformed children can show aliased corners. <code>isolation: isolate</code> or a <code>clip-path</code> round inset fixes it.</li>
+            <li><strong>Nested three deep.</strong> Card 16, media 8, badge on media 4. Each level subtracts its padding; below 4px, just use 4px.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <a href="https://github.com/w3c/csswg-drafts/issues/7707" target="_blank" rel="noopener">CSSWG, issue #7707: matching nested radii</a> · <a href="https://www.30secondsofcode.org/css/s/nested-border-radius/" target="_blank" rel="noopener">30 seconds of code, nested border radius</a> · Recurring practice in Rauno Freiberg's and Emil Kowalski's work</footer>
+        </article>
+
+<article class="lesson" id="continuous-curvature">
+          <span class="eyebrow">Layout · 02</span>
+          <h2>Continuous Curvature</h2>
+          <p class="lede">A regular rounded corner is an arc of a circle, and the moment it meets the straight edge the curvature jumps from zero to full. The eye reads that as a slight hardness.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="squircle">
+            <div class="demo-stage">
+            <div class="sq-row"><div class="sq-shape"></div><span class="sq-unsupported">Your browser does not support corner-shape yet; the shape shows circular corners.</span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Radius</span><input type="range" name="r" min="8" max="64" step="4" value="40" data-unit="px"><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Curve the chroma</span><input type="checkbox" name="squircle" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Drag the hue. With a constant chroma the light steps go neon and the dark ones go muddy. With the arc, one hue produces a usable twelve-step scale at any angle.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Continuous curvature, the shape people call a squircle, smooths that transition: the curve begins gently, tightens, and relaxes again into the edge. It is what Apple uses for app icons and hardware, and the reason those shapes feel organic while ordinary rounded rectangles feel cut out. The effect grows with the radius: at 4 to 8px almost nobody can tell; at 16px and above the difference is visible, and worth chasing.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Large radii only.</strong> Cards, sheets, app-icon-like tiles, big buttons. Leave small controls on plain radii.</li>
+            <li><strong>In CSS, <code>corner-shape: squircle</code></strong> where the browser supports it, with plain <code>border-radius</code> as the fallback. In design tools, corner smoothing around 60% approximates the iOS shape.</li>
+            <li><strong>Keep the family consistent.</strong> Mixing squircles and circular corners in the same view is more noticeable than either alone.</li>
+            <li><strong>Nested radii still apply.</strong> Outer radius equals inner radius plus padding, whatever the curvature.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>16px and up.</strong> Below that the difference is invisible; above it, circular corners start to look cut out.</li>
+            <li><strong>Progressive enhancement.</strong> <code>corner-shape: squircle</code> where supported, plain radius elsewhere. Nobody sees a broken shape.</li>
+            <li><strong>Do not mix in one view.</strong> A squircle card next to a circular-cornered one draws attention to both.</li>
+            <li><strong>Icons and tiles first.</strong> App-icon-like shapes, hero cards and sheets are where it pays; buttons and inputs rarely.</li>
+            <li><strong>Design tools call it smoothing.</strong> Around 60% approximates the iOS shape.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Craft de interfaces, handbook</em> (section 10.3) · <a href="https://www.figma.com/blog/desperately-seeking-squircles/" target="_blank" rel="noopener">Figma, Desperately seeking squircles</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/corner-shape" target="_blank" rel="noopener">MDN, corner-shape</a></footer>
+        </article>
+
+<article class="lesson" id="hit-areas">
+          <span class="eyebrow">Layout · 03</span>
+          <h2>Hit Areas</h2>
+          <p class="lede">The icon can be 16px. The area that responds to the click needs to be at least 44px. The two do not have to coincide.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="hit">
+            <div class="demo-stage">
+            <div class="hit-row">
+              <div class="oa-item"><span class="cap">16px icon button</span><button class="icon-btn" type="button" aria-label="Close" data-hover><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>
+              <div class="oa-item"><span class="cap">1px resize handle</span><div class="handle" role="separator" aria-orientation="vertical" tabindex="0" data-hover></div></div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Hit area</span><input type="range" name="hit" min="16" max="48" step="4" value="44" data-unit="px"><output></output></label></div>
+          </div>
+            <figcaption class="demo-caption">Hover the icon or the handle to see the target. The drawing stays 16px and 1px; only the invisible area grows. 24px is the WCAG minimum, 44px the comfortable touch size.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Fingers are 10 to 14mm wide on average. Apple recommends targets of at least 44×44pt; Material, 48dp; WCAG 2.2 requires 24×24px as the absolute minimum (criterion 2.5.8). A 16px "x" that only responds within its 16px is guaranteed frustration on mobile and a tight target even for a mouse. But a 44px "x" drawn at that size looks huge. The solution is to separate them: small drawing, large invisible target.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Expanded pseudo-element.</strong> <code>::before</code> with <code>position: absolute; inset: -14px</code> grows the target without changing layout.</li>
+            <li><strong>Or padding plus negative margin.</strong> <code>padding: 12px; margin: -12px</code> has the same effect, with the button occupying the original visual space.</li>
+            <li><strong>Lines and handles:</strong> a 1px draggable divider needs an 8 to 12px target. Sliders, resize handles and column edges are the most forgotten cases.</li>
+            <li><strong>List and menu items:</strong> the whole row is clickable, not just the text. Minimum height of 36 to 44px.</li>
+            <li><strong>Spacing between targets:</strong> at least 8px, otherwise one large target invades its neighbor's.</li>
+            <li><strong>Visualize.</strong> During development, give the pseudo-elements an <code>outline</code> to check them (like the "Show hit areas" toggle above).</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copy" data-copied="Copied" aria-label="Copy"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copy</span></button></div><pre><code><span class="k">.icon-btn</span> { position: relative; width: <span class="n">16px</span>; height: <span class="n">16px</span>; }
+<span class="k">.icon-btn::before</span> { content: <span class="s">""</span>; position: absolute; inset: <span class="n">-14px</span>; }  <span class="c">/* 44px target */</span>
+
+<span class="k">.resize-handle</span> { width: <span class="n">1px</span>; position: relative; }
+<span class="k">.resize-handle::before</span> { content: <span class="s">""</span>; position: absolute; inset: <span class="n">0</span> <span class="n">-6px</span>; cursor: col-resize; }</code></pre></figure>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Three numbers.</strong> 24px is the legal minimum (WCAG 2.5.8), 32px is comfortable for a mouse, 44 to 48px for touch. Grow targets under <code>@media (pointer: coarse)</code> instead of everywhere.</li>
+            <li><strong>Stretched link in cards.</strong> Make the whole card clickable with <code>::after { position: absolute; inset: 0 }</code> on the primary link, and lift secondary buttons with <code>position: relative; z-index: 1</code>.</li>
+            <li><strong>No dead zones between items.</strong> Menu and list items separate with padding, never margin or gap, so the pointer never lands on nothing.</li>
+            <li><strong>Hover menus need a safe triangle.</strong> Dropdowns that open on hover need a 100 to 150ms close delay and tolerance for diagonal movement toward the panel, or they close on the way.</li>
+            <li><strong>Sliders.</strong> A 16px thumb with a 28 to 44px hit area, and the full track height clickable. The visual thumb is never the target.</li>
+            <li><strong>Touch specifics.</strong> <code>touch-action: manipulation</code> removes the 300ms tap delay; make <code>-webkit-tap-highlight-color</code> transparent and provide your own pressed state.</li>
+            <li><strong>Focus ring on the visual, not the hit area.</strong> The enlarged pseudo-element is not focusable, so the ring hugs the 16px icon. Set <code>outline-offset</code> to give it 2 to 4px of room.</li>
+            <li><strong>Corner close buttons.</strong> Keep the icon at least 8px from the edge; the hit area may extend all the way to it.</li>
+            <li data-craftbook><strong>Frequent near, dangerous far.</strong> Keep at least 24px between a destructive action and anything used often. Distance protects as well as size.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <a href="https://developer.apple.com/design/human-interface-guidelines/accessibility#Buttons-and-controls" target="_blank" rel="noopener">Apple HIG, 44×44pt</a> · <a href="https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html" target="_blank" rel="noopener">WCAG 2.2, 2.5.8 Target Size (Minimum)</a> · <a href="https://m3.material.io/foundations/designing/structure#dab862b1-e042-4c40-b680-b484b9f077f6" target="_blank" rel="noopener">Material Design, 48dp touch targets</a></footer>
+        </article>
+
+<article class="lesson" id="fitts-law">
+          <span class="eyebrow">Layout · 04</span>
+          <h2>Fitts's Law</h2>
+          <p class="lede">The time to reach a target depends on how far it is and how big it is. Corners and edges are infinitely big, and a submenu that closes on the way to it is the law being ignored.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="fitts">
+            <div class="demo-stage">
+            <div class="ft-menu" data-fitts>
+              <div class="ft-item">Rename</div>
+              <div class="ft-item ft-parent" data-parent>Share<span class="sp-chev">›</span>
+                <div class="ft-sub" data-sub><div class="ft-item">Copy link</div><div class="ft-item">Email</div><div class="ft-item">Slack</div><div class="ft-item">Export</div></div>
+              </div>
+              <div class="ft-item">Duplicate</div>
+              <div class="ft-item">Delete</div>
+              <svg class="ft-tri" aria-hidden="true"><polygon points="0,0 0,0 0,0"/></svg>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Safe triangle</span><input type="checkbox" name="safe" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Hover Share, then move diagonally toward a submenu item. With the safe triangle the submenu stays open while you head toward it; without it, crossing Duplicate closes it.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>The relationship is logarithmic: doubling a small target helps a lot, doubling an already large one barely helps. So growing the clickable area is almost always the cheapest usability win available, and the clickable area does not have to match the visual one. An edge target is effectively infinite in that direction because the cursor cannot overshoot it; a corner is infinite in two. That is why operating systems put important menus in corners, and why items touching the edge of a sidebar are much faster to hit than items a few pixels in.</p>
+          <p>The classic failure is the submenu. Moving diagonally toward it, the cursor leaves the parent item, crosses other items, and the submenu closes before you arrive. The correct fix is a safe triangle: as long as the cursor is heading into the submenu's area, keep it open even though the pointer left the parent. A 200 to 300ms close delay or an invisible bridge are acceptable approximations.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Targets:</strong> touch 44px minimum and 48 comfortable; pointer 24 minimum and 32 comfortable; at least 8px between targets.</li>
+            <li><strong>Things used together sit together;</strong> dangerous things sit far from frequent ones, at least 24px away.</li>
+            <li><strong>Reserve the edge for the most used.</strong> In a sidebar or toolbar against the screen edge, the items touching the edge are the fastest.</li>
+            <li><strong>Grow the area, not the drawing.</strong> A 20px icon with 12px of transparent padding on each side is a 44px target that looks exactly the same.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Edges are infinite.</strong> Put the most used items against the edge of a sidebar or toolbar; nothing to overshoot.</li>
+            <li><strong>Safe triangle over delay.</strong> Keep the submenu open while the pointer heads toward it; a 200 to 300ms close delay is the acceptable fallback.</li>
+            <li><strong>Grow the target, not the icon.</strong> Transparent padding turns a 20px icon into a 44px target with no visual change.</li>
+            <li><strong>Frequent near, dangerous far.</strong> At least 24px between a destructive action and anything used often.</li>
+            <li><strong>Logarithmic gains.</strong> Doubling a tiny target is a big win; doubling a large one is not. Spend the pixels on the small ones.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Craft de interfaces, handbook</em> (chapter 8) · Paul M. Fitts, <em>The information capacity of the human motor system</em> (1954) · <a href="https://www.nngroup.com/articles/fitts-law/" target="_blank" rel="noopener">Nielsen Norman Group, Fitts's Law and Its Applications in UX</a></footer>
+        </article>
+
+<article class="lesson" id="html-background">
+          <span class="eyebrow">Layout · 05</span>
+          <h2>HTML Background</h2>
+          <p class="lede">If the background lives only on the body, overscroll on macOS and iOS shows white behind your dark mode. Put the background on the html.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="htmlbg">
+            <div class="demo-stage">
+            <div class="win" tabindex="0" data-hover>
+              <div class="win-bar"><span></span><span></span><span></span></div>
+              <div class="win-canvas"><div class="win-page"><div class="win-line" style="width:60%"></div><div class="win-line" style="width:90%"></div><div class="win-line" style="width:75%"></div></div></div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Validate while typing</span><input type="checkbox" name="htmlbg" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Type a password. Requirements tick off live; the red only appears when you leave the field. Switch on eager validation to feel the difference: it scolds you before you finish.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>The browser paints the canvas (the area behind everything, including what appears when you pull the page past its end) with the background of the root element, the <code>html</code>. If it has none, it propagates the <code>body</code>'s. But in several scenarios (body shorter than the viewport, elastic overscroll, scrollbars, page transitions) what shows is the html background. Without it, a dark theme flashes white at the edges.</p>
+          <p>The same goes for <code>color-scheme</code>: declared on the <code>html</code>, it tells the browser to draw scrollbars, form controls and the canvas itself in the right palette.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong><code>html { background: var(--bg) }</code></strong> always, in addition to the body.</li>
+            <li><strong><code>color-scheme: light dark</code></strong> on the html, and <code>color-scheme: dark</code> when the theme is forced. This fixes the scrollbar, checkboxes, selects and the overscroll color.</li>
+            <li><strong><code>&lt;meta name="theme-color"&gt;</code></strong> so the browser bar on mobile follows the theme (with <code>media="(prefers-color-scheme: dark)"</code> for two colors).</li>
+            <li><strong>Apply the theme before the first paint.</strong> A minimal inline script in the <code>&lt;head&gt;</code> reading the saved preference avoids the wrong-theme flash.</li>
+            <li><strong>Avoid <code>overscroll-behavior: none</code> just to hide the problem.</strong> It kills pull-to-refresh and the native feel.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">HTML</span><button class="code-copy" type="button" data-copy data-label="Copy" data-copied="Copied" aria-label="Copy"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copy</span></button></div><pre><code><span class="k">html</span> { background: <span class="f">var</span>(--bg); color: <span class="f">var</span>(--fg); color-scheme: light; }
+<span class="k">html[data-theme="dark"]</span> { color-scheme: dark; }
+
+<span class="t">&lt;meta name="theme-color" content="#fcfcfc" media="(prefers-color-scheme: light)"&gt;</span>
+<span class="t">&lt;meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)"&gt;</span></code></pre></figure>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Use <code>dvh</code>, not <code>vh</code>.</strong> <code>min-height: 100dvh</code> tracks the collapsing URL bar on mobile; <code>100vh</code> leaves a strip of html background visible or overflows.</li>
+            <li><strong>Paint under the notch.</strong> <code>viewport-fit=cover</code> in the viewport meta plus <code>env(safe-area-inset-*)</code> padding lets the background reach the edges without content hiding behind hardware.</li>
+            <li><strong>Stable scrollbar gutter.</strong> <code>scrollbar-gutter: stable</code> on the scroll container stops the layout from shifting when a scrollbar appears or a modal locks scroll.</li>
+            <li><strong>Style scrollbars lightly.</strong> <code>scrollbar-width: thin; scrollbar-color: var(--border-strong) transparent</code> matches both themes without custom heavy tracks.</li>
+            <li><strong>Autofill fights color-scheme.</strong> Browser autofill paints yellow or blue inputs; override with a <code>:-webkit-autofill</code> rule using an inset box-shadow in your input background.</li>
+            <li><strong>Transition the theme, not everything.</strong> Add a short <code>transition</code> class to the root only during the toggle click and remove it after; a global transition on every element makes theme switches sluggish.</li>
+            <li><strong>Native controls follow the accent.</strong> <code>accent-color: var(--accent)</code> tints checkboxes, radios and progress bars; <code>::selection</code> should use the same hue at low opacity.</li>
+            <li><strong>Status bar for PWAs.</strong> <code>&lt;meta name="apple-mobile-web-app-status-bar-style"&gt;</code> and a matching <code>theme-color</code> per scheme complete the illusion of a native surface.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color-scheme" target="_blank" rel="noopener">MDN, color-scheme</a> · <a href="https://www.w3.org/TR/css-backgrounds-3/#special-backgrounds" target="_blank" rel="noopener">CSS Backgrounds 3, the canvas background and the root element</a> · <a href="https://web.dev/articles/color-scheme" target="_blank" rel="noopener">web.dev, Improved dark mode default styling with color-scheme</a></footer>
+        </article>
+
+<article class="lesson" id="clip-path">
+          <span class="eyebrow">Layout · 06</span>
+          <h2>Clip-Path</h2>
+          <p class="lede">Clip instead of hide. Clip-path reveals, masks and shapes without touching layout and without heavy repaint costs.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="clip">
+            <div class="demo-stage">
+            <div class="clip-wrap"><div class="clip-card" tabindex="0" data-hover><div class="reveal"><div class="reveal-inner">Revealed content</div></div></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Corner radius</span><input type="range" name="r" min="0" max="24" step="2" value="12" data-unit="px"><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Counter-movement</span><input type="checkbox" name="counter" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Hover a finding to read it as observation, impact and direction. Then sort by severity: the shadow can wait behind the lost-data bug.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>To reveal a panel from top to bottom, the instinct is to animate <code>height</code>. That triggers layout on every frame and squashes the content. With <code>clip-path: inset()</code> the element already has its final size; you only change the window through which it is seen. It is composited on the GPU, does not affect neighbors and the content does not deform. Emil Kowalski uses this for reveals, before/after comparisons and transitions between states of the same component.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Directional reveal:</strong> <code>inset(0 0 100% 0)</code> → <code>inset(0 0 0 0)</code> reveals top to bottom. Swap the side for other directions.</li>
+            <li><strong>Reveal with radius:</strong> <code>inset(0 round 12px)</code> keeps the rounded corners during the animation.</li>
+            <li><strong>Circle reveal:</strong> <code>circle(0% at 50% 50%)</code> → <code>circle(150% at …)</code> for transitions from a point (like some apps' theme toggle).</li>
+            <li><strong>Non-rectangular shapes:</strong> <code>polygon()</code> for tags, hexagons, arrows. Works on images and video.</li>
+            <li><strong>Replaces <code>overflow: hidden</code></strong> when you need <code>position: sticky</code> or shadows that must not be cut.</li>
+            <li><strong>Only animate between the same functions</strong> with the same number of arguments (inset with inset, polygon with polygon of equal vertex count).</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copy" data-copied="Copied" aria-label="Copy"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copy</span></button></div><pre><code><span class="k">.panel</span> { clip-path: <span class="f">inset</span>(<span class="n">0</span> <span class="n">0</span> <span class="n">100</span>% <span class="n">0</span> round <span class="n">12px</span>); transition: clip-path <span class="n">320ms</span> <span class="f">cubic-bezier</span>(<span class="n">0.23</span>, <span class="n">1</span>, <span class="n">0.32</span>, <span class="n">1</span>); }
+<span class="k">.open .panel</span> { clip-path: <span class="f">inset</span>(<span class="n">0</span> <span class="n">0</span> <span class="n">0</span> <span class="n">0</span> round <span class="n">12px</span>); }
+
+<span class="k">.tag</span> { clip-path: <span class="f">polygon</span>(<span class="n">0</span> <span class="n">0</span>, <span class="f">calc</span>(<span class="n">100</span>% - <span class="n">10px</span>) <span class="n">0</span>, <span class="n">100</span>% <span class="n">50</span>%, <span class="f">calc</span>(<span class="n">100</span>% - <span class="n">10px</span>) <span class="n">100</span>%, <span class="n">0</span> <span class="n">100</span>%); }</code></pre></figure>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Clipping clips shadows too.</strong> A <code>clip-path</code> on the element removes its <code>box-shadow</code>. Put the shadow on a wrapper and the clip on the child.</li>
+            <li><strong>Clipped areas are not clickable.</strong> Pointer events do not fire in the clipped region, which is exactly what you want for a reveal panel.</li>
+            <li><strong>Add counter-movement.</strong> Combine the inset animation with a 8 to 12px <code>transform</code> in the opposite direction on the content for a sense of depth.</li>
+            <li><strong>Replace overflow + radius on transformed children.</strong> <code>clip-path: inset(0 round var(--r))</code> avoids the Safari corner glitch that <code>overflow: hidden</code> shows during transforms.</li>
+            <li><strong>Sliding tab indicator with text inversion.</strong> Duplicate the tab labels in the inverted color and clip that layer to the indicator's position. The label appears to change color as the pill passes over it.</li>
+            <li><strong>Before/after comparisons.</strong> Two stacked images, the top one with <code>inset(0 X% 0 0)</code> driven by a range input. No canvas, no JavaScript beyond setting a variable.</li>
+            <li><strong><code>polygon()</code> is responsive, <code>path()</code> is not.</strong> Percentages in polygon scale with the box; path coordinates are fixed pixels.</li>
+            <li><strong>Hide fully clipped content properly.</strong> When a panel is completely clipped, also set <code>visibility: hidden</code> or <code>inert</code>, so it leaves the accessibility tree and tab order.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <a href="https://emilkowal.ski/ui/the-magic-of-clip-path" target="_blank" rel="noopener">Emil Kowalski, The magic of clip-path</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path" target="_blank" rel="noopener">MDN, clip-path</a></footer>
+        </article>
+
+<article class="lesson" id="scroll-fades">
+          <span class="eyebrow">Layout · 07</span>
+          <h2>Scroll Fades</h2>
+          <p class="lede">Content cut abruptly at the edge of a scroll area looks like a bug. A 24 to 40px fade says "there is more here" without needing an arrow.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="fades">
+            <div class="demo-stage">
+            <div class="scroller faded" tabindex="0" aria-label="Topics"><span class="chip">Typography</span><span class="chip">Color</span><span class="chip">Layout</span><span class="chip">Motion</span><span class="chip">Accessibility</span><span class="chip">Performance</span><span class="chip">Design systems</span><span class="chip">Icons</span><span class="chip">Shadows</span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Fade width</span><input type="range" name="fade" min="0" max="64" step="4" value="32" data-unit="px"><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">mask-image</span><input type="checkbox" name="fade" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Scroll the row. The fade only appears on the side that has more content; at the end, the right edge becomes a hard cut again.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>The fade does two jobs: it softens the cut (content disappears instead of being guillotined) and it signals continuity (the user understands they can scroll). It matters most in horizontal scrollers, where there is no visible scrollbar to give the hint, and in long sidebars, where text cut mid-line looks broken. This site's sidebar uses exactly that.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong><code>mask-image</code> with a linear gradient</strong> on the scroll container itself. It works on any background, including images and gradients, because it is real transparency rather than a colored overlay.</li>
+            <li><strong>Alternative:</strong> pseudo-elements with a gradient in the background color. Simpler, but it breaks if the background changes.</li>
+            <li><strong>Fade size:</strong> 24 to 48px. Too small goes unnoticed; too large eats content.</li>
+            <li><strong>Ideally the fade only shows when there is more content in that direction.</strong> With <code>animation-timeline: scroll()</code> you can do it in pure CSS where supported; otherwise, a scroll listener that toggles a class.</li>
+            <li><strong>Hide the scrollbar</strong> on horizontal chip scrollers (<code>scrollbar-width: none</code>), but make sure it still scrolls with keyboard and trackpad.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copy" data-copied="Copied" aria-label="Copy"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copy</span></button></div><pre><code><span class="k">.scroller</span> {
+  overflow-x: auto;
+  mask-image: <span class="f">linear-gradient</span>(to right, transparent, #<span class="n">000</span> <span class="n">32px</span>, #<span class="n">000</span> <span class="f">calc</span>(<span class="n">100</span>% - <span class="n">32px</span>), transparent);
+}
+<span class="k">.sidebar</span> {
+  overflow-y: auto;
+  mask-image: <span class="f">linear-gradient</span>(to bottom, transparent, #<span class="n">000</span> <span class="n">24px</span>, #<span class="n">000</span> <span class="f">calc</span>(<span class="n">100</span>% - <span class="n">32px</span>), transparent);
+}</code></pre></figure>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Fade only where there is more.</strong> With scroll-driven animations, <code>animation-timeline: scroll(self inline)</code> can drive a custom property that controls each edge's fade; without support, a scroll listener toggles <code>data-at-start</code> and <code>data-at-end</code>.</li>
+            <li><strong>Pixels, not percentages.</strong> A 32px fade should stay 32px on a 300px and on a 1200px scroller.</li>
+            <li><strong>Snap inside the visible area.</strong> <code>scroll-snap-type: x mandatory</code> plus <code>scroll-padding-inline: 32px</code> so snapped items land past the fade, not under it.</li>
+            <li><strong>Keep sticky headers outside the mask.</strong> A masked container fades its sticky header as well. Structure the header as a sibling above the scroller.</li>
+            <li><strong>Contain overscroll.</strong> <code>overscroll-behavior-x: contain</code> on horizontal scrollers prevents trackpad swipes from triggering browser back navigation.</li>
+            <li><strong>Focus must escape the fade.</strong> <code>scroll-margin-inline: 32px</code> on focusable children so keyboard focus scrolls them clear of the faded edge.</li>
+            <li><strong>Hidden scrollbar, visible affordance.</strong> If you hide the scrollbar, the fade is the only hint. Also keep the container keyboard-scrollable with <code>tabindex="0"</code> and a label.</li>
+            <li><strong>Dialogs too.</strong> A fade above the footer actions of a long dialog signals more content better than a divider line.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/mask-image" target="_blank" rel="noopener">MDN, mask-image</a> · <a href="https://developer.chrome.com/docs/css-ui/scroll-driven-animations" target="_blank" rel="noopener">Chrome for Developers, scroll-driven animations</a> · <a href="https://rauno.me/craft" target="_blank" rel="noopener">Rauno Freiberg, Craft</a></footer>
+        </article>
+
+<article class="lesson" id="spacing-rhythm">
+          <span class="eyebrow">Layout · 08</span>
+          <h2>Spacing Rhythm</h2>
+          <p class="lede">Spacing is the part of layout nobody notices when it is right and everybody feels when it is wrong. A small set of repeated distances is what makes a screen feel composed.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="spacing">
+            <div class="demo-stage">
+            <div class="sp-form">
+              <div class="sp-field"><span class="sp-label">Project name</span><span class="sp-input"></span><span class="sp-help">Visible to everyone on the team</span></div>
+              <div class="sp-field"><span class="sp-label">Description</span><span class="sp-input"></span></div>
+              <div class="sp-actions"><span class="sp-btn primary"></span><span class="sp-btn"></span></div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Base unit</span><input type="range" name="unit" min="2" max="8" step="1" value="4" data-unit="px"><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Arbitrary spacing</span><input type="checkbox" name="arbitrary" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Drag the base unit: every distance is a multiple of it. Switch to arbitrary spacing to see the same form with 7, 13 and 19px gaps.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Look at a screen that feels slightly off but you cannot say why. Often it is spacing: 13px here, 19px there, 7px between a label and its field. None of them is wrong on its own, but together they have no rhythm, like music with no steady beat. Now rebuild the same screen using only multiples of one unit, say 4px: 4, 8, 12, 16, 24, 32. Nothing else changes and it suddenly looks intentional. The eye picks up the repetition even without measuring it.</p>
+          <p>A scale also makes decisions faster. Instead of asking "how much space here?" you ask "which step?", and the answer is usually obvious: tight for things that belong together, wide for things that do not.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Pick a unit and a short ladder.</strong> 4px base, steps at 4, 8, 12, 16, 24, 32, 48, 64. That covers almost everything from icon gaps to page sections.</li>
+            <li><strong>Closeness means relationship.</strong> A label sits 4 to 8px from its field; two fields sit 16 to 24px apart; two sections sit 48 to 64px apart. The distances tell the story of what belongs to what.</li>
+            <li><strong>Inside is smaller than outside.</strong> Padding inside a card is smaller than the gap between cards, otherwise the cards seem to merge.</li>
+            <li><strong>Optical exceptions are allowed.</strong> Text has its own internal space from line height; sometimes a step has to be nudged by a pixel or two to look even. The scale is a default, not a law.</li>
+            <li><strong>Tokenize it.</strong> Named steps in the code (space-1 to space-8) keep the rhythm from drifting as more people touch the product.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Four is a good base.</strong> It divides cleanly, matches most icon grids and gives fine control where 8 would be too coarse. Larger products often use 8 for layout and 4 for components.</li>
+            <li><strong>Bigger jumps at the top of the ladder.</strong> 4, 8, 12, 16, 24, 32, 48, 64. The steps grow because large distances need bigger differences to be perceived as different.</li>
+            <li><strong>Label, field, help text.</strong> Label 6 to 8px above its field, help text 6px below, 20 to 24px before the next field. This one pattern fixes most forms.</li>
+            <li><strong>Card padding equals card radius, roughly.</strong> A 16px radius wants around 16 to 20px of padding; 8px padding inside a 16px radius looks cramped at the corners.</li>
+            <li><strong>Section gaps double the block gaps.</strong> If items inside a section are 16px apart, sections are 32 to 48px apart. Twice is the minimum for the eye to see a new group.</li>
+            <li><strong>Audit with a ruler overlay.</strong> Turn on a 4px grid in the design tool or a dev overlay and look for anything landing between lines.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> Adam Wathan and Steve Schoger, <em>Refactoring UI</em> (establish a spacing and sizing system) · <a href="https://m3.material.io/foundations/layout/understanding-layout/spacing" target="_blank" rel="noopener">Material Design, Spacing</a> · <a href="https://developer.apple.com/design/human-interface-guidelines/layout" target="_blank" rel="noopener">Apple HIG, Layout</a></footer>
+        </article>
+
+<article class="lesson" id="density">
+          <span class="eyebrow">Layout · 09</span>
+          <h2>Density</h2>
+          <p class="lede">How much fits on a screen is a design decision, not a side effect. The right density depends on who is looking and how often.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="density">
+            <div class="demo-stage">
+            <div class="dn-table"><div class="dn-row dn-head"><span>Issue</span><span>Status</span><span>Updated</span></div><div class="dn-row"><span class="dn-name">Login button misaligned on Safari</span><span class="dn-tag">In progress</span><span class="dn-time">2m</span></div><div class="dn-row"><span class="dn-name">Export to CSV drops header row</span><span class="dn-tag">Todo</span><span class="dn-time">1h</span></div><div class="dn-row"><span class="dn-name">Dark mode flashes on load</span><span class="dn-tag">Review</span><span class="dn-time">3h</span></div><div class="dn-row"><span class="dn-name">Keyboard shortcut conflicts with browser</span><span class="dn-tag">Todo</span><span class="dn-time">1d</span></div><div class="dn-row"><span class="dn-name">Toast overlaps the composer</span><span class="dn-tag">Done</span><span class="dn-time">2d</span></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Row height</span><input type="range" name="row" min="32" max="56" step="4" value="40" data-unit="px"><output></output></label></div>
+          </div>
+            <figcaption class="demo-caption">Drag the row height between compact and comfortable. Text stays the same size; only space changes. Hover a row: the whole width is the target.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>A spreadsheet used all day by an analyst and a settings page opened once a month want opposite things. The analyst wants to see forty rows without scrolling and reads them in a glance; generous padding would just be scrolling in disguise. The settings page is read slowly, once, and wants room to breathe so each option is understood before it is changed. Both are correct. What is wrong is applying one density to everything, which is what happens when a component library ships with a single "comfortable" size.</p>
+          <p>Density is also about what is visible at once. Seeing more rows means comparing more, finding patterns, feeling in control. Seeing fewer means focusing. The choice belongs to the task, and often to the person, which is why the best data tools let them switch.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Two or three densities, not one.</strong> Compact around 32px per row, default around 40, comfortable around 48. Let power users choose.</li>
+            <li><strong>Reduce space before reducing text.</strong> Compact means tighter padding and smaller gaps; the text stays readable at the same size.</li>
+            <li><strong>Keep the hit areas.</strong> A 32px row is still clickable across its whole width; small rows must never mean small targets.</li>
+            <li><strong>Frequency decides.</strong> Screens used many times a day lean compact; screens used rarely lean comfortable.</li>
+            <li><strong>Test with real amounts.</strong> Ten rows of sample data hide density problems. Load two hundred and see whether the screen still reads.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Row heights that sit on the grid.</strong> 32, 40, 48. Odd heights like 37px break the vertical rhythm as soon as rows stack.</li>
+            <li><strong>Compact hides less, not more.</strong> In compact mode show the same columns with less padding; do not drop information the person chose to see.</li>
+            <li><strong>Text size stays.</strong> The same 13px in every density; only spacing and icon sizes change. Shrinking text to fit is a different, worse decision.</li>
+            <li><strong>Persist the choice.</strong> If someone picks compact, remember it per view. Resetting density on every visit erases the reason they chose it.</li>
+            <li><strong>Hover reveals, density hides.</strong> In compact rows, secondary actions can appear only on hover, keeping the rest of the row for content.</li>
+            <li><strong>Mobile is its own density.</strong> Touch targets force at least 44px rows, so compact does not exist there; comfortable is the default and the only option.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <a href="https://m2.material.io/design/layout/applying-density.html" target="_blank" rel="noopener">Material Design, Applying density</a> · <a href="https://linear.app/docs" target="_blank" rel="noopener">Linear</a> (display density settings) · <a href="https://www.nngroup.com/articles/information-density/" target="_blank" rel="noopener">Nielsen Norman Group, Information density</a></footer>
+        </article>
+
+<article class="lesson" id="zero-one-many">
+          <span class="eyebrow">Layout · 10</span>
+          <h2>Zero, One, Many</h2>
+          <p class="lede">Every list, counter and collection has to be designed four times: with nothing, with one, with a few, and with far too many. Everyone designs the third.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="cardinality">
+            <div class="demo-stage">
+            <div class="zm-wrap">
+              <div class="zm-grid"><div class="zm-item"><span class="zm-thumb"></span><span class="zm-t">Project 1</span></div><div class="zm-item"><span class="zm-thumb"></span><span class="zm-t">Project 2</span></div><div class="zm-item"><span class="zm-thumb"></span><span class="zm-t">Project 3</span></div><div class="zm-item"><span class="zm-thumb"></span><span class="zm-t">Project 4</span></div><div class="zm-item"><span class="zm-thumb"></span><span class="zm-t">Project 5</span></div><div class="zm-item"><span class="zm-thumb"></span><span class="zm-t">Project 6</span></div><div class="zm-item"><span class="zm-thumb"></span><span class="zm-t">Project 7</span></div><div class="zm-item"><span class="zm-thumb"></span><span class="zm-t">Project 8</span></div><div class="zm-item"><span class="zm-thumb"></span><span class="zm-t">Project 9</span></div><div class="zm-item"><span class="zm-thumb"></span><span class="zm-t">Project 10</span></div><div class="zm-item"><span class="zm-thumb"></span><span class="zm-t">Project 11</span></div><div class="zm-item"><span class="zm-thumb"></span><span class="zm-t">Project 12</span></div></div>
+              <div class="zm-empty"><b>No projects yet</b><span>Create one to see it here.</span></div>
+              <div class="zm-more">+ 4 more</div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Items</span><input type="range" name="items" min="0" max="12" step="1" value="3" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Designed for each case</span><input type="checkbox" name="designed" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Drag from 0 to 12. Designed: an empty state at zero, a single wide card at one, a bounded grid with a count past eight. Default: a lonely cell and an endless grid.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>The "few" case is the one in every mockup. Zero needs an empty state with an explanation and an action. Many needs pagination, virtualization, search or grouping, and a real number: ask the team for the 99th percentile and design for that, not the typical value. The most forgotten is one: a three-column grid with a single card, a carousel with one slide, a chart with one data point. All of them look broken by default, and none of them is rare.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Zero:</strong> explain why it is empty (never had anything, filter hid it, error), teach what will live here, offer the way out. And distinguish error from empty; confusing them makes people think they lost their data.</li>
+            <li><strong>One:</strong> a layout that does not look like a grid missing its other cells. Often a single wide card, or the list variant of the same component.</li>
+            <li><strong>Few:</strong> the normal case, already designed.</li>
+            <li><strong>Many:</strong> show a bounded number and say how many more, with a way to see them. Decide whether the surface scrolls, pages or searches.</li>
+            <li><strong>Loading has its own cardinalities:</strong> initial, partial, more items, revalidation. Each is a state.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Design the one.</strong> A single card in a three-column grid is the most common broken screen in production.</li>
+            <li><strong>Ask for the p99.</strong> Design "many" for the real maximum, not the demo data.</li>
+            <li><strong>Error is not empty.</strong> Different icon, different words, a retry. Confusing them makes people think they lost data.</li>
+            <li><strong>Bound and count.</strong> Show eight and "12 more", with a way to see them. Never an unbounded list without a plan.</li>
+            <li><strong>Keep the height.</strong> Zero, one and many should reserve roughly the same region so the layout does not jump between them.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Craft de interfaces, handbook</em> (sections 7.1, 7.2, appendix B) · <a href="https://www.nngroup.com/articles/empty-state-interface-design/" target="_blank" rel="noopener">Nielsen Norman Group, Designing Empty States</a></footer>
+        </article>
+
+<article class="lesson" id="adversarial-content">
+          <span class="eyebrow">Layout · 11</span>
+          <h2>Adversarial Content</h2>
+          <p class="lede">Test every screen with hostile content. An 80-character name with no spaces has broken more products than any bug.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="adversarial">
+            <div class="demo-stage" data-cases="Marina Costa|Bartholomew-Featherstonehaugh-Cholmondeley-Montgomery-Fitzwilliam|Li|Geschwindigkeitsbegrenzung Straßenverkehrsordnung|田中太郎の新しいプロジェクト計画書|Marina 🎨✨ Costa">
+            <div class="ad-card">
+              <span class="ad-avatar"><span class="ad-initials">MC</span></span>
+              <div class="ad-text"><b class="ad-name"></b><span class="ad-role">Product designer</span></div>
+              <span class="ad-badge">Admin</span>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Case</span><input type="range" name="case" min="0" max="5" step="1" value="0" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Hardened</span><input type="checkbox" name="hardened" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Step through the cases: a normal name, 80 characters with no spaces, two letters, German, Japanese, emoji. Then switch on hardened: min-width zero, truncation, a fallback that keeps its size.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Mockups are filled with names that fit, numbers that are round, and images that load. Real data is none of that. Robustness is the axis of craft with the highest impact and the least glamour, and Rauno calls it a bigger multiplier of trust than any visual refinement, because trust breaks the first time a layout does.</p>
+
+          <h3>The minimum list</h3>
+          <ul>
+            <li>A name with 80 characters and no spaces, and a name with 2 characters.</li>
+            <li>Text in German (about 30% longer than Portuguese or English) and in Japanese (shorter, no spaces, different breaking).</li>
+            <li>A number in the billions, a negative number, zero, and null.</li>
+            <li>An emoji in the middle of a name, and text that looks like HTML.</li>
+            <li>A date from 1900 and from 2100.</li>
+            <li>An image that did not load, and an image in an unexpected aspect ratio.</li>
+          </ul>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Truncation is a decision.</strong> Ellipsis at the end for labels and card titles; in the middle for file names, because the extension matters; two lines for important titles; a smaller size for featured numbers. If you do not decide, the default behavior decides, and it is usually the worst option.</li>
+            <li><strong>The full text is always reachable</strong> somewhere: tooltip, hover, detail screen. Truncating without recovery is hiding information.</li>
+            <li><strong>Network is content too.</strong> Offline, slow, partial, stale, conflicting edits, reconnecting. Each is a screen or a behavior, and most design files have none of them.</li>
+            <li><strong>Make it part of done.</strong> A state check in the definition of done, not a polish phase later.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>80 characters, no spaces.</strong> The single test that catches the most bugs. Add min-width 0 to flex children and a truncation strategy.</li>
+            <li><strong>German and Japanese.</strong> One stretches, the other has no spaces to break on. Both break layouts tuned to English.</li>
+            <li><strong>Missing image is a state.</strong> A fallback with initials or a neutral tile, the same size, the same outline.</li>
+            <li><strong>Middle ellipsis for files.</strong> Keep the extension and the distinguishing end of the name.</li>
+            <li><strong>Numbers too.</strong> Billions, negatives, zero and null each need a decision, especially in tabular columns.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Craft de interfaces, handbook</em> (sections 7.4 to 7.6) · <a href="https://rauno.me/craft/interaction-design" target="_blank" rel="noopener">Rauno Freiberg, Invisible Details of Interaction Design</a> (robustness)</footer>
+        </article>
+      </section>
+      <footer class="footer"><p>Personal study library. Content synthesized from the sources listed in each lesson; course and author names belong to their respective owners. Hierarchy through size, weight and space only.</p></footer>
+    </div>
+  </main>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-lang="pt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Referências — Interface Craft</title>
+  <meta name="description" content="Quem estudar e onde ler. Fontes primárias: gente que constrói, guidelines de plataforma e especificações.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#fcfcfc" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
+  <script>
+    // Applies the saved theme before first paint to avoid a flash
+    try { var t = localStorage.getItem('theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script>
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <div>
+        <div class="brand-name">Interface Craft</div>
+        <div class="brand-sub">Biblioteca viva</div>
+      </div>
+      <div class="controls">
+        <nav class="lang-switch" aria-label="Idioma"><a class="lang-opt" href="../references.html" data-lang="en" hreflang="en">EN</a><a class="lang-opt" href="#" data-lang="pt" hreflang="pt" aria-current="true">PT</a></nav>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Alternar tema claro e escuro" title="Alternar tema claro e escuro"><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+      </div>
+    </div>
+    <a class="back-link" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>Início</a>
+    <nav class="nav-groups" aria-label="Sumário da seção">
+      <div class="nav-group" data-section="resources" style="margin-top:0">
+        <div class="nav-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Referências</div>
+        <ul class="nav-list"><li><a class="nav-link" href="#goats">GOATs</a></li><li><a class="nav-link" href="#resources">Resources</a></li></ul>
+      </div>
+      <div class="nav-group nav-other" data-section="resources">
+        <div class="nav-title">Outras seções</div>
+        <ul class="nav-list"><li><a class="nav-link" href="craft.html">Craft</a></li><li><a class="nav-link" href="typography.html">Typography</a></li><li><a class="nav-link" href="color.html">Color</a></li><li><a class="nav-link" href="layout.html">Layout</a></li><li><a class="nav-link" href="motion.html">Motion</a></li><li><a class="nav-link" href="ux.html">UX</a></li></ul>
+      </div>
+    </nav>
+  </aside>
+  <main class="content">
+    <div class="container">
+<section class="section" data-section="resources">
+        <div class="section-head" id="references">
+          <span class="eyebrow">Seção 07</span>
+          <h2>Referências</h2>
+          <p>Quem estudar e onde ler. Fontes primárias: gente que constrói, guidelines de plataforma e especificações.</p>
+        </div>
+
+        <article class="lesson" id="goats">
+          <span class="eyebrow">Referências · 01</span>
+          <h2>GOATs</h2>
+          <p class="lede">Pessoas cujo trabalho define o padrão de craft em interfaces hoje. Siga, leia o blog, recrie o que fazem.</p>
+          <div class="people">
+            <a class="person" href="https://emilkowal.ski/" target="_blank" rel="noopener"><b>Emil Kowalski</b><span>Design engineer na Linear, ex-Vercel. Autor de Sonner, Vaul e do curso animations.dev.</span></a>
+            <a class="person" href="https://joshpuckett.me/" target="_blank" rel="noopener"><b>Josh Puckett</b><span>Ex-Dropbox e Wealthfront. Autor de Interface Craft e do DialKit. "Uncommon care".</span></a>
+            <a class="person" href="https://rauno.me/" target="_blank" rel="noopener"><b>Rauno Freiberg</b><span>Design engineer na Vercel. Mantém o catálogo Craft e o ui.land.</span></a>
+            <a class="person" href="https://paco.me/" target="_blank" rel="noopener"><b>Paco Coursey</b><span>Design engineer na Linear. Autor do cmdk e da estética do "command menu".</span></a>
+            <a class="person" href="https://www.makingsoftware.com/" target="_blank" rel="noopener"><b>Dan Hollick</b><span>Autor de Making Software, o manual ilustrado sobre como telas, cor, fontes e rasterização funcionam.</span></a>
+            <a class="person" href="https://www.joshwcomeau.com/" target="_blank" rel="noopener"><b>Josh W. Comeau</b><span>Referência em CSS profundo: sombras, layout, animação. Autor do CSS for JavaScript Developers.</span></a>
+            <a class="person" href="https://devouringdetails.com/" target="_blank" rel="noopener"><b>Mariana Castilho</b><span>Design engineer, ex-Vercel. Autora de Devouring Details, sobre design de interação.</span></a>
+            <a class="person" href="https://nerdy.dev/" target="_blank" rel="noopener"><b>Adam Argyle</b><span>Chrome DevRel. Explica as APIs novas de CSS (OKLCH, scroll-driven animations, text-wrap) antes de todo mundo.</span></a>
+            <a class="person" href="https://jhey.dev/" target="_blank" rel="noopener"><b>Jhey Tompkins</b><span>Demos criativas em CSS que empurram o limite do que dá para fazer sem JavaScript.</span></a>
+            <a class="person" href="https://benji.org/" target="_blank" rel="noopener"><b>Benji Taylor</b><span>Family, Mercury. Motion e detalhe em produto de consumo, referência para o Family Drawer.</span></a>
+          </div>
+          <p class="muted" style="margin-top:16px; font-size: var(--text-sm)">Lista intencionalmente curta. Melhor conhecer profundamente o trabalho de dez pessoas do que seguir cem.</p>
+        </article>
+
+        <article class="lesson" id="resources">
+          <span class="eyebrow">Referências · 02</span>
+          <h2>Resources</h2>
+          <p class="lede">Cursos, bibliotecas e especificações usados como base para as aulas desta biblioteca.</p>
+
+          <h3>Cursos e bibliotecas</h3>
+          <ul class="res-list">
+            <li><div><b><a href="https://animations.dev/" target="_blank" rel="noopener">animations.dev</a></b><span>Emil Kowalski. Teoria de animação, CSS, Motion, walkthroughs (Family Drawer, Dynamic Island).</span></div><em>curso</em></li>
+            <li><div><b><a href="https://www.interfacecraft.dev/" target="_blank" rel="noopener">Interface Craft</a></b><span>Josh Puckett. Biblioteca com artigos, walkthroughs interativos, vídeos e ferramentas (DialKit). Princípios: noticing, uncommon care, less but better.</span></div><em>biblioteca</em></li>
+            <li><div><b><a href="https://www.makingsoftware.com/" target="_blank" rel="noopener">Making Software</a></b><span>Dan Hollick. Manual de referência sobre como software funciona por baixo: telas, color spaces, fontes, rasterização, blur e ruído, GPU.</span></div><em>livro</em></li>
+            <li><div><b><a href="https://devouringdetails.com/" target="_blank" rel="noopener">Devouring Details</a></b><span>Mariana Castilho. Design de interação e os detalhes que fazem produtos parecerem vivos.</span></div><em>livro</em></li>
+            <li><div><b><a href="https://rauno.me/craft" target="_blank" rel="noopener">Craft, por Rauno Freiberg</a></b><span>Catálogo de padrões de interação recriados e explicados.</span></div><em>catálogo</em></li>
+            <li><div><b><a href="https://github.com/emilkowalski/skills" target="_blank" rel="noopener">emilkowalski/skills</a></b><span>Regras de animação e design engineering de Emil em formato de skill para agentes. Ótimo como checklist.</span></div><em>repositório</em></li>
+          </ul>
+
+          <h3>Guidelines e especificações</h3>
+          <ul class="res-list">
+            <li><div><b><a href="https://developer.apple.com/design/human-interface-guidelines/" target="_blank" rel="noopener">Apple Human Interface Guidelines</a></b><span>Hit areas de 44pt, SF Symbols, motion, materiais.</span></div><em>guideline</em></li>
+            <li><div><b><a href="https://m3.material.io/" target="_blank" rel="noopener">Material Design 3</a></b><span>Tokens de duração e easing, touch targets de 48dp.</span></div><em>guideline</em></li>
+            <li><div><b><a href="https://www.w3.org/WAI/WCAG22/quickref/" target="_blank" rel="noopener">WCAG 2.2</a></b><span>Target size (2.5.8), contraste, motion (2.3.3).</span></div><em>spec</em></li>
+            <li><div><b><a href="https://developer.mozilla.org/" target="_blank" rel="noopener">MDN Web Docs</a></b><span>Referência definitiva de cada propriedade citada aqui.</span></div><em>referência</em></li>
+            <li><div><b><a href="https://web.dev/" target="_blank" rel="noopener">web.dev</a></b><span>Performance, Core Web Vitals, animações de alta performance.</span></div><em>referência</em></li>
+          </ul>
+
+          <h3>Ferramentas</h3>
+          <ul class="res-list">
+            <li><div><b><a href="https://oklch.com" target="_blank" rel="noopener">oklch.com</a></b><span>Picker OKLCH com visualização de gamut (Evil Martians).</span></div><em>cor</em></li>
+            <li><div><b><a href="https://linear-easing-generator.netlify.app/" target="_blank" rel="noopener">linear() easing generator</a></b><span>Jake Archibald. Converte springs e curvas JS em <code>linear()</code>.</span></div><em>motion</em></li>
+            <li><div><b><a href="https://easings.net" target="_blank" rel="noopener">easings.net</a></b><span>Catálogo visual de curvas com os valores de cubic-bezier.</span></div><em>motion</em></li>
+            <li><div><b><a href="https://rsms.me/inter/" target="_blank" rel="noopener">Inter</a></b><span>A fonte deste site. Features OpenType, dynamic metrics e a variante Inter Display.</span></div><em>tipografia</em></li>
+          </ul>
+        </article>
+      </section>
+      <footer class="footer"><p>Biblioteca de estudo pessoal. Conteúdo sintetizado a partir das fontes listadas em cada aula; nomes de cursos e autores pertencem aos seus respectivos donos. Hierarquia só por tamanho, peso e espaço.</p></footer>
+    </div>
+  </main>
+</div>
+<script src="../app.js"></script>
+</body>
+</html>

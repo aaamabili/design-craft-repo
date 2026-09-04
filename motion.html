@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Motion — Interface Craft</title>
+  <meta name="description" content="Motion is what turns states into a story. These lessons follow Emil Kowalski&#x27;s principles (animations.dev) closely: curves, durations, springs and when not to animate.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#fcfcfc" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
+  <script>
+    // Applies the saved theme before first paint to avoid a flash
+    try { var t = localStorage.getItem('theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script>
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <div>
+        <div class="brand-name">Interface Craft</div>
+        <div class="brand-sub">Living library</div>
+      </div>
+      <div class="controls">
+        <nav class="lang-switch" aria-label="Language"><a class="lang-opt" href="#" data-lang="en" hreflang="en" aria-current="true">EN</a><a class="lang-opt" href="pt/motion.html" data-lang="pt" hreflang="pt">PT</a></nav>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle light and dark theme" title="Toggle light and dark theme"><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+      </div>
+    </div>
+    <a class="back-link" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>Home</a>
+    <nav class="nav-groups" aria-label="Section contents">
+      <div class="nav-group" data-section="motion" style="margin-top:0">
+        <div class="nav-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17c4-8 8-8 12 0s6 0 6 0"/></svg>Motion</div>
+        <ul class="nav-list"><li><a class="nav-link" href="#why-motion-works">Why Motion Works</a></li><li><a class="nav-link" href="#easing">Easing</a></li><li><a class="nav-link" href="#perceived-duration">Perceived Duration</a></li><li><a class="nav-link" href="#duration">Duration</a></li><li><a class="nav-link" href="#springs">Springs</a></li><li><a class="nav-link" href="#overshoot-and-clamp">Overshoot and Clamp</a></li><li><a class="nav-link" href="#transform-origin">Transform Origin</a></li><li><a class="nav-link" href="#animate-only-transform-opacity">Transform &amp; Opacity</a></li><li><a class="nav-link" href="#interruptibility">Interruptibility</a></li><li><a class="nav-link" href="#choreography">Choreography</a></li><li><a class="nav-link" href="#shared-element-transitions">Shared Element Transitions</a></li><li><a class="nav-link" href="#gestures">Gestures</a></li><li><a class="nav-link" href="#when-the-gesture-fires">When the Gesture Fires</a></li><li><a class="nav-link" href="#loading-and-perceived-performance">Loading and Perceived Performance</a></li><li><a class="nav-link" href="#frequency">Frequency</a></li><li><a class="nav-link" href="#instant-in-soft-out">Instant In, Soft Out</a></li><li><a class="nav-link" href="#reduced-motion">Reduced Motion</a></li><li><a class="nav-link" href="#fidgetability">Fidgetability</a></li><li><a class="nav-link" href="#pattern-catalog">Pattern Catalog</a></li><li><a class="nav-link" href="#motion-tokens-and-specs">Motion Tokens and Specs</a></li><li><a class="nav-link" href="#critiquing-motion">Critiquing Motion</a></li></ul>
+      </div>
+      <div class="nav-group nav-other" data-section="motion">
+        <div class="nav-title">Other sections</div>
+        <ul class="nav-list"><li><a class="nav-link" href="craft.html">Craft</a></li><li><a class="nav-link" href="typography.html">Typography</a></li><li><a class="nav-link" href="color.html">Color</a></li><li><a class="nav-link" href="layout.html">Layout</a></li><li><a class="nav-link" href="ux.html">UX</a></li><li><a class="nav-link" href="references.html">References</a></li></ul>
+      </div>
+    </nav>
+  </aside>
+  <main class="content">
+    <div class="container">
+<section class="section" data-section="motion">
+        <div class="section-head" id="motion">
+          <span class="eyebrow">Section 05</span>
+          <h2>Motion</h2>
+          <p>Motion is what turns states into a story. These lessons follow Emil Kowalski's principles (animations.dev) closely: curves, durations, springs and when not to animate.</p>
+        </div>
+
+        <article class="lesson" id="why-motion-works">
+          <span class="eyebrow">Motion · 01</span>
+          <h2>Why Motion Works</h2>
+          <p class="lede">Before any curve or number, it helps to know what motion is doing for the person watching. Almost every good decision follows from that.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="causality">
+            <div class="demo-stage">
+            <div class="ca-row">
+              <button class="btn ca-btn" type="button" data-flash="is-hit" data-flash-ms="1400">Tap me</button>
+              <span class="ca-resp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Done</span>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Response delay</span><input type="range" name="delay" min="0" max="600" step="20" value="0" data-unit="ms"><output></output></label></div>
+          </div>
+            <figcaption class="demo-caption">Click the button and drag the delay. Under 100ms the answer feels like yours; past it, it feels like the system replying.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Interfaces change state. An instant change asks the brain to do two things at once: notice that something changed, and work out what. We are bad at this; it is called change blindness, and it is why you can miss a button that just appeared in the corner. Motion turns a state change into a continuous event. Instead of A and then B, you see A becoming B, and the eye follows without effort, because tracking moving things is far older than reading.</p>
+          <p>The practical consequence is that motion is a tool for explaining, not for decorating. Whenever you add movement, ask what it explains. If the answer is nothing, it needs another reason, delight or brand, and that reason has to survive the hundredth repetition.</p>
+          <p>Motion is also a scarce resource. It grabs attention almost involuntarily, so when three things move at once none of them has priority. On a screen where something important is happening, an error, a confirmation, an item added to the cart, everything else should hold still.</p>
+
+          <h3>The thresholds worth memorizing</h3>
+          <table>
+            <thead><tr><th>Time</th><th>What happens in perception</th></tr></thead>
+            <tbody>
+              <tr><td>~16ms</td><td>One frame at 60fps. Dropped frames here are what feels like stutter.</td></tr>
+              <tr><td>~100ms</td><td>Limit of perceived causality. Below it, the response feels caused by your action.</td></tr>
+              <tr><td>~250ms</td><td>Simple visual reaction time of an adult.</td></tr>
+              <tr><td>~400ms</td><td>Doherty threshold. Past it, attention starts to wander.</td></tr>
+              <tr><td>~1s</td><td>The train of thought survives, but the wait is noticed.</td></tr>
+              <tr><td>~10s</td><td>Attention limit. Past it, people switch tabs.</td></tr>
+            </tbody>
+          </table>
+          <p>The 100ms line is the most important and the least known. If the interface starts responding within 100ms of the touch, the person attributes the change to themselves and feels in control. Past that, it becomes "I clicked and the system answered", a different and worse relationship. The animation does not need to finish in 100ms; it needs to visibly start. That is why ease-out feels responsive even at 400ms: most of the travel happens in the first few frames.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Start within 100ms, always.</strong> Never put a delay between the click and the first visible response.</li>
+            <li><strong>Distance needs time, physically.</strong> Screens do not blur. An element crossing 800px in 150ms jumps between frames and the eye loses it. Combine long travel with a fade, shorten the apparent distance to 20 to 40px, or add a little scale for continuity.</li>
+            <li><strong>Fades are not linear to the eye.</strong> Brightness perception is roughly logarithmic, so a constant-speed fade looks fast at first and then drags. Let the fade finish in the first 60 to 70% of the movement; on exit, fade faster than you move.</li>
+            <li><strong>One thing moves at a time.</strong> When something matters, freeze the rest. A pulsing skeleton next to an incoming error message is direct competition.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Causality has a deadline.</strong> The first visible response within 100ms is what makes the person feel they did it. A 200ms delay before anything moves is felt as the system doing it.</li>
+            <li><strong>Explain first, delight second.</strong> If a movement explains nothing, it must earn its place another way, and that reason has to survive being seen a hundred times.</li>
+            <li><strong>Frames are sharp, so speed has a limit.</strong> Without motion blur, a fast object skips positions between frames. Long distances need more time or a fade that lets the eye stop tracking.</li>
+            <li><strong>Fade early, move long.</strong> Finish the opacity in the first 60 to 70% of the duration; let the position settle for the full 100%. The element arrives seated instead of still materializing.</li>
+            <li><strong>Exit fades harder than it moves.</strong> Nobody needs to track something that is leaving; get it out of the way fast and let the movement be a hint.</li>
+            <li><strong>Attention is a budget.</strong> Simultaneous movement is inversely proportional to clarity. One thing moving has all of it; three things moving share nothing.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Animação de interface, handbook</em> (chapter 1) · <a href="https://www.nngroup.com/articles/response-times-3-important-limits/" target="_blank" rel="noopener">Nielsen Norman Group, Response Times: The 3 Important Limits</a> · Walter J. Doherty and Ahrvind J. Thadani, <em>The Economic Value of Rapid Response Time</em> (IBM, 1982)</footer>
+        </article>
+
+<article class="lesson" id="easing">
+          <span class="eyebrow">Motion · 02</span>
+          <h2>Easing</h2>
+          <p class="lede">The curve matters more than the duration. Almost every UI animation should use ease-out: fast at the start, soft at the end.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="easing">
+            <div class="demo-stage" tabindex="0" data-hover>
+            <div class="ease-rows"><div class="ease-row"><span>linear</span><div class="ease-track"><div class="ease-ball linear"></div></div></div><div class="ease-row"><span>ease-in</span><div class="ease-track"><div class="ease-ball ease-in"></div></div></div><div class="ease-row"><span>ease-out</span><div class="ease-track"><div class="ease-ball ease-out"></div></div></div><div class="ease-row"><span>ease-in-out</span><div class="ease-track"><div class="ease-ball in-out"></div></div></div><div class="ease-row"><span>spring</span><div class="ease-track"><div class="ease-ball spring"></div></div></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Duration</span><input type="range" name="d" min="200" max="1200" step="50" value="600" data-unit="ms"><output></output></label></div>
+          </div>
+            <figcaption class="demo-caption">Hover the tracks: the balls travel and return. Same distance, same duration, five curves; ease-out arrives first in perception.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Ease-out starts fast, so the user sees the response immediately; the deceleration at the end gives the feeling of landing. Ease-in does the opposite: it starts slow, and for 100ms it looks like nothing happened. That is why, in interfaces, ease-in is almost never the answer. The native CSS curves (<code>ease</code>, <code>ease-out</code>) are too weak; the craft community uses more pronounced curves.</p>
+
+          <h3>How to apply</h3>
+          <table>
+            <thead><tr><th>Situation</th><th>Curve</th></tr></thead>
+            <tbody>
+              <tr><td>Element entering or leaving (popover, toast, modal)</td><td><code>ease-out</code></td></tr>
+              <tr><td>Element already on screen that moves</td><td><code>ease-in-out</code></td></tr>
+              <tr><td>Hover, color change</td><td><code>ease</code></td></tr>
+              <tr><td>Continuous motion (marquee, spinner)</td><td><code>linear</code></td></tr>
+              <tr><td>Interruptible gesture, drag and drop</td><td>spring</td></tr>
+            </tbody>
+          </table>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copy" data-copied="Copied" aria-label="Copy"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copy</span></button></div><pre><code><span class="k">:root</span> {
+  <span class="p">--ease-out</span>:    <span class="f">cubic-bezier</span>(<span class="n">0.23</span>, <span class="n">1</span>, <span class="n">0.32</span>, <span class="n">1</span>);     <span class="c">/* stronger than the native ease-out */</span>
+  <span class="p">--ease-in-out</span>: <span class="f">cubic-bezier</span>(<span class="n">0.77</span>, <span class="n">0</span>, <span class="n">0.175</span>, <span class="n">1</span>);
+  <span class="p">--ease-drawer</span>: <span class="f">cubic-bezier</span>(<span class="n">0.32</span>, <span class="n">0.72</span>, <span class="n">0</span>, <span class="n">1</span>);     <span class="c">/* used in iOS-style drawers */</span>
+}
+<span class="k">.popover</span> { transition: opacity <span class="n">150ms</span> <span class="f">var</span>(--ease-out), transform <span class="n">150ms</span> <span class="f">var</span>(--ease-out); }</code></pre></figure>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Mix curves within one animation.</strong> Opacity can run linear for 100ms while transform runs ease-out for 200ms. Splitting them usually looks better than one curve for both.</li>
+            <li><strong>Opacity does not want ease-out.</strong> Perceived brightness is nonlinear; an ease-out fade "pops" in. Use <code>ease</code> or <code>linear</code> for pure fades.</li>
+            <li><strong>Known good curves.</strong> Material standard <code>cubic-bezier(0.4, 0, 0.2, 1)</code>, iOS default <code>cubic-bezier(0.25, 0.1, 0.25, 1)</code>, a strong ease-out <code>cubic-bezier(0.23, 1, 0.32, 1)</code>, iOS-style drawer <code>cubic-bezier(0.32, 0.72, 0, 1)</code>.</li>
+            <li><strong>Exits: same curve, shorter.</strong> Reversing the entrance curve at 60 to 80% of the duration reads as symmetric. Ease-in on exits is defensible but rarely worth the perceived lag.</li>
+            <li><strong>Never ease-in-out on hover.</strong> The slow start delays the response by 30 to 50ms, exactly where it hurts most.</li>
+            <li><strong>Distance changes the curve.</strong> Long travel wants stronger deceleration (a curve closer to (0.2, 1, 0.2, 1)); tiny nudges are fine with the default ease-out.</li>
+            <li><strong>Library equivalents.</strong> Framer Motion accepts arrays: <code>ease: [0.23, 1, 0.32, 1]</code>. Keep the same tokens in CSS and JS so both feel identical.</li>
+            <li><strong>Test at half speed.</strong> DevTools' Animations panel at 25 or 50% reveals a wrong curve instantly; at full speed you only feel that something is off.</li>
+            <li data-handbook><strong>The CSS default is a trap.</strong> Unspecified transitions inherit <code>ease</code>, which has a slow start. A product with no motion tokens ships that lag on every hover it forgot to specify.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <a href="https://animations.dev/" target="_blank" rel="noopener">Emil Kowalski, animations.dev</a> · <a href="https://github.com/emilkowalski/skills/blob/main/skills/review-animations/STANDARDS.md" target="_blank" rel="noopener">Emil Kowalski, animation standards</a> · <a href="https://easings.net" target="_blank" rel="noopener">easings.net</a></footer>
+        </article>
+
+<article class="lesson" id="perceived-duration">
+          <span class="eyebrow">Motion · 03</span>
+          <h2>Perceived Duration</h2>
+          <p class="lede">The number in the spec is not the time the person feels. The curve decides how long an animation seems, and two curves with the same duration can feel twice as different.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="perceived">
+            <div class="demo-stage" tabindex="0" data-hover>
+            <div class="pd-rows">
+              <div class="ease-row"><span>ease-out-quad</span><div class="ease-track"><div class="ease-ball pd-quad"></div></div></div>
+              <div class="ease-row"><span>ease-out-expo</span><div class="ease-track"><div class="ease-ball pd-expo"></div></div></div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Duration</span><input type="range" name="d" min="200" max="800" step="50" value="300" data-unit="ms"><output></output></label></div>
+          </div>
+            <figcaption class="demo-caption">Hover the tracks. Same distance, same duration, two curves. The expo ball looks finished long before the quad one, because its tail is invisible.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>A bezier curve is not the path of the object; it is a graph of progress over time. An aggressive ease-out reaches 80% of the way at half the time, and spends the other half on the last 20%, which is nearly invisible. That tail is why a 400ms animation with a strong ease-out looks like it lasted 200ms. Strong curves buy you generous durations without any feeling of slowness.</p>
+          <p>It also means you cannot compare durations across curves. A developer who swaps ease-out for ease-out-expo while keeping 300ms just made the animation feel twice as fast. Curve and duration are one decision, and changing one means reviewing the other.</p>
+
+          <h3>How to apply</h3>
+          <table>
+            <thead><tr><th>Curve</th><th>300ms specified feels like</th></tr></thead>
+            <tbody>
+              <tr><td>linear</td><td>~285ms</td></tr>
+              <tr><td>ease-out-quad</td><td>~230ms</td></tr>
+              <tr><td>ease-out-quart</td><td>~180ms</td></tr>
+              <tr><td>ease-out-expo</td><td>~120ms</td></tr>
+            </tbody>
+          </table>
+          <ul>
+            <li><strong>Measure at 95%.</strong> The moment the element reaches 95% of the way is roughly when the eye considers it arrived. Use that, not the total, when comparing.</li>
+            <li><strong>Distance does not scale linearly.</strong> Doubling the distance asks for about 40% more time, not double. 0 to 50px around 150ms, 300 to 600px around 350ms, a full screen 400 to 500ms.</li>
+            <li><strong>Size changes the feeling too.</strong> A 24px icon and a 400px card moving the same 100px do not look equally fast; the big one seems to glide because the move is a small fraction of its size. When they must feel coherent, the bigger one can go slightly faster.</li>
+            <li><strong>Never use the CSS default.</strong> Unspecified transitions inherit <code>ease</code>, which starts slow. Every product without motion tokens ships that lag by accident.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Read the curve as progress, not path.</strong> A steep segment is fast, a flat one slow. A first handle high and left means a strong start; a second handle low and right means a soft landing.</li>
+            <li><strong>Strong curves buy time.</strong> 400ms with ease-out-expo looks like 200ms. Use the generous number for smoothness and let the tail hide it.</li>
+            <li><strong>Change curve, revise duration.</strong> Swapping to a stronger curve at the same duration halves the perceived time. Treat the pair as one decision.</li>
+            <li><strong>Distance: plus 40%, not double.</strong> The empirical relationship is close to a square root. Doubling the travel wants roughly 40% more time.</li>
+            <li><strong>Big elements may go faster.</strong> The same 100px is a small fraction of a 400px card and a huge one of a 24px icon. To make them feel coherent, the card can be slightly quicker.</li>
+            <li><strong>Consistency beats the choice.</strong> Two good curves used at random across screens do more harm than one mediocre curve applied everywhere.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Animação de interface, handbook</em> (chapters 2 and 3) · <a href="https://easings.net" target="_blank" rel="noopener">easings.net</a> · <a href="https://animations.dev/" target="_blank" rel="noopener">Emil Kowalski, animations.dev</a></footer>
+        </article>
+
+<article class="lesson" id="duration">
+          <span class="eyebrow">Motion · 04</span>
+          <h2>Duration</h2>
+          <p class="lede">Interface animations stay under 300ms. A 180ms dropdown feels responsive; a 400ms one feels slow.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="duration">
+            <div class="demo-stage">
+            <div class="menu-wrap">
+              <button class="btn btn--ghost" type="button" data-toggle="is-open" aria-expanded="false">Open menu</button>
+              <div class="menu"><div>Rename</div><div>Duplicate</div><div>Move to…</div><div>Delete</div></div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Duration</span><input type="range" name="d" min="80" max="600" step="20" value="180" data-unit="ms"><output></output></label></div>
+          </div>
+            <figcaption class="demo-caption">Click to open and close. The menu opens at the chosen duration and closes at 0.7× of it. Above 300ms it starts to feel like a presentation.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>The interface serves a task; every millisecond of animation is time the user waits. Short animations communicate the change and get out of the way. And perception depends on the curve: a 200ms ease-out feels faster than a 200ms ease-in, because most of the movement happens in the first 60ms.</p>
+
+          <h3>How to apply</h3>
+          <table>
+            <thead><tr><th>Element</th><th>Duration</th></tr></thead>
+            <tbody>
+              <tr><td>Button feedback (pressed)</td><td>100 to 160ms</td></tr>
+              <tr><td>Tooltip, small popover</td><td>125 to 200ms</td></tr>
+              <tr><td>Dropdown, menu</td><td>150 to 250ms</td></tr>
+              <tr><td>Modal, drawer, sheet</td><td>200 to 500ms</td></tr>
+              <tr><td>Color hover</td><td>100 to 200ms</td></tr>
+              <tr><td>Stagger between items</td><td>30 to 80ms apart</td></tr>
+            </tbody>
+          </table>
+          <ul>
+            <li><strong>The larger the distance or the element, the more time.</strong> A full-screen modal can take 300ms; a tooltip, never.</li>
+            <li><strong>Exit faster than entry.</strong> The user has already decided to close; do not make them wait. Exit at 60% to 80% of the entry time.</li>
+            <li><strong>Tooltips only animate the first time.</strong> Moving from one button to its neighbor should swap instantly.</li>
+            <li><strong>Stagger is decorative.</strong> Never make the user wait for a list to appear item by item before they can click.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copy" data-copied="Copied" aria-label="Copy"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copy</span></button></div><pre><code><span class="k">.btn:active</span> { transform: <span class="f">scale</span>(<span class="n">0.97</span>); transition: transform <span class="n">120ms</span> <span class="f">var</span>(--ease-out); }
+<span class="k">.menu[data-state="open"]</span>  { animation: in  <span class="n">180ms</span> <span class="f">var</span>(--ease-out); }
+<span class="k">.menu[data-state="closed"]</span> { animation: out <span class="n">120ms</span> <span class="f">var</span>(--ease-out); }</code></pre></figure>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Duration scales with distance.</strong> Roughly 100ms base plus 0.2ms per pixel of travel: a 20px nudge is 100 to 150ms, a 400px drawer 250 to 350ms.</li>
+            <li><strong>Exit at 0.7×.</strong> If the menu opens in 180ms, it closes in about 120ms.</li>
+            <li><strong>Overlap, never queue.</strong> Start step B when A is about halfway. Sequential steps that total more than 400ms feel like a presentation, not a response.</li>
+            <li><strong>Tooltip delays.</strong> 300 to 600ms before the first tooltip appears, zero between adjacent ones, and immediate hide on leave.</li>
+            <li><strong>Cap the stagger total.</strong> <code>delay = min(40ms, 300ms / n)</code> so a 20-item list still finishes under 300ms.</li>
+            <li><strong>Do not animate the fast path.</strong> Content that arrives in under 100ms should just appear; a fade would make it feel slower than it is.</li>
+            <li><strong>Skeleton to content.</strong> Crossfade in 150 to 200ms, keeping dimensions identical so nothing moves.</li>
+            <li><strong>Tokens, not numbers.</strong> Three durations (fast 120, base 180, slow 260) cover a whole product. Untokenized durations drift until nothing matches.</li>
+            <li data-handbook><strong>Perceived is not specified.</strong> With a strong ease-out, 300ms feels like 120 to 180ms because the tail is invisible. Compare curves at the moment they reach 95%, never by the number in the spec.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <a href="https://animations.dev/" target="_blank" rel="noopener">Emil Kowalski, animations.dev</a> · <a href="https://github.com/emilkowalski/skills/blob/main/skills/review-animations/STANDARDS.md" target="_blank" rel="noopener">Emil Kowalski, animation standards</a> · <a href="https://m3.material.io/styles/motion/easing-and-duration/tokens-specs" target="_blank" rel="noopener">Material Design, easing and duration tokens</a></footer>
+        </article>
+
+<article class="lesson" id="springs">
+          <span class="eyebrow">Motion · 05</span>
+          <h2>Springs</h2>
+          <p class="lede">Springs have no fixed duration: they have physics. That is why they stay natural when interrupted, which Bézier curves cannot do.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="spring">
+            <div class="demo-stage">
+            <div class="sp-track"><div class="sp-box" data-drag tabindex="0" role="slider" aria-label="Draggable box" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Bounce</span><input type="range" name="bounce" min="0" max="0.4" step="0.2" value="0.2" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Spring</span><input type="checkbox" name="spring" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Apply the spacing overrides. With min-height the card grows and stays readable. Turn on fixed height and the last lines are clipped: the same content, now inaccessible.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>A <code>cubic-bezier</code> transition has a fixed start, end and duration. If the user interrupts it midway (lets go of a drawer and pulls it again), the animation restarts from zero or cuts. A spring preserves velocity: the element continues from where it was, at the speed it was moving. That is how iOS moves, and it is why spring-driven gestures feel "real". Bounce, however, is seasoning: 0.1 to 0.3 is enough. More than that becomes cartoon.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Use springs for gestures and things the user drags:</strong> sheets, drawers, swipe cards, reordering.</li>
+            <li><strong>Use Bézier for click-triggered transitions:</strong> opening a menu, switching tabs. Springs there only add time.</li>
+            <li><strong>Configure by perceived duration and bounce</strong>, not stiffness/damping. That is how Apple and Motion (Framer Motion) expose it: <code>{ type: "spring", duration: 0.5, bounce: 0.2 }</code>.</li>
+            <li><strong>In pure CSS, use <code>linear()</code>.</strong> The function takes a list of points that approximates any spring. Generators like Jake Archibald's export the curve ready to paste.</li>
+            <li><strong>Do not bind the element directly to the mouse.</strong> Interpolate the position with a spring to get momentum; the element "chases" the cursor instead of sticking to it.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">JSX</span><button class="code-copy" type="button" data-copy data-label="Copy" data-copied="Copied" aria-label="Copy"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copy</span></button></div><pre><code><span class="c">/* Motion (React) */</span>
+<span class="t">&lt;motion.div transition={{ type: "spring", duration: 0.5, bounce: 0.2 }} /&gt;</span>
+
+<span class="c">/* Pure CSS: spring approximated with linear() */</span>
+<span class="k">.sheet</span> { transition: transform <span class="n">700ms</span> <span class="f">linear</span>(<span class="n">0</span>, <span class="n">0.009</span>, <span class="n">0.035</span> <span class="n">2.1</span>%, <span class="n">0.141</span>, <span class="n">0.281</span> <span class="n">6.7</span>%, <span class="n">0.723</span> <span class="n">12.9</span>%,
+  <span class="n">0.938</span> <span class="n">16.7</span>%, <span class="n">1.017</span>, <span class="n">1.077</span>, <span class="n">1.121</span>, <span class="n">1.149</span> <span class="n">24.3</span>%, <span class="n">1.159</span>, <span class="n">1.163</span>, <span class="n">1.161</span>, <span class="n">1.154</span> <span class="n">29.9</span>%, <span class="n">1.129</span> <span class="n">32.8</span>%,
+  <span class="n">1.051</span> <span class="n">39.6</span>%, <span class="n">1.017</span> <span class="n">43.1</span>%, <span class="n">0.991</span>, <span class="n">0.977</span> <span class="n">51</span>%, <span class="n">0.975</span> <span class="n">57.1</span>%, <span class="n">0.997</span> <span class="n">69.8</span>%, <span class="n">1.003</span> <span class="n">76.9</span>%, <span class="n">1</span>); }</code></pre></figure>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Carry the release velocity.</strong> Feed the gesture's velocity at release into the spring. This single detail is what makes drawers and sheets feel physical.</li>
+            <li><strong>Bounce by property.</strong> Position and scale may bounce 0.1 to 0.2; size and opacity should be critically damped (bounce 0). Overshooting opacity above 1 looks like flicker.</li>
+            <li><strong>Perceptual duration.</strong> 0.3 to 0.5s covers most UI; Dynamic-Island-style morphs sit around 0.45 to 0.6s with bounce 0.15 to 0.25.</li>
+            <li><strong>Rubber-band at the edges.</strong> Past a boundary, apply resistance: <code>offset = d / (1 + d / limit)</code> or a decaying multiplier. Hard stops feel like bugs.</li>
+            <li><strong>Retargeting is the point.</strong> When the target changes mid-flight, a spring adjusts smoothly; a Bézier restarts. Use springs wherever the target can change under the user's finger.</li>
+            <li><strong>Dismiss by velocity, not distance.</strong> A quick flick of 60px should dismiss; a slow drag of 200px that returns should not. Threshold around 0.1 to 0.2 px/ms.</li>
+            <li><strong><code>linear()</code> in CSS.</strong> 30 to 60 sampled points reproduce a spring convincingly; supported in Chrome 113+, Safari 17.2+, Firefox 112+.</li>
+            <li><strong>Layout springs.</strong> For size and position changes of existing elements, a FLIP or Framer <code>layout</code> animation with a damped spring beats any easing curve.</li>
+            <li data-handbook><strong>Damping ratio is the one number to know.</strong> ζ = damping ÷ (2√(stiffness × mass)). Below 1 it bounces, at 1 it is the fastest without bouncing, above 1 it is slow. Raise stiffness and damping together to get faster without more bounce.</li>
+            <li data-handbook><strong>A spring never quite ends.</strong> Implementations stop it at a rest threshold, so its duration is not deterministic. Do not choreograph a spring against a tween by milliseconds.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <a href="https://animations.dev/" target="_blank" rel="noopener">Emil Kowalski, animations.dev</a> (spring animations, Dynamic Island walkthrough) · <a href="https://developer.apple.com/videos/play/wwdc2023/10158/" target="_blank" rel="noopener">Apple WWDC23, Animate with springs</a> · <a href="https://linear-easing-generator.netlify.app/" target="_blank" rel="noopener">Jake Archibald, linear() easing generator</a> · <a href="https://www.interfacecraft.dev/" target="_blank" rel="noopener">Josh Puckett, Interface Craft</a> (spring-first)</footer>
+        </article>
+
+<article class="lesson" id="overshoot-and-clamp">
+          <span class="eyebrow">Motion · 06</span>
+          <h2>Overshoot and Clamp</h2>
+          <p class="lede">A knob that goes a little past its target and settles back feels mechanical and alive. The same curve on a fade produces a visible stall. The difference is whether the property has a ceiling.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="overshoot">
+            <div class="demo-stage">
+            <div class="os-row">
+              <button class="os-switch" type="button" role="switch" aria-checked="false" data-toggle="is-on" aria-label="Notifications"><span class="os-knob"></span></button>
+              <span class="os-badge">Saved</span>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Overshoot y1</span><input type="range" name="y1" min="1" max="1.6" step="0.2" value="1.4" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Overshoot on opacity too</span><input type="checkbox" name="opacityos" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Click the switch. The knob bounces past its target and settles; that is overshoot on a transform. Put the same curve on the badge’s fade and watch it stall at full opacity.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>A curve like <code>cubic-bezier(0.34, 1.56, 0.64, 1)</code> goes beyond 1 before returning. On a transform that is fine: the knob travels past the end and comes back. Opacity, colors and blur cannot go past their limit. The value is clamped at the top, and while the curve is doing its invisible excess the element just sits there at full opacity, frozen, and then nothing happens because it was already there. The eye reads a pause in the middle of the motion. Curves that dip below zero, the ones that pull back before launching, break the same way on properties with a floor.</p>
+          <p>Overshoot also communicates weight, or rather the lack of it. A bouncing object is a light object. On a toggle, a like, a badge, that is charming. On a 600px panel it reads as structural instability: the interface looks badly built, not playful.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Overshoot only on transform.</strong> If a scale and a fade share one animation and you want the bounce, use two curves: overshoot on the transform, a plain curve on the opacity.</li>
+            <li><strong>Scale the bounce to the object.</strong> Icons and knobs can take a strong overshoot (y1 up to 1.6), buttons and chips a moderate one (up to 1.2), panels and sheets almost none.</li>
+            <li><strong>Springs follow the same rule.</strong> A spring on opacity or color is overshoot with a physics engine behind it, and it stalls the same way. Spring the transform, tween the fade.</li>
+            <li><strong>Stretch on the way.</strong> A knob can widen slightly in the direction of travel (scaleX 1.1 at the midpoint) and return to 1. It imitates deformation from acceleration and is a small detail with a big effect.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Ceilings stall.</strong> Opacity stops at 1, colors stop at their target. An overshoot curve on them freezes at the top while the curve does its invisible excess, then nothing.</li>
+            <li><strong>Floors stall too.</strong> Anticipation curves (y below 0) break on any property that cannot go negative. Same fix: transforms only.</li>
+            <li><strong>Two curves in one animation is normal.</strong> Overshoot on the scale, linear or ease-out on the fade, often with different durations. Not the exception; the everyday case.</li>
+            <li><strong>Size decides the bounce.</strong> Knob up to y1 1.6, button up to 1.2, panel almost none, full screen none. The bigger the object, the more a bounce reads as instability.</li>
+            <li><strong>Context decides too.</strong> Playful physics on a payment form or a medical record feels wrong. Serious contexts want critically damped motion.</li>
+            <li><strong>Springs are overshoot with a physics engine.</strong> Everything above applies to them, plus the fact that a spring never quite ends, so do not synchronize it with a tween by milliseconds.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Animação de interface, handbook</em> (sections 2.4, 2.5, 4.5, 12.2) · <a href="https://www.raphaelsalaja.com/library/12-principles-of-animation" target="_blank" rel="noopener">Raphael Salaja, 12 Principles of Animation</a> (squash and stretch)</footer>
+        </article>
+
+<article class="lesson" id="transform-origin">
+          <span class="eyebrow">Motion · 07</span>
+          <h2>Transform Origin</h2>
+          <p class="lede">A popover should grow from the button that opened it, not from the center. And never from scale(0).</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="origin">
+            <div class="demo-stage">
+            <div class="menu-wrap">
+              <button class="btn btn--ghost" type="button" data-toggle="is-open" aria-expanded="false">Open menu</button>
+              <div class="menu"><div>Rename</div><div>Duplicate</div><div>Move to…</div><div>Delete</div></div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Initial scale</span><input type="range" name="scale" min="0" max="1" step="0.02" value="0.96" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Origin at the trigger</span><input type="checkbox" name="origin" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Click to open. Scale 0.96 from the trigger reads as “emerging from the button”; scale 0 from the center reads as a random element inflating.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Motion creates cause and effect. If the menu grows out of the button, the brain understands that the button produced it. If it grows from the center of the screen, it looks like a random element appearing. And <code>scale(0)</code> is physically strange: nothing in the real world goes from zero size to full size. Starting at 0.95 or 0.96 with opacity 0 gives the same sense of "emerging" without the exaggerated zoom.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Popovers, dropdowns, tooltips:</strong> <code>transform-origin</code> pointing at the trigger. Libraries like Radix expose it as a CSS variable.</li>
+            <li><strong>Modals:</strong> the exception. They emerge from the center, because they have no clear spatial trigger.</li>
+            <li><strong>Initial scale:</strong> 0.9 to 0.97. Never 0.</li>
+            <li><strong>Combine with opacity.</strong> Scale alone feels stiff; opacity alone has no direction.</li>
+            <li><strong>Remember that scale affects children.</strong> Text and icons inside scale too. That is why the scale must be subtle.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copy" data-copied="Copied" aria-label="Copy"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copy</span></button></div><pre><code><span class="k">.popover</span> {
+  transform-origin: <span class="f">var</span>(--radix-popover-content-transform-origin, top left);
+  animation: pop-in <span class="n">140ms</span> <span class="f">var</span>(--ease-out);
+}
+<span class="a">@keyframes</span> pop-in {
+  <span class="k">from</span> { opacity: <span class="n">0</span>; transform: <span class="f">scale</span>(<span class="n">0.96</span>); }
+  <span class="k">to</span>   { opacity: <span class="n">1</span>; transform: <span class="f">scale</span>(<span class="n">1</span>); }
+}</code></pre></figure>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Derive the origin from geometry.</strong> Floating UI and Radix expose the origin as a CSS variable computed from the trigger's position and the final placement. Read it instead of guessing <code>top left</code>.</li>
+            <li><strong>Flip with the placement.</strong> When the popover flips from below to above the trigger, the origin flips too. A menu growing upward from its top edge looks detached.</li>
+            <li><strong>Add a small translate.</strong> <code>scale(0.96)</code> plus <code>translateY(-4px)</code> for a menu opening downward reads as "emerging from" rather than "inflating".</li>
+            <li><strong>Tooltips scale less.</strong> 0.94 to 0.98 with 100 to 150ms, origin on the pointing side. Larger scale ranges make tooltips feel like dialogs.</li>
+            <li><strong>Context menus.</strong> Origin at the top-left corner where the cursor is; no translate, since the cursor is already the source.</li>
+            <li><strong>Dialogs are center-origin with a backdrop.</strong> Content scales 0.95 to 1 in about 200ms; the backdrop fades in 150ms and out faster, so the exit never feels heavy.</li>
+            <li><strong>Morphs use the source element.</strong> For shared-element transitions, the origin is the source's center; FLIP or the View Transitions API handles the math.</li>
+            <li><strong>Scale scales the children.</strong> Text inside a scaling panel rasterizes twice. Keeping the range within 0.95 to 1 avoids visible blur.</li>
+            <li data-handbook><strong>Scale below 0.9 explodes.</strong> Menus feel like they burst open. Stay between 0.95 and 0.97.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <a href="https://github.com/emilkowalski/skills/blob/main/skills/review-animations/STANDARDS.md" target="_blank" rel="noopener">Emil Kowalski, animation standards</a> (physicality rules) · <a href="https://www.radix-ui.com/primitives/docs/components/popover#origin-aware-animations" target="_blank" rel="noopener">Radix UI, origin-aware animations</a></footer>
+        </article>
+
+<article class="lesson" id="animate-only-transform-opacity">
+          <span class="eyebrow">Motion · 08</span>
+          <h2>Transform &amp; Opacity</h2>
+          <p class="lede">Only two properties animate for free: transform and opacity. Everything else forces the browser to recalculate layout or repaint.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="layout">
+            <div class="demo-stage">
+            <div class="acc">
+              <button class="acc-head" type="button" data-toggle="is-open" aria-expanded="false">Details<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+              <div class="acc-panel"><div class="acc-inner">This panel has three lines of content. Watch whether the text squashes while opening or is simply revealed.</div></div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Composite (clip-path) instead of height</span><input type="checkbox" name="composite" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Click the header. Animating height triggers layout every frame and squashes the text; clip-path runs on the compositor and reveals it.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>The browser renders in stages: layout (where things go), paint (what they look like) and composite (combining layers on the GPU). Animating <code>width</code>, <code>height</code>, <code>margin</code> or <code>top</code> triggers layout on every frame, and one element's layout can affect the whole page. Animating <code>background</code> or <code>box-shadow</code> triggers paint. Only <code>transform</code> and <code>opacity</code> go straight to composite, which runs on another thread and does not stutter even under heavy JavaScript.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Move:</strong> <code>transform: translate()</code>, never <code>top</code>/<code>left</code>/<code>margin</code>.</li>
+            <li><strong>Resize:</strong> <code>transform: scale()</code> when possible. For real content height (accordions), use <code>grid-template-rows: 0fr → 1fr</code> or <code>clip-path</code>, and accept that it costs more.</li>
+            <li><strong>Show/hide:</strong> <code>opacity</code> + <code>visibility</code>, not <code>display</code>.</li>
+            <li><strong>Shadow on hover:</strong> instead of animating <code>box-shadow</code>, animate the <code>opacity</code> of a pseudo-element that already has the final shadow.</li>
+            <li><strong>Percentages in translate</strong> are relative to the element itself: <code>translateY(100%)</code> = its own height. Great for sheets and toasts.</li>
+            <li><strong>Transitions are interruptible; keyframes are not.</strong> For states that toggle quickly (toggle, toast), use <code>transition</code>.</li>
+            <li><strong><code>will-change</code> sparingly.</strong> Only on elements that will actually animate, and remove it afterward. In excess, it eats memory.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copy" data-copied="Copied" aria-label="Copy"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copy</span></button></div><pre><code><span class="c">/* Cheap animated shadow */</span>
+<span class="k">.card</span> { position: relative; }
+<span class="k">.card::after</span> { content: <span class="s">""</span>; position: absolute; inset: <span class="n">0</span>; border-radius: inherit;
+  box-shadow: <span class="f">var</span>(--shadow-lg); opacity: <span class="n">0</span>; transition: opacity <span class="n">200ms</span> <span class="f">var</span>(--ease-out); pointer-events: none; }
+<span class="k">.card:hover::after</span> { opacity: <span class="n">1</span>; }
+
+<span class="c">/* Accordion without animating height */</span>
+<span class="k">.acc</span> { display: grid; grid-template-rows: <span class="n">0fr</span>; transition: grid-template-rows <span class="n">240ms</span> <span class="f">var</span>(--ease-out); }
+<span class="k">.acc[open]</span> { grid-template-rows: <span class="n">1fr</span>; }
+<span class="k">.acc > div</span> { overflow: hidden; }</code></pre></figure>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Promote layers deliberately.</strong> <code>will-change: transform</code> just before an element animates (on hover intent or open) and removed afterward. Dozens of promoted layers cost memory and blur text.</li>
+            <li><strong>Blurry text during scale.</strong> Text is rasterized at the starting scale. Start at 0.9 or above and end exactly at 1, with no fractional final translate, so the browser re-rasterizes crisply.</li>
+            <li><strong>Animating <code>height: auto</code>.</strong> Use the <code>grid-template-rows: 0fr → 1fr</code> trick, or <code>interpolate-size: allow-keywords</code> with <code>calc-size()</code> where supported. Measuring heights in JavaScript is the last resort.</li>
+            <li><strong>Never animate <code>backdrop-filter</code>.</strong> Animate the opacity of an already-blurred layer instead.</li>
+            <li><strong>Opacity creates a stacking context.</strong> A parent with <code>opacity &lt; 1</code> traps its children's <code>z-index</code>. Fixed or sticky descendants may suddenly render underneath other content.</li>
+            <li><strong>FLIP for layout moves.</strong> Measure first and last positions, apply the inverse transform instantly, then animate the transform to zero. Layout changes become composited animations.</li>
+            <li><strong>Color hovers are fine.</strong> Background and color changes trigger paint, but on small controls that cost is negligible. The rule is about layout properties, not every non-transform property.</li>
+            <li><strong>Check the layers panel.</strong> DevTools' Layers view shows what is actually promoted and repainting; green flashes in "Paint flashing" mean you are animating the wrong property.</li>
+            <li data-handbook><strong>Layers cost memory.</strong> A list of sixty items, each promoted to its own layer for a hover effect, can exhaust a phone's video memory. Promote only what is animating now.</li>
+            <li data-handbook><strong>Height is the honest exception.</strong> Accordions must measure before animating, and if content changes mid-animation the result is wrong. Warn the team before promising it.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <a href="https://web.dev/articles/animations-guide" target="_blank" rel="noopener">web.dev, How to create high-performance CSS animations</a> · <a href="https://animations.dev/" target="_blank" rel="noopener">Emil Kowalski, animations.dev</a> (performance) · <a href="https://csstriggers.com/" target="_blank" rel="noopener">CSS Triggers</a></footer>
+        </article>
+
+<article class="lesson" id="interruptibility">
+          <span class="eyebrow">Motion · 09</span>
+          <h2>Interruptibility</h2>
+          <p class="lede">People change their minds mid-motion. Hover in, hover out, tap, tap again. An interface that can only finish what it started feels stubborn.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="interrupt">
+            <div class="demo-stage">
+            <div class="ir-card" tabindex="0" data-hover><span class="ir-title">Hover me, then leave early</span><span class="ir-sub">Watch whether I turn around or start over</span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Keyframes instead of transition</span><input type="checkbox" name="keyframes" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Hover in and out before the card finishes. A transition turns back from wherever it is; keyframes restart from zero every time.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Move your cursor over a card that grows on hover, then move away before it finishes growing. In a well-made interface, the card simply turns around from wherever it is and shrinks back. In a fragile one, it either jumps to the end and then shrinks, or snaps back instantly, or worse, plays the whole grow animation again the next time you touch it. The difference is whether the motion can be interrupted. Real objects always can: you can catch a door halfway through closing. Interfaces earn trust by behaving the same way.</p>
+          <p>Technically this is the difference between a transition, which can retarget mid-flight, and a fixed animation, which restarts from zero every time it is triggered. Practically, it is the difference between motion that follows the person and motion that makes the person wait.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Prefer transitions for anything the person can toggle.</strong> Hover states, expand and collapse, selection. They reverse naturally from wherever they are.</li>
+            <li><strong>Reserve fixed animations for one-way events.</strong> A toast entering, a confirmation check drawing itself. Things that happen once and are not undone by moving the cursor.</li>
+            <li><strong>Springs for gestures.</strong> When a finger is involved, the motion should carry the finger's speed and adjust to a new target without hesitation.</li>
+            <li><strong>Test the fidget.</strong> Hover in and out fast, tap twice quickly. If anything flickers, restarts or lags behind, the motion is not interruptible yet.</li>
+            <li><strong>Keep hover motion short.</strong> Even interruptible, a 600ms hover effect feels heavy. 150 to 250ms lets it follow the cursor closely.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Transitions retarget, animations restart.</strong> A CSS transition heading to state B will smoothly turn back toward A if the trigger is removed. A keyframe animation cannot; it plays again from frame zero.</li>
+            <li><strong>Same duration both ways is fine for hover.</strong> Because the transition reverses from wherever it is, quick in-and-out gestures produce short, proportional movements automatically.</li>
+            <li><strong>Do not chain states with timers.</strong> A setTimeout that waits for an animation to finish before allowing the next one is what makes fast users feel blocked.</li>
+            <li><strong>Springs keep momentum through the change.</strong> When a target changes mid-flight, a spring continues with its current velocity; that is what makes drawers feel physical.</li>
+            <li><strong>Interrupt the loader too.</strong> If data arrives while a skeleton is fading in, crossfade immediately instead of waiting for the skeleton to finish.</li>
+            <li><strong>Fidget test in the review.</strong> Rapid hover, double taps and mid-gesture reversals are part of the checklist, not edge cases.</li>
+            <li data-handbook><strong>Reverse with proportional time.</strong> Close a modal at 30% open and the exit should take about 30% of its full duration, not all of it. Otherwise the reversal feels detached from the gesture.</li>
+            <li data-handbook><strong>Focus does not wait.</strong> When a modal opens, keyboard focus and the screen-reader announcement move immediately; the animation is a visual layer over a state change that already happened.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <a href="https://github.com/emilkowalski/skills/blob/main/skills/review-animations/STANDARDS.md" target="_blank" rel="noopener">Emil Kowalski, animation standards</a> (CSS transitions vs keyframes, interruptibility) · <a href="https://developer.apple.com/videos/play/wwdc2023/10158/" target="_blank" rel="noopener">Apple WWDC23, Animate with springs</a> · <a href="https://www.interfacecraft.dev/" target="_blank" rel="noopener">Josh Puckett, Interface Craft</a> (fidgetable as a facet of quality)</footer>
+        </article>
+
+<article class="lesson" id="choreography">
+          <span class="eyebrow">Motion · 10</span>
+          <h2>Choreography</h2>
+          <p class="lede">When several things appear at once, the order they arrive in tells a story. All at once is a slide; one after another is a sequence.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="choreo">
+            <div class="demo-stage">
+            <div class="ch-wrap">
+              <button class="btn btn--ghost ch-btn" type="button" data-toggle="is-open" aria-expanded="false">Show notifications</button>
+              <div class="ch-panel"><div class="ch-item" style="--i:0"><span class="ch-dot"></span><span>Ana mentioned you in Roadmap</span></div><div class="ch-item" style="--i:1"><span class="ch-dot"></span><span>Build #412 passed</span></div><div class="ch-item" style="--i:2"><span class="ch-dot"></span><span>Weekly digest is ready</span></div><div class="ch-item" style="--i:3"><span class="ch-dot"></span><span>Two new sign-ups</span></div><div class="ch-item" style="--i:4"><span class="ch-dot"></span><span>Storage at 80%</span></div></div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Stagger</span><input type="range" name="gap" min="0" max="120" step="10" value="40" data-unit="ms"><output></output></label></div>
+          </div>
+            <figcaption class="demo-caption">Click to open. Items arrive top to bottom with the chosen gap and leave together. At 0ms it is a slide; at 40ms it is a sequence.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Open a panel with five notifications. If all five pop in simultaneously, the eye has nowhere to start and the panel just switches on. If they arrive one after another, a few dozen milliseconds apart, the eye follows them down the list and understands the structure before reading a word. That is choreography: not more animation, but animation with an order. It is how a good interface directs attention the way a good speaker directs a room.</p>
+          <p>The trap is overdoing it. A stagger that is fun the first time becomes a wait the twentieth. Choreography should be so short that the person never feels they waited for it, and it should never delay the thing they came for.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Small gaps.</strong> 30 to 60ms between items. The whole sequence should finish in under 300ms, so shorten the gap when the list is long.</li>
+            <li><strong>Lead with what matters.</strong> The first item to arrive is the one the person will read first. Order the sequence by importance, not just by position.</li>
+            <li><strong>Enter in order, leave together.</strong> Staggered exits feel slow; things can disappear all at once.</li>
+            <li><strong>Only on arrival.</strong> Stagger the first appearance, never a re-render or an update. Repeated staggers are the fastest way to make an interface feel sluggish.</li>
+            <li><strong>Keep the movement small.</strong> A few pixels of travel and a fade are enough. Items sliding in from far away look like a presentation.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Cap the total, not just the gap.</strong> Gap = min(50ms, 250ms ÷ items). Twenty items still finish in a quarter of a second.</li>
+            <li><strong>Direction follows reading.</strong> Top to bottom for lists, left to right for a row of cards, from the trigger outward for menus.</li>
+            <li><strong>Parent first, children after.</strong> The panel appears, then its items. Children arriving before their container looks like a glitch.</li>
+            <li><strong>Same motion, different start.</strong> Every item uses the identical fade-and-rise; only the delay differs. Mixing motions inside one sequence reads as noise.</li>
+            <li><strong>Stagger once per mount.</strong> Filtering, sorting or refreshing the list should not replay the entrance. Only the first appearance earns it.</li>
+            <li><strong>Under reduced motion, keep the order but drop the travel.</strong> Items still fade in sequence, which preserves the story without the movement.</li>
+            <li data-handbook><strong>Stagger the first six to eight, then the rest together.</strong> Forty items at 40ms puts the last one 1.6 seconds late. Or use a decaying gap: 40, 35, 30ms.</li>
+            <li data-handbook><strong>Direction follows the origin of the event.</strong> A grid emerging from a button in the corner staggers radially from that corner. The wrong direction disorients without anyone knowing why.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <a href="https://www.raphaelsalaja.com/library/12-principles-of-animation" target="_blank" rel="noopener">Raphael Salaja, 12 Principles of Animation</a> (staging, follow-through) · <a href="https://animations.dev/" target="_blank" rel="noopener">Emil Kowalski, animations.dev</a> (orchestration) · <a href="https://github.com/emilkowalski/skills/blob/main/skills/review-animations/STANDARDS.md" target="_blank" rel="noopener">Emil Kowalski, animation standards</a> (stagger timing)</footer>
+        </article>
+
+<article class="lesson" id="shared-element-transitions">
+          <span class="eyebrow">Motion · 11</span>
+          <h2>Shared Element Transitions</h2>
+          <p class="lede">A card that seems to become the detail screen, a thumbnail that grows into the full photo. It is the most impressive transition in an interface and the one with the most traps.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="shared">
+            <div class="demo-stage">
+            <div class="se-wrap">
+              <div class="se-box" role="button" tabindex="0" data-toggle="is-expanded" aria-expanded="false">
+                <div class="se-thumb"></div>
+                <div class="se-text"><b>Roadmap</b><span class="se-desc">Q4 priorities, owners and the two bets we agreed on. Updated this morning.</span></div>
+              </div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Counter-scale the text</span><input type="checkbox" name="counterscale" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Click the card. The box scales, which is cheap. With counter-scaling off, the text scales with it and balloons; with it on, the text keeps its size and the description fades in at the end.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>The element does not really travel. The technique, called FLIP, measures where the element is (First), puts it in its final place instantly and measures again (Last), applies a transform that makes it look like it never left (Invert), and animates that transform back to zero (Play). Everything happens with transform, which is cheap. Knowing this explains every limitation: because it is all scale, everything inside scales too.</p>
+          <p>That produces the three classic defects. Text stretches: a 300px card that becomes a 900px panel scales three times, and its title balloons and shrinks back. Corner radii deform: a 12px corner becomes 36px mid-flight. Proportions squash when the shape changes from square to wide. Good implementations correct all three, but you need to know what to ask for.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Never scale text.</strong> The box scales; the text crossfades, with the destination text entering already at its final size. Fonts do not render linearly and line breaks differ between sizes, so there is no correct interpolation anyway.</li>
+            <li><strong>Counter-scale the children.</strong> Content receives the inverse transform of the container, cancelling the distortion. It costs a little performance and solves most of it.</li>
+            <li><strong>Correct the radius per frame.</strong> Good libraries do this automatically; if yours does not, mention it.</li>
+            <li><strong>Curve the path.</strong> Different curves for X and Y, or for position and scale, make the element travel in a slight arc instead of a mechanical straight line.</li>
+            <li><strong>Know when not to.</strong> Very different layouts at both ends, a destination that loads slowly, a transition repeated dozens of times a day, or a source that leaves the screen mid-flight. A fade with a small offset is less impressive and far more reliable.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>It is all scale.</strong> FLIP never moves the element; it distorts it back to the start and undistorts it. Every defect comes from children scaling with the box.</li>
+            <li><strong>Text is the first casualty.</strong> Crossfade it instead. Source text fades out, destination text fades in already at final size, and only the box scales.</li>
+            <li><strong>Radius needs per-frame correction.</strong> A 12px corner scaled 3× is 36px mid-flight. Good libraries compensate each frame; ask whether yours does.</li>
+            <li><strong>Inverse-scale the content.</strong> Children get the opposite transform of the container. It costs a little and cancels most of the distortion.</li>
+            <li><strong>Different curves for position and scale.</strong> The same curve on both looks stiff; slightly different ones produce a natural arc.</li>
+            <li><strong>Have a fallback.</strong> When the destination is slow or the layouts differ too much, fade plus a small offset is the honest option. It is less impressive and never wrong.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Animação de interface, handbook</em> (chapter 8) · <a href="https://aerotwist.com/blog/flip-your-animations/" target="_blank" rel="noopener">Paul Lewis, FLIP Your Animations</a> · <a href="https://interfaces.dev/magazine/issues/how-i-use-shared-layout-animations" target="_blank" rel="noopener">interfaces.dev, How I use shared layout animations</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/API/View_Transition_API" target="_blank" rel="noopener">MDN, View Transition API</a></footer>
+        </article>
+
+<article class="lesson" id="gestures">
+          <span class="eyebrow">Motion · 12</span>
+          <h2>Gestures</h2>
+          <p class="lede">Anything that follows a finger or a cursor continuously plays by its own rules. The first one is that, while the finger is down, there is no animation at all.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="gesture">
+            <div class="demo-stage">
+            <div class="ph">
+              <div class="ph-overlay"></div>
+              <button class="btn btn--ghost ph-open" type="button" data-sheet-open>Open sheet</button>
+              <div class="ph-sheet" data-sheet tabindex="0" role="dialog" aria-label="Share">
+                <span class="ph-handle"></span>
+                <b>Share</b><span class="ph-sub">Drag me down. Flick to dismiss.</span>
+                <div class="ph-line"></div><div class="ph-line short"></div>
+              </div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Dismiss by velocity too</span><input type="checkbox" name="velocity" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Drag the sheet: it follows one to one and rubber-bands past the top. Let go: it springs back, or closes if you moved past 25% or flicked fast. The overlay follows its position, not a clock.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>The most common mistake in drawers and carousels is interpolating the position while the finger drags. The element ends up trailing behind, and the interface feels lazy. During the drag the element follows the finger one to one. Animation begins only at release, and at that moment the finger's speed is handed to the animation as its starting velocity. A quick flick carries on and settles with a small bounce; a slow drag comes to rest quietly. The same code produces different results depending on the gesture, which is exactly what physics does.</p>
+          <p>Around that core there are a few behaviors people recognize instantly from their phones, even without naming them: resistance at the edges, a sheet that closes on a short fast flick, a carousel that picks the right slide from an ambiguous swipe.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>One to one during the drag.</strong> No easing, no lag. Then a spring on release, seeded with the release velocity.</li>
+            <li><strong>Rubber band at the limits.</strong> Past the edge, the first pixels move almost normally and it gets progressively harder. The iOS-style formula: displacement = (1 − 1 / (excess × 0.55 / size + 1)) × size.</li>
+            <li><strong>Two thresholds to dismiss, not one.</strong> Close if the sheet moved more than 25% of its height, or if the release velocity is above about 500px/s in the closing direction. The second rule is what makes a short flick feel understood.</li>
+            <li><strong>Project the destination.</strong> Decide based on where the element would stop given its velocity, not where it is now. That is how a carousel chooses the right slide.</li>
+            <li><strong>Tie companions to position, not time.</strong> The overlay behind a drawer darkens in proportion to how far the drawer is open. Drag halfway and stop, and the overlay stays at half.</li>
+            <li><strong>Start threshold and axis lock.</strong> A drag begins after about 10px, so a shaky tap is not a drag. Once the dominant direction is known, ignore the other axis, or a horizontal swipe inside a scrolling page does both things and neither works.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>No easing under the finger.</strong> Interpolating during a drag is the single most common reason a drawer feels like a web page instead of a native sheet.</li>
+            <li><strong>Velocity is the handoff.</strong> At release, the finger's speed becomes the animation's initial velocity. Without it the element stops dead and restarts, which everyone notices.</li>
+            <li><strong>Rubber band with the iOS constant.</strong> c ≈ 0.55: the first pixels past the limit move almost normally, then resistance grows. It says "there is an edge here" without a wall.</li>
+            <li><strong>25% or 500px/s.</strong> Distance or velocity, whichever comes first. A short fast flick clearly means "close"; a slow half drag that returns clearly means "never mind".</li>
+            <li><strong>Overlay follows the sheet, not the clock.</strong> Any companion element is a function of position, not of time. That is what binds them into one physical system.</li>
+            <li><strong>Handles need real targets.</strong> A 4px drawer handle needs a 44px hit area, drawn in the design file as an invisible annotated rectangle.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Animação de interface, handbook</em> (chapter 9) · <a href="https://developer.apple.com/videos/play/wwdc2018/803/" target="_blank" rel="noopener">Apple WWDC18, Designing Fluid Interfaces</a> · <a href="https://vaul.emilkowal.ski/" target="_blank" rel="noopener">Emil Kowalski, Vaul</a></footer>
+        </article>
+
+<article class="lesson" id="when-the-gesture-fires">
+          <span class="eyebrow">Motion · 13</span>
+          <h2>When the Gesture Fires</h2>
+          <p class="lede">A gesture can trigger its action during the movement or on release. The right choice depends on how reversible the action is.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="swipe">
+            <div class="demo-stage">
+            <div class="sw-list">
+              <div class="sw-row" data-swipe><div class="sw-bg"><span>Delete</span></div><div class="sw-front" tabindex="0"><span class="sw-dot"></span><span>Design review notes</span></div></div>
+              <button class="sw-reset" type="button" data-swipe-reset>Bring it back</button>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Fire on release</span><input type="checkbox" name="release" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Drag the row left. It moves at reduced scale before the threshold, then fully. On release: the delete only happens when you let go past the line. Switch to fire during, and crossing the line deletes mid-drag.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Firing during the gesture is right for light, reversible actions: revealing a search overlay after dragging a certain distance, for instance. You see what appeared, decide it is not what you wanted, and dismiss it, all in one motion; waiting for release would feel bureaucratic. Firing on release is right for destructive or costly actions. Closing an app in the switcher never happens mid-drag, however far you push it, because an accidental gesture crossing the threshold would destroy work. Requiring release is requiring explicit intent. Release is also right for peeking: if you want to let someone glance at another screen without committing, the snap happens only when they let go, so they can reverse mid-way and cancel.</p>
+          <p>Either way, the gesture must respond before the threshold. If pinching a card does nothing until a certain point, the interface gives no hint that the card is pinchable, and the gesture is unsatisfying to perform. Apply the delta immediately at a reduced scale, and only fire the full animation past the threshold. The first pixel of movement already produces a visible response.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>The more destructive or costly, the more explicit the intent.</strong> Reveal during, delete on release.</li>
+            <li><strong>Always show the intermediate state.</strong> Pull to refresh, swipe to delete, drag to dismiss: there is always a state before the threshold, and it must be visible.</li>
+            <li><strong>Anchor where the person is looking.</strong> A pinch zooms around the midpoint of the fingers; a zoom anchored at screen center when the person was looking at the corner is disorienting even if mathematically correct.</li>
+            <li><strong>Show what the finger hides.</strong> The magnifier above a text cursor, the enlarged key above the keyboard, the slider value above the thumb. And make it disappear when it is no longer needed.</li>
+            <li><strong>Do not cancel when the finger leaves the control.</strong> Small sliders need the capture to continue while the touch is active.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Reveal during, delete on release.</strong> Reversible actions can fire mid-gesture; destructive ones wait for explicit intent.</li>
+            <li><strong>Respond before the threshold.</strong> Reduced-scale movement from the first pixel tells the person the thing is draggable and how far they are.</li>
+            <li><strong>Anchor at the eyes.</strong> Zoom around the fingers' midpoint; never around the screen center by default.</li>
+            <li><strong>Peek is release-based.</strong> Let someone drag to look and reverse to cancel; snap only when they let go.</li>
+            <li><strong>Do not lose the touch.</strong> Keep capturing the drag when the finger wanders off a small control.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Craft de interfaces, handbook</em> (sections 4.3 to 4.7) · <a href="https://rauno.me/craft/interaction-design" target="_blank" rel="noopener">Rauno Freiberg, Invisible Details of Interaction Design</a> · <a href="https://developer.apple.com/videos/play/wwdc2018/803/" target="_blank" rel="noopener">Apple WWDC18, Designing Fluid Interfaces</a></footer>
+        </article>
+
+<article class="lesson" id="loading-and-perceived-performance">
+          <span class="eyebrow">Motion · 14</span>
+          <h2>Loading and Perceived Performance</h2>
+          <p class="lede">Loading is where the wrong motion decision costs the most, because it changes how fast the whole product feels.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="loading">
+            <div class="demo-stage">
+            <div class="ld-wrap">
+              <button class="btn btn--ghost ld-btn" type="button" data-load>Load</button>
+              <div class="ld-card">
+                <div class="ld-skel"><span class="ld-sk-title"></span><span class="ld-sk-line"></span><span class="ld-sk-line short"></span></div>
+                <div class="ld-content"><b>Weekly report</b><span>Three bets, two shipped, one slipped to next sprint.</span></div>
+                <div class="ld-idle">Nothing loaded yet</div>
+              </div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Response time</span><input type="range" name="latency" min="50" max="2000" step="50" value="200" data-unit="ms"><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Wait 300, keep 500</span><input type="checkbox" name="smart" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Click Load and vary the response time. Naive shows the skeleton immediately for exactly the response time, so fast answers flash. Smart shows nothing under 300ms and, once shown, keeps the skeleton at least 500ms.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>A spinner that appears for 200ms and disappears is worse than no spinner. It draws attention to a wait the person would never have noticed. The same is true of a skeleton that flashes for 80ms because the cache answered quickly. Loading indicators need two rules that sound contradictory: do not show anything before 300ms, and once you show something, keep it for at least 500ms. That sometimes means deliberately delaying content, and it still feels faster, because a flash reads as an error and a smooth 500ms transition reads as calm.</p>
+          <p>The biggest win in perceived speed is not a curve at all. Optimistic UI assumes the action succeeded and updates immediately, reverting if it fails. A like that turns red on touch instead of after the server answers turns a 400ms interaction into a 0ms one.</p>
+
+          <h3>How to apply</h3>
+          <table>
+            <thead><tr><th>Wait</th><th>What to show</th></tr></thead>
+            <tbody>
+              <tr><td>under 300ms</td><td>Nothing. Any indicator will flash.</td></tr>
+              <tr><td>300ms to 1s</td><td>A subtle indicator, appearing after a 300ms delay.</td></tr>
+              <tr><td>1 to 5s</td><td>Skeleton or spinner, with context on what is loading.</td></tr>
+              <tr><td>over 5s</td><td>Real progress, with an estimate if possible.</td></tr>
+              <tr><td>over 10s</td><td>Progress plus a way to cancel or do something else.</td></tr>
+            </tbody>
+          </table>
+          <ul>
+            <li><strong>Skeletons must match.</strong> Same dimensions as the content that will arrive, or the arrival jumps and the benefit is lost. Pulse slowly, 1.5 to 2 seconds per cycle; fast pulses over a large area are aggressive.</li>
+            <li><strong>Progress bars only for real progress.</strong> A fake bar stuck at 90% destroys more trust than a spinner.</li>
+            <li><strong>Change the words, not the spinner.</strong> Past a few seconds, "connecting", then "fetching results" communicates progress better than any looping motion.</li>
+            <li><strong>Do not animate while the page is busiest.</strong> Entrance animations during initial load stutter exactly at the first impression. Delay or simplify them, and never animate list items arriving during scroll; scrolling has absolute priority.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Wait 300, keep 500.</strong> Do not show an indicator before 300ms; if it appears, keep it at least 500ms. Together they remove every flash.</li>
+            <li><strong>A flash reads as an error.</strong> An 80ms skeleton feels broken; a deliberate 500ms crossfade feels calm and, paradoxically, faster.</li>
+            <li><strong>Skeleton when you know the shape.</strong> Spinner when you do not or the space is small. Progress bar only when progress is real.</li>
+            <li><strong>Pulse slowly.</strong> 1.5 to 2 seconds per cycle. Skeletons cover a lot of area, so a fast pulse competes with everything on screen.</li>
+            <li><strong>Optimistic UI beats every curve.</strong> Update on touch, revert on failure. Only for actions that almost always succeed and are not destructive or financial.</li>
+            <li><strong>Scrolling wins.</strong> Never animate items entering during a scroll, and go easy on entrance animations during the initial page load, when the processor is busiest.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Animação de interface, handbook</em> (chapter 10) · <a href="https://www.nngroup.com/articles/progress-indicators/" target="_blank" rel="noopener">Nielsen Norman Group, Progress Indicators</a> · <a href="https://developer.apple.com/design/human-interface-guidelines/loading" target="_blank" rel="noopener">Apple HIG, Loading</a></footer>
+        </article>
+
+<article class="lesson" id="frequency">
+          <span class="eyebrow">Motion · 15</span>
+          <h2>Frequency</h2>
+          <p class="lede">The more times a day the user performs an action, the less it should animate. Keyboard actions never animate.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="freq">
+            <div class="demo-stage">
+            <div class="todo">
+              <label class="todo-row"><input type="checkbox" class="todo-input"><span class="todo-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span>Reply to Ana</span></label>
+              <label class="todo-row"><input type="checkbox" class="todo-input"><span class="todo-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span>Review pull request</span></label>
+              <label class="todo-row"><input type="checkbox" class="todo-input"><span class="todo-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span>Update roadmap</span></label>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Uses per day</span><input type="range" name="freq" min="1" max="200" step="1" value="20" data-unit=""><output></output></label></div>
+          </div>
+            <figcaption class="demo-caption">Complete the items. Animation length = 240ms − 1.2ms × uses per day: at 20 uses the check animates in 216ms, at 200 it is instant.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>A 200ms animation on an action performed 200 times a day is 40 seconds of daily waiting, and a constant irritation. The same animation on an action performed once a week is a moment of delight. Emil Kowalski sums it up: animation exists to explain a state change or to give pleasure, and both lose value with repetition. Power users of Linear, Figma and Raycast navigate by keyboard precisely because it is instant.</p>
+
+          <h3>How to apply</h3>
+          <table>
+            <thead><tr><th>Frequency</th><th>Rule</th></tr></thead>
+            <tbody>
+              <tr><td>Hundreds of times a day (navigate, select, toggle)</td><td>No animation, or at most 80ms of opacity</td></tr>
+              <tr><td>Dozens of times a day (open menu, create item)</td><td>Reduce: 100 to 150ms, no stagger</td></tr>
+              <tr><td>Occasional (open settings, advanced filter)</td><td>Standard animation</td></tr>
+              <tr><td>Rare, first time (onboarding, success, upgrade)</td><td>Can have more elaboration and delight</td></tr>
+            </tbody>
+          </table>
+          <ul>
+            <li><strong>Keyboard never animates.</strong> Switching tabs with a shortcut, arrowing through a list, opening the command palette: instant.</li>
+            <li><strong>Subsequent tooltips are instant.</strong> Only the first in a sequence gets the delay and fade.</li>
+            <li><strong>Offer "reduce motion"</strong> in the product settings on top of respecting the system preference.</li>
+            <li><strong>Ask "what does this animation explain?"</strong> If the answer is "nothing, it's pretty", it belongs in the rare category.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>List your top ten actions.</strong> Guess or measure the ten most frequent interactions and cap their motion at 80 to 100ms of opacity, or none.</li>
+            <li><strong>Feedback stays even when motion goes.</strong> Removing the animation does not remove the state change: pressed color, checkmark, count update must still be instant and visible.</li>
+            <li><strong>Detect the input modality.</strong> The same action can animate when clicked and skip animation when triggered by a shortcut. Track the last input type (pointer vs keyboard) and branch on it.</li>
+            <li><strong>Animate on mount, not on re-render.</strong> Lists stagger once, on first appearance. Data updates that re-render rows must not replay entrance animations.</li>
+            <li><strong>Live data does not animate per cell.</strong> In a grid updating every second, animate only changes the user caused, or nothing.</li>
+            <li><strong>Toasts after the first.</strong> The first toast slides in; subsequent ones stacking behind it can appear with minimal motion. Sonner's stacking is a good reference.</li>
+            <li><strong>Shorten with expertise.</strong> Offer an in-app "reduce motion" setting, or shorten repeated animations after the first uses. Power users should never wait for a flourish they have seen a hundred times.</li>
+            <li><strong>Ask what it explains.</strong> If a transition does not communicate origin, destination or state, and the action is frequent, remove it.</li>
+            <li data-handbook><strong>Decay with use.</strong> Once per session can take 600ms, a few times per session 250 to 400, dozens of times 100 to 150, continuous feedback 50 or nothing.</li>
+            <li data-craftbook><strong>Frequency times novelty.</strong> High frequency and low novelty: do not animate. Low frequency and high novelty: it is a moment, animate well. The other two quadrants get very little or discreet motion.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <a href="https://github.com/emilkowalski/skills/blob/main/skills/review-animations/STANDARDS.md" target="_blank" rel="noopener">Emil Kowalski, animation standards</a> (frequency decision table) · <a href="https://animations.dev/" target="_blank" rel="noopener">Emil Kowalski, animations.dev</a> (purpose &amp; taste)</footer>
+        </article>
+
+<article class="lesson" id="instant-in-soft-out">
+          <span class="eyebrow">Motion · 16</span>
+          <h2>Instant In, Soft Out</h2>
+          <p class="lede">The macOS context menu appears with no animation at all and disappears with a subtle fade. That asymmetry is the right pattern for anything used hundreds of times a day.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="ctxmenu">
+            <div class="demo-stage">
+            <div class="cm-wrap">
+              <button class="btn btn--ghost cm-btn" type="button" data-cm-open aria-haspopup="menu">Options</button>
+              <div class="cm-menu" role="menu"><div role="menuitem" tabindex="-1">Rename</div><div role="menuitem" tabindex="-1">Duplicate</div><div role="menuitem" tabindex="-1">Move to…</div><div role="menuitem" tabindex="-1">Delete</div></div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Default pattern (fade in, instant out)</span><input type="checkbox" name="default" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Open the menu and pick an item. Instant in: the menu appears with no animation, the chosen item flashes, the menu fades out. Switch to the default pattern to compare.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>There is an inherent disconnect between keyboard or mouse input and the screen: pressing a key is mechanical, not visceral, while touching the screen puts your finger literally on the object. Touch interactions tolerate and often need animation; keyboard and pointer interactions are often better without. Context menus, app switchers and command palettes are used thousands of times with zero novelty, so they appear instantly. What the macOS menu adds is the second-order detail: the selected item flashes briefly in the highlight color before the menu fades. The instant entrance keeps the sense of speed, the flash confirms the selection registered, and the soft exit gives grace to an ending that would otherwise be abrupt.</p>
+          <p>Rauno's own bookmarks tool is the cautionary tale: he animated the active indicator and list items, loved it, and two days later everything felt sluggish. Making it faster did not help. Removing the motion from the core interactions brought the speed back. For high-frequency actions, any animation adds perceived latency; there is no duration small enough, and the fix is removal, not acceleration.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Instant in, explicit confirmation, soft out.</strong> The opposite of the default pattern (soft in, instant out), and much better for frequent interactions.</li>
+            <li><strong>Remove motion from</strong> keyboard navigation in lists, selection in command menus, tab switching by shortcut, batch check and uncheck, anything done in quick succession.</li>
+            <li><strong>Anticipate intent.</strong> If the modifier and the key are pressed almost together, the app switcher does not even appear; it just switches. The interface distinguishes someone navigating from someone executing. Tooltips work the same way: a delay for the first, none inside the group.</li>
+            <li><strong>Keep motion where it is mandatory.</strong> An element that changes position and must be followed, something appearing outside the focus area, a change that would be confusing if instant, a continuous gesture, a rare moment worth celebrating. If removing the animation makes the change confusing, it was necessary; if it makes the interface faster with no loss, it was decoration.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Keyboard and pointer are mechanical.</strong> They tolerate instant changes; touch wants to see the object move.</li>
+            <li><strong>Flash to confirm.</strong> A brief highlight on the chosen item says "registered" before the menu leaves.</li>
+            <li><strong>Fade out, 100 to 150ms.</strong> Enough grace to avoid an abrupt cut, short enough to never be waited for.</li>
+            <li><strong>Anticipate executors.</strong> A modifier-and-key pressed together skips the menu entirely; a delayed release shows it.</li>
+            <li><strong>Remove, do not shorten.</strong> For actions done hundreds of times, no duration is short enough.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Craft de interfaces, handbook</em> (chapter 5) · <a href="https://rauno.me/craft/interaction-design" target="_blank" rel="noopener">Rauno Freiberg, Invisible Details of Interaction Design</a> (frequency and novelty)</footer>
+        </article>
+
+<article class="lesson" id="reduced-motion">
+          <span class="eyebrow">Motion · 17</span>
+          <h2>Reduced Motion</h2>
+          <p class="lede">Reducing motion is not removing animation. It is trading displacement for opacity and keeping the transitions that aid understanding.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="reduce">
+            <div class="demo-stage">
+            <div class="rm-stage">
+              <div class="marquee"><span>Shipping v2.4 on Friday · Shipping v2.4 on Friday · Shipping v2.4 on Friday · </span></div>
+              <button class="btn btn--ghost rm-btn" type="button" data-flash="is-shown" data-flash-ms="2200">Save changes</button>
+              <div class="toast"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Changes saved</div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">prefers-reduced-motion</span><input type="checkbox" name="reduce" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Click Save. Under reduced motion the toast fades in place instead of sliding and the marquee stops. The information stays.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>A meaningful share of people experience vestibular discomfort from on-screen movement: parallax, zoom, sliding elements. Every operating system exposes a preference to reduce it, and CSS reads it with <code>prefers-reduced-motion</code>. But zeroing everything with <code>animation: none</code> also removes the transitions that communicate ("this panel came from that button"). The goal is gentler motion, not the absence of motion.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Replace translate/scale with fade.</strong> A popover that used to slide now simply appears with opacity, in 150ms.</li>
+            <li><strong>Remove what is purely decorative:</strong> parallax, marquees, infinite loops, staggers.</li>
+            <li><strong>Keep functional feedback:</strong> progress bars, loading indicators, color change on hover.</li>
+            <li><strong>Hover with movement only on fine pointers.</strong> <code>@media (hover: hover) and (pointer: fine)</code> avoids stuck states on touch.</li>
+            <li><strong>Test for real.</strong> Turn on the preference in the system and navigate the whole product. Video autoplay counts here too.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copy" data-copied="Copied" aria-label="Copy"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copy</span></button></div><pre><code><span class="k">.popover</span> { animation: slide-in <span class="n">180ms</span> <span class="f">var</span>(--ease-out); }
+
+<span class="a">@media</span> (prefers-reduced-motion: reduce) {
+  <span class="k">.popover</span> { animation: fade-in <span class="n">150ms</span> ease; }     <span class="c">/* keeps opacity, drops displacement */</span>
+  <span class="k">.parallax, .marquee</span> { animation: none; transform: none; }
+}
+
+<span class="a">@media</span> (hover: hover) and (pointer: fine) {
+  <span class="k">.card:hover</span> { transform: <span class="f">translateY</span>(<span class="n">-2px</span>); }
+}</code></pre></figure>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Scale distances with a token.</strong> Define <code>--motion-distance: 1</code> and set it to 0 under <code>prefers-reduced-motion</code>; multiply every translate by it. One rule reduces the whole system.</li>
+            <li><strong>Keep fades short.</strong> Under reduce, opacity transitions of 100 to 150ms remain acceptable and preserve orientation.</li>
+            <li><strong>Replace big movements with crossfades.</strong> Sliding page transitions, expanding sheets and zooming dialogs become fades; the mapping is mechanical once the token exists.</li>
+            <li><strong>Stop autoplay and loops.</strong> Video shows its poster, marquees stop, parallax and scroll-driven effects are disabled entirely.</li>
+            <li><strong>In-app toggle synced with the system.</strong> Default to the OS preference, allow an override, store it, and apply it as a class on the root so CSS and JS agree.</li>
+            <li><strong>JavaScript animations too.</strong> <code>matchMedia('(prefers-reduced-motion: reduce)')</code>, Framer's <code>useReducedMotion</code> or <code>MotionConfig reducedMotion="user"</code>. CSS alone does not cover JS-driven motion.</li>
+            <li><strong>Do not reduce feedback.</strong> Focus rings, pressed states, progress indicators and loading spinners stay. Motion reduction is about displacement, not about information.</li>
+            <li><strong>Respect the sibling preferences.</strong> <code>prefers-reduced-transparency</code> for glass effects and <code>prefers-contrast</code> for borders and text weight belong in the same audit.</li>
+            <li data-handbook><strong>The known triggers.</strong> Large-area movement, parallax, big zooms, rotation, fast wide motion and 3D depth. Fades, color changes and small local movements are generally safe.</li>
+            <li data-handbook><strong>Formal lines.</strong> Nothing flashes more than three times a second; anything moving automatically for more than five seconds gets a pause control; motion is never the only way information is conveyed.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion" target="_blank" rel="noopener">MDN, prefers-reduced-motion</a> · <a href="https://web.dev/articles/prefers-reduced-motion" target="_blank" rel="noopener">web.dev, prefers-reduced-motion</a> · <a href="https://github.com/emilkowalski/skills/blob/main/skills/review-animations/STANDARDS.md" target="_blank" rel="noopener">Emil Kowalski, animation standards</a> (accessibility)</footer>
+        </article>
+
+<article class="lesson" id="fidgetability">
+          <span class="eyebrow">Motion · 18</span>
+          <h2>Fidgetability</h2>
+          <p class="lede">The earbud case you keep opening and closing. The pencil that spins with pleasant friction. Some interactions are satisfying to repeat for no reason, and that is a property of material, not decoration.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="detents">
+            <div class="demo-stage">
+            <div class="dt-wrap"><div class="dt-track" data-detents><span class="dt-tick"></span><span class="dt-tick"></span><span class="dt-tick"></span><span class="dt-tick"></span><span class="dt-tick"></span><div class="dt-knob" tabindex="0" role="slider" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0" aria-label="Detent slider"></div></div><span class="dt-val"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Detents</span><input type="checkbox" name="snap" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Drag the knob. With detents it pulls slightly toward each stop, snaps on release and ticks. Without them it just slides. Notice which one you keep playing with.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>An object becomes fidgetable when it responds so consistently and immediately that handling it is pleasurable in itself. In software this appears when the response is immediate and proportional to the gesture, the behavior is perfectly predictable, there is a little physics (resistance, inertia, a snap into place), and there is no penalty for repeating. Sliders with resistance, toggles with a small bounce, lists with inertial scroll and draggable things that snap tend to get there. The test: do you catch yourself playing with it for no reason? If so, you got something deep about the physics right.</p>
+          <p>Delight has a budget, though. It costs attention, time and maintenance, and the cost is paid once while the annoyance is paid every time. Spend it on low-frequency moments with emotional weight (a long task finished, a first publish, a milestone), never where it costs time, and always so it can be interrupted and never blocks the flow. Easter eggs are for people who already love the product, never for people in a hurry.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Immediate, proportional, predictable.</strong> The three properties that make something feel like a material.</li>
+            <li><strong>Detents.</strong> A drag that snaps to meaningful positions and resists slightly near them feels like a real control.</li>
+            <li><strong>Haptics at the threshold, not the end.</strong> A drawer that ticks the moment it crosses its dismiss point tells you the limit before you let go. Light, not heavy, and never on high-frequency actions.</li>
+            <li><strong>Sound only for rare, important events,</strong> always with a way to turn it off, always respecting silent mode.</li>
+            <li><strong>Delight that delays is a toll.</strong> Anything celebratory must be dismissible and must never stand between the person and their next action.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Detents with a little magnetism.</strong> Slight pull toward each stop, a snap on release, and a tick you can feel or see.</li>
+            <li><strong>Zero penalty for play.</strong> Repeating the interaction must never trigger side effects, logs or confirmations.</li>
+            <li><strong>Haptic at the crossing.</strong> Fire when the threshold is crossed, not when the gesture ends; keep it light.</li>
+            <li><strong>Delight is dismissible.</strong> Any celebration can be interrupted and never blocks the next action.</li>
+            <li><strong>Test on the desk.</strong> Loud vibration on a table is noise; sound respects silent mode; both have an off switch.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Craft de interfaces, handbook</em> (chapter 14) · <a href="https://rauno.me/craft/interaction-design" target="_blank" rel="noopener">Rauno Freiberg, Invisible Details of Interaction Design</a> (fidgetability) · <a href="https://www.interfacecraft.dev/" target="_blank" rel="noopener">Josh Puckett, Interface Craft</a> (fidgetable as a facet of quality)</footer>
+        </article>
+
+<article class="lesson" id="pattern-catalog">
+          <span class="eyebrow">Motion · 19</span>
+          <h2>Pattern Catalog</h2>
+          <p class="lede">The same dozen components carry most of the motion in any product. Starting values for each, with the trap that usually breaks them.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="tabs">
+            <div class="demo-stage">
+            <div class="tabs" role="tablist" data-tabs><button class="tab is-active" type="button" role="tab" aria-selected="true" data-tab>Overview</button><button class="tab" type="button" role="tab" aria-selected="false" data-tab>Activity</button><button class="tab" type="button" role="tab" aria-selected="false" data-tab>Members</button><button class="tab" type="button" role="tab" aria-selected="false" data-tab>Settings</button><span class="tab-ind"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Separate curves for position and width</span><input type="checkbox" name="twocurves" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Click the tabs. The indicator moves and resizes at once. With two curves it stretches mid-flight and feels elastic; with one it slides stiffly.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Most motion is not invented; it is applied to a button, a menu, a modal, a toast. Having a baseline spec for each means the team argues about the exceptions instead of relitigating the basics, and the product ends up with one pulse instead of ten. These values are starting points, tuned for interfaces used many times a day. Adjust them, but adjust them together.</p>
+
+          <h3>The catalog</h3>
+          <table>
+            <thead><tr><th>Component</th><th>Baseline</th><th>The usual trap</th></tr></thead>
+            <tbody>
+              <tr><td>Button</td><td>hover 120ms, pressed scale 0.97 in 80ms, release 150ms</td><td>Label change ("Save" to "Saved") shifting the width; reserve the wider one.</td></tr>
+              <tr><td>Toggle</td><td>knob 200ms with overshoot, track color 150ms plain</td><td>Overshoot on the color, which stalls.</td></tr>
+              <tr><td>Dropdown</td><td>fade and scale 0.96 to 1 in 200ms, exit 120ms, origin at the trigger corner</td><td>Origin at the center; a flipped menu whose origin did not flip.</td></tr>
+              <tr><td>Modal</td><td>overlay and panel 250ms together, scale 0.96 to 1, exit 150ms, content 60ms after</td><td>Overlay arriving before the panel; Escape mid-open that waits instead of reversing.</td></tr>
+              <tr><td>Drawer / sheet</td><td>open 400ms, close 250ms, overlay tied to position, one-to-one drag, spring on release</td><td>Interpolating during the drag; distance-only dismissal.</td></tr>
+              <tr><td>Toast</td><td>rise 16px and fade in 350ms, exit 200ms, visible 4s (6s with an action), pause on hover</td><td>Timer that does not pause while reading; errors that need action shown as toasts.</td></tr>
+              <tr><td>Accordion</td><td>height 250ms, content fade 200ms, chevron 180°</td><td>Height measured before an image loaded; opening one while closing another in sequence instead of together.</td></tr>
+              <tr><td>Tabs</td><td>indicator translate and width 250ms, content crossfade 150ms overlapping</td><td>Panels of different heights making the page jump.</td></tr>
+              <tr><td>List reorder</td><td>move 300ms, stagger 30ms up to 8 items, removal: fade 150ms then collapse 200ms</td><td>Fading and collapsing at the same time, which looks like crushing.</td></tr>
+              <tr><td>Tooltip</td><td>delay 400 to 600ms (0 inside a group), fade and 4px rise in 150ms, hide after 100 to 200ms</td><td>Tooltips that move a lot and steal attention from the task.</td></tr>
+              <tr><td>Error shake</td><td>±6, ±4, ±2px in 400ms, border color 150ms</td><td>Shaking while the person is still typing.</td></tr>
+            </tbody>
+          </table>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Entrances and exits are asymmetric everywhere.</strong> Exit at about 60% of the entrance, with ease-in. A modal at 250 in and 150 out; a drawer at 400 and 250.</li>
+            <li><strong>Containers before content.</strong> Panel first, then its content 50 to 100ms later. Reverse on exit: content leaves first or together, container last.</li>
+            <li><strong>Modal over modal is a special case.</strong> The one underneath recedes slightly (scale 0.98) and darkens. Without that, two panels fight for the same plane.</li>
+            <li><strong>Toasts pause for readers.</strong> Stop the timer on hover, expand the stack on hover, and never use a toast for an error that needs action.</li>
+            <li><strong>Tabs stretch.</strong> Animate the indicator's position and width with two different curves; the mid-flight stretch feels elastic and hides the width change.</li>
+            <li><strong>Reduced motion has a line in every spec.</strong> Shake becomes a color change; slide becomes fade; the indicator jumps instead of stretching.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Animação de interface, handbook</em> (chapter 12) · <a href="https://sonner.emilkowal.ski/" target="_blank" rel="noopener">Emil Kowalski, Sonner</a> · <a href="https://developer.apple.com/design/human-interface-guidelines/motion" target="_blank" rel="noopener">Apple HIG, Motion</a> · <a href="https://m3.material.io/styles/motion/overview" target="_blank" rel="noopener">Material Design, Motion</a></footer>
+        </article>
+
+<article class="lesson" id="motion-tokens-and-specs">
+          <span class="eyebrow">Motion · 20</span>
+          <h2>Motion Tokens and Specs</h2>
+          <p class="lede">A product whose every component was tuned in isolation looks like it was made by ten people. Five durations and seven curves, named and shared, give it one pulse.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="tokens">
+            <div class="demo-stage">
+            <div class="tk-row">
+              <button class="btn btn--ghost tk-a" type="button" tabindex="-1">Save changes</button>
+              <span class="chip tk-b" tabindex="0">Design</span>
+              <div class="card tk-c" tabindex="0"><div class="card-title">Design review</div><div class="card-sub">Today, 3:00 PM</div></div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Components reference primitives</span><input type="checkbox" name="tokens" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Drag the brand hue: everything follows because it is derived from one token. Turn on primitives and the badge and link were hardcoded to blue-9: rebranding now means touching every component.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Restriction is what produces coherence, the same principle as a type scale. When the choices are "fast, normal or slow" instead of any number, decisions get quicker and the result gets more consistent. Tokens also fix the silent default problem: with nothing specified, every transition inherits the browser's <code>ease</code> and its slow start.</p>
+          <p>The other half is the spec. Most handoffs describe the entrance and stop. The three lines nobody writes, origin, what happens on interruption, and the reduced-motion version, are the three that always come back as rework.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Durations:</strong> instant 100ms, fast 150, normal 250, slow 400, slower 600. Forbid values outside the list.</li>
+            <li><strong>Curves:</strong> ease-out (0.25, 1, 0.5, 1) as the default, a soft and a strong variant, ease-in for exits, ease-in-out for on-screen moves, an overshoot for small transforms, and the iOS drawer curve (0.32, 0.72, 0, 1).</li>
+            <li><strong>Springs:</strong> default 0.35s with no bounce, snappy 0.25s with bounce 0.2, gesture 0.4s with bounce 0.15. Described by duration and bounce, never by stiffness numbers designers cannot feel.</li>
+            <li><strong>An eight-line spec.</strong> Component, trigger, properties, entry timing, exit timing, origin, interruption behavior, reduced-motion version.</li>
+            <li><strong>Shared vocabulary.</strong> "Grows from the button" is transform-origin; "gets bigger" is scale, not width; "one after another" is stagger; "follows the finger" is a continuous gesture with no interpolation.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Five durations, seven curves, three springs.</strong> Enough for an entire product. The point of the list is what it forbids.</li>
+            <li><strong>Name the default.</strong> Most transitions should use one duration and one curve. If the team has to choose every time, they will choose differently.</li>
+            <li><strong>Springs by feel, not physics.</strong> Duration and bounce are things a designer can sense; stiffness and damping interact in ways nobody can predict by hand.</li>
+            <li><strong>Write the interruption line.</strong> "On close during open: reverse from the current position, same curve, proportional duration." Without it, the shortest implementation wins, and it is usually the worst.</li>
+            <li><strong>Write the reduced-motion line.</strong> Usually "fade only, no movement". It costs one sentence and saves a bug ticket.</li>
+            <li><strong>Audit with the checklist.</strong> Under 300ms? Exit faster than entrance? Origin makes spatial sense? Double click handled? Transform and opacity only? Still tolerable after thirty repetitions?</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Animação de interface, handbook</em> (chapter 14) · <a href="https://m3.material.io/styles/motion/easing-and-duration/tokens-specs" target="_blank" rel="noopener">Material Design, easing and duration tokens</a> · <a href="https://github.com/emilkowalski/skills/blob/main/skills/review-animations/STANDARDS.md" target="_blank" rel="noopener">Emil Kowalski, animation standards</a></footer>
+        </article>
+
+<article class="lesson" id="critiquing-motion">
+          <span class="eyebrow">Motion · 21</span>
+          <h2>Critiquing Motion</h2>
+          <p class="lede">Nothing teaches motion like watching it slowly. Twenty minutes of frame-by-frame review of an app you admire teaches more than any text, this one included.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="slowmo">
+            <div class="demo-stage">
+            <div class="sm-stage">
+              <button class="btn btn--ghost sm-btn" type="button" data-toggle="is-open" aria-expanded="false">Open modal</button>
+              <div class="sm-overlay" data-toggle="is-open"></div>
+              <div class="sm-modal"><div class="sm-modal-head">Delete project?</div><p class="sm-modal-text">This removes the project and its history for everyone.</p><div class="sm-modal-actions"><span class="sm-ghost"></span><span class="sm-primary"></span></div></div>
+            </div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Playback speed ×</span><input type="range" name="speed" min="0.1" max="1" step="0.1" value="1" data-unit=""><output></output></label></div>
+          </div>
+            <figcaption class="demo-caption">Click to open and close, then slow it down. At 0.25× you can see the order: overlay first, panel scaling from 0.96, content 60ms later, exit at 60% of the entrance.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>At normal speed you feel that a transition is good or off, but you cannot say why. At a quarter speed you see it: the overlay starts before the panel, the content arrives 80ms late, the corner radius changes mid-flight, the exit is half the length of the entrance. Those are the decisions that make an interface feel expensive, and every one of them is invisible until you slow it down. Record a phone at 240fps or use the browser's animation panel at 10%, and the vocabulary in these lessons becomes something you can point at.</p>
+          <p>Taste in motion is also taste for restraint. Mature products have a recognizable signature: productivity tools are fast and quiet, mobile systems are physical, developer tools are precise, consumer products are expressive. Pick one and stay with it. The worst choice is mixing, because the person can never form an expectation.</p>
+
+          <h3>The eight questions</h3>
+          <ol>
+            <li><strong>What does it explain?</strong> If the answer is nothing, the rest does not matter.</li>
+            <li><strong>Where does it come from and where does it go?</strong> Does the spatial origin make sense?</li>
+            <li><strong>How long does it last?</strong> Record it and count frames.</li>
+            <li><strong>Does it speed up or slow down?</strong> Where is most of the movement?</li>
+            <li><strong>Is there overshoot?</strong> How much, and on which property?</li>
+            <li><strong>What moves and what stays still?</strong> What stayed put is as informative as what moved.</li>
+            <li><strong>What happens if I interrupt it?</strong></li>
+            <li><strong>Is it still good the thirtieth time?</strong></li>
+          </ol>
+          <p>And the hardest advice to follow: the best animation is often the one you removed. Take one out and use the product for a day. If you did not miss it, it should not exist.</p>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Slow motion first.</strong> 240fps on a phone, or the browser's animation panel at 10 or 25%. Every hidden decision becomes visible.</li>
+            <li><strong>Count frames.</strong> Duration is a number you can measure, not a feeling. Record and count before arguing.</li>
+            <li><strong>Look at what did not move.</strong> Restraint is a decision too. The elements that held still tell you what the designer wanted you to look at.</li>
+            <li><strong>The thirtieth-time test.</strong> Repeat the interaction thirty times in a row. Anything that irritates by then will irritate a daily user by lunch.</li>
+            <li><strong>Signature over variety.</strong> Fast and quiet, physical, precise or expressive. One of them, consistently, so the person can predict how things will behave.</li>
+            <li><strong>Remove one and live without it.</strong> If a day later nobody missed it, it was never doing work.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Animação de interface, handbook</em> (chapter 15 and appendix B) · <a href="https://developer.chrome.com/docs/devtools/css/animations" target="_blank" rel="noopener">Chrome DevTools, Animations panel</a> · <a href="https://www.interfacecraft.dev/" target="_blank" rel="noopener">Josh Puckett, Interface Craft</a> (noticing, facets of quality)</footer>
+        </article>
+      </section>
+      <footer class="footer"><p>Personal study library. Content synthesized from the sources listed in each lesson; course and author names belong to their respective owners. Hierarchy through size, weight and space only.</p></footer>
+    </div>
+  </main>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
