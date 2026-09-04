@@ -178,6 +178,27 @@
       c.addEventListener('change', function () { update(); setTimeout(replay, 0); });
       update();
     });
+    // Scrub: when the stage has nothing of its own to touch, dragging on it scrubs the first slider and a tap flips the first switch.
+    (function () {
+      var stage = demo.querySelector('.demo-stage'); if (!stage) return;
+      if (stage.querySelector('button, input, textarea, select, a, [role], [tabindex], [data-toggle], [data-flash], [data-drag], [data-hover], [data-sheet], .scroller, .sa-strip, .tb3-scroll, .sl-page, .pt-list, [data-fitts]')) return;
+      var range = demo.querySelector('.demo-controls input[type="range"]'), sw = demo.querySelector('.demo-controls input[type="checkbox"]');
+      if (!range && !sw) return;
+      var pt = document.documentElement.lang.indexOf('pt') === 0;
+      demo.classList.add(range ? 'is-scrub' : 'is-tap');
+      stage.setAttribute('data-hint', range ? (pt ? 'arraste para ajustar' : 'drag to adjust') + (sw ? (pt ? ' · toque para alternar' : ' · tap to switch') : '') : (pt ? 'toque para alternar' : 'tap to switch'));
+      var x0 = 0, v0 = 0, moved = false, down = false;
+      stage.addEventListener('pointerdown', function (e) { if (e.button !== 0) return; down = true; moved = false; x0 = e.clientX; v0 = range ? Number(range.value) : 0; try { stage.setPointerCapture(e.pointerId); } catch (x) {} });
+      stage.addEventListener('pointermove', function (e) {
+        if (!down || !range) return; var dx = e.clientX - x0; if (!moved && Math.abs(dx) < 4) return;
+        if (!moved) { moved = true; stage.classList.add('is-scrubbing'); }
+        var min = Number(range.min), max = Number(range.max), step = Number(range.step) || 1, span = max - min;
+        var v = v0 + dx / 220 * span; v = Math.round(v / step) * step; v = Math.max(min, Math.min(max, v));
+        var digits = (String(range.step).split('.')[1] || '').length; range.value = v.toFixed(digits); range.dispatchEvent(new Event('input', { bubbles: true }));
+      });
+      function up() { if (!down) return; down = false; stage.classList.remove('is-scrubbing'); if (moved) { if (range) range.dispatchEvent(new Event('change', { bubbles: true })); } else if (sw) { sw.click(); } }
+      stage.addEventListener('pointerup', up); stage.addEventListener('pointercancel', up);
+    })();
     Array.prototype.forEach.call(demo.querySelectorAll('[data-toggle]'), function (el) {
       var cls = el.getAttribute('data-toggle');
       el.addEventListener('click', function () {
@@ -556,7 +577,7 @@
       pmTrigger.addEventListener('pointerdown', function (e) { if (!demo.classList.contains('on-onpress')) return; e.preventDefault(); pmPressOpened = true; pmOpen(); try { pmTrigger.setPointerCapture(e.pointerId); } catch (x) {} });
       pmTrigger.addEventListener('pointermove', function (e) { if (!pmPressOpened) return; var hit = null; Array.prototype.forEach.call(pmMenu.querySelectorAll('.pm-item'), function (it) { var r = it.getBoundingClientRect(); if (e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom) hit = it; }); pmSet(hit); });
       pmTrigger.addEventListener('pointerup', function (e) { if (!pmPressOpened) return; pmPressOpened = false; try { pmTrigger.releasePointerCapture(e.pointerId); } catch (x) {} if (pmActive) pmSelect(pmActive); });
-      pmTrigger.addEventListener('click', function () { if (demo.classList.contains('on-onpress')) return; pmMenu.classList.contains('is-open') ? pmClose() : pmOpen(); });
+      pmTrigger.addEventListener('click', function (e) { if (demo.classList.contains('on-onpress') && e.detail !== 0) return; pmMenu.classList.contains('is-open') ? pmClose() : pmOpen(); });
       Array.prototype.forEach.call(pmMenu.querySelectorAll('.pm-item'), function (it) { it.addEventListener('pointerenter', function () { pmSet(it); }); it.addEventListener('click', function () { pmSelect(it); }); });
       document.addEventListener('pointerdown', function (e) { if (!demo.contains(e.target) && pmMenu.classList.contains('is-open')) pmClose(); });
     }
@@ -689,6 +710,7 @@
     if (mnTrigger) {
       var mnMenu = demo.querySelector('.mn-menu'), mnParent = demo.querySelector('.mn-parent'), mnCloseT = null;
       mnTrigger.addEventListener('pointerdown', function (e) { e.preventDefault(); mnMenu.classList.toggle('is-open'); mnParent.classList.remove('is-sub-open'); });
+      mnTrigger.addEventListener('click', function (e) { if (e.detail === 0) { mnMenu.classList.toggle('is-open'); mnParent.classList.remove('is-sub-open'); } });
       mnParent.addEventListener('pointerenter', function () { clearTimeout(mnCloseT); mnParent.classList.add('is-sub-open'); mnParent.classList.add('is-active'); });
       Array.prototype.forEach.call(mnMenu.querySelectorAll(':scope > .mn-item'), function (it) {
         it.addEventListener('pointerenter', function (e) {
@@ -933,6 +955,9 @@
       Array.prototype.forEach.call(demo.querySelectorAll('.demo-controls input'), function (r) { r.addEventListener('input', ylUpdate); r.addEventListener('change', ylUpdate); }); ylUpdate();
     }
     // UX demos --------------------------------------------------------------
+    // Pop-out: clicking a distractor wobbles it, so the miss is felt
+    var ppGrid = demo.querySelector('.pp-grid');
+    if (ppGrid) ppGrid.addEventListener('click', function (e) { var d = e.target.closest('.pp-dot'); if (d && !d.classList.contains('pp-target')) { d.classList.remove('is-miss'); void d.offsetWidth; d.classList.add('is-miss'); } });
     // Signifiers / structure: single pick
     var picks = demo.querySelectorAll('[data-pick]');
     if (picks.length) {

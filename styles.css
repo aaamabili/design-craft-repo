@@ -389,7 +389,9 @@ td:last-child, th:last-child { padding-right: 0; }
   display: grid; place-items: center; align-content: center;
 }
 /* Suavidade padrão: toda mudança de estado dentro do palco transiciona cor, opacidade e sombra; demos específicos sobrescrevem */
-.demo-stage *, .demo-stage *::before, .demo-stage *::after { transition-property: background-color, color, border-color, box-shadow, opacity, outline-color, fill, stroke; transition-duration: 160ms; transition-timing-function: ease; }
+.demo-stage *, .demo-stage *::before, .demo-stage *::after { transition-property: background-color, color, border-color, box-shadow, opacity, outline-color, fill, stroke, scale; transition-duration: 160ms; transition-timing-function: ease; }
+/* Pressão padrão: todo botão dentro do palco desce rápido e volta suave (a propriedade scale não interfere em transforms próprios) */
+.demo-stage button:not(:disabled):active, .demo-stage [role="button"]:active { scale: 0.97; transition-duration: 80ms; }
 
 .demo-caption { margin: 14px auto 0; max-width: 52ch; text-align: center; font-size: var(--text-sm); color: var(--fg-subtle); text-wrap: pretty; }
 .demo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; align-items: start; width: 100%; }
@@ -1500,6 +1502,16 @@ td:last-child, th:last-child { padding-right: 0; }
 .jd-notes li { color: var(--accent-color); } .jd-b .jd-notes li { color: var(--accent-motion); }
 .on-checks .jd-checks { display: grid; } .on-critique .jd-notes { display: grid; }
 
+/* Scrub e toque no palco (demos sem objeto próprio) */
+.demo.is-scrub .demo-stage { cursor: ew-resize; touch-action: pan-y; user-select: none; }
+.demo.is-tap .demo-stage { cursor: pointer; user-select: none; }
+.demo.is-scrub .demo-stage::after, .demo.is-tap .demo-stage::after { content: attr(data-hint); position: absolute; right: 10px; bottom: 8px; padding: 2px 7px; border-radius: 999px; background: var(--bg-elevated); box-shadow: var(--shadow-sm); color: var(--fg-subtle); font-size: var(--text-xs); pointer-events: none; opacity: 0; transition: opacity 150ms ease; }
+.demo.is-scrub .demo-stage:hover::after, .demo.is-tap .demo-stage:hover::after, .demo-stage.is-scrubbing::after { opacity: 1; }
+.demo-stage.is-scrubbing { cursor: ew-resize; }
+.demo-stage.is-scrubbing * { pointer-events: none; }
+/* Pop-out: erro sentido */
+.pp-dot.is-miss { animation: pp-miss 260ms var(--ease-out); }
+@keyframes pp-miss { 0% { transform: translateX(0); } 30% { transform: translateX(-3px); } 60% { transform: translateX(3px); } 100% { transform: translateX(0); } }
 /* ---- Primitives ----------------------------------------------------------------------------------------------- */
 .pr-focus:focus-visible, .dm-native:focus-visible, .fc-item:focus-visible, .sd-track:focus-visible, .tb-tab:focus-visible, .ro-item:focus-visible, .sa-strip:focus-visible, .fc-before:focus-visible, .fc-after:focus-visible, .dm-start:focus-visible, .cmd-trigger:focus-visible, .st-open:focus-visible, .dg-open:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 /* 01 dimensions */
