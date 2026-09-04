@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Practice — Interface Craft</title>
+  <meta name="description" content="The work itself: how design engineering operates inside a team, how component APIs are designed, how a system is run as a product, and how the result is verified so it does not degrade.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#fcfcfc" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
+  <script>
+    // Applies the saved theme before first paint to avoid a flash
+    try { var t = localStorage.getItem('theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script>
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <div>
+        <div class="brand-name">Interface Craft</div>
+        <div class="brand-sub">Living library</div>
+      </div>
+      <div class="controls">
+        <nav class="lang-switch" aria-label="Language"><a class="lang-opt" href="#" data-lang="en" hreflang="en" aria-current="true">EN</a><a class="lang-opt" href="pt/practice.html" data-lang="pt" hreflang="pt">PT</a></nav>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle light and dark theme" title="Toggle light and dark theme"><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+      </div>
+    </div>
+    <a class="back-link" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>Home</a>
+    <nav class="nav-groups" aria-label="Section contents">
+      <div class="nav-group" data-section="practice" style="margin-top:0">
+        <div class="nav-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>Practice</div>
+        <ul class="nav-list"><li><a class="nav-link" href="#what-is-design-engineering">What Is Design Engineering</a></li><li><a class="nav-link" href="#modes-of-operation">Modes of Operation</a></li><li><a class="nav-link" href="#prototyping">Prototyping</a></li><li><a class="nav-link" href="#ai-in-the-flow">AI in the Flow</a></li><li><a class="nav-link" href="#the-api-is-design">The API Is Design</a></li><li><a class="nav-link" href="#composition">Composition</a></li><li><a class="nav-link" href="#properties">Properties</a></li><li><a class="nav-link" href="#state-and-control">State and Control</a></li><li><a class="nav-link" href="#style-and-extension">Style and Extension</a></li><li><a class="nav-link" href="#api-evolution">API Evolution</a></li><li><a class="nav-link" href="#team-models">Team Models</a></li><li><a class="nav-link" href="#layered-governance">Layered Governance</a></li><li><a class="nav-link" href="#contribution">Contribution</a></li><li><a class="nav-link" href="#definition-of-done">Definition of Done</a></li><li><a class="nav-link" href="#adoption-and-metrics">Adoption and Metrics</a></li><li><a class="nav-link" href="#generations-and-deprecation">Generations and Deprecation</a></li><li><a class="nav-link" href="#documentation">Documentation</a></li><li><a class="nav-link" href="#the-interface-testing-pyramid">The Interface Testing Pyramid</a></li><li><a class="nav-link" href="#visual-testing">Visual Testing</a></li><li><a class="nav-link" href="#interaction-and-accessibility-tests">Interaction and Accessibility Tests</a></li><li><a class="nav-link" href="#what-not-to-automate">What Not to Automate</a></li></ul>
+      </div>
+      <div class="nav-group nav-other" data-section="practice">
+        <div class="nav-title">Other sections</div>
+        <ul class="nav-list"><li><a class="nav-link" href="craft.html">Craft</a></li><li><a class="nav-link" href="typography.html">Typography</a></li><li><a class="nav-link" href="color.html">Color</a></li><li><a class="nav-link" href="layout.html">Layout</a></li><li><a class="nav-link" href="motion.html">Motion</a></li><li><a class="nav-link" href="ux.html">UX</a></li><li><a class="nav-link" href="primitives.html">Primitives</a></li><li><a class="nav-link" href="references.html">References</a></li></ul>
+      </div>
+    </nav>
+  </aside>
+  <main class="content">
+    <div class="container">
+<section class="section" data-section="practice">
+        <div class="section-head" id="practice">
+          <span class="eyebrow">Section 08</span>
+          <h2>Practice</h2>
+          <p>The work itself: how design engineering operates inside a team, how component APIs are designed, how a system is run as a product, and how the result is verified so it does not degrade.</p>
+        </div>
+
+        <article class="lesson" id="what-is-design-engineering">
+          <span class="eyebrow">Practice · 01</span>
+          <h2>What Is Design Engineering</h2>
+          <p class="lede">A design engineer makes design decisions while writing production code. Not someone who implements mockups faithfully, and not a designer who knows some code. The distinction is where the decision happens.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="decide">
+            <div class="demo-stage">
+            <div class="de-wrap"><div class="de-card" data-hover><b>Project card</b><span>Hover me. The number that feels right is found here, not in the file.</span></div><span class="de-read"><span class="de-live">decided in the browser</span><span class="de-file">as the file says: scale 1.05 · 300ms</span></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Hover scale</span><input type="range" name="hscale" min="100" max="110" step="1" value="102" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">As the file says</span><input type="checkbox" name="asfile" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Hover the card while dragging the scale. Somewhere around 1.02 it feels right; the file said 1.05 and 300ms, which reads as a bounce. The decision belongs where the material is.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>If the judgment about spacing, timing, hierarchy and behavior is made in the browser, with the real material, you are doing design engineering. Implementing a file with fidelity is front-end development, a legitimate job with another name. The role appeared now because three forces converged: hardware runs animation, blur and composition that used to be unaffordable; the platform gained primitives such as transitions, layers, container queries and perceptual color; and when functional software becomes a commodity, the differential moves to execution. The problem it solves is the handoff. A design file cannot express interruption behavior, gesture physics, real data, error states or how something feels at six times slowdown. All of that gets decided by someone, and in the traditional model by someone who was not present when the intent was formed. The role exists to eliminate the translation, not to speed it up.</p>
+          <p>People arrive by two paths with two debts. From design: visual judgment and interaction sensitivity, owing architecture, types, state, performance and tests. From engineering: execution, owing visual judgment, critique vocabulary, typography, color and the patience to iterate on something that already works. Neither is the better start. What separates those who grow is recognizing their own debt.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Decide with the real thing.</strong> A number chosen looking at a static file is a guess.</li>
+            <li><strong>Do not become the translator.</strong> If you never disagree with the file, you are a faster handoff, not the end of one.</li>
+            <li><strong>Do not become the bottleneck.</strong> The way out is system: components, tokens, documented patterns.</li>
+            <li><strong>Do not become the animations person.</strong> The work that matters is robustness, states, system and behavior, and it is less showy.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Decision in the browser, not in the file.</strong> That is the whole definition.</li>
+            <li><strong>Know your debt.</strong> From design: architecture, state, tests. From engineering: eye, vocabulary, patience.</li>
+            <li><strong>Disagree with the file sometimes.</strong> If you never do, you are translating.</li>
+            <li><strong>Scale through system,</strong> not through being in every review.</li>
+            <li><strong>Robustness over flourish.</strong> The less visible work is the valuable one.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Design engineering: the discipline, handbook</em> (chapter 1) · <a href="https://www.proofofconcept.pub/p/design-engineering" target="_blank" rel="noopener">David Hoang, Design Engineering</a> · <a href="https://designengineer.xyz/" target="_blank" rel="noopener">designengineer.xyz</a></footer>
+        </article>
+
+        <article class="lesson" id="modes-of-operation">
+          <span class="eyebrow">Practice · 02</span>
+          <h2>Modes of Operation</h2>
+          <p class="lede">Exploration, product, system. Confusing them is the most common cause of wasted work: polishing something that will be thrown away, or building the tenth variation of what should be one component.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="extract">
+            <div class="demo-stage" data-v1="One occurrence: a case. Build it locally." data-v2="Two: maybe coincidence. Watch it." data-v3="Three: a pattern. Extract to the system." data-early="Extracted at one: the abstraction fits nobody and now every case fights it.">
+            <div class="xt-wrap"><div class="xt-row"><div class="xt-card" style="--i:0"><i></i><i></i></div><div class="xt-card" style="--i:1"><i></i><i></i></div><div class="xt-card" style="--i:2"><i></i><i></i></div><div class="xt-card" style="--i:3"><i></i><i></i></div><div class="xt-card" style="--i:4"><i></i><i></i></div></div><span class="xt-verdict"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Occurrences</span><input type="range" name="occ" min="1" max="5" step="1" value="1" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Extract on the first occurrence</span><input type="checkbox" name="early" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Drag the occurrences. The verdict changes at three. Extract at one and you freeze decisions before you know which are right: the generic component fits none of the cases that came later.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Exploration discovers what to build: low fidelity in everything that is not the question, disposable code, success measured in learning. Product builds a specific surface with quality: full fidelity, success is the thing working with real data. System extracts, generalizes and maintains what repeats: success is other people building faster and better without you. The typical mistake is operating in product mode during exploration, or in product mode when the right one was system.</p>
+          <p>When to extract: on the third occurrence. The first is a case, the second may be coincidence, the third is a pattern. Extracting too early freezes decisions before you know which are right and produces abstractions that serve nobody. Extracting too late produces ten variations that must be unified later, which costs far more. Healthy teams alternate deliberately: a product cycle ships surfaces, a short period consolidates what repeated, exploration runs in parallel, isolated and time-boxed. Without consolidation, system debt accumulates and every new screen costs more than the last. Where the role sits: embedded in product gives context and speed but the system belongs to nobody; in the platform team gives ownership and consistency but distance from real needs. The hybrid, based in the system with rotations through product teams, tends to work best.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Name the mode before starting.</strong> Exploration, product or system.</li>
+            <li><strong>Third occurrence extracts.</strong> Not the first, not the tenth.</li>
+            <li><strong>Consolidate after each product cycle.</strong></li>
+            <li><strong>Hybrid seating:</strong> system home, product rotations.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Exploration: disposable code, learning as output.</strong></li>
+            <li><strong>Product: full fidelity, real data.</strong></li>
+            <li><strong>System: others build faster without you.</strong></li>
+            <li><strong>Third occurrence extracts.</strong></li>
+            <li><strong>Consolidation after every cycle,</strong> or every screen costs more than the last.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Design engineering: the discipline, handbook</em> (chapter 2) · <a href="https://www.designsystems.com/" target="_blank" rel="noopener">designsystems.com</a></footer>
+        </article>
+
+        <article class="lesson" id="prototyping">
+          <span class="eyebrow">Practice · 03</span>
+          <h2>Prototyping</h2>
+          <p class="lede">A prototype answers one question. Write the question before building, then build the smallest thing that answers it. Fidelity is per dimension, not global, and disposable code must actually be thrown away.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="proto">
+            <div class="demo-stage" data-dismissed="dismissed" data-noint="the gesture is not built: nothing to learn">
+            <div class="pt-wrap"><span class="pt-q">Question: is drag-to-dismiss discoverable without instruction?</span><div class="pt-list"><div class="pt-item"><span>Invoice #2041</span><kbd>→</kbd></div><div class="pt-item"><span>Weekly digest</span><kbd>→</kbd></div><div class="pt-item"><span>Password reset</span><kbd>→</kbd></div></div><span class="pt-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Visual fidelity</span><input type="range" name="vis" min="0" max="100" step="10" value="20" data-unit="%"><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Interaction fidelity</span><input type="checkbox" name="inter" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Drag an item to the right to dismiss it. Push visual fidelity to zero: the question is still answered. Turn interaction fidelity off with the visuals at 100%: the prototype looks finished and answers nothing.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Prototypes fail when they try to answer everything. If one tests navigation, visual hierarchy and gesture physics at once, any reaction is ambiguous and none of the three was answered. There is no such thing as a high-fidelity prototype; there is high fidelity in some dimensions, visual, content, data, interaction, performance, states, and low in others. Maximum interaction fidelity with minimum visual fidelity is perfectly valid and often right. Disposable code is fast, dirty, untested and unabstracted, the right choice for exploration, and the commitment must be real: if you do not throw it away you just created debt. Evolutionary code will become product and is slower and more careful. The dangerous mode is the undeclared middle: exploratory code that nobody said was exploratory and shipped because it already worked.</p>
+          <p>The practice that most accelerates judgment is live tuning: expose critical values as adjustable controls and change them while using the thing. Spring parameters, blur, scale, delay, opacity, radius, spacing. You find the right value faster and build intuition about each parameter's range. Corollary: no interaction value should be chosen in the abstract. And be honest: a prototype that promises what the implementation will not deliver costs trust. If it does not reproduce interruption, gesture physics or real performance, say so alongside it.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>One question, one sentence, written first.</strong></li>
+            <li><strong>Fidelity only where the question needs it.</strong></li>
+            <li><strong>Declare disposable or evolutionary.</strong> Never the middle.</li>
+            <li><strong>Tune live.</strong> Sliders on every value that matters.</li>
+            <li><strong>State what the prototype does not reproduce.</strong></li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Write the question first.</strong> One sentence.</li>
+            <li><strong>Fidelity per dimension:</strong> visual, content, data, interaction, performance, states.</li>
+            <li><strong>Disposable means deleted.</strong></li>
+            <li><strong>Live controls on every critical value.</strong></li>
+            <li><strong>Say what it does not reproduce.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Design engineering: the discipline, handbook</em> (chapter 3) · <a href="https://www.interfacecraft.dev/" target="_blank" rel="noopener">Josh Puckett, Interface Craft</a></footer>
+        </article>
+
+        <article class="lesson" id="ai-in-the-flow">
+          <span class="eyebrow">Practice · 04</span>
+          <h2>AI in the Flow</h2>
+          <p class="lede">The replicable part of the work got cheap: conventional layout, standard components, file-to-code conversion. That does not remove the role; it moves the value to judgment, invisible detail, robustness and system coherence, and it moves the bottleneck to review.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="gen">
+            <div class="demo-stage" data-title="Team plan" data-long="Enterprise plan with single sign-on, audit log, priority support and a dedicated success manager for regulated industries" data-cta="Choose" data-gen="generated in 0.2s" data-rev="reviewed" data-broken="broke">
+            <div class="gn-wrap"><div class="gn-bar"><button class="gn-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20L16 8M15 3l1 2 2 1-2 1-1 2-1-2-2-1 2-1zM20 10l.6 1.4L22 12l-1.4.6L20 14l-.6-1.4L18 12l1.4-.6z"/></svg>Generate 5 variations</button><span class="gn-read"></span></div><div class="gn-grid"></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Hostile content</span><input type="checkbox" name="hostile" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Constrain to system tokens</span><input type="checkbox" name="system" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Generate. Five plausible cards in a fifth of a second. Click each to review it: that part takes as long as it always did. Turn on hostile content and three of five break; constrained to system tokens, they hold.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Generation does well: initial component structure, quick variations of an idea, conversion between formats and frameworks, filling repetitive cases such as states, variants and sample data, drafts of tests and documentation, explaining unfamiliar code. It does badly exactly where the work lives. Judgment about what deserves care: generating ten variations is easy; knowing which deserves ten hours of refinement is the job. Invisible detail: the overlay that darkens with the drag, the menu origin, the text trim, interruption behavior, none of it is in the prompt because whoever wrote the prompt did not know it existed. Robustness: generated code solves the happy path; error states, hostile content, edge cases and accessibility remain deliberate work. System coherence: each generation produces a local solution, and without someone holding the line the product becomes a collection of plausible, inconsistent answers. And convergence to the mean: models produce what is common, and the common is by definition what does not differentiate.</p>
+          <p>With cheap production, the bottleneck moves to review. Generating five variations takes minutes; evaluating them with criteria takes the time it always took. The critique protocol becomes more valuable, not less, and the ability to articulate why something works becomes the team's real constraint.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Generate for breadth, decide with human criteria.</strong></li>
+            <li><strong>Every generation passes the robustness checklist.</strong> Hostile content, states, keyboard.</li>
+            <li><strong>Generate inside the system,</strong> with primitives and tokens as constraints.</li>
+            <li><strong>Treat generated code as third-party code.</strong> Read before approving.</li>
+            <li><strong>Spend your time on what only you do.</strong></li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Generation is cheap; review is the job now.</strong></li>
+            <li><strong>Invisible details are not in the prompt.</strong> Whoever wrote it did not know they existed.</li>
+            <li><strong>Robustness checklist on every output.</strong></li>
+            <li><strong>Generate inside the token system.</strong></li>
+            <li><strong>Read it like third-party code.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Design engineering: the discipline, handbook</em> (chapter 4)</footer>
+        </article>
+
+        <article class="lesson" id="the-api-is-design">
+          <span class="eyebrow">Practice · 05</span>
+          <h2>The API Is Design</h2>
+          <p class="lede">A component has two interfaces: the one users see and the one other developers use. The second is design too. If people duplicate the component instead of using it, the API is wrong, not the component.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="props">
+            <div class="demo-stage" data-props="sortable|filterable|paginated|selectable|resizable|expandable|stickyHeader|showActions|compact|striped|virtualized|editable" data-combos="possible combinations" data-valid="pieces · every arrangement is a valid state" data-pieces="Table.Root|Table.Header|Table.Row|Table.Cell|Table.Pagination">
+            <div class="pp2-wrap"><div class="pp2-code"><span class="pp2-tag">&lt;DataTable</span><span class="pp2-props"></span><span class="pp2-tag">/&gt;</span></div><div class="pp2-combos"><b class="pp2-n"></b><span class="pp2-l"></span></div><div class="pp2-grid"></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Boolean props</span><input type="range" name="bools" min="1" max="12" step="1" value="6" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Compose instead</span><input type="checkbox" name="compose" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Drag the props. Six booleans are already 64 combinations, most never tested. Twelve are 4,096. Compose instead and the number stops mattering: pieces arrange into states that are all valid.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>A bad API shows up in the product: people working around the component, creating local variations, or using it in ways that produce states nobody designed. Two properties pull against each other. Predictability: given the name you can guess the behavior, with consistent names, types and behavior across sibling components. Flexibility: unforeseen cases can be handled without changing the component. Too predictable is rigid; too flexible is unpredictable; the balance depends on how many people use it and how varied their cases are.</p>
+          <p>The diagnostic symptom is prop explosion. A component with twenty boolean props was not designed, it was accumulated. Each prop looked reasonable on its own; the set is unmanageable, because possible combinations grow exponentially, most were never tested, and several produce nonsense. The way out is composition.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Watch for duplication.</strong> It is feedback about the API.</li>
+            <li><strong>Count the props.</strong> Past eight, think composition.</li>
+            <li><strong>Consistency across siblings</strong> beats the perfect name on one.</li>
+            <li><strong>Combinations must be testable.</strong> If they cannot be enumerated, the shape is wrong.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Duplication is API feedback.</strong></li>
+            <li><strong>Predictable across siblings.</strong></li>
+            <li><strong>Flexible without modification.</strong></li>
+            <li><strong>Past eight props, compose.</strong></li>
+            <li><strong>Untestable combinations mean the shape is wrong.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Design engineering: the discipline, handbook</em> (chapter 5) · <a href="https://www.patterns.dev/" target="_blank" rel="noopener">patterns.dev</a></footer>
+        </article>
+
+        <article class="lesson" id="composition">
+          <span class="eyebrow">Practice · 06</span>
+          <h2>Composition</h2>
+          <p class="lede">Instead of one component with many props, a set of pieces that cooperate and share state internally. The API mirrors the visual structure, new cases are handled by rearranging pieces, and nothing had to become a prop.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="compose">
+            <div class="demo-stage">
+            <div class="cp-wrap"><div class="cp-preview"><span class="cp-trigger"><span class="cp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>São Paulo<span class="sp-chev">▾</span></span></div>
+              <div class="cp-code cp-code-props"><span class="k">&lt;Select</span> value="sp" placeholder="…"<span class="cp-added"> triggerIcon={&lt;Search /&gt;}</span> <span class="k">/&gt;</span><span class="cp-count">props: <b>3</b><b class="cp-alt">4</b></span></div>
+              <div class="cp-code cp-code-comp"><span class="k">&lt;Select&gt;</span>
+  <span class="k">&lt;Select.Trigger&gt;</span><span class="cp-added">&lt;Search /&gt;</span><span class="k">&lt;Select.Value /&gt;</span><span class="k">&lt;/Select.Trigger&gt;</span>
+  <span class="k">&lt;Select.Content&gt;</span>…<span class="k">&lt;/Select.Content&gt;</span>
+<span class="k">&lt;/Select&gt;</span><span class="cp-count">props: <b>0</b></span></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Compound components</span><input type="checkbox" name="compound" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Add an icon to the trigger</span><input type="checkbox" name="icon" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Add an icon. With props, it needs a new prop and the count grows; with compound components you just place it inside the trigger. The code reads like the component looks.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Compound components: a Select made of Trigger, Value, Content, Group, Label and Item. Whoever reads the code sees the component. Want an icon in the trigger? Put it there. A footer in the content? Put it there. The state stays hidden, the pieces talk internally, and extension happens without modification. The real cost is verbosity and a structure to learn; for simple components it is overkill. Slots are the lighter form: the component accepts content in named positions such as header and footer. They work when positions are fixed and content varies, and lose when pieces need the parent's state or the structure itself must vary; that is when you need compound components. The two are complementary: a mature system uses slots for simple components and composition for complex ones.</p>
+          <p>Choose by shape. No internal state and fixed structure: simple props. Fixed structure, variable content: slots. Shared state between pieces or variable structure: compound. Fewer than five props and no state: none of this, keep it simple. And add the convenience layer: for the common cases, a wrapper that composes the pieces with sensible defaults while the pieces stay exported. The simple case is short and the complex case is possible.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Compound when state is shared or structure varies.</strong></li>
+            <li><strong>Slots when positions are fixed and content varies.</strong></li>
+            <li><strong>Plain props under five, with no state.</strong></li>
+            <li><strong>Convenience wrapper on top,</strong> pieces still exported.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copy" data-copied="Copied" aria-label="Copy"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copy</span></button></div><pre><code><span class="t">&lt;Select&gt;</span>
+  <span class="t">&lt;Select.Trigger&gt;</span><span class="t">&lt;Select.Value placeholder="Choose" /&gt;</span><span class="t">&lt;/Select.Trigger&gt;</span>
+  <span class="t">&lt;Select.Content&gt;</span>
+    <span class="t">&lt;Select.Item value="sp"&gt;</span>São Paulo<span class="t">&lt;/Select.Item&gt;</span>
+  <span class="t">&lt;/Select.Content&gt;</span>
+<span class="t">&lt;/Select&gt;</span></code></pre></figure>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Compound: shared state, variable structure.</strong></li>
+            <li><strong>Slots: fixed positions, variable content.</strong></li>
+            <li><strong>Plain props: under five, stateless.</strong></li>
+            <li><strong>Convenience wrapper for the common case.</strong></li>
+            <li><strong>Pieces stay exported.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Design engineering: the discipline, handbook</em> (chapter 6) · <a href="https://www.radix-ui.com/primitives/docs/overview/introduction" target="_blank" rel="noopener">Radix Primitives</a> · <a href="https://ark-ui.com/" target="_blank" rel="noopener">Ark UI</a></footer>
+        </article>
+
+        <article class="lesson" id="properties">
+          <span class="eyebrow">Practice · 07</span>
+          <h2>Properties</h2>
+          <p class="lede">If the options are mutually exclusive, it is one value, not several booleans. Name by convention across siblings, size by the system's scale, and make the component usable with no optional prop at all.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="enum">
+            <div class="demo-stage">
+            <div class="en-wrap"><div class="en-api"><span class="en-label">API surface</span>
+              <div class="en-bools"><label><input type="checkbox" class="en-p" checked> primary</label><label><input type="checkbox" class="en-s"> secondary</label><label><input type="checkbox" class="en-d"> danger</label></div>
+              <div class="en-enum"><span>variant =</span><label><input type="radio" name="en-variant" value="primary" checked> primary</label><label><input type="radio" name="en-variant" value="secondary"> secondary</label><label><input type="radio" name="en-variant" value="danger"> danger</label></div></div>
+              <div class="en-preview"><button class="en-btn" type="button" tabindex="-1">Save changes</button><span class="en-bad">impossible state: two variants at once</span></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">variant as one value</span><input type="checkbox" name="enum" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Check two of the booleans. Nothing prevents it, and the button becomes a state nobody designed. Switch to a single variant value: the impossible state stops existing.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>The most common and most expensive mistake: primary, secondary and danger as three booleans. Nothing stops two from being true at once, and somebody will do it. A single variant value makes the impossible states cease to exist. Booleans are for things that are truly binary and independent: disabled, loading, required. Naming: booleans prefixed is, has or can; enums as nouns such as variant, size, tone, align; content as label, description, placeholder, never a generic data; events as onSomething; external state as value plus onValueChange. Consistency across components matters more than any specific choice: if one uses isDisabled and another uses disabled, people have to remember two conventions and will get one wrong.</p>
+          <p>Sizes use the system's scale names, sm not 14, so the scale can evolve without touching every use, and there are three to five of them, because each size is a whole combination of spacing, type, height and radius that must be designed and tested. Every optional prop needs a default that serves the common case; the test is whether the component with no optional props produces something usable. Props that should not exist: ones for a single consumer, ones that pass arbitrary styles inside, ones that switch parts that should be composition, ones that replicate what CSS already does, and booleans that are really three states.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Enum for exclusive options,</strong> boolean only for independent binaries.</li>
+            <li><strong>is, has, can · nouns · onX · value + onValueChange.</strong></li>
+            <li><strong>Scale names, three to five sizes.</strong></li>
+            <li><strong>Zero-prop render must be usable.</strong></li>
+            <li><strong>Delete the props that should not exist.</strong></li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Exclusive options are one enum.</strong></li>
+            <li><strong>is, has, can for booleans.</strong></li>
+            <li><strong>sm, md, lg. Never 14.</strong></li>
+            <li><strong>No optional props must still render something usable.</strong></li>
+            <li><strong>Delete single-consumer props.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Design engineering: the discipline, handbook</em> (chapter 7) · <a href="https://polaris.shopify.com/" target="_blank" rel="noopener">Shopify Polaris</a> · <a href="https://spectrum.adobe.com/" target="_blank" rel="noopener">Adobe Spectrum</a></footer>
+        </article>
+
+        <article class="lesson" id="state-and-control">
+          <span class="eyebrow">Practice · 08</span>
+          <h2>State and Control</h2>
+          <p class="lede">Every stateful component works two ways: managing its own state, and accepting it from outside. The change callback fires in both modes. Derived state is not state. And the best API makes the impossible unrepresentable.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="ctrl">
+            <div class="demo-stage" data-ignored="ignored: the component owns its state">
+            <div class="ct-wrap"><div class="ct-row"><div class="ct-comp"><button class="ct-head" type="button" aria-expanded="false">Advanced options<span class="sp-chev">▾</span></button><div class="ct-panel">Region, retries and timeout.</div></div><button class="ct-ext" type="button">Toggle from outside<kbd>⌘.</kbd></button></div><div class="ct-log"></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Supports controlled mode</span><input type="checkbox" name="controlled" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">onOpenChange fires in both modes</span><input type="checkbox" name="notify" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Click the header, then the outside button that stands for a global shortcut. Without controlled mode, the outside cannot touch the state. Turn off the callback and the log goes silent for internal changes.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Uncontrolled is simple use with no ceremony. Controlled is necessary when something else must influence the component: a global shortcut, URL sync, form validation. Offering only one is a serious limitation; only uncontrolled blocks integration, only controlled forces every consumer to write the same logic. The pattern that serves both: an optional value for controlled mode, an optional default value for uncontrolled, and a change callback that fires either way, so you can react to a change without taking control of it, for analytics, closing something else, saving a draft.</p>
+          <p>Storing something that can be computed creates two sources of truth that diverge; derive it. And model exclusive states as one value: instead of independent isLoading, data and error, one status that is loading, or success with data, or error with a message. In the first form "loading with error and data" is representable and somebody will produce it; in the second it does not exist. Finally, expose the underlying element. Components need to allow access for focus, measurement, positioning libraries and scroll; encapsulating without access forces bad solutions from the outside.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>value, defaultValue, onValueChange.</strong> All three.</li>
+            <li><strong>Callback fires in both modes.</strong></li>
+            <li><strong>Derive, do not store.</strong></li>
+            <li><strong>One status instead of three flags.</strong></li>
+            <li><strong>Forward the ref.</strong></li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>value + defaultValue + onValueChange.</strong></li>
+            <li><strong>Callback in both modes.</strong></li>
+            <li><strong>Derived values are computed, not stored.</strong></li>
+            <li><strong>status: loading | success | error.</strong> Not three flags.</li>
+            <li><strong>Expose the element.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Design engineering: the discipline, handbook</em> (chapter 8) · <a href="https://react-spectrum.adobe.com/react-aria/" target="_blank" rel="noopener">React Aria</a></footer>
+        </article>
+
+        <article class="lesson" id="style-and-extension">
+          <span class="eyebrow">Practice · 09</span>
+          <h2>Style and Extension</h2>
+          <p class="lede">A system component must be consistent and must allow deviation. Open by props for what the system decided; a declared, observable escape hatch for the rest. The escape nobody can measure is what makes systems rot unnoticed.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="escape">
+            <div class="demo-stage" data-usage="escape hatch in use" data-promote="a pattern is emerging: promote a variant" data-work="workarounds you cannot see">
+            <div class="es-wrapper"><div class="es-grid"><div class="es-card"><b>Card 1</b><span class="es-hack">className</span><span class="es-wrap">wrapper hack</span></div><div class="es-card"><b>Card 2</b><span class="es-hack">className</span><span class="es-wrap">wrapper hack</span></div><div class="es-card"><b>Card 3</b><span class="es-hack">className</span><span class="es-wrap">wrapper hack</span></div><div class="es-card"><b>Card 4</b><span class="es-hack">className</span><span class="es-wrap">wrapper hack</span></div><div class="es-card"><b>Card 5</b><span class="es-hack">className</span><span class="es-wrap">wrapper hack</span></div><div class="es-card"><b>Card 6</b><span class="es-hack">className</span><span class="es-wrap">wrapper hack</span></div></div><span class="es-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Teams using the escape hatch</span><input type="range" name="rogue" min="0" max="6" step="1" value="3" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Closed component</span><input type="checkbox" name="closed" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Drag the teams. With a declared escape hatch you can count the deviations and see when three become a pattern worth a variant. Close the component and the deviations still happen, as wrappers nobody can measure.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Three approaches. Closed: no customization, total consistency, and people work around it when they need something different. Open by props: a declared set of variations, the most common balance. Open by style: arbitrary classes or styles, maximum flexibility, consistency dependent on discipline. The recommendation combines the first two with a visible door: variants and sizes are props; if someone needs something outside them there is an explicit path that accepts style, and that path is observable so the team knows when a new pattern is emerging.</p>
+          <p>The consolidated trend separates behavior from appearance: one layer solves accessibility, keyboard, focus and state; another solves the visual. The gain is concrete, because the correct behavior of a combobox, a menu or a dialog is much harder than it looks and should not be rewritten by each team; the system owns only the appearance, where identity actually lives. Polymorphism, rendering the component as another element, a button that is really a link, a card that is an article, is useful and costly: it complicates types and allows invalid combinations. Restrict it to what makes semantic sense and never let the swap break behavior; a button rendered as a link must keep working as a link, including opening in a new tab.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Props for decided variation, one declared escape for the rest.</strong></li>
+            <li><strong>Count escape usage.</strong> Three of the same means a missing variant.</li>
+            <li><strong>Behavior layer from a tested library, appearance from the system.</strong></li>
+            <li><strong>Polymorphism only where semantics allow.</strong></li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Variants as props, one escape hatch.</strong></li>
+            <li><strong>Make the escape observable.</strong> Grep it, count it.</li>
+            <li><strong>Behavior from a headless layer, looks from the system.</strong></li>
+            <li><strong>Polymorphism only where semantics hold.</strong></li>
+            <li><strong>Three identical escapes equal a missing variant.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Design engineering: the discipline, handbook</em> (chapter 9) · <a href="https://base-ui.com/" target="_blank" rel="noopener">Base UI</a></footer>
+        </article>
+
+        <article class="lesson" id="api-evolution">
+          <span class="eyebrow">Practice · 10</span>
+          <h2>API Evolution</h2>
+          <p class="lede">Every API will change. Add first, deprecate with a path second, break last. A bad API with a hundred usages should often be kept and complemented, not fixed.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="deprec">
+            <div class="demo-stage">
+            <div class="dp-wrap"><div class="dp-code"><span class="k">&lt;Button</span> <span class="dp-old">color="primary"</span> <span class="k">/&gt;</span></div>
+              <div class="dp-notice"><b>⚠ Deprecation</b><span><em>What:</em> color</span><span><em>Why:</em> booleans and color overlapped; variant replaces both</span><span><em>Instead:</em> <code>variant="primary"</code></span><span><em>Until:</em> v4.0, 2026-12</span></div>
+              <div class="dp-error"><b>✕ TypeError</b><span>unknown prop "color"</span><span class="dp-count">100 usages to fix · no migration guide</span></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Deprecation notice</span><input type="checkbox" name="notice" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Ship as a breaking change</span><input type="checkbox" name="breaking" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">A notice with four parts keeps the old prop working and tells you what, why, what instead and until when. Ship it as a break and a hundred usages fail at once, each one somebody else's afternoon.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Changes that break consumers are expensive; changes that only add are cheap. Order of preference: add a prop or piece with a default that preserves the previous behavior; deprecate with a warning and a migration path, keeping the old working; break, with a major version, a migration guide and ideally an automatic conversion tool. A useful deprecation has four parts: what is being removed, why, what to use instead with an example, and until when the old keeps working. Without the last, nobody migrates; without the third, migration becomes research. The warning appears where the person is, in the dev console, in the editor, in the docs, not only in release notes nobody reads.</p>
+          <p>Breaking does not cost the time to change the component. It costs every consumer's time multiplied by the number of usages, plus the regression risk in each. That changes the calculation. Version semantically and take it seriously: breaking bumps the major, additions the minor, fixes the patch. And the discipline that sustains it: what is public is contract. Anything that should not be contract must be explicitly internal, or somebody will depend on it and you broke them without knowing.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Add, deprecate, break.</strong> In that order.</li>
+            <li><strong>Four-part deprecation:</strong> what, why, instead, until.</li>
+            <li><strong>Warn where people are.</strong> Console, editor, docs.</li>
+            <li><strong>Multiply by usages before breaking.</strong></li>
+            <li><strong>Mark internals internal.</strong></li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Add, deprecate, break.</strong></li>
+            <li><strong>What, why, instead, until.</strong></li>
+            <li><strong>Warn in the console and the editor.</strong></li>
+            <li><strong>Cost = consumers × usages.</strong></li>
+            <li><strong>Public is contract; mark internals.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Design engineering: the discipline, handbook</em> (chapter 10) · <a href="https://semver.org/" target="_blank" rel="noopener">Semantic Versioning</a></footer>
+        </article>
+
+        <article class="lesson" id="team-models">
+          <span class="eyebrow">Practice · 11</span>
+          <h2>Team Models</h2>
+          <p class="lede">Solitary, centralized, federated, hybrid. Choosing the model is the easy part. What determines whether it works are the rituals: who triages, how often, who decides what enters, how contributions are reviewed, when releases happen.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="teams">
+            <div class="demo-stage" data-names="Solitary|Centralized|Federated|Hybrid" data-risks="Every team its own system: fast locally, inconsistent by design.|One team builds for all: consistent, and drifting from real needs.|Everyone part-time: anchored in need, nobody owns coherence.|Small core, embedded contributors: works, if governance is explicit." data-ok="Triage weekly, owners named, releases on a rhythm: healthy." data-bad="No triage, no owners, no cadence: the model does not matter.">
+            <div class="tm-wrap"><div class="tm-diagram"><span class="tm-team" style="--i:0">Payments</span><span class="tm-team" style="--i:1">Growth</span><span class="tm-team" style="--i:2">Platform</span><span class="tm-team" style="--i:3">Mobile</span><span class="tm-sys">System</span><span class="tm-core">core</span></div><div class="tm-read"><b class="tm-name"></b><span class="tm-risk"></span><span class="tm-health"></span></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Model</span><input type="range" name="model" min="0" max="3" step="1" value="3" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Rituals in place</span><input type="checkbox" name="rituals" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Drag through the four models and watch the lines. Then turn rituals off: even the best-drawn model stalls without triage, owners and cadence.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>The taxonomy comes from Nathan Curtis. Solitary: each team keeps its own system, maximum autonomy, guaranteed inconsistency, sensible only for small organizations or genuinely independent products. Centralized: a dedicated team builds and distributes, high consistency, and a specific risk: the central team drifts from the real product and solves problems nobody has while real problems queue. Federated: people from several product teams build the system part-time, anchored in real need, with the symmetric risk: without someone responsible for coherence it becomes a patchwork, and system work always loses to product work in prioritization. Hybrid: a small core with embedded contributors, what works most often in medium and large organizations, and what most demands explicit governance.</p>
+          <p>A centralized model with clear rituals beats a federated one without them. And the root of most failures: treating the design system as a project with an end date. Products without operation stagnate; components age, the gap between system and production grows, and eventually the system is a reference nobody references. It needs an owner, a roadmap, a release cycle, a support channel and metrics. If none of that exists, it is not a product; it is a file.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Pick hybrid by default</strong> beyond a few teams.</li>
+            <li><strong>Write the rituals down:</strong> triage cadence, decision owners, review flow, release rhythm.</li>
+            <li><strong>Owner, roadmap, releases, support, metrics.</strong> Or it is a file.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Hybrid by default past a few teams.</strong></li>
+            <li><strong>Rituals beat models.</strong></li>
+            <li><strong>Owner, roadmap, releases, support, metrics.</strong></li>
+            <li><strong>A project with an end date becomes a file.</strong></li>
+            <li><strong>Rotate core people through product.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Design engineering: the discipline, handbook</em> (chapter 11) · <a href="https://medium.com/eightshapes-llc/team-models-for-scaling-a-design-system-2cf9d03be6a0" target="_blank" rel="noopener">Nathan Curtis, Team Models for Scaling a Design System</a></footer>
+        </article>
+
+        <article class="lesson" id="layered-governance">
+          <span class="eyebrow">Practice · 12</span>
+          <h2>Layered Governance</h2>
+          <p class="lede">Requiring core review for every change is a bottleneck disguised as quality. Requiring nothing produces chaos. Grade by layer: the deeper in the stack, the stricter; the closer to the product, the freer.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="gov">
+            <div class="demo-stage" data-local="One case: solve locally, mark for observation." data-pattern="One team: document a pattern, no component." data-component="Two or more teams: candidate component, definition of done applies.">
+            <div class="gv-wrap"><div class="gv-stack"><div class="gv-layer" data-l="0"><b>Foundation</b><span>tokens, primitives, accessibility · core approval</span></div><div class="gv-layer" data-l="1"><b>Components</b><span>shared blocks · core review, open contribution</span></div><div class="gv-layer" data-l="2"><b>Patterns</b><span>recommended compositions · documented, not imposed</span></div><div class="gv-layer" data-l="3"><b>Page</b><span>product layout · no governance</span></div></div><div class="gv-verdict"></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Teams needing it</span><input type="range" name="teams" min="1" max="4" step="1" value="1" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Third occurrence</span><input type="checkbox" name="third" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Drag the number of teams and toggle the third occurrence. The request routes to a layer, and the layer sets the rigor: nothing at the page, full process at the foundation.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Foundation, tokens, primitives and accessibility, requires core approval and changes rarely, with process. Components, the shared blocks, get core review with open contribution and a mandatory definition of done. Patterns, recommended compositions, are documented, not imposed; teams extend within guidelines. Page, product-specific layout and composition, has no governance. Not every request becomes a component. Two or more teams need it: candidate component. One team needs it: documented pattern, no component. One specific case: solve locally and mark for observation. The third occurrence of the same local request is the trigger to promote.</p>
+          <p>Document explicitly who decides whether a new component enters, who reviews contributions, who can approve an exception, who decides to deprecate, and how often that happens. Ambiguity here is what makes requests die in queues and contributors give up.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Four layers, four levels of rigor.</strong></li>
+            <li><strong>Two teams make a component; one makes a pattern.</strong></li>
+            <li><strong>Third local occurrence promotes.</strong></li>
+            <li><strong>Name the deciders and the cadence.</strong></li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Foundation strict, page free.</strong></li>
+            <li><strong>Two teams: component. One team: pattern.</strong></li>
+            <li><strong>Third local occurrence promotes.</strong></li>
+            <li><strong>Name who decides, reviews, excepts, deprecates.</strong></li>
+            <li><strong>Cadence written down.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Design engineering: the discipline, handbook</em> (chapter 12) · <a href="https://bradfrost.com/blog/post/atomic-web-design/" target="_blank" rel="noopener">Brad Frost, Atomic Design</a></footer>
+        </article>
+
+        <article class="lesson" id="contribution">
+          <span class="eyebrow">Practice · 13</span>
+          <h2>Contribution</h2>
+          <p class="lede">A contribution is work by someone outside the core, published through the system for others to reuse. Unpublished work is local work. Size the process to the contribution, answer every request, and make it count in people's evaluations.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="queue">
+            <div class="demo-stage" data-tiers="fix|improvement|new" data-reqs="Token tweak for focus ring|Toast needs a loading state|Date range picker|Docs typo in Button|Menu needs a checkbox item|Kanban board component" data-waiting="waiting…" data-accepted="accepted" data-declined="declined, with reason" data-unanswered="unanswered">
+            <div class="qu-wrap"><div class="qu-bar"><button class="qu-btn" type="button">Submit request</button><span class="qu-read"></span></div><div class="qu-list"></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Weekly triage</span><input type="checkbox" name="triage" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Size tiers</span><input type="checkbox" name="tiers" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Submit a few requests. With triage they get an answer, even a no. Without it they pile up waiting, and waiting is what kills contribution. Tiers route a typo fix and a new component through different paths.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Contributions are not one category. Treating them as one makes the process too heavy for the small and too light for the large. Fixes, a visual bug, a token tweak, a docs correction, get light review and enter fast. Improvements, a new variant, prop or missing state, get API review and a partial definition of done. New components or patterns get a proposal, alignment and the full definition of done. The intake process must be light enough to use: a request channel with a short form, triage on a fixed cadence, weekly is usually enough, an answer always, even a no, and a public entry criterion. What kills contribution: unanswered requests, invisible criteria, and review that takes longer than doing it locally.</p>
+          <p>Before blaming culture, diagnose honestly why people do not contribute: they do not know they can, they do not know how, the process costs more than working around, the work does not count in their evaluation, review is hostile, there is no time allocated. The first three are process design problems. The fourth is organizational and the most decisive: if contributing counts for nothing, nobody contributes, whatever the process.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Three tiers: fix, improvement, new.</strong> Three processes.</li>
+            <li><strong>Weekly triage, always an answer.</strong></li>
+            <li><strong>Public criteria.</strong></li>
+            <li><strong>Make it count</strong> in performance reviews, or nothing else matters.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Published through the system, or it is local work.</strong></li>
+            <li><strong>Fix, improvement, new: three processes.</strong></li>
+            <li><strong>Answer every request.</strong></li>
+            <li><strong>Public entry criteria.</strong></li>
+            <li><strong>Count it in evaluations.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Design engineering: the discipline, handbook</em> (chapter 13) · <a href="https://medium.com/eightshapes-llc/contributions-to-design-systems-5d5a4e8b7b5f" target="_blank" rel="noopener">Nathan Curtis, Contributions to Design Systems</a></footer>
+        </article>
+
+        <article class="lesson" id="definition-of-done">
+          <span class="eyebrow">Practice · 14</span>
+          <h2>Definition of Done</h2>
+          <p class="lede">"Done" means different things to different people. A matrix makes it explicit: six dimensions, each not started, in progress, done or not applicable. It does not demand everything be finished to publish; it demands the state be visible.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="matrix">
+            <div class="demo-stage" data-ready="ready" data-empty="not started" data-published="Published" data-partial="Partial" data-states="not started|in progress|done|n/a">
+            <div class="mx-wrap"><div class="mx-grid"><div class="mx-row"><span class="mx-dim">Design</span><button class="mx-cell" type="button" data-s="2" aria-label="Design"></button><button class="mx-cell" type="button" data-s="2" aria-label="Design"></button><button class="mx-cell" type="button" data-s="1" aria-label="Design"></button><button class="mx-cell" type="button" data-s="0" aria-label="Design"></button></div><div class="mx-row"><span class="mx-dim">Code</span><button class="mx-cell" type="button" data-s="2" aria-label="Code"></button><button class="mx-cell" type="button" data-s="2" aria-label="Code"></button><button class="mx-cell" type="button" data-s="2" aria-label="Code"></button><button class="mx-cell" type="button" data-s="1" aria-label="Code"></button></div><div class="mx-row"><span class="mx-dim">Behavior</span><button class="mx-cell" type="button" data-s="2" aria-label="Behavior"></button><button class="mx-cell" type="button" data-s="1" aria-label="Behavior"></button><button class="mx-cell" type="button" data-s="0" aria-label="Behavior"></button><button class="mx-cell" type="button" data-s="0" aria-label="Behavior"></button></div><div class="mx-row"><span class="mx-dim">Robustness</span><button class="mx-cell" type="button" data-s="1" aria-label="Robustness"></button><button class="mx-cell" type="button" data-s="0" aria-label="Robustness"></button><button class="mx-cell" type="button" data-s="0" aria-label="Robustness"></button><button class="mx-cell" type="button" data-s="0" aria-label="Robustness"></button></div><div class="mx-row"><span class="mx-dim">Verification</span><button class="mx-cell" type="button" data-s="0" aria-label="Verification"></button><button class="mx-cell" type="button" data-s="0" aria-label="Verification"></button><button class="mx-cell" type="button" data-s="0" aria-label="Verification"></button><button class="mx-cell" type="button" data-s="3" aria-label="Verification"></button></div><div class="mx-row"><span class="mx-dim">Documentation</span><button class="mx-cell" type="button" data-s="2" aria-label="Documentation"></button><button class="mx-cell" type="button" data-s="0" aria-label="Documentation"></button><button class="mx-cell" type="button" data-s="0" aria-label="Documentation"></button><button class="mx-cell" type="button" data-s="0" aria-label="Documentation"></button></div></div><div class="mx-foot"><span class="mx-read"></span><span class="mx-badge"></span></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Publish with visible status</span><input type="checkbox" name="label" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Click cells to cycle their state. The component can ship before every cell is done; what it cannot do is hide the state. Turn the label off and it is simply "Published", and somebody finds the gap the hard way.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Design: all states drawn, variants and sizes defined, responsive behavior defined, tokens applied with no loose values. Code: implemented with a reviewed API, controlled and uncontrolled, ref exposed, complete types. Behavior: full keyboard, correct focus including restoration, declared semantics, reduced motion respected. Robustness: long, short and empty content; zero, one, many; error and loading states; tested in another language. Verification: interaction tests, visual snapshots, automated accessibility checks. Documentation: when to use and when not, examples of the common cases, documented props, content guidelines.</p>
+          <p>Publishing a component with partial documentation and marking it as such is honest and useful. Publishing without saying it is incomplete is what breeds distrust when somebody discovers the gap the hard way. Teams that adopt the matrix report an effect that is not about quality: it unblocks progress. When done is vague, the work never ends and morale drops. When it is a list, every checked cell is visible progress.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Six dimensions, four states, per component.</strong></li>
+            <li><strong>Publish partial, label partial.</strong></li>
+            <li><strong>Review the matrix in triage.</strong></li>
+            <li><strong>Count empty cells</strong> as the roadmap.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Six dimensions, four states.</strong></li>
+            <li><strong>Visible state beats finished state.</strong></li>
+            <li><strong>Label partial as partial.</strong></li>
+            <li><strong>Checked cells are morale.</strong></li>
+            <li><strong>Empty cells are the roadmap.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Design engineering: the discipline, handbook</em> (chapter 14 and appendix B) · <a href="https://medium.com/eightshapes-llc/component-completeness-in-design-systems-eb3d1ac8ea8e" target="_blank" rel="noopener">Nathan Curtis, Component Completeness</a></footer>
+        </article>
+
+        <article class="lesson" id="adoption-and-metrics">
+          <span class="eyebrow">Practice · 15</span>
+          <h2>Adoption and Metrics</h2>
+          <p class="lede">The gap between the impact a system should have and how much it is used is the universal complaint. Measure coverage, segment by team, count contributions and detachments. An aggregate number hides exactly the team that is not adopting.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="coverage">
+            <div class="demo-stage">
+            <div class="cv-wrap"><div class="cv-agg"><div class="cv-row"><span>All teams</span><div class="cv-track"><span class="cv-fill" style="--v:68"></span></div><b>68%</b><i class="cv-det">9 detached variants</i></div></div><div class="cv-teams"><div class="cv-row"><span>Payments</span><div class="cv-track"><span class="cv-fill" style="--v:92"></span></div><b>92%</b><i class="cv-det">1 detached variants</i></div><div class="cv-row"><span>Growth</span><div class="cv-track"><span class="cv-fill" style="--v:85"></span></div><b>85%</b><i class="cv-det">2 detached variants</i></div><div class="cv-row"><span>Platform</span><div class="cv-track"><span class="cv-fill" style="--v:80"></span></div><b>80%</b><i class="cv-det">1 detached variants</i></div><div class="cv-row"><span>Mobile</span><div class="cv-track"><span class="cv-fill" style="--v:15"></span></div><b>15%</b><i class="cv-det">5 detached variants</i></div></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Segment by team</span><input type="checkbox" name="segment" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Show detached variants</span><input type="checkbox" name="detach" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">68% coverage looks healthy. Segment it and one team sits at 15% with five local copies of things the system already offers. The aggregate hid exactly the team that needs attention.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Component coverage is the main metric: what percentage of the interface in production uses system components versus local code. A healthy system usually passes 60 to 70% in the first year and climbs. Adoption by team: low adoption in one team is always a signal, of a governance failure or a quality gap, and the aggregate hides it, which is why segmenting matters more than the total. Contribution rate: how many components or patterns came from outside the core last quarter; zero is a diagnosis. Time to first working screen translates the system into business value. Detachment: how many local variations exist of things the system already offers; each is an unmet request or an insufficient API.</p>
+          <p>Metrics that mislead: number of components published measures output, not value; package downloads measure installation, not use; survey satisfaction without usage data beside it; coverage without segmentation. Stages: something exists, maintained informally; a documented library with uneven adoption, where you formalize an owner, define contribution and start measuring; adopted by most teams with versioning and deprecation, where you leave reactive maintenance and build a roadmap with consumer input; a strategic asset with measurable impact, where governance can be light because the value is evident. Most organizations are at stage two trying to reach three, and the problem at stage two is never the library. It is adoption, contribution and the absence of governance.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Coverage, segmented by team.</strong></li>
+            <li><strong>Contribution rate and detachment count.</strong></li>
+            <li><strong>Time to first working screen.</strong></li>
+            <li><strong>Ignore component count and downloads.</strong></li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Coverage first, segmented always.</strong></li>
+            <li><strong>Contribution rate: zero is a diagnosis.</strong></li>
+            <li><strong>Detached variants are unmet requests.</strong></li>
+            <li><strong>Component count and downloads mislead.</strong></li>
+            <li><strong>Stage two problems are governance, not library.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Design engineering: the discipline, handbook</em> (chapter 15) · <a href="https://www.designsystems.com/" target="_blank" rel="noopener">designsystems.com</a></footer>
+        </article>
+
+        <article class="lesson" id="generations-and-deprecation">
+          <span class="eyebrow">Practice · 16</span>
+          <h2>Generations and Deprecation</h2>
+          <p class="lede">At some point incremental change stops being enough and the foundation, architecture and visual language change together. That is a new generation, and the classic error is a forced migration with a deadline, no tooling, competing with every team's priorities at once.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="migrate">
+            <div class="demo-stage" data-migrated="migrated" data-blocked="forced deadline: every team blocked at once" data-auto="codemod migrated the mechanical five">
+            <div class="mg-wrap"><div class="mg-grid"><button class="mg-chip mg-mech" type="button">Button</button><button class="mg-chip mg-mech" type="button">Badge</button><button class="mg-chip mg-mech" type="button">Input</button><button class="mg-chip mg-mech" type="button">Checkbox</button><button class="mg-chip mg-mech" type="button">Divider</button><button class="mg-chip" type="button">Table</button><button class="mg-chip" type="button">Combobox</button><button class="mg-chip" type="button">Date picker</button></div><span class="mg-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Forced deadline</span><input type="checkbox" name="forced" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Codemod for mechanical ones</span><input type="checkbox" name="codemod" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Click components to migrate them when their team is ready. Turn on the codemod and the five mechanical ones move by themselves, leaving people the three that need judgment. Force a deadline and everyone is blocked at once.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>A generation is not a visual refresh; it rethinks structure, scale, documentation and governance at the same time. Doing it without stopping the product: define success in metrics before starting, run the new foundation in parallel in a small real pilot, keep backward compatibility during the transition, adopt in phases with teams choosing when, and provide an automatic migration tool for what is mechanical. Systems grow by addition and rarely by subtraction, and become obese. A regular deprecation practice keeps them usable. Signs something should go: used by fewer than two teams, replaced by something better for more than two cycles, kept by habit without an owner, duplicating something else.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Metrics for success before the generation starts.</strong></li>
+            <li><strong>Pilot in parallel, compatibility during transition.</strong></li>
+            <li><strong>Phased adoption, codemods for the mechanical.</strong></li>
+            <li><strong>Deprecate every cycle:</strong> under two teams, superseded, ownerless, duplicate.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Define success in metrics first.</strong></li>
+            <li><strong>Pilot in parallel, keep compatibility.</strong></li>
+            <li><strong>Teams pick their moment.</strong></li>
+            <li><strong>Codemods for the mechanical.</strong></li>
+            <li><strong>Deprecate: under two teams, superseded, ownerless, duplicate.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Design engineering: the discipline, handbook</em> (chapter 16) · <a href="https://medium.com/eightshapes-llc/design-system-generations-8e6fac26a8e9" target="_blank" rel="noopener">Nathan Curtis, Design System Generations</a></footer>
+        </article>
+
+        <article class="lesson" id="documentation">
+          <span class="eyebrow">Practice · 17</span>
+          <h2>Documentation</h2>
+          <p class="lede">The most used documentation is not the prop list. It answers the questions people actually have: when to use this, when not to and what to use instead, three copyable examples, do and don't with images, content guidelines, what accessibility is already solved.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="docs">
+            <div class="demo-stage">
+            <div class="dc-wrap"><div class="dc-nav"><span class="is-on">Overview</span><span class="dc-notuse">When not to use</span><span>Examples</span><span>Props</span><span>Content</span></div>
+              <div class="dc-body"><b>Toast</b><p class="dc-notuse">Do not use for errors that require action; they disappear. Use an inline alert instead.</p><div class="dc-example"><div class="dc-live"><button class="dc-demo-btn" type="button">Save</button><span class="dc-toast">Saved</span></div><div class="dc-static"><span class="dc-shot">screenshot.png</span><i>out of date since v3</i></div></div></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Include “when not to use”</span><input type="checkbox" name="notuse" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Live example</span><input type="checkbox" name="live" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">The section that prevents the most misuse is the one most docs skip. Click Save in the live example; it breaks when the component breaks. The screenshot would keep smiling for years.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>The prop reference matters and should be generated from the types, not written by hand; hand-written documentation diverges from the code in weeks. The most forgotten section is "when not to use". It prevents more misuse than any prop description: an alert that says "for messages that require action, use X instead of this" avoids a whole class of problems. Examples run for real, not screenshots. Screenshots age silently; runnable examples break when the component breaks, which is exactly what you want.</p>
+          <p>Three audiences with different needs. Designers need when to use, how it behaves and what exists. Implementers need the API, the examples and the edge cases. Content writers need the text guidelines. Documentation that serves only the second audience is the default, and it is why designers do not use system documentation.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>When to use, when not, what instead.</strong> First.</li>
+            <li><strong>Three live examples</strong> of the common cases.</li>
+            <li><strong>Props generated from types.</strong></li>
+            <li><strong>Content and accessibility guidelines</strong> per component.</li>
+            <li><strong>Write for designers and writers too.</strong></li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>When not to use, first.</strong></li>
+            <li><strong>Live examples, not screenshots.</strong></li>
+            <li><strong>Props from types.</strong></li>
+            <li><strong>Content guidelines per component.</strong></li>
+            <li><strong>Three audiences, not one.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Design engineering: the discipline, handbook</em> (chapter 17) · <a href="https://storybook.js.org/docs/writing-docs" target="_blank" rel="noopener">Storybook, Writing docs</a></footer>
+        </article>
+
+        <article class="lesson" id="the-interface-testing-pyramid">
+          <span class="eyebrow">Practice · 18</span>
+          <h2>The Interface Testing Pyramid</h2>
+          <p class="lede">Without automated verification, every bit of care in the earlier sections degrades silently. Many unit and component tests, a moderate set of visual snapshots, few end-to-end flows. And query by accessible role, not by class.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="pyramid">
+            <div class="demo-stage" data-min="suite" data-flaky="flaky" data-pass="passes after the refactor" data-fail="fails: the class is gone, the button is not">
+            <div class="py-wrap"><div class="py-bars"><div class="py-bar py-unit"><span>unit</span></div><div class="py-bar py-comp"><span>component</span></div><div class="py-bar py-vis"><span>visual</span></div><div class="py-bar py-e2e"><span>end-to-end</span></div></div><span class="py-read"></span>
+              <div class="py-test"><code class="py-q py-q-class">querySelector('.btn-3')</code><code class="py-q py-q-role">getByRole('button', { name: 'Save' })</code><button class="py-refactor" type="button">Refactor: rename the class</button><span class="py-result"></span></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">End-to-end share</span><input type="range" name="e2e" min="0" max="80" step="5" value="10" data-unit="%"><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Query by role</span><input type="checkbox" name="role" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Push end-to-end share up and the suite gets slow and flaky. Then click Refactor: the class-based query breaks although nothing changed for users; the role-based one still finds the Save button.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Someone adjusts a token, three components change, and nobody knows until a user complains. Tests protect exactly what this material builds: states nobody breaks unnoticed, keyboard behavior that keeps working, visuals that do not change by accident. Layers: unit for pure logic, fast and many; component for one isolated component in a real browser, with interactions, states and accessibility; visual snapshots compared across versions, catching what assertions cannot; flows for critical end-to-end paths, expensive, slow and few. Two symmetric errors: too many end-to-end tests are slow, flaky and uninformative when they fail, and teams that rely only on them end up ignoring failures, which is worse than not testing; only unit tests catch nothing that matters in an interface, not broken layout, lost focus, low contrast or wrong visual state.</p>
+          <p>Test as the user uses. Query elements by accessible role and visible text, not by class or internal structure. The fragile test looks for a class name or an element index; the robust one looks for the button named Save. The side effect is excellent: if you cannot find the element by role and name, the semantics are probably wrong, and the test just found an accessibility problem.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Many unit and component tests, few flows.</strong></li>
+            <li><strong>getByRole with a name,</strong> never by class.</li>
+            <li><strong>Component tests in a real browser.</strong></li>
+            <li><strong>A failing test that nobody reads is worse than none.</strong></li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Many unit and component, some visual, few flows.</strong></li>
+            <li><strong>getByRole with a name.</strong></li>
+            <li><strong>Real browser for component tests.</strong></li>
+            <li><strong>Unfindable by role means broken semantics.</strong></li>
+            <li><strong>Ignored failures are worse than no tests.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Design engineering: the discipline, handbook</em> (chapter 18) · <a href="https://testing-library.com/docs/queries/about/#priority" target="_blank" rel="noopener">Testing Library, Query priority</a> · <a href="https://playwright.dev/docs/test-components" target="_blank" rel="noopener">Playwright, Component tests</a></footer>
+        </article>
+
+        <article class="lesson" id="visual-testing">
+          <span class="eyebrow">Practice · 19</span>
+          <h2>Visual Testing</h2>
+          <p class="lede">Snapshots reveal what no assertion catches: shifted spacing, changed color, different wrapping, overlapping elements, a vanished shadow. They also fail for reasons that are not regressions, and every false positive costs trust until the review becomes theater.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="snap">
+            <div class="demo-stage" data-base="baseline" data-cur="current" data-diff="diff regions · false positives" data-clean="no diff" data-time2="4 min ago">
+            <div class="sn-wrap"><div class="sn-frames"><div class="sn-frame sn-base"><span class="sn-lbl"></span><div class="sn-card"><b>Payment received</b><span class="sn-time">3 min ago</span><span class="sn-dot"></span></div></div><div class="sn-frame sn-cur"><span class="sn-lbl"></span><div class="sn-card"><b>Payment received</b><span class="sn-time">3 min ago</span><span class="sn-dot"></span></div></div></div><div class="sn-bar"><button class="sn-run" type="button">Run snapshot</button><span class="sn-read"></span></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Animations off</span><input type="checkbox" name="noanim" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Freeze time</span><input type="checkbox" name="freeze" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Run the snapshot. The badge is caught mid-animation and the timestamp moved: two diffs, zero regressions. Turn animations off and freeze time, run again, and the snapshot only fails when something real changes.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Flakiness comes from animation caught mid-frame, fonts not yet loaded, dynamic content such as dates and random data, images still loading, a blinking cursor, and rendering differences between operating systems. Stabilize: disable animations and transitions in the test environment, the number one cause; freeze time and use deterministic data; wait for fonts before capturing; run in a consistent environment, a container or a service, never each person's machine; wait for network and image stability; hide genuinely variable elements instead of tolerating difference.</p>
+          <p>Capture components, not pages: each component in each relevant variant and state, common compositions, the hostile content cases, both themes, at least two widths. Whole product pages change for too many reasons and produce huge reviews nobody reads attentively. The snapshot detects change, not error; a person decides whether the change was intended. That is an opportunity: visual review is where designers enter the code flow naturally, approving or rejecting what changed. Teams that treat it as a shared ritual gain much more than regression detection.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Animations off, time frozen, fonts awaited.</strong></li>
+            <li><strong>Consistent environment,</strong> never local machines.</li>
+            <li><strong>Components and compositions, both themes, two widths.</strong></li>
+            <li><strong>Designers approve the diffs.</strong></li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Animations off in the test environment.</strong></li>
+            <li><strong>Freeze time, deterministic data.</strong></li>
+            <li><strong>Wait for fonts and images.</strong></li>
+            <li><strong>Components, both themes, two widths.</strong></li>
+            <li><strong>Designers approve diffs.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Design engineering: the discipline, handbook</em> (chapter 19) · <a href="https://playwright.dev/docs/test-snapshots" target="_blank" rel="noopener">Playwright, Visual comparisons</a> · <a href="https://www.chromatic.com/docs/" target="_blank" rel="noopener">Chromatic docs</a></footer>
+        </article>
+
+        <article class="lesson" id="interaction-and-accessibility-tests">
+          <span class="eyebrow">Practice · 20</span>
+          <h2>Interaction and Accessibility Tests</h2>
+          <p class="lede">Does focus return to the trigger when the dialog closes? Do arrows navigate the menu? Does Escape close only the top layer? Each of these breaks silently in a refactor and is never caught in code review. Automated accessibility checks are the floor, not the ceiling.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="itest">
+            <div class="demo-stage">
+            <div class="it-wrap"><div class="it-subject"><button class="it-open" type="button">Open dialog</button><div class="it-dialog" role="dialog"><b>Confirm</b><span class="it-muted">This cannot be undone.</span><button class="it-close" type="button">Close</button></div></div>
+              <div class="it-runner"><button class="it-run" type="button">Run tests</button><ul class="it-results"><li data-t="focusin">focus moves into the dialog on open</li><li data-t="restore">focus returns to the trigger on close</li><li data-t="contrast">axe: text contrast ≥ 4.5:1</li></ul></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Restore focus on close</span><input type="checkbox" name="restore" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Muted text at 4.5:1</span><input type="checkbox" name="contrast" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Run the tests against the real dialog. Turn off focus restoration: the second test fails, the kind of regression code review never catches. Lower the muted text contrast and the automated rule fails too.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Interaction tests describe user behavior as code and verify the result: click here, tab there, wait for that to appear. Their specific value for design engineering is protecting the invisible, fragile things from the Primitives section: focus restoration, arrow navigation, escape stacks, type-ahead, the selected item visible on open, a disabled button that really does not fire. Automated accessibility tools run rules against the rendered component and catch objective violations: insufficient contrast, unlabeled fields, undeclared state, broken heading hierarchy, invalid roles. Run them on every component, in every state, in continuous integration; it is cheap and catches many real problems.</p>
+          <p>The honest limit: automation detects a fraction of accessibility barriers, the objective rules. It does not detect a focus order that is valid and illogical, an accessible name that is present and useless, alt text that is present and meaningless, a flow impossible to complete by keyboard although every element is focusable, an announcement at the wrong time, or content that depends on color although contrast passes. The real test remains navigating with a keyboard and listening with a screen reader. Gate the integration: fail when a new accessibility violation appears, when a snapshot changes without approval, when an interaction test breaks, when the bundle exceeds its budget. Without gates, all of it becomes a report nobody reads.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>One interaction test per invisible behavior.</strong> Focus, Escape, arrows, type-ahead.</li>
+            <li><strong>axe on every component and state in CI.</strong></li>
+            <li><strong>Keyboard and screen reader by hand,</strong> still.</li>
+            <li><strong>Gates, not reports.</strong></li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Test focus, Escape, arrows, type-ahead.</strong></li>
+            <li><strong>axe on every state in CI.</strong></li>
+            <li><strong>Automation is the floor.</strong></li>
+            <li><strong>Keyboard and screen reader by hand.</strong></li>
+            <li><strong>Gate the merge.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Design engineering: the discipline, handbook</em> (chapter 20) · <a href="https://github.com/dequelabs/axe-core" target="_blank" rel="noopener">axe-core</a> · <a href="https://storybook.js.org/docs/writing-tests/interaction-testing" target="_blank" rel="noopener">Storybook, Interaction tests</a></footer>
+        </article>
+
+        <article class="lesson" id="what-not-to-automate">
+          <span class="eyebrow">Practice · 21</span>
+          <h2>What Not to Automate</h2>
+          <p class="lede">No tool tells you whether the hierarchy is right, whether the timing feels good, whether the metaphor holds, whether the product feels cared for. A tool can approve an interface that passes every rule and is unpleasant to use.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="judge">
+            <div class="demo-stage">
+            <div class="jd-wrap"><div class="jd-card jd-a"><span class="jd-tag">A</span><b>Weekly summary</b><span>Four reports were sent and two are waiting for review.</span><button type="button" tabindex="-1">Open</button><ul class="jd-checks"><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>contrast</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>labels</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>keyboard</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>roles</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>snapshot</li></ul><ul class="jd-notes"><li>cramped: 4px where 12 belong</li><li>everything bold, nothing leads</li><li>hover jitters and distracts</li><li>button reads as decoration</li></ul></div><div class="jd-card jd-b"><span class="jd-tag">B</span><b>Weekly summary</b><span>Four reports were sent and two are waiting for review.</span><button type="button" tabindex="-1">Open</button><ul class="jd-checks"><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>contrast</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>labels</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>keyboard</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>roles</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>snapshot</li></ul><ul class="jd-notes"><li>calm, one thing leads</li></ul></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Automated checks</span><input type="checkbox" name="checks" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Human critique</span><input type="checkbox" name="critique" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Both cards pass every automated check. Hover A. Turn on the critique: cramped, shouting, jittery, and no tool would ever say so. Green is a floor; the judgment is the job.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>If the team starts treating "all tests green" as a synonym for quality, what always happens when a metric becomes a target happens: the system optimizes for the metric. The countermeasure is to keep critique rituals separate from automated verification and never replace the first with the second. What remains human work: deciding what deserves uncommon care, judging whether an interaction feels good, judging hierarchy and composition, choosing between plausible alternatives, noticing what is missing, testing with real people, listening with a screen reader, using on a slow device, noticing that something, after the thirtieth time, irritates. That list is, essentially, the job description.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Critique ritual separate from CI.</strong> Both, never one for the other.</li>
+            <li><strong>Green is a floor.</strong> Quality is judged.</li>
+            <li><strong>Use the product</strong> slowly, on a slow device, thirty times.</li>
+            <li><strong>Test with people.</strong></li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Critique separate from CI.</strong></li>
+            <li><strong>Green is not quality.</strong></li>
+            <li><strong>Judge hierarchy, timing, metaphor.</strong></li>
+            <li><strong>Slow device, thirtieth use.</strong></li>
+            <li><strong>Real people, real tasks.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <em>Design engineering: the discipline, handbook</em> (chapter 21) · <a href="https://www.interfacecraft.dev/" target="_blank" rel="noopener">Josh Puckett, Interface Craft (critique)</a></footer>
+        </article>
+      </section>
+      <footer class="footer"><p>Personal study library. Content synthesized from the sources listed in each lesson; course and author names belong to their respective owners. Hierarchy through size, weight and space only.</p></footer>
+    </div>
+  </main>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

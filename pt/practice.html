@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-lang="pt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Practice — Interface Craft</title>
+  <meta name="description" content="O trabalho em si: como design engineering opera dentro de um time, como APIs de componente são projetadas, como um sistema é operado como produto, e como o resultado é verificado para não degradar.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#fcfcfc" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
+  <script>
+    // Applies the saved theme before first paint to avoid a flash
+    try { var t = localStorage.getItem('theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script>
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <div>
+        <div class="brand-name">Interface Craft</div>
+        <div class="brand-sub">Biblioteca viva</div>
+      </div>
+      <div class="controls">
+        <nav class="lang-switch" aria-label="Idioma"><a class="lang-opt" href="../practice.html" data-lang="en" hreflang="en">EN</a><a class="lang-opt" href="#" data-lang="pt" hreflang="pt" aria-current="true">PT</a></nav>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Alternar tema claro e escuro" title="Alternar tema claro e escuro"><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+      </div>
+    </div>
+    <a class="back-link" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>Início</a>
+    <nav class="nav-groups" aria-label="Sumário da seção">
+      <div class="nav-group" data-section="practice" style="margin-top:0">
+        <div class="nav-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>Practice</div>
+        <ul class="nav-list"><li><a class="nav-link" href="#what-is-design-engineering">What Is Design Engineering</a></li><li><a class="nav-link" href="#modes-of-operation">Modes of Operation</a></li><li><a class="nav-link" href="#prototyping">Prototyping</a></li><li><a class="nav-link" href="#ai-in-the-flow">AI in the Flow</a></li><li><a class="nav-link" href="#the-api-is-design">The API Is Design</a></li><li><a class="nav-link" href="#composition">Composition</a></li><li><a class="nav-link" href="#properties">Properties</a></li><li><a class="nav-link" href="#state-and-control">State and Control</a></li><li><a class="nav-link" href="#style-and-extension">Style and Extension</a></li><li><a class="nav-link" href="#api-evolution">API Evolution</a></li><li><a class="nav-link" href="#team-models">Team Models</a></li><li><a class="nav-link" href="#layered-governance">Layered Governance</a></li><li><a class="nav-link" href="#contribution">Contribution</a></li><li><a class="nav-link" href="#definition-of-done">Definition of Done</a></li><li><a class="nav-link" href="#adoption-and-metrics">Adoption and Metrics</a></li><li><a class="nav-link" href="#generations-and-deprecation">Generations and Deprecation</a></li><li><a class="nav-link" href="#documentation">Documentation</a></li><li><a class="nav-link" href="#the-interface-testing-pyramid">The Interface Testing Pyramid</a></li><li><a class="nav-link" href="#visual-testing">Visual Testing</a></li><li><a class="nav-link" href="#interaction-and-accessibility-tests">Interaction and Accessibility Tests</a></li><li><a class="nav-link" href="#what-not-to-automate">What Not to Automate</a></li></ul>
+      </div>
+      <div class="nav-group nav-other" data-section="practice">
+        <div class="nav-title">Outras seções</div>
+        <ul class="nav-list"><li><a class="nav-link" href="craft.html">Craft</a></li><li><a class="nav-link" href="typography.html">Typography</a></li><li><a class="nav-link" href="color.html">Color</a></li><li><a class="nav-link" href="layout.html">Layout</a></li><li><a class="nav-link" href="motion.html">Motion</a></li><li><a class="nav-link" href="ux.html">UX</a></li><li><a class="nav-link" href="primitives.html">Primitives</a></li><li><a class="nav-link" href="referencias.html">Referências</a></li></ul>
+      </div>
+    </nav>
+  </aside>
+  <main class="content">
+    <div class="container">
+<section class="section" data-section="practice">
+        <div class="section-head" id="practice">
+          <span class="eyebrow">Seção 08</span>
+          <h2>Practice</h2>
+          <p>O trabalho em si: como design engineering opera dentro de um time, como APIs de componente são projetadas, como um sistema é operado como produto, e como o resultado é verificado para não degradar.</p>
+        </div>
+
+        <article class="lesson" id="what-is-design-engineering">
+          <span class="eyebrow">Practice · 01</span>
+          <h2>What Is Design Engineering</h2>
+          <p class="lede">Um design engineer toma decisões de design enquanto escreve código de produção. Não é quem implementa mockups com fidelidade, nem um designer que sabe um pouco de código. A distinção é onde a decisão acontece.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="decide">
+            <div class="demo-stage">
+            <div class="de-wrap"><div class="de-card" data-hover><b>Card de projeto</b><span>Passe o mouse. O número que parece certo é achado aqui, não no arquivo.</span></div><span class="de-read"><span class="de-live">decidido no navegador</span><span class="de-file">como diz o arquivo: escala 1,05 · 300ms</span></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Escala no hover</span><input type="range" name="hscale" min="100" max="110" step="1" value="102" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Como diz o arquivo</span><input type="checkbox" name="asfile" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Passe o mouse no card enquanto arrasta a escala. Perto de 1,02 parece certo; o arquivo dizia 1,05 e 300ms, que lê como um pulo. A decisão pertence a onde o material está.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Se o julgamento sobre espaçamento, timing, hierarquia e comportamento é feito no navegador, com o material real, você está fazendo design engineering. Implementar um arquivo com fidelidade é desenvolvimento de front-end, um trabalho legítimo com outro nome. A função apareceu agora porque três forças convergiram: o hardware roda animação, blur e composição que antes eram inviáveis; a plataforma ganhou primitivos como transições, camadas, consultas de contêiner e cor perceptual; e quando software funcional vira commodity, o diferencial migra para a execução. O problema que ela resolve é o handoff. Um arquivo de design não expressa comportamento de interrupção, física de gesto, dados reais, estados de erro ou como algo se sente a seis vezes de lentidão. Tudo isso é decidido por alguém, e no modelo tradicional por quem não estava presente quando a intenção foi formada. A função existe para eliminar a tradução, não para acelerá-la.</p>
+          <p>Chega-se por dois caminhos com duas dívidas. Do design: julgamento visual e sensibilidade de interação, devendo arquitetura, tipos, estado, performance e testes. Da engenharia: execução, devendo julgamento visual, vocabulário de crítica, tipografia, cor e a paciência de iterar em algo que já funciona. Nenhum é o melhor começo. O que separa quem cresce é reconhecer a própria dívida.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Decida com a coisa real.</strong> Um número escolhido olhando um arquivo estático é chute.</li>
+            <li><strong>Não vire tradutor.</strong> Se você nunca discorda do arquivo, é um handoff mais rápido, não o fim dele.</li>
+            <li><strong>Não vire gargalo.</strong> A saída é sistema: componentes, tokens, padrões documentados.</li>
+            <li><strong>Não vire a pessoa das animações.</strong> O trabalho que importa é robustez, estados, sistema e comportamento, e é menos vistoso.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Decisão no navegador, não no arquivo.</strong> Essa é a definição inteira.</li>
+            <li><strong>Conheça sua dívida.</strong> Do design: arquitetura, estado, testes. Da engenharia: olho, vocabulário, paciência.</li>
+            <li><strong>Discorde do arquivo às vezes.</strong> Se nunca discorda, está traduzindo.</li>
+            <li><strong>Escale por sistema,</strong> não por estar em toda revisão.</li>
+            <li><strong>Robustez acima de floreio.</strong> O trabalho menos visível é o valioso.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Design engineering: a disciplina, handbook</em> (capítulo 1) · <a href="https://www.proofofconcept.pub/p/design-engineering" target="_blank" rel="noopener">David Hoang, Design Engineering</a> · <a href="https://designengineer.xyz/" target="_blank" rel="noopener">designengineer.xyz</a></footer>
+        </article>
+
+        <article class="lesson" id="modes-of-operation">
+          <span class="eyebrow">Practice · 02</span>
+          <h2>Modes of Operation</h2>
+          <p class="lede">Exploração, produto, sistema. Confundir os três é a causa mais comum de trabalho desperdiçado: polir algo que vai ser jogado fora, ou construir a décima variação do que deveria ser um componente.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="extract">
+            <div class="demo-stage" data-v1="Uma ocorrência: um caso. Construa local." data-v2="Duas: talvez coincidência. Observe." data-v3="Três: um padrão. Extraia para o sistema." data-early="Extraído em uma: a abstração não serve a ninguém e agora todo caso briga com ela.">
+            <div class="xt-wrap"><div class="xt-row"><div class="xt-card" style="--i:0"><i></i><i></i></div><div class="xt-card" style="--i:1"><i></i><i></i></div><div class="xt-card" style="--i:2"><i></i><i></i></div><div class="xt-card" style="--i:3"><i></i><i></i></div><div class="xt-card" style="--i:4"><i></i><i></i></div></div><span class="xt-verdict"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Ocorrências</span><input type="range" name="occ" min="1" max="5" step="1" value="1" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Extrair na primeira ocorrência</span><input type="checkbox" name="early" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Arraste as ocorrências. O veredito muda em três. Extraia em uma e você congela decisões antes de saber quais são certas: o componente genérico não serve a nenhum dos casos que vieram depois.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Exploração descobre o que construir: baixa fidelidade em tudo que não é a pergunta, código descartável, sucesso medido em aprendizado. Produto constrói uma superfície específica com qualidade: fidelidade completa, sucesso é a coisa funcionando com dados reais. Sistema extrai, generaliza e mantém o que se repete: sucesso é outras pessoas construindo mais rápido e melhor sem você. O erro típico é operar em modo produto durante a exploração, ou em modo produto quando o certo era sistema.</p>
+          <p>Quando extrair: na terceira ocorrência. A primeira é um caso, a segunda pode ser coincidência, a terceira é um padrão. Extrair cedo demais congela decisões antes de saber quais são as certas e produz abstrações que não servem a ninguém. Extrair tarde demais produz dez variações que precisam ser unificadas depois, o que custa muito mais. Times saudáveis alternam deliberadamente: um ciclo de produto entrega superfícies, um período curto consolida o que se repetiu, a exploração roda em paralelo, isolada e com prazo. Sem consolidação, a dívida de sistema acumula e cada tela nova custa mais que a anterior. Onde a função se senta: embutida no produto dá contexto e velocidade, mas o sistema não é de ninguém; no time de plataforma dá dono e consistência, mas distância das necessidades reais. O híbrido, com base no sistema e rotação pelos times de produto, costuma funcionar melhor.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Nomeie o modo antes de começar.</strong> Exploração, produto ou sistema.</li>
+            <li><strong>A terceira ocorrência extrai.</strong> Não a primeira, não a décima.</li>
+            <li><strong>Consolide depois de cada ciclo de produto.</strong></li>
+            <li><strong>Assento híbrido:</strong> casa no sistema, rotação pelo produto.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Exploração: código descartável, aprendizado como saída.</strong></li>
+            <li><strong>Produto: fidelidade completa, dados reais.</strong></li>
+            <li><strong>Sistema: outros constroem mais rápido sem você.</strong></li>
+            <li><strong>A terceira ocorrência extrai.</strong></li>
+            <li><strong>Consolidação depois de cada ciclo,</strong> ou cada tela custa mais que a anterior.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Design engineering: a disciplina, handbook</em> (capítulo 2) · <a href="https://www.designsystems.com/" target="_blank" rel="noopener">designsystems.com</a></footer>
+        </article>
+
+        <article class="lesson" id="prototyping">
+          <span class="eyebrow">Practice · 03</span>
+          <h2>Prototyping</h2>
+          <p class="lede">Um protótipo responde uma pergunta. Escreva a pergunta antes de construir, depois construa a menor coisa que a responde. Fidelidade é por dimensão, não global, e código descartável precisa de fato ser jogado fora.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="proto">
+            <div class="demo-stage" data-dismissed="dispensado" data-noint="o gesto não foi construído: nada a aprender">
+            <div class="pt-wrap"><span class="pt-q">Pergunta: o gesto de arrastar para dispensar é descoberto sem instrução?</span><div class="pt-list"><div class="pt-item"><span>Fatura #2041</span><kbd>→</kbd></div><div class="pt-item"><span>Resumo semanal</span><kbd>→</kbd></div><div class="pt-item"><span>Redefinir senha</span><kbd>→</kbd></div></div><span class="pt-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Fidelidade visual</span><input type="range" name="vis" min="0" max="100" step="10" value="20" data-unit="%"><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Fidelidade de interação</span><input type="checkbox" name="inter" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Arraste um item para a direita para dispensar. Leve a fidelidade visual a zero: a pergunta continua respondida. Desligue a fidelidade de interação com o visual em 100%: o protótipo parece pronto e não responde nada.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Protótipos falham quando tentam responder tudo. Se um testa navegação, hierarquia visual e física de gesto ao mesmo tempo, qualquer reação é ambígua e nenhuma das três foi respondida. Não existe protótipo de alta fidelidade; existe fidelidade alta em algumas dimensões, visual, conteúdo, dados, interação, performance, estados, e baixa em outras. Fidelidade máxima de interação com mínima de visual é perfeitamente válida e frequentemente é o certo. Código descartável é rápido, sujo, sem testes e sem abstração, a escolha certa na exploração, e o compromisso precisa ser real: se você não joga fora, acabou de criar dívida. Código evolutivo vai virar produto e é mais lento e cuidadoso. O modo perigoso é o intermediário não declarado: código exploratório que ninguém disse que era exploratório e foi para produção porque já funcionava.</p>
+          <p>A prática que mais acelera o julgamento é o ajuste ao vivo: expor os valores críticos em controles ajustáveis e mexer neles enquanto usa a coisa. Parâmetros de spring, blur, escala, delay, opacidade, raio, espaçamento. Você acha o valor certo mais rápido e desenvolve intuição sobre a faixa de cada parâmetro. Corolário: nenhum valor de interação deve ser escolhido no abstrato. E seja honesto: um protótipo que promete o que a implementação não vai entregar custa confiança. Se ele não reproduz interrupção, física de gesto ou performance real, diga isso junto com ele.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Uma pergunta, uma frase, escrita antes.</strong></li>
+            <li><strong>Fidelidade só onde a pergunta precisa.</strong></li>
+            <li><strong>Declare descartável ou evolutivo.</strong> Nunca o meio.</li>
+            <li><strong>Ajuste ao vivo.</strong> Sliders em todo valor que importa.</li>
+            <li><strong>Diga o que o protótipo não reproduz.</strong></li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Escreva a pergunta antes.</strong> Uma frase.</li>
+            <li><strong>Fidelidade por dimensão:</strong> visual, conteúdo, dados, interação, performance, estados.</li>
+            <li><strong>Descartável significa apagado.</strong></li>
+            <li><strong>Controles ao vivo em todo valor crítico.</strong></li>
+            <li><strong>Diga o que ele não reproduz.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Design engineering: a disciplina, handbook</em> (capítulo 3) · <a href="https://www.interfacecraft.dev/" target="_blank" rel="noopener">Josh Puckett, Interface Craft</a></footer>
+        </article>
+
+        <article class="lesson" id="ai-in-the-flow">
+          <span class="eyebrow">Practice · 04</span>
+          <h2>AI in the Flow</h2>
+          <p class="lede">A parte replicável do trabalho ficou barata: layout convencional, componentes padrão, conversão de arquivo em código. Isso não elimina a função; move o valor para julgamento, detalhe invisível, robustez e coerência de sistema, e move o gargalo para a revisão.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="gen">
+            <div class="demo-stage" data-title="Plano Team" data-long="Plano Enterprise com single sign-on, log de auditoria, suporte prioritário e gerente de sucesso dedicado para setores regulados" data-cta="Escolher" data-gen="gerado em 0,2s" data-rev="revisado" data-broken="quebrou">
+            <div class="gn-wrap"><div class="gn-bar"><button class="gn-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20L16 8M15 3l1 2 2 1-2 1-1 2-1-2-2-1 2-1zM20 10l.6 1.4L22 12l-1.4.6L20 14l-.6-1.4L18 12l1.4-.6z"/></svg>Gerar 5 variações</button><span class="gn-read"></span></div><div class="gn-grid"></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Conteúdo hostil</span><input type="checkbox" name="hostile" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Restringir aos tokens do sistema</span><input type="checkbox" name="system" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Gere. Cinco cards plausíveis em um quinto de segundo. Clique em cada um para revisar: essa parte leva o tempo que sempre levou. Ligue o conteúdo hostil e três de cinco quebram; restritos aos tokens do sistema, aguentam.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>A geração faz bem: estrutura inicial de componente, variações rápidas de uma ideia, conversão entre formatos e frameworks, preenchimento de casos repetitivos como estados, variantes e dados de exemplo, rascunhos de testes e documentação, explicação de código desconhecido. Faz mal exatamente onde o trabalho vive. Julgamento sobre o que merece cuidado: gerar dez variações é fácil; saber qual merece dez horas de refinamento é o trabalho. Detalhe invisível: o overlay que escurece com o arrasto, a origem do menu, o corte do texto, o comportamento de interrupção, nada disso está no prompt porque quem escreveu o prompt não sabia que existia. Robustez: código gerado resolve o caminho feliz; estados de erro, conteúdo hostil, casos limite e acessibilidade continuam sendo trabalho deliberado. Coerência de sistema: cada geração produz uma solução local, e sem alguém segurando a linha o produto vira uma coleção de respostas plausíveis e inconsistentes. E convergência para a média: modelos produzem o que é comum, e o comum é por definição o que não diferencia.</p>
+          <p>Com produção barata, o gargalo migra para a revisão. Gerar cinco variações leva minutos; avaliá-las com critério leva o tempo que sempre levou. O protocolo de crítica fica mais valioso, não menos, e a capacidade de articular por que algo funciona vira a restrição real do time.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Gere para amplitude, decida com critério humano.</strong></li>
+            <li><strong>Toda geração passa pelo checklist de robustez.</strong> Conteúdo hostil, estados, teclado.</li>
+            <li><strong>Gere dentro do sistema,</strong> com primitivos e tokens como restrição.</li>
+            <li><strong>Trate código gerado como código de terceiro.</strong> Leia antes de aprovar.</li>
+            <li><strong>Gaste seu tempo no que só você faz.</strong></li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Gerar é barato; revisar é o trabalho agora.</strong></li>
+            <li><strong>Detalhes invisíveis não estão no prompt.</strong> Quem escreveu não sabia que existiam.</li>
+            <li><strong>Checklist de robustez em toda saída.</strong></li>
+            <li><strong>Gere dentro do sistema de tokens.</strong></li>
+            <li><strong>Leia como código de terceiro.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Design engineering: a disciplina, handbook</em> (capítulo 4)</footer>
+        </article>
+
+        <article class="lesson" id="the-api-is-design">
+          <span class="eyebrow">Practice · 05</span>
+          <h2>The API Is Design</h2>
+          <p class="lede">Um componente tem duas interfaces: a que o usuário vê e a que outros desenvolvedores usam. A segunda também é design. Se as pessoas duplicam o componente em vez de usá-lo, a API está errada, não o componente.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="props">
+            <div class="demo-stage" data-props="sortable|filterable|paginated|selectable|resizable|expandable|stickyHeader|showActions|compact|striped|virtualized|editable" data-combos="combinações possíveis" data-valid="peças · todo arranjo é um estado válido" data-pieces="Table.Root|Table.Header|Table.Row|Table.Cell|Table.Pagination">
+            <div class="pp2-wrap"><div class="pp2-code"><span class="pp2-tag">&lt;DataTable</span><span class="pp2-props"></span><span class="pp2-tag">/&gt;</span></div><div class="pp2-combos"><b class="pp2-n"></b><span class="pp2-l"></span></div><div class="pp2-grid"></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Props booleanas</span><input type="range" name="bools" min="1" max="12" step="1" value="6" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Compor em vez disso</span><input type="checkbox" name="compose" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Arraste as props. Seis booleanas já são 64 combinações, a maioria nunca testada. Doze são 4.096. Componha em vez disso e o número deixa de importar: peças se arranjam em estados que são todos válidos.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Uma API ruim aparece no produto: pessoas contornando o componente, criando variações locais, ou usando de formas que produzem estados que ninguém desenhou. Duas propriedades puxam em direções opostas. Previsibilidade: dado o nome dá para adivinhar o comportamento, com nomes, tipos e comportamento consistentes entre componentes irmãos. Flexibilidade: casos não previstos podem ser atendidos sem alterar o componente. Previsível demais é rígido; flexível demais é imprevisível; o equilíbrio depende de quantas pessoas usam e de quão variados são os casos.</p>
+          <p>O sintoma diagnóstico é a explosão de propriedades. Um componente com vinte propriedades booleanas não foi projetado, foi acumulado. Cada propriedade parecia razoável sozinha; o conjunto é ingerenciável, porque as combinações possíveis crescem exponencialmente, a maioria nunca foi testada, e várias produzem estados sem sentido. A saída é composição.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Observe a duplicação.</strong> É feedback sobre a API.</li>
+            <li><strong>Conte as propriedades.</strong> Acima de oito, pense em composição.</li>
+            <li><strong>Consistência entre irmãos</strong> vale mais que o nome perfeito em um.</li>
+            <li><strong>Combinações precisam ser testáveis.</strong> Se não dá para enumerar, a forma está errada.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Duplicação é feedback de API.</strong></li>
+            <li><strong>Previsível entre irmãos.</strong></li>
+            <li><strong>Flexível sem modificação.</strong></li>
+            <li><strong>Acima de oito props, componha.</strong></li>
+            <li><strong>Combinações intestáveis significam forma errada.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Design engineering: a disciplina, handbook</em> (capítulo 5) · <a href="https://www.patterns.dev/" target="_blank" rel="noopener">patterns.dev</a></footer>
+        </article>
+
+        <article class="lesson" id="composition">
+          <span class="eyebrow">Practice · 06</span>
+          <h2>Composition</h2>
+          <p class="lede">Em vez de um componente com muitas propriedades, um conjunto de peças que cooperam e compartilham estado internamente. A API espelha a estrutura visual, casos novos são atendidos rearranjando peças, e nada precisou virar propriedade.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="compose">
+            <div class="demo-stage">
+            <div class="cp-wrap"><div class="cp-preview"><span class="cp-trigger"><span class="cp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>São Paulo<span class="sp-chev">▾</span></span></div>
+              <div class="cp-code cp-code-props"><span class="k">&lt;Select</span> value="sp" placeholder="…"<span class="cp-added"> triggerIcon={&lt;Search /&gt;}</span> <span class="k">/&gt;</span><span class="cp-count">props: <b>3</b><b class="cp-alt">4</b></span></div>
+              <div class="cp-code cp-code-comp"><span class="k">&lt;Select&gt;</span>
+  <span class="k">&lt;Select.Trigger&gt;</span><span class="cp-added">&lt;Search /&gt;</span><span class="k">&lt;Select.Value /&gt;</span><span class="k">&lt;/Select.Trigger&gt;</span>
+  <span class="k">&lt;Select.Content&gt;</span>…<span class="k">&lt;/Select.Content&gt;</span>
+<span class="k">&lt;/Select&gt;</span><span class="cp-count">props: <b>0</b></span></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Componentes compostos</span><input type="checkbox" name="compound" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Adicionar ícone ao gatilho</span><input type="checkbox" name="icon" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Adicione um ícone. Com props, precisa de uma prop nova e a contagem cresce; com componentes compostos você só o coloca dentro do gatilho. O código lê como o componente aparece.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Componentes compostos: um Select feito de Trigger, Value, Content, Group, Label e Item. Quem lê o código enxerga o componente. Quer um ícone no gatilho? Coloque. Um rodapé no conteúdo? Coloque. O estado fica escondido, as peças se comunicam internamente, e a extensão acontece sem modificação. O custo real é verbosidade e uma estrutura a aprender; para componentes simples é exagero. Slots são a forma mais leve: o componente aceita conteúdo em posições nomeadas como header e footer. Funcionam quando as posições são fixas e o conteúdo varia, e perdem quando as peças precisam do estado do pai ou a estrutura em si precisa variar; aí é caso de componente composto. Os dois são complementares: um sistema maduro usa slots nos componentes simples e composição nos complexos.</p>
+          <p>Escolha pela forma. Sem estado interno e estrutura fixa: propriedades simples. Estrutura fixa, conteúdo variável: slots. Estado compartilhado entre peças ou estrutura variável: composto. Menos de cinco propriedades e nenhum estado: nada disso, mantenha simples. E adicione a camada de conveniência: para os casos comuns, um invólucro que compõe as peças com padrões sensatos, mantendo as peças exportadas. O caso simples é curto e o complexo é possível.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Composto quando o estado é compartilhado ou a estrutura varia.</strong></li>
+            <li><strong>Slots quando as posições são fixas e o conteúdo varia.</strong></li>
+            <li><strong>Propriedades simples abaixo de cinco, sem estado.</strong></li>
+            <li><strong>Invólucro de conveniência por cima,</strong> peças ainda exportadas.</li>
+          </ul>
+          <figure class="code"><div class="code-bar"><span class="code-lang">CSS</span><button class="code-copy" type="button" data-copy data-label="Copiar" data-copied="Copiado" aria-label="Copiar"><span class="code-copy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><span class="code-copy-text">Copiar</span></button></div><pre><code><span class="t">&lt;Select&gt;</span>
+  <span class="t">&lt;Select.Trigger&gt;</span><span class="t">&lt;Select.Value placeholder="Escolha" /&gt;</span><span class="t">&lt;/Select.Trigger&gt;</span>
+  <span class="t">&lt;Select.Content&gt;</span>
+    <span class="t">&lt;Select.Item value="sp"&gt;</span>São Paulo<span class="t">&lt;/Select.Item&gt;</span>
+  <span class="t">&lt;/Select.Content&gt;</span>
+<span class="t">&lt;/Select&gt;</span></code></pre></figure>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Composto: estado compartilhado, estrutura variável.</strong></li>
+            <li><strong>Slots: posições fixas, conteúdo variável.</strong></li>
+            <li><strong>Props simples: abaixo de cinco, sem estado.</strong></li>
+            <li><strong>Invólucro de conveniência para o caso comum.</strong></li>
+            <li><strong>Peças continuam exportadas.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Design engineering: a disciplina, handbook</em> (capítulo 6) · <a href="https://www.radix-ui.com/primitives/docs/overview/introduction" target="_blank" rel="noopener">Radix Primitives</a> · <a href="https://ark-ui.com/" target="_blank" rel="noopener">Ark UI</a></footer>
+        </article>
+
+        <article class="lesson" id="properties">
+          <span class="eyebrow">Practice · 07</span>
+          <h2>Properties</h2>
+          <p class="lede">Se as opções são mutuamente exclusivas, é um valor, não vários booleanos. Nomeie por convenção entre irmãos, dimensione pela escala do sistema, e faça o componente ser utilizável sem nenhuma propriedade opcional.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="enum">
+            <div class="demo-stage">
+            <div class="en-wrap"><div class="en-api"><span class="en-label">Superfície da API</span>
+              <div class="en-bools"><label><input type="checkbox" class="en-p" checked> primary</label><label><input type="checkbox" class="en-s"> secondary</label><label><input type="checkbox" class="en-d"> danger</label></div>
+              <div class="en-enum"><span>variant =</span><label><input type="radio" name="en-variant" value="primary" checked> primary</label><label><input type="radio" name="en-variant" value="secondary"> secondary</label><label><input type="radio" name="en-variant" value="danger"> danger</label></div></div>
+              <div class="en-preview"><button class="en-btn" type="button" tabindex="-1">Salvar alterações</button><span class="en-bad">estado impossível: duas variantes ao mesmo tempo</span></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">variant como um valor</span><input type="checkbox" name="enum" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Marque dois booleanos. Nada impede, e o botão vira um estado que ninguém desenhou. Mude para um único valor variant: o estado impossível deixa de existir.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>O erro mais comum e mais caro: primary, secondary e danger como três booleanos. Nada impede que dois sejam verdadeiros ao mesmo tempo, e alguém vai fazer isso. Um único valor variant faz os estados impossíveis deixarem de existir. Booleanos são para o que é de fato binário e independente: desabilitado, carregando, obrigatório. Nomenclatura: booleanos com prefixo is, has ou can; enums como substantivos, variant, size, tone, align; conteúdo como label, description, placeholder, nunca um data genérico; eventos como onAlgo; estado externo como value mais onValueChange. Consistência entre componentes vale mais que qualquer escolha específica: se um usa isDisabled e outro usa disabled, as pessoas precisam lembrar duas convenções e vão errar uma.</p>
+          <p>Tamanhos usam os nomes da escala do sistema, sm e não 14, para a escala evoluir sem tocar em cada uso, e são três a cinco, porque cada tamanho é uma combinação inteira de espaçamento, tipo, altura e raio que precisa ser desenhada e testada. Toda propriedade opcional precisa de um padrão que sirva ao caso comum; o teste é se o componente sem nenhuma propriedade opcional produz algo utilizável. Propriedades que não deveriam existir: as de um consumidor específico, as que passam estilos arbitrários para dentro, as que ligam e desligam partes que deveriam ser composição, as que replicam o que o CSS já faz, e booleanos que na verdade são três estados.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Enum para opções exclusivas,</strong> booleano só para binários independentes.</li>
+            <li><strong>is, has, can · substantivos · onX · value + onValueChange.</strong></li>
+            <li><strong>Nomes da escala, três a cinco tamanhos.</strong></li>
+            <li><strong>Renderizar sem propriedades precisa ser utilizável.</strong></li>
+            <li><strong>Apague as propriedades que não deveriam existir.</strong></li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Opções exclusivas são um enum.</strong></li>
+            <li><strong>is, has, can para booleanos.</strong></li>
+            <li><strong>sm, md, lg. Nunca 14.</strong></li>
+            <li><strong>Sem props opcionais ainda renderiza algo utilizável.</strong></li>
+            <li><strong>Apague props de um consumidor só.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Design engineering: a disciplina, handbook</em> (capítulo 7) · <a href="https://polaris.shopify.com/" target="_blank" rel="noopener">Shopify Polaris</a> · <a href="https://spectrum.adobe.com/" target="_blank" rel="noopener">Adobe Spectrum</a></footer>
+        </article>
+
+        <article class="lesson" id="state-and-control">
+          <span class="eyebrow">Practice · 08</span>
+          <h2>State and Control</h2>
+          <p class="lede">Todo componente com estado funciona de duas formas: gerenciando o próprio estado e aceitando-o de fora. O retorno de mudança dispara nos dois modos. Estado derivado não é estado. E a melhor API torna o impossível irrepresentável.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="ctrl">
+            <div class="demo-stage" data-ignored="ignorado: o componente é dono do estado">
+            <div class="ct-wrap"><div class="ct-row"><div class="ct-comp"><button class="ct-head" type="button" aria-expanded="false">Opções avançadas<span class="sp-chev">▾</span></button><div class="ct-panel">Região, tentativas e timeout.</div></div><button class="ct-ext" type="button">Alternar de fora<kbd>⌘.</kbd></button></div><div class="ct-log"></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Suporta modo controlado</span><input type="checkbox" name="controlled" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">onOpenChange dispara nos dois modos</span><input type="checkbox" name="notify" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Clique no cabeçalho, depois no botão de fora que representa um atalho global. Sem modo controlado, o lado de fora não consegue tocar no estado. Desligue o retorno e o log silencia para mudanças internas.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Não controlado é uso simples, sem cerimônia. Controlado é necessário quando outra coisa precisa influenciar o componente: um atalho global, sincronização com URL, validação de formulário. Oferecer só um é limitação séria; só não controlado impede integração, só controlado obriga todo consumidor a escrever a mesma lógica. O padrão que atende os dois: um valor opcional para o modo controlado, um valor inicial opcional para o não controlado, e um retorno de mudança que dispara nos dois casos, para reagir a uma mudança sem assumir o controle dela, para analytics, fechar outra coisa, salvar rascunho.</p>
+          <p>Guardar algo que pode ser calculado cria duas fontes de verdade que divergem; derive. E modele estados exclusivos como um valor: em vez de isLoading, data e error independentes, um status que é carregando, ou sucesso com dados, ou erro com mensagem. Na primeira forma "carregando com erro e dados" é representável e alguém vai produzir; na segunda não existe. Por fim, exponha o elemento subjacente. Componentes precisam permitir acesso para foco, medição, bibliotecas de posicionamento e rolagem; encapsular sem oferecer acesso força soluções ruins do lado de fora.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>value, defaultValue, onValueChange.</strong> Os três.</li>
+            <li><strong>O retorno dispara nos dois modos.</strong></li>
+            <li><strong>Derive, não guarde.</strong></li>
+            <li><strong>Um status em vez de três flags.</strong></li>
+            <li><strong>Exponha a referência.</strong></li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>value + defaultValue + onValueChange.</strong></li>
+            <li><strong>Retorno nos dois modos.</strong></li>
+            <li><strong>Valores derivados se calculam, não se guardam.</strong></li>
+            <li><strong>status: loading | success | error.</strong> Não três flags.</li>
+            <li><strong>Exponha o elemento.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Design engineering: a disciplina, handbook</em> (capítulo 8) · <a href="https://react-spectrum.adobe.com/react-aria/" target="_blank" rel="noopener">React Aria</a></footer>
+        </article>
+
+        <article class="lesson" id="style-and-extension">
+          <span class="eyebrow">Practice · 09</span>
+          <h2>Style and Extension</h2>
+          <p class="lede">Um componente de sistema precisa ser consistente e precisa permitir desvio. Aberto por propriedades para o que o sistema decidiu; um escape declarado e observável para o resto. O escape que ninguém consegue medir é o que faz sistemas apodrecerem sem que ninguém perceba.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="escape">
+            <div class="demo-stage" data-usage="escape em uso" data-promote="um padrão está emergindo: promova uma variante" data-work="contornos que você não vê">
+            <div class="es-wrapper"><div class="es-grid"><div class="es-card"><b>Card 1</b><span class="es-hack">className</span><span class="es-wrap">hack com wrapper</span></div><div class="es-card"><b>Card 2</b><span class="es-hack">className</span><span class="es-wrap">hack com wrapper</span></div><div class="es-card"><b>Card 3</b><span class="es-hack">className</span><span class="es-wrap">hack com wrapper</span></div><div class="es-card"><b>Card 4</b><span class="es-hack">className</span><span class="es-wrap">hack com wrapper</span></div><div class="es-card"><b>Card 5</b><span class="es-hack">className</span><span class="es-wrap">hack com wrapper</span></div><div class="es-card"><b>Card 6</b><span class="es-hack">className</span><span class="es-wrap">hack com wrapper</span></div></div><span class="es-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Times usando o escape</span><input type="range" name="rogue" min="0" max="6" step="1" value="3" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Componente fechado</span><input type="checkbox" name="closed" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Arraste os times. Com um escape declarado você conta os desvios e vê quando três viram um padrão que merece variante. Feche o componente e os desvios continuam acontecendo, como wrappers que ninguém mede.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Três abordagens. Fechado: nenhuma customização, consistência total, e as pessoas contornam quando precisam de algo diferente. Aberto por propriedades: um conjunto declarado de variações, o equilíbrio mais comum. Aberto por estilo: classes ou estilos arbitrários, máxima flexibilidade, consistência dependente de disciplina. A recomendação combina as duas primeiras com uma porta visível: variantes e tamanhos são propriedades; se alguém precisa de algo fora disso existe um caminho explícito que aceita estilo, e esse caminho é observável para o time saber quando um padrão novo está emergindo.</p>
+          <p>A tendência consolidada separa comportamento de aparência: uma camada resolve acessibilidade, teclado, foco e estado; outra resolve o visual. O ganho é concreto, porque o comportamento correto de um combobox, de um menu ou de um diálogo é muito mais difícil do que parece e não deveria ser reescrito por cada time; o sistema fica responsável só pela aparência, que é onde a identidade de fato vive. Polimorfismo, renderizar o componente como outro elemento, um botão que na verdade é um link, um card que é um artigo, é útil e tem custo: complica os tipos e permite combinações inválidas. Restrinja ao que faz sentido semanticamente e nunca deixe a troca quebrar o comportamento; um botão renderizado como link precisa continuar funcionando como link, inclusive em abrir em nova aba.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Propriedades para a variação decidida, um escape declarado para o resto.</strong></li>
+            <li><strong>Conte o uso do escape.</strong> Três iguais significam uma variante que falta.</li>
+            <li><strong>Camada de comportamento de biblioteca testada, aparência do sistema.</strong></li>
+            <li><strong>Polimorfismo só onde a semântica permite.</strong></li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Variantes como props, um escape.</strong></li>
+            <li><strong>Torne o escape observável.</strong> Grep, contagem.</li>
+            <li><strong>Comportamento de camada headless, aparência do sistema.</strong></li>
+            <li><strong>Polimorfismo só onde a semântica se sustenta.</strong></li>
+            <li><strong>Três escapes iguais são uma variante faltando.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Design engineering: a disciplina, handbook</em> (capítulo 9) · <a href="https://base-ui.com/" target="_blank" rel="noopener">Base UI</a></footer>
+        </article>
+
+        <article class="lesson" id="api-evolution">
+          <span class="eyebrow">Practice · 10</span>
+          <h2>API Evolution</h2>
+          <p class="lede">Toda API vai mudar. Adicione primeiro, deprecie com caminho depois, quebre por último. Uma API ruim com cem usos frequentemente deve ser mantida e complementada, não corrigida.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="deprec">
+            <div class="demo-stage">
+            <div class="dp-wrap"><div class="dp-code"><span class="k">&lt;Button</span> <span class="dp-old">color="primary"</span> <span class="k">/&gt;</span></div>
+              <div class="dp-notice"><b>⚠ Depreciação</b><span><em>O que:</em> color</span><span><em>Por quê:</em> booleanos e color se sobrepunham; variant substitui os dois</span><span><em>No lugar:</em> <code>variant="primary"</code></span><span><em>Até:</em> v4.0, 2026-12</span></div>
+              <div class="dp-error"><b>✕ TypeError</b><span>prop desconhecida "color"</span><span class="dp-count">100 usos para corrigir · sem guia de migração</span></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Aviso de depreciação</span><input type="checkbox" name="notice" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Lançar como quebra</span><input type="checkbox" name="breaking" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Um aviso com quatro partes mantém a prop antiga funcionando e diz o quê, por quê, o que no lugar e até quando. Lance como quebra e cem usos falham de uma vez, cada um a tarde de outra pessoa.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Mudanças que quebram consumidores custam caro; mudanças que só adicionam são baratas. Ordem de preferência: adicionar uma propriedade ou peça com padrão que preserva o comportamento anterior; depreciar com aviso e caminho de migração, mantendo o antigo funcionando; quebrar, com versão maior, guia de migração e idealmente uma ferramenta de conversão automática. Uma depreciação útil tem quatro partes: o que está sendo removido, por quê, o que usar no lugar com exemplo, e até quando o antigo continua funcionando. Sem a última ninguém migra; sem a terceira a migração vira pesquisa. O aviso aparece onde a pessoa está, no console, no editor, na documentação, não só em notas de versão que ninguém lê.</p>
+          <p>Quebrar não custa o tempo de mudar o componente. Custa o tempo de todos os consumidores multiplicado pelo número de usos, mais o risco de regressão em cada um. Isso muda o cálculo. Versione semanticamente e leve a sério: quebras sobem a versão maior, adições a menor, correções a de correção. E a disciplina que sustenta isso: o que é público é contrato. Tudo que não deveria ser contrato precisa ser explicitamente interno, senão alguém vai depender e você quebrou sem saber.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Adicionar, depreciar, quebrar.</strong> Nessa ordem.</li>
+            <li><strong>Depreciação em quatro partes:</strong> o quê, por quê, no lugar, até quando.</li>
+            <li><strong>Avise onde as pessoas estão.</strong> Console, editor, docs.</li>
+            <li><strong>Multiplique pelos usos antes de quebrar.</strong></li>
+            <li><strong>Marque o interno como interno.</strong></li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Adicionar, depreciar, quebrar.</strong></li>
+            <li><strong>O quê, por quê, no lugar, até quando.</strong></li>
+            <li><strong>Avise no console e no editor.</strong></li>
+            <li><strong>Custo = consumidores × usos.</strong></li>
+            <li><strong>Público é contrato; marque o interno.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Design engineering: a disciplina, handbook</em> (capítulo 10) · <a href="https://semver.org/" target="_blank" rel="noopener">Semantic Versioning</a></footer>
+        </article>
+
+        <article class="lesson" id="team-models">
+          <span class="eyebrow">Practice · 11</span>
+          <h2>Team Models</h2>
+          <p class="lede">Solitário, centralizado, federado, híbrido. Escolher o modelo é a parte fácil. O que determina se funciona são os rituais: quem triaga, com que frequência, quem decide o que entra, como contribuições são revisadas, quando os releases acontecem.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="teams">
+            <div class="demo-stage" data-names="Solitário|Centralizado|Federado|Híbrido" data-risks="Cada time com seu sistema: rápido localmente, inconsistente por definição.|Um time constrói para todos: consistente, e se afastando das necessidades reais.|Todos em tempo parcial: ancorado em necessidade, ninguém é dono da coerência.|Núcleo pequeno, contribuidores embutidos: funciona, se a governança for explícita." data-ok="Triagem semanal, donos nomeados, releases em ritmo: saudável." data-bad="Sem triagem, sem donos, sem cadência: o modelo não importa.">
+            <div class="tm-wrap"><div class="tm-diagram"><span class="tm-team" style="--i:0">Pagamentos</span><span class="tm-team" style="--i:1">Growth</span><span class="tm-team" style="--i:2">Plataforma</span><span class="tm-team" style="--i:3">Mobile</span><span class="tm-sys">Sistema</span><span class="tm-core">núcleo</span></div><div class="tm-read"><b class="tm-name"></b><span class="tm-risk"></span><span class="tm-health"></span></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Modelo</span><input type="range" name="model" min="0" max="3" step="1" value="3" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Rituais em prática</span><input type="checkbox" name="rituals" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Arraste pelos quatro modelos e veja as linhas. Depois desligue os rituais: até o modelo mais bem desenhado trava sem triagem, donos e cadência.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>A taxonomia vem de Nathan Curtis. Solitário: cada time mantém o próprio sistema, autonomia máxima, inconsistência garantida, sensato só em organizações pequenas ou produtos genuinamente independentes. Centralizado: um time dedicado constrói e distribui, consistência alta, e um risco específico: o time central se distancia do produto real e resolve problemas que ninguém tem enquanto os reais viram fila. Federado: pessoas de vários times de produto constroem o sistema em tempo parcial, ancoradas em necessidade real, com o risco simétrico: sem alguém responsável pela coerência vira colcha de retalhos, e trabalho de sistema sempre perde para trabalho de produto na priorização. Híbrido: um núcleo pequeno com contribuidores embutidos, o que mais funciona em organizações médias e grandes, e o que mais exige governança explícita.</p>
+          <p>Um modelo centralizado com rituais claros funciona melhor que um federado sem eles. E a raiz da maior parte dos fracassos: tratar o design system como projeto com data de fim. Produtos sem operação estagnam; os componentes envelhecem, a distância entre sistema e produção cresce, e em algum momento o sistema é uma referência que ninguém referencia. Ele precisa de dono, roteiro, ciclo de release, canal de suporte e métricas. Se nada disso existe, não é produto; é arquivo.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Escolha híbrido por padrão</strong> a partir de alguns times.</li>
+            <li><strong>Escreva os rituais:</strong> cadência de triagem, donos de decisão, fluxo de revisão, ritmo de release.</li>
+            <li><strong>Dono, roteiro, releases, suporte, métricas.</strong> Ou é arquivo.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Híbrido por padrão a partir de alguns times.</strong></li>
+            <li><strong>Rituais vencem modelos.</strong></li>
+            <li><strong>Dono, roteiro, releases, suporte, métricas.</strong></li>
+            <li><strong>Projeto com data de fim vira arquivo.</strong></li>
+            <li><strong>Rode o núcleo pelo produto.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Design engineering: a disciplina, handbook</em> (capítulo 11) · <a href="https://medium.com/eightshapes-llc/team-models-for-scaling-a-design-system-2cf9d03be6a0" target="_blank" rel="noopener">Nathan Curtis, Team Models for Scaling a Design System</a></footer>
+        </article>
+
+        <article class="lesson" id="layered-governance">
+          <span class="eyebrow">Practice · 12</span>
+          <h2>Layered Governance</h2>
+          <p class="lede">Exigir revisão do núcleo para toda mudança é gargalo disfarçado de qualidade. Não exigir nada produz caos. Gradue por camada: quanto mais fundo na pilha, mais rígido; quanto mais perto do produto, mais livre.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="gov">
+            <div class="demo-stage" data-local="Um caso: resolva local, marque para observação." data-pattern="Um time: documente um padrão, sem componente." data-component="Dois ou mais times: candidato a componente, definição de pronto se aplica.">
+            <div class="gv-wrap"><div class="gv-stack"><div class="gv-layer" data-l="0"><b>Fundação</b><span>tokens, primitivos, acessibilidade · aprovação do núcleo</span></div><div class="gv-layer" data-l="1"><b>Componentes</b><span>blocos compartilhados · revisão do núcleo, contribuição aberta</span></div><div class="gv-layer" data-l="2"><b>Padrões</b><span>composições recomendadas · documentados, não impostos</span></div><div class="gv-layer" data-l="3"><b>Página</b><span>layout de produto · sem governança</span></div></div><div class="gv-verdict"></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Times que precisam</span><input type="range" name="teams" min="1" max="4" step="1" value="1" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Terceira ocorrência</span><input type="checkbox" name="third" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Arraste o número de times e alterne a terceira ocorrência. O pedido é roteado para uma camada, e a camada define o rigor: nada na página, processo completo na fundação.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Fundação, tokens, primitivos e acessibilidade, exige aprovação do núcleo e muda raramente, com processo. Componentes, os blocos compartilhados, recebem revisão do núcleo com contribuição aberta e definição de pronto obrigatória. Padrões, composições recomendadas, são documentados, não impostos; times estendem dentro de diretrizes. Página, layout e composição específicos de produto, não tem governança. Nem todo pedido vira componente. Dois ou mais times precisam: candidato a componente. Um time precisa: padrão documentado, sem componente. Um caso específico: resolva localmente e marque para observação. A terceira ocorrência do mesmo pedido local é o gatilho para promover.</p>
+          <p>Documente explicitamente quem decide se um componente novo entra, quem revisa contribuições, quem pode aprovar exceção, quem decide depreciar, e com que frequência isso acontece. Ambiguidade aqui é o que faz pedidos morrerem em fila e contribuidores desistirem.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Quatro camadas, quatro níveis de rigor.</strong></li>
+            <li><strong>Dois times fazem um componente; um faz um padrão.</strong></li>
+            <li><strong>A terceira ocorrência local promove.</strong></li>
+            <li><strong>Nomeie quem decide e a cadência.</strong></li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Fundação rígida, página livre.</strong></li>
+            <li><strong>Dois times: componente. Um time: padrão.</strong></li>
+            <li><strong>A terceira ocorrência local promove.</strong></li>
+            <li><strong>Nomeie quem decide, revisa, excepciona, deprecia.</strong></li>
+            <li><strong>Cadência escrita.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Design engineering: a disciplina, handbook</em> (capítulo 12) · <a href="https://bradfrost.com/blog/post/atomic-web-design/" target="_blank" rel="noopener">Brad Frost, Atomic Design</a></footer>
+        </article>
+
+        <article class="lesson" id="contribution">
+          <span class="eyebrow">Practice · 13</span>
+          <h2>Contribution</h2>
+          <p class="lede">Contribuição é trabalho de alguém fora do núcleo, publicado através do sistema para outras pessoas reutilizarem. Trabalho não publicado é trabalho local. Dimensione o processo à contribuição, responda todo pedido, e faça contar na avaliação das pessoas.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="queue">
+            <div class="demo-stage" data-tiers="correção|melhoria|novo" data-reqs="Ajuste de token no anel de foco|Toast precisa de estado de carregamento|Seletor de intervalo de datas|Erro de digitação na doc do Button|Menu precisa de item com checkbox|Componente de quadro kanban" data-waiting="aguardando…" data-accepted="aceito" data-declined="recusado, com motivo" data-unanswered="sem resposta">
+            <div class="qu-wrap"><div class="qu-bar"><button class="qu-btn" type="button">Enviar pedido</button><span class="qu-read"></span></div><div class="qu-list"></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Triagem semanal</span><input type="checkbox" name="triage" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Níveis por tamanho</span><input type="checkbox" name="tiers" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Envie alguns pedidos. Com triagem eles recebem resposta, mesmo que seja não. Sem ela, acumulam aguardando, e aguardar é o que mata a contribuição. Níveis roteiam um erro de digitação e um componente novo por caminhos diferentes.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Contribuições não são uma categoria única. Tratá-las assim faz o processo pesado demais para o pequeno e leve demais para o grande. Correções, um bug visual, um ajuste de token, uma correção de documentação, recebem revisão leve e entram rápido. Melhorias, uma variante, propriedade ou estado que faltava, recebem revisão de API e definição de pronto parcial. Componentes ou padrões novos recebem proposta, alinhamento e definição de pronto completa. O processo de entrada precisa ser leve o bastante para ser usado: um canal de pedidos com formulário curto, triagem em cadência fixa, semanal costuma bastar, resposta sempre, mesmo que seja não, e critério de entrada público. O que mata contribuição: pedidos sem resposta, critérios invisíveis, e revisão que demora mais que fazer localmente.</p>
+          <p>Antes de culpar a cultura, diagnostique honestamente por que as pessoas não contribuem: não sabem que podem, não sabem como, o processo custa mais que contornar, o trabalho não conta na avaliação delas, a revisão é hostil, não há tempo alocado. Os três primeiros são problemas de design de processo. O quarto é organizacional e o mais determinante: se contribuir não conta para nada, ninguém contribui, independentemente do processo.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Três níveis: correção, melhoria, novo.</strong> Três processos.</li>
+            <li><strong>Triagem semanal, resposta sempre.</strong></li>
+            <li><strong>Critérios públicos.</strong></li>
+            <li><strong>Faça contar</strong> na avaliação de desempenho, ou nada mais importa.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Publicado pelo sistema, ou é trabalho local.</strong></li>
+            <li><strong>Correção, melhoria, novo: três processos.</strong></li>
+            <li><strong>Responda todo pedido.</strong></li>
+            <li><strong>Critérios de entrada públicos.</strong></li>
+            <li><strong>Conte na avaliação.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Design engineering: a disciplina, handbook</em> (capítulo 13) · <a href="https://medium.com/eightshapes-llc/contributions-to-design-systems-5d5a4e8b7b5f" target="_blank" rel="noopener">Nathan Curtis, Contributions to Design Systems</a></footer>
+        </article>
+
+        <article class="lesson" id="definition-of-done">
+          <span class="eyebrow">Practice · 14</span>
+          <h2>Definition of Done</h2>
+          <p class="lede">"Pronto" significa coisas diferentes para pessoas diferentes. Uma matriz torna explícito: seis dimensões, cada uma não começada, em andamento, pronta ou não aplicável. Ela não exige que tudo esteja terminado para publicar; exige que o estado seja visível.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="matrix">
+            <div class="demo-stage" data-ready="pronto" data-empty="não começado" data-published="Publicado" data-partial="Parcial" data-states="não começado|em andamento|pronto|n/a">
+            <div class="mx-wrap"><div class="mx-grid"><div class="mx-row"><span class="mx-dim">Design</span><button class="mx-cell" type="button" data-s="2" aria-label="Design"></button><button class="mx-cell" type="button" data-s="2" aria-label="Design"></button><button class="mx-cell" type="button" data-s="1" aria-label="Design"></button><button class="mx-cell" type="button" data-s="0" aria-label="Design"></button></div><div class="mx-row"><span class="mx-dim">Código</span><button class="mx-cell" type="button" data-s="2" aria-label="Código"></button><button class="mx-cell" type="button" data-s="2" aria-label="Código"></button><button class="mx-cell" type="button" data-s="2" aria-label="Código"></button><button class="mx-cell" type="button" data-s="1" aria-label="Código"></button></div><div class="mx-row"><span class="mx-dim">Comportamento</span><button class="mx-cell" type="button" data-s="2" aria-label="Comportamento"></button><button class="mx-cell" type="button" data-s="1" aria-label="Comportamento"></button><button class="mx-cell" type="button" data-s="0" aria-label="Comportamento"></button><button class="mx-cell" type="button" data-s="0" aria-label="Comportamento"></button></div><div class="mx-row"><span class="mx-dim">Robustez</span><button class="mx-cell" type="button" data-s="1" aria-label="Robustez"></button><button class="mx-cell" type="button" data-s="0" aria-label="Robustez"></button><button class="mx-cell" type="button" data-s="0" aria-label="Robustez"></button><button class="mx-cell" type="button" data-s="0" aria-label="Robustez"></button></div><div class="mx-row"><span class="mx-dim">Verificação</span><button class="mx-cell" type="button" data-s="0" aria-label="Verificação"></button><button class="mx-cell" type="button" data-s="0" aria-label="Verificação"></button><button class="mx-cell" type="button" data-s="0" aria-label="Verificação"></button><button class="mx-cell" type="button" data-s="3" aria-label="Verificação"></button></div><div class="mx-row"><span class="mx-dim">Documentação</span><button class="mx-cell" type="button" data-s="2" aria-label="Documentação"></button><button class="mx-cell" type="button" data-s="0" aria-label="Documentação"></button><button class="mx-cell" type="button" data-s="0" aria-label="Documentação"></button><button class="mx-cell" type="button" data-s="0" aria-label="Documentação"></button></div></div><div class="mx-foot"><span class="mx-read"></span><span class="mx-badge"></span></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Publicar com status visível</span><input type="checkbox" name="label" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Clique nas células para alternar o estado. O componente pode sair antes de toda célula estar pronta; o que não pode é esconder o estado. Desligue o rótulo e vira só "Publicado", e alguém descobre a lacuna do jeito difícil.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Design: todos os estados desenhados, variantes e tamanhos definidos, comportamento responsivo definido, tokens aplicados sem valores soltos. Código: implementado com API revisada, controlado e não controlado, referência exposta, tipos completos. Comportamento: teclado completo, foco correto incluindo restauração, semântica declarada, movimento reduzido respeitado. Robustez: conteúdo longo, curto e vazio; zero, um, muitos; estados de erro e carregamento; testado em outro idioma. Verificação: testes de interação, instantâneos visuais, verificação automatizada de acessibilidade. Documentação: quando usar e quando não, exemplos dos casos comuns, propriedades documentadas, diretrizes de conteúdo.</p>
+          <p>Publicar um componente com documentação parcial e marcá-lo como tal é honesto e útil. Publicar sem dizer que está incompleto é o que gera desconfiança quando alguém descobre a lacuna do jeito difícil. Times que adotam a matriz relatam um efeito que não é sobre qualidade: ela desbloqueia progresso. Quando pronto é vago, o trabalho nunca termina e a moral cai. Quando é uma lista, cada célula marcada é progresso visível.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Seis dimensões, quatro estados, por componente.</strong></li>
+            <li><strong>Publique parcial, rotule parcial.</strong></li>
+            <li><strong>Revise a matriz na triagem.</strong></li>
+            <li><strong>Conte as células vazias</strong> como roteiro.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Seis dimensões, quatro estados.</strong></li>
+            <li><strong>Estado visível vence estado terminado.</strong></li>
+            <li><strong>Rotule parcial como parcial.</strong></li>
+            <li><strong>Células marcadas são moral.</strong></li>
+            <li><strong>Células vazias são o roteiro.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Design engineering: a disciplina, handbook</em> (capítulo 14 e apêndice B) · <a href="https://medium.com/eightshapes-llc/component-completeness-in-design-systems-eb3d1ac8ea8e" target="_blank" rel="noopener">Nathan Curtis, Component Completeness</a></footer>
+        </article>
+
+        <article class="lesson" id="adoption-and-metrics">
+          <span class="eyebrow">Practice · 15</span>
+          <h2>Adoption and Metrics</h2>
+          <p class="lede">A lacuna entre o impacto que o sistema deveria ter e o quanto é usado é a queixa universal. Meça cobertura, segmente por time, conte contribuições e destaques. Um número agregado esconde exatamente o time que não está adotando.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="coverage">
+            <div class="demo-stage">
+            <div class="cv-wrap"><div class="cv-agg"><div class="cv-row"><span>Todos os times</span><div class="cv-track"><span class="cv-fill" style="--v:68"></span></div><b>68%</b><i class="cv-det">9 variantes destacadas</i></div></div><div class="cv-teams"><div class="cv-row"><span>Pagamentos</span><div class="cv-track"><span class="cv-fill" style="--v:92"></span></div><b>92%</b><i class="cv-det">1 variantes destacadas</i></div><div class="cv-row"><span>Growth</span><div class="cv-track"><span class="cv-fill" style="--v:85"></span></div><b>85%</b><i class="cv-det">2 variantes destacadas</i></div><div class="cv-row"><span>Plataforma</span><div class="cv-track"><span class="cv-fill" style="--v:80"></span></div><b>80%</b><i class="cv-det">1 variantes destacadas</i></div><div class="cv-row"><span>Mobile</span><div class="cv-track"><span class="cv-fill" style="--v:15"></span></div><b>15%</b><i class="cv-det">5 variantes destacadas</i></div></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Segmentar por time</span><input type="checkbox" name="segment" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Mostrar variantes destacadas</span><input type="checkbox" name="detach" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">68% de cobertura parece saudável. Segmente e um time está em 15% com cinco cópias locais de coisas que o sistema já oferece. O agregado escondeu exatamente o time que precisa de atenção.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Cobertura de componentes é a métrica principal: que porcentagem da interface em produção usa componentes do sistema versus código local. Um sistema saudável costuma passar de 60 a 70% no primeiro ano e sobe. Adoção por time: adoção baixa em um time é sempre um sinal, de falha de governança ou lacuna de qualidade, e o agregado esconde isso, por isso segmentar importa mais que o total. Taxa de contribuição: quantos componentes ou padrões vieram de fora do núcleo no último trimestre; zero é diagnóstico. Tempo até a primeira tela funcional traduz o sistema em valor de negócio. Destaque: quantas variações locais existem de coisas que o sistema já oferece; cada uma é um pedido não atendido ou uma API insuficiente.</p>
+          <p>Métricas que enganam: número de componentes publicados mede produção, não valor; downloads do pacote medem instalação, não uso; satisfação em pesquisa sem dados de uso ao lado; cobertura sem segmentação. Estágios: existe algo mantido informalmente; biblioteca documentada com adoção desigual, onde se formaliza o dono, define contribuição e começa a medir; adotado na maioria dos times com versionamento e depreciação, onde se sai da manutenção reativa e cria roteiro com entrada dos consumidores; ativo estratégico com impacto mensurável, onde a governança pode ser leve porque o valor é evidente. A maioria das organizações está no estágio dois tentando chegar ao três, e o problema no estágio dois nunca é a biblioteca. É adoção, contribuição e ausência de governança.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Cobertura, segmentada por time.</strong></li>
+            <li><strong>Taxa de contribuição e contagem de destaques.</strong></li>
+            <li><strong>Tempo até a primeira tela funcional.</strong></li>
+            <li><strong>Ignore contagem de componentes e downloads.</strong></li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Cobertura primeiro, segmentada sempre.</strong></li>
+            <li><strong>Taxa de contribuição: zero é diagnóstico.</strong></li>
+            <li><strong>Variantes destacadas são pedidos não atendidos.</strong></li>
+            <li><strong>Contagem de componentes e downloads enganam.</strong></li>
+            <li><strong>Problemas do estágio dois são governança, não biblioteca.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Design engineering: a disciplina, handbook</em> (capítulo 15) · <a href="https://www.designsystems.com/" target="_blank" rel="noopener">designsystems.com</a></footer>
+        </article>
+
+        <article class="lesson" id="generations-and-deprecation">
+          <span class="eyebrow">Practice · 16</span>
+          <h2>Generations and Deprecation</h2>
+          <p class="lede">Em algum momento a mudança incremental deixa de bastar e fundação, arquitetura e linguagem visual mudam juntas. Isso é uma geração nova, e o erro clássico é a migração forçada com prazo, sem ferramenta, competindo com as prioridades de todos os times ao mesmo tempo.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="migrate">
+            <div class="demo-stage" data-migrated="migrados" data-blocked="prazo forçado: todos os times bloqueados ao mesmo tempo" data-auto="o codemod migrou os cinco mecânicos">
+            <div class="mg-wrap"><div class="mg-grid"><button class="mg-chip mg-mech" type="button">Button</button><button class="mg-chip mg-mech" type="button">Badge</button><button class="mg-chip mg-mech" type="button">Input</button><button class="mg-chip mg-mech" type="button">Checkbox</button><button class="mg-chip mg-mech" type="button">Divider</button><button class="mg-chip" type="button">Table</button><button class="mg-chip" type="button">Combobox</button><button class="mg-chip" type="button">Date picker</button></div><span class="mg-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Prazo forçado</span><input type="checkbox" name="forced" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Codemod para os mecânicos</span><input type="checkbox" name="codemod" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Clique nos componentes para migrá-los quando o time estiver pronto. Ligue o codemod e os cinco mecânicos se movem sozinhos, deixando para as pessoas os três que exigem julgamento. Force um prazo e todo mundo trava de uma vez.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Uma geração não é atualização visual; repensa estrutura, escala, documentação e governança ao mesmo tempo. Fazer sem parar o produto: defina sucesso em métricas antes de começar, rode a fundação nova em paralelo num piloto real e pequeno, mantenha compatibilidade retroativa durante a transição, adote em fases com os times escolhendo quando, e forneça ferramenta de migração automática para o que é mecânico. Sistemas crescem por adição e raramente por subtração, e ficam obesos. Uma prática regular de depreciação os mantém utilizáveis. Sinais de que algo deve sair: usado por menos de dois times, substituído por algo melhor há mais de dois ciclos, mantido por hábito sem dono, duplicando outra coisa.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Métricas de sucesso antes de a geração começar.</strong></li>
+            <li><strong>Piloto em paralelo, compatibilidade na transição.</strong></li>
+            <li><strong>Adoção em fases, codemods para o mecânico.</strong></li>
+            <li><strong>Deprecie todo ciclo:</strong> menos de dois times, substituído, sem dono, duplicado.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Defina sucesso em métricas antes.</strong></li>
+            <li><strong>Piloto em paralelo, mantenha compatibilidade.</strong></li>
+            <li><strong>Times escolhem o momento.</strong></li>
+            <li><strong>Codemods para o mecânico.</strong></li>
+            <li><strong>Deprecie: menos de dois times, substituído, sem dono, duplicado.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Design engineering: a disciplina, handbook</em> (capítulo 16) · <a href="https://medium.com/eightshapes-llc/design-system-generations-8e6fac26a8e9" target="_blank" rel="noopener">Nathan Curtis, Design System Generations</a></footer>
+        </article>
+
+        <article class="lesson" id="documentation">
+          <span class="eyebrow">Practice · 17</span>
+          <h2>Documentation</h2>
+          <p class="lede">A documentação mais usada não é a lista de propriedades. Ela responde as perguntas que as pessoas de fato têm: quando usar isto, quando não e o que usar no lugar, três exemplos copiáveis, o que fazer e o que não com imagens, diretrizes de conteúdo, que acessibilidade já está resolvida.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="docs">
+            <div class="demo-stage">
+            <div class="dc-wrap"><div class="dc-nav"><span class="is-on">Visão geral</span><span class="dc-notuse">Quando não usar</span><span>Exemplos</span><span>Props</span><span>Conteúdo</span></div>
+              <div class="dc-body"><b>Toast</b><p class="dc-notuse">Não use para erros que exigem ação; eles somem. Use um alerta inline no lugar.</p><div class="dc-example"><div class="dc-live"><button class="dc-demo-btn" type="button">Salvar</button><span class="dc-toast">Salvo</span></div><div class="dc-static"><span class="dc-shot">captura.png</span><i>desatualizada desde a v3</i></div></div></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Incluir “quando não usar”</span><input type="checkbox" name="notuse" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Exemplo vivo</span><input type="checkbox" name="live" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">A seção que mais evita mau uso é a que a maioria das docs pula. Clique em Salvar no exemplo vivo; ele quebra quando o componente quebra. A captura continuaria sorrindo por anos.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>A referência de propriedades importa e deveria ser gerada a partir dos tipos, não escrita à mão; documentação escrita à mão diverge do código em semanas. A seção mais esquecida é "quando não usar". Ela evita mais mau uso do que qualquer descrição de propriedade: um alerta que diz "para mensagens que exigem ação, use X em vez disto" previne uma classe inteira de problemas. Exemplos rodam de verdade, não capturas de tela. Capturas envelhecem em silêncio; exemplos executáveis quebram quando o componente quebra, que é exatamente o que você quer.</p>
+          <p>Três públicos com necessidades diferentes. Quem desenha precisa de quando usar, como se comporta e o que existe. Quem implementa precisa da API, dos exemplos e dos casos limite. Quem escreve conteúdo precisa das diretrizes de texto. Documentação que serve só ao segundo público é o padrão, e é por isso que designers não usam a documentação do sistema.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Quando usar, quando não, o que no lugar.</strong> Primeiro.</li>
+            <li><strong>Três exemplos vivos</strong> dos casos comuns.</li>
+            <li><strong>Propriedades geradas dos tipos.</strong></li>
+            <li><strong>Diretrizes de conteúdo e acessibilidade</strong> por componente.</li>
+            <li><strong>Escreva para designers e redatores também.</strong></li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Quando não usar, primeiro.</strong></li>
+            <li><strong>Exemplos vivos, não capturas.</strong></li>
+            <li><strong>Props a partir dos tipos.</strong></li>
+            <li><strong>Diretrizes de conteúdo por componente.</strong></li>
+            <li><strong>Três públicos, não um.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Design engineering: a disciplina, handbook</em> (capítulo 17) · <a href="https://storybook.js.org/docs/writing-docs" target="_blank" rel="noopener">Storybook, Writing docs</a></footer>
+        </article>
+
+        <article class="lesson" id="the-interface-testing-pyramid">
+          <span class="eyebrow">Practice · 18</span>
+          <h2>The Interface Testing Pyramid</h2>
+          <p class="lede">Sem verificação automatizada, todo o cuidado das seções anteriores degrada em silêncio. Muitos testes de unidade e componente, um conjunto moderado de instantâneos visuais, poucos fluxos de ponta a ponta. E busque pelo papel acessível, não pela classe.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="pyramid">
+            <div class="demo-stage" data-min="suíte" data-flaky="instável" data-pass="passa depois da refatoração" data-fail="falha: a classe sumiu, o botão não">
+            <div class="py-wrap"><div class="py-bars"><div class="py-bar py-unit"><span>unidade</span></div><div class="py-bar py-comp"><span>componente</span></div><div class="py-bar py-vis"><span>visual</span></div><div class="py-bar py-e2e"><span>ponta a ponta</span></div></div><span class="py-read"></span>
+              <div class="py-test"><code class="py-q py-q-class">querySelector('.btn-3')</code><code class="py-q py-q-role">getByRole('button', { name: 'Salvar' })</code><button class="py-refactor" type="button">Refatorar: renomear a classe</button><span class="py-result"></span></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Parcela ponta a ponta</span><input type="range" name="e2e" min="0" max="80" step="5" value="10" data-unit="%"><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Buscar pelo papel</span><input type="checkbox" name="role" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Suba a parcela ponta a ponta e a suíte fica lenta e instável. Depois clique em Refatorar: a busca por classe quebra embora nada tenha mudado para as pessoas; a busca por papel ainda acha o botão Salvar.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Alguém ajusta um token, três componentes mudam, e ninguém sabe até um usuário reclamar. Testes protegem exatamente o que este material constrói: estados que ninguém quebra sem perceber, comportamento de teclado que continua funcionando, visual que não muda por acidente. Camadas: unidade para lógica pura, rápidos e muitos; componente para um componente isolado em navegador real, com interações, estados e acessibilidade; instantâneos visuais comparados entre versões, pegando o que asserção não pega; fluxos para caminhos críticos de ponta a ponta, caros, lentos e poucos. Dois erros simétricos: excesso de ponta a ponta é lento, instável e pouco informativo quando falha, e times que dependem só deles acabam ignorando falhas, o que é pior que não testar; só unidade não pega nada do que importa em interface, layout quebrado, foco perdido, contraste insuficiente, estado visual errado.</p>
+          <p>Teste como o usuário usa. Consulte elementos pelo papel acessível e pelo texto visível, não por classe ou estrutura interna. O teste frágil procura um nome de classe ou índice de elemento; o robusto procura o botão chamado Salvar. O efeito colateral é excelente: se você não consegue achar o elemento pelo papel e pelo nome, a semântica provavelmente está errada, e o teste acabou de achar um problema de acessibilidade.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Muitos testes de unidade e componente, poucos fluxos.</strong></li>
+            <li><strong>getByRole com nome,</strong> nunca por classe.</li>
+            <li><strong>Testes de componente em navegador real.</strong></li>
+            <li><strong>Um teste que falha e ninguém lê é pior que nenhum.</strong></li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Muitos de unidade e componente, alguns visuais, poucos fluxos.</strong></li>
+            <li><strong>getByRole com nome.</strong></li>
+            <li><strong>Navegador real para testes de componente.</strong></li>
+            <li><strong>Não achável pelo papel significa semântica quebrada.</strong></li>
+            <li><strong>Falhas ignoradas são pior que sem testes.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Design engineering: a disciplina, handbook</em> (capítulo 18) · <a href="https://testing-library.com/docs/queries/about/#priority" target="_blank" rel="noopener">Testing Library, Query priority</a> · <a href="https://playwright.dev/docs/test-components" target="_blank" rel="noopener">Playwright, Component tests</a></footer>
+        </article>
+
+        <article class="lesson" id="visual-testing">
+          <span class="eyebrow">Practice · 19</span>
+          <h2>Visual Testing</h2>
+          <p class="lede">Instantâneos revelam o que nenhuma asserção pega: espaçamento deslocado, cor alterada, quebra diferente, elementos sobrepostos, sombra sumida. Também falham por motivos que não são regressão, e cada falso positivo custa confiança até a revisão virar teatro.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="snap">
+            <div class="demo-stage" data-base="baseline" data-cur="atual" data-diff="regiões de diff · falsos positivos" data-clean="sem diff" data-time2="há 4 min">
+            <div class="sn-wrap"><div class="sn-frames"><div class="sn-frame sn-base"><span class="sn-lbl"></span><div class="sn-card"><b>Pagamento recebido</b><span class="sn-time">há 3 min</span><span class="sn-dot"></span></div></div><div class="sn-frame sn-cur"><span class="sn-lbl"></span><div class="sn-card"><b>Pagamento recebido</b><span class="sn-time">há 3 min</span><span class="sn-dot"></span></div></div></div><div class="sn-bar"><button class="sn-run" type="button">Rodar instantâneo</button><span class="sn-read"></span></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Animações desligadas</span><input type="checkbox" name="noanim" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Congelar o tempo</span><input type="checkbox" name="freeze" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Rode o instantâneo. O badge foi capturado no meio da animação e o horário mudou: dois diffs, zero regressões. Desligue as animações e congele o tempo, rode de novo, e o instantâneo só falha quando algo real muda.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>A instabilidade vem de animação capturada no meio, fontes não carregadas, conteúdo dinâmico como datas e dados aleatórios, imagens carregando, cursor piscando e diferenças de renderização entre sistemas. Estabilize: desative animações e transições no ambiente de teste, a causa número um; congele o tempo e use dados determinísticos; espere as fontes antes de capturar; rode em ambiente consistente, contêiner ou serviço, nunca na máquina de cada pessoa; aguarde a estabilidade de rede e imagens; esconda elementos genuinamente variáveis em vez de tolerar diferença.</p>
+          <p>Capture componentes, não páginas: cada componente em cada variante e estado relevante, composições comuns, os casos de conteúdo hostil, os dois temas, ao menos duas larguras. Páginas inteiras de produto mudam por motivos demais e produzem revisões enormes que ninguém lê com atenção. O instantâneo detecta mudança, não erro; uma pessoa decide se a mudança era intencional. Isso é uma oportunidade: a revisão visual é onde designers entram no fluxo de código de forma natural, aprovando ou reprovando o que mudou. Times que tratam isso como ritual compartilhado ganham muito mais que detecção de regressão.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Animações desligadas, tempo congelado, fontes aguardadas.</strong></li>
+            <li><strong>Ambiente consistente,</strong> nunca máquinas locais.</li>
+            <li><strong>Componentes e composições, dois temas, duas larguras.</strong></li>
+            <li><strong>Designers aprovam os diffs.</strong></li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Animações desligadas no ambiente de teste.</strong></li>
+            <li><strong>Congele o tempo, dados determinísticos.</strong></li>
+            <li><strong>Espere fontes e imagens.</strong></li>
+            <li><strong>Componentes, dois temas, duas larguras.</strong></li>
+            <li><strong>Designers aprovam os diffs.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Design engineering: a disciplina, handbook</em> (capítulo 19) · <a href="https://playwright.dev/docs/test-snapshots" target="_blank" rel="noopener">Playwright, Visual comparisons</a> · <a href="https://www.chromatic.com/docs/" target="_blank" rel="noopener">Chromatic docs</a></footer>
+        </article>
+
+        <article class="lesson" id="interaction-and-accessibility-tests">
+          <span class="eyebrow">Practice · 20</span>
+          <h2>Interaction and Accessibility Tests</h2>
+          <p class="lede">O foco volta ao gatilho quando o diálogo fecha? As setas navegam no menu? Escape fecha só a camada de cima? Cada um desses quebra em silêncio numa refatoração e nunca é pego em revisão de código. Verificação automatizada de acessibilidade é o piso, não o teto.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="itest">
+            <div class="demo-stage">
+            <div class="it-wrap"><div class="it-subject"><button class="it-open" type="button">Abrir diálogo</button><div class="it-dialog" role="dialog"><b>Confirmar</b><span class="it-muted">Isso não pode ser desfeito.</span><button class="it-close" type="button">Fechar</button></div></div>
+              <div class="it-runner"><button class="it-run" type="button">Rodar testes</button><ul class="it-results"><li data-t="focusin">o foco entra no diálogo ao abrir</li><li data-t="restore">o foco volta ao gatilho ao fechar</li><li data-t="contrast">axe: contraste do texto ≥ 4,5:1</li></ul></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Restaurar foco ao fechar</span><input type="checkbox" name="restore" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Texto apagado em 4,5:1</span><input type="checkbox" name="contrast" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Rode os testes contra o diálogo real. Desligue a restauração de foco: o segundo teste falha, o tipo de regressão que revisão de código nunca pega. Baixe o contraste do texto apagado e a regra automatizada também falha.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Testes de interação descrevem o comportamento do usuário como código e verificam o resultado: clicar aqui, tabular até ali, esperar aquilo aparecer. O valor específico para design engineering é proteger as coisas invisíveis e frágeis da seção de Primitivos: restauração de foco, navegação por setas, pilhas de escape, busca por digitação, o item selecionado visível ao abrir, o botão desabilitado que realmente não dispara. Ferramentas automatizadas de acessibilidade rodam regras contra o componente renderizado e pegam violações objetivas: contraste insuficiente, campo sem rótulo, estado não declarado, hierarquia de títulos quebrada, papel inválido. Rode em cada componente, em cada estado, na integração contínua; é barato e pega muitos problemas reais.</p>
+          <p>O limite honesto: a automação detecta uma fração das barreiras, as regras objetivas. Não detecta ordem de foco válida e ilógica, nome acessível presente e inútil, texto alternativo presente e sem sentido, fluxo impossível de completar por teclado apesar de cada elemento ser focável, anúncio na hora errada, ou conteúdo que depende de cor apesar de o contraste passar. O teste real continua sendo navegar com teclado e ouvir com leitor de tela. Feche a integração: falhe quando uma violação nova aparecer, quando um instantâneo mudar sem aprovação, quando um teste de interação quebrar, quando o pacote ultrapassar o orçamento. Sem portões, tudo isso vira relatório que ninguém lê.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Um teste de interação por comportamento invisível.</strong> Foco, Escape, setas, digitação.</li>
+            <li><strong>axe em todo componente e estado no CI.</strong></li>
+            <li><strong>Teclado e leitor de tela à mão,</strong> ainda.</li>
+            <li><strong>Portões, não relatórios.</strong></li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Teste foco, Escape, setas, digitação.</strong></li>
+            <li><strong>axe em todo estado no CI.</strong></li>
+            <li><strong>Automação é o piso.</strong></li>
+            <li><strong>Teclado e leitor de tela à mão.</strong></li>
+            <li><strong>Feche o merge com portão.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Design engineering: a disciplina, handbook</em> (capítulo 20) · <a href="https://github.com/dequelabs/axe-core" target="_blank" rel="noopener">axe-core</a> · <a href="https://storybook.js.org/docs/writing-tests/interaction-testing" target="_blank" rel="noopener">Storybook, Interaction tests</a></footer>
+        </article>
+
+        <article class="lesson" id="what-not-to-automate">
+          <span class="eyebrow">Practice · 21</span>
+          <h2>What Not to Automate</h2>
+          <p class="lede">Nenhuma ferramenta diz se a hierarquia está certa, se o timing parece bom, se a metáfora se sustenta, se o produto parece cuidado. Uma ferramenta pode aprovar uma interface que passa em toda regra e é desagradável de usar.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="judge">
+            <div class="demo-stage">
+            <div class="jd-wrap"><div class="jd-card jd-a"><span class="jd-tag">A</span><b>Resumo semanal</b><span>Quatro relatórios foram enviados e dois aguardam revisão.</span><button type="button" tabindex="-1">Abrir</button><ul class="jd-checks"><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>contraste</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>rótulos</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>teclado</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>papéis</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>instantâneo</li></ul><ul class="jd-notes"><li>apertado: 4px onde cabem 12</li><li>tudo em negrito, nada lidera</li><li>o hover treme e distrai</li><li>o botão parece decoração</li></ul></div><div class="jd-card jd-b"><span class="jd-tag">B</span><b>Resumo semanal</b><span>Quatro relatórios foram enviados e dois aguardam revisão.</span><button type="button" tabindex="-1">Abrir</button><ul class="jd-checks"><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>contraste</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>rótulos</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>teclado</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>papéis</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>instantâneo</li></ul><ul class="jd-notes"><li>calmo, uma coisa lidera</li></ul></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Verificações automatizadas</span><input type="checkbox" name="checks" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Crítica humana</span><input type="checkbox" name="critique" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Os dois cards passam em toda verificação automatizada. Passe o mouse em A. Ligue a crítica: apertado, gritando, tremendo, e nenhuma ferramenta diria isso. Verde é piso; o julgamento é o trabalho.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Se o time passa a tratar "todos os testes verdes" como sinônimo de qualidade, acontece o que sempre acontece quando uma métrica vira meta: o sistema se otimiza para a métrica. A contramedida é manter rituais de crítica separados da verificação automatizada e nunca substituir os primeiros pelos segundos. O que continua sendo trabalho humano: decidir o que merece cuidado incomum, julgar se uma interação parece boa, julgar hierarquia e composição, escolher entre alternativas plausíveis, perceber o que está faltando, testar com pessoas reais, ouvir com leitor de tela, usar em aparelho lento, notar que algo, depois da trigésima vez, irrita. Essa lista é, essencialmente, a descrição do trabalho.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Ritual de crítica separado do CI.</strong> Os dois, nunca um pelo outro.</li>
+            <li><strong>Verde é piso.</strong> Qualidade se julga.</li>
+            <li><strong>Use o produto</strong> devagar, em aparelho lento, trinta vezes.</li>
+            <li><strong>Teste com pessoas.</strong></li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Crítica separada do CI.</strong></li>
+            <li><strong>Verde não é qualidade.</strong></li>
+            <li><strong>Julgue hierarquia, timing, metáfora.</strong></li>
+            <li><strong>Aparelho lento, trigésimo uso.</strong></li>
+            <li><strong>Pessoas reais, tarefas reais.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <em>Design engineering: a disciplina, handbook</em> (capítulo 21) · <a href="https://www.interfacecraft.dev/" target="_blank" rel="noopener">Josh Puckett, Interface Craft (crítica)</a></footer>
+        </article>
+      </section>
+      <footer class="footer"><p>Biblioteca de estudo pessoal. Conteúdo sintetizado a partir das fontes listadas em cada aula; nomes de cursos e autores pertencem aos seus respectivos donos. Hierarquia só por tamanho, peso e espaço.</p></footer>
+    </div>
+  </main>
+</div>
+<script src="../app.js"></script>
+</body>
+</html>

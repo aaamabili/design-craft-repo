@@ -413,6 +413,92 @@
       setIdx(0, false);
       if ('ResizeObserver' in window) new ResizeObserver(function () { if (!kDragging) setIdx(lastIdx, false); }).observe(dtTrack);
     }
+    // Practice demos --------------------------------------------------------
+    var stg = demo.querySelector('.demo-stage');
+    var exV = demo.querySelector('.xt-verdict');
+    if (exV) { function exUpd() { var n = Number(demo.getAttribute('data-occ')) || 1; exV.textContent = demo.classList.contains('on-early') ? stg.getAttribute('data-early') : stg.getAttribute(n >= 3 ? 'data-v3' : n === 2 ? 'data-v2' : 'data-v1'); } Array.prototype.forEach.call(demo.querySelectorAll('.demo-controls input'), function (i) { i.addEventListener('input', exUpd); i.addEventListener('change', exUpd); }); exUpd(); }
+    var ptList = demo.querySelector('.pt-list');
+    if (ptList) {
+      var ptRead = demo.querySelector('.pt-read'), ptDrag = null, ptX = 0;
+      ptList.addEventListener('pointerdown', function (e) { var it = e.target.closest('.pt-item'); if (!it) return; if (!demo.classList.contains('on-inter')) { ptRead.textContent = stg.getAttribute('data-noint'); return; } ptDrag = it; ptX = e.clientX; it.classList.add('is-dragging'); try { ptList.setPointerCapture(e.pointerId); } catch (x) {} });
+      ptList.addEventListener('pointermove', function (e) { if (!ptDrag) return; var dx = Math.max(0, e.clientX - ptX); ptDrag.style.transform = 'translateX(' + dx + 'px)'; ptDrag.style.opacity = 1 - dx / 240; });
+      function ptEnd(e) { if (!ptDrag) return; var dx = e ? e.clientX - ptX : 0; ptDrag.classList.remove('is-dragging'); ptDrag.style.transform = ''; ptDrag.style.opacity = ''; if (dx > 70) { var it = ptDrag; it.classList.add('is-gone'); ptRead.textContent = it.firstChild.textContent + ' · ' + stg.getAttribute('data-dismissed'); setTimeout(function () { it.remove(); if (!ptList.children.length) { ptList.innerHTML = ptList.getAttribute('data-orig'); } }, 260); } ptDrag = null; }
+      ptList.setAttribute('data-orig', ptList.innerHTML);
+      ptList.addEventListener('pointerup', ptEnd); ptList.addEventListener('pointercancel', function () { ptEnd(null); });
+    }
+    var gnGrid = demo.querySelector('.gn-grid');
+    if (gnGrid) {
+      var gnRead = demo.querySelector('.gn-read'), gnT0 = 0;
+      function gnRender() { gnGrid.innerHTML = ''; for (var i = 1; i <= 5; i++) { var c = document.createElement('div'); c.className = 'gn-card v' + i + (demo.classList.contains('on-system') ? ' gn-sys' : ''); var hostile = demo.classList.contains('on-hostile'); c.innerHTML = '<b>' + (hostile ? stg.getAttribute('data-long') : stg.getAttribute('data-title')) + '</b><span>' + (hostile ? stg.getAttribute('data-long') : '$29 / mo') + '</span><i>' + stg.getAttribute('data-cta') + '</i>'; c.addEventListener('click', function () { c.classList.toggle('is-reviewed'); gnStatus(); }); gnGrid.appendChild(c); } gnT0 = performance.now(); gnStatus(); }
+      function gnStatus() { var n = gnGrid.querySelectorAll('.is-reviewed').length, broken = demo.classList.contains('on-hostile') && !demo.classList.contains('on-system') ? 3 : 0; gnRead.textContent = stg.getAttribute('data-gen') + ' · ' + n + '/5 ' + stg.getAttribute('data-rev') + (n === 5 ? ' (' + Math.round((performance.now() - gnT0) / 1000) + 's)' : '') + (broken ? ' · ' + broken + ' ' + stg.getAttribute('data-broken') : ''); }
+      demo.querySelector('.gn-btn').addEventListener('click', gnRender);
+      Array.prototype.forEach.call(demo.querySelectorAll('.demo-controls input'), function (i) { i.addEventListener('change', function () { if (gnGrid.children.length) gnRender(); }); });
+    }
+    var ppGrid = demo.querySelector('.pp2-grid');
+    if (ppGrid) {
+      var ppProps = stg.getAttribute('data-props').split('|'), ppPieces = stg.getAttribute('data-pieces').split('|');
+      function ppUpd() { var n = Number(demo.getAttribute('data-bools')) || 6, combos = Math.pow(2, n), compose = demo.classList.contains('on-compose'); demo.querySelector('.pp2-props').innerHTML = ppProps.slice(0, n).map(function (p) { return '<span>' + p + '</span>'; }).join(''); demo.querySelector('.pp2-n').textContent = compose ? ppPieces.length : combos.toLocaleString(); demo.querySelector('.pp2-l').textContent = compose ? stg.getAttribute('data-valid') : stg.getAttribute('data-combos'); var html = ''; var shown = Math.min(combos, 96); for (var i = 0; i < shown; i++) html += '<i' + (i < Math.min(6, combos) ? ' class="ok"' : '') + '></i>'; if (combos > shown) html += '<em>+' + (combos - shown).toLocaleString() + '</em>'; html += ppPieces.map(function (p) { return '<span class="pp2-piece">' + p + '</span>'; }).join(''); ppGrid.innerHTML = html; }
+      Array.prototype.forEach.call(demo.querySelectorAll('.demo-controls input'), function (i) { i.addEventListener('input', ppUpd); i.addEventListener('change', ppUpd); }); ppUpd();
+    }
+    var ctComp = demo.querySelector('.ct-comp');
+    if (ctComp) {
+      var ctLog = demo.querySelector('.ct-log'), ctOpen = false;
+      function ctLogLine(t, ignored) { var l = document.createElement('span'); l.textContent = t; if (ignored) l.className = 'is-ignored'; ctLog.prepend(l); while (ctLog.children.length > 4) ctLog.lastChild.remove(); }
+      function ctSet(v, source) { ctOpen = v; ctComp.classList.toggle('is-open', v); demo.querySelector('.ct-head').setAttribute('aria-expanded', v ? 'true' : 'false'); if (demo.classList.contains('on-notify')) ctLogLine('onOpenChange(' + v + ') ← ' + source); }
+      demo.querySelector('.ct-head').addEventListener('click', function () { ctSet(!ctOpen, 'click'); });
+      demo.querySelector('.ct-ext').addEventListener('click', function () { if (demo.classList.contains('on-controlled')) ctSet(!ctOpen, '⌘.'); else ctLogLine('⌘. ' + stg.getAttribute('data-ignored'), true); });
+    }
+    var esRead = demo.querySelector('.es-read');
+    if (esRead) { function esUpd() { var n = Number(demo.getAttribute('data-rogue')) || 0, closed = demo.classList.contains('on-closed'); esRead.textContent = closed ? (n ? n + ' ' + stg.getAttribute('data-work') : '—') : (n + ' ' + stg.getAttribute('data-usage') + (n >= 3 ? ' · ' + stg.getAttribute('data-promote') : '')); } Array.prototype.forEach.call(demo.querySelectorAll('.demo-controls input'), function (i) { i.addEventListener('input', esUpd); i.addEventListener('change', esUpd); }); esUpd(); }
+    var tmRead = demo.querySelector('.tm-read');
+    if (tmRead) { var tmNames = stg.getAttribute('data-names').split('|'), tmRisks = stg.getAttribute('data-risks').split('|'); function tmUpd() { var m = Number(demo.getAttribute('data-model')) || 0; demo.querySelector('.tm-name').textContent = tmNames[m]; demo.querySelector('.tm-risk').textContent = tmRisks[m]; demo.querySelector('.tm-health').textContent = demo.classList.contains('on-rituals') ? stg.getAttribute('data-ok') : stg.getAttribute('data-bad'); } Array.prototype.forEach.call(demo.querySelectorAll('.demo-controls input'), function (i) { i.addEventListener('input', tmUpd); i.addEventListener('change', tmUpd); }); tmUpd(); }
+    var gvV = demo.querySelector('.gv-verdict');
+    if (gvV) { function gvUpd() { var n = Number(demo.getAttribute('data-teams')) || 1, third = demo.classList.contains('on-third'), layer; if (n >= 2 || third) { gvV.textContent = stg.getAttribute('data-component'); layer = 1; } else { gvV.textContent = stg.getAttribute(n === 1 ? 'data-local' : 'data-pattern'); layer = 3; } if (n === 1 && !third) { gvV.textContent = stg.getAttribute('data-local'); layer = 3; } Array.prototype.forEach.call(demo.querySelectorAll('.gv-layer'), function (l, i) { l.classList.toggle('is-hit', i === layer); }); } Array.prototype.forEach.call(demo.querySelectorAll('.demo-controls input'), function (i) { i.addEventListener('input', gvUpd); i.addEventListener('change', gvUpd); }); gvUpd(); }
+    var quList = demo.querySelector('.qu-list');
+    if (quList) {
+      var quReqs = stg.getAttribute('data-reqs').split('|'), quTiers = stg.getAttribute('data-tiers').split('|'), quI = 0, quRead = demo.querySelector('.qu-read');
+      function quCount() { var w = quList.querySelectorAll('.qu-status:not(.ok):not(.no)').length; quRead.textContent = w ? w + ' ' + stg.getAttribute('data-unanswered') : ''; }
+      demo.querySelector('.qu-btn').addEventListener('click', function () { var t = quReqs[quI % quReqs.length], tier = quTiers[quI % 3]; quI++; var it = document.createElement('div'); it.className = 'qu-item'; it.innerHTML = '<span>' + t + '</span><span class="qu-tier">' + tier + '</span><span class="qu-status">' + stg.getAttribute('data-waiting') + '</span>'; quList.prepend(it); while (quList.children.length > 4) quList.lastChild.remove(); quCount(); var st = it.querySelector('.qu-status'); var tick = function () { if (!it.isConnected) return; if (demo.classList.contains('on-triage')) { var ok = quI % 3 !== 0; st.textContent = stg.getAttribute(ok ? 'data-accepted' : 'data-declined'); st.className = 'qu-status ' + (ok ? 'ok' : 'no'); quCount(); } else setTimeout(tick, 800); }; setTimeout(tick, 1200); });
+    }
+    var mxGrid = demo.querySelector('.mx-grid');
+    if (mxGrid) {
+      var mxStates = stg.getAttribute('data-states').split('|');
+      function mxUpd() { var cells = Array.prototype.slice.call(mxGrid.querySelectorAll('.mx-cell')), applicable = cells.filter(function (c) { return c.getAttribute('data-s') !== '3'; }), done = applicable.filter(function (c) { return c.getAttribute('data-s') === '2'; }).length, empty = applicable.filter(function (c) { return c.getAttribute('data-s') === '0'; }).length; demo.querySelector('.mx-read').textContent = Math.round(done / applicable.length * 100) + '% ' + stg.getAttribute('data-ready') + ' · ' + empty + ' ' + stg.getAttribute('data-empty'); var badge = demo.querySelector('.mx-badge'), gaps = Array.prototype.slice.call(mxGrid.querySelectorAll('.mx-row')).filter(function (r) { return Array.prototype.some.call(r.querySelectorAll('.mx-cell'), function (c) { return c.getAttribute('data-s') === '0' || c.getAttribute('data-s') === '1'; }); }).map(function (r) { return r.querySelector('.mx-dim').textContent.toLowerCase(); }); var partial = gaps.length > 0 && demo.classList.contains('on-label'); badge.textContent = partial ? stg.getAttribute('data-partial') + ' · ' + gaps.slice(0, 2).join(', ') : stg.getAttribute('data-published'); badge.classList.toggle('is-partial', partial); cells.forEach(function (c) { c.title = mxStates[Number(c.getAttribute('data-s'))]; }); }
+      Array.prototype.forEach.call(mxGrid.querySelectorAll('.mx-cell'), function (c) { c.addEventListener('click', function () { c.setAttribute('data-s', (Number(c.getAttribute('data-s')) + 1) % 4); mxUpd(); }); });
+      var mxSw = demo.querySelector('input[name="label"]'); if (mxSw) mxSw.addEventListener('change', mxUpd); mxUpd();
+    }
+    var mgGrid = demo.querySelector('.mg-grid');
+    if (mgGrid) {
+      var mgRead = demo.querySelector('.mg-read');
+      function mgUpd() { var all = mgGrid.querySelectorAll('.mg-chip').length, n = mgGrid.querySelectorAll('.is-migrated').length; mgRead.textContent = n + '/' + all + ' ' + stg.getAttribute('data-migrated') + (demo.classList.contains('on-forced') && n < all ? ' · ' + stg.getAttribute('data-blocked') : '') + (demo.classList.contains('on-codemod') ? ' · ' + stg.getAttribute('data-auto') : ''); }
+      Array.prototype.forEach.call(mgGrid.querySelectorAll('.mg-chip'), function (c) { c.addEventListener('click', function () { c.classList.toggle('is-migrated'); mgUpd(); }); });
+      var mgSw = demo.querySelector('input[name="codemod"]'); if (mgSw) mgSw.addEventListener('change', function () { Array.prototype.forEach.call(mgGrid.querySelectorAll('.mg-mech'), function (c) { c.classList.toggle('is-migrated', mgSw.checked); }); mgUpd(); });
+      var mgF = demo.querySelector('input[name="forced"]'); if (mgF) mgF.addEventListener('change', mgUpd); mgUpd();
+    }
+    var dcBtn = demo.querySelector('.dc-demo-btn');
+    if (dcBtn) dcBtn.addEventListener('click', function () { var t = demo.querySelector('.dc-toast'); t.classList.add('is-shown'); clearTimeout(t._t); t._t = setTimeout(function () { t.classList.remove('is-shown'); }, 1500); });
+    var pyRead = demo.querySelector('.py-read');
+    if (pyRead) {
+      function pyUpd() { var e = Number(demo.getAttribute('data-e2e')) || 0; pyRead.textContent = stg.getAttribute('data-min') + ': ' + Math.round(2 + e * 0.55) + ' min · ' + stg.getAttribute('data-flaky') + ': ' + Math.round(e * 0.35) + '%'; }
+      Array.prototype.forEach.call(demo.querySelectorAll('.demo-controls input[type="range"]'), function (r) { r.addEventListener('input', pyUpd); }); pyUpd();
+      var pyRes = demo.querySelector('.py-result');
+      demo.querySelector('.py-refactor').addEventListener('click', function () { var role = demo.classList.contains('on-role'); pyRes.textContent = role ? '✓ ' + stg.getAttribute('data-pass') : '✕ ' + stg.getAttribute('data-fail'); pyRes.className = 'py-result ' + (role ? 'ok' : 'bad'); });
+      var pySw = demo.querySelector('input[name="role"]'); if (pySw) pySw.addEventListener('change', function () { pyRes.textContent = ''; pyRes.className = 'py-result'; });
+    }
+    var snRun = demo.querySelector('.sn-run');
+    if (snRun) {
+      var snRead = demo.querySelector('.sn-read'), snCur = demo.querySelector('.sn-cur');
+      demo.querySelector('.sn-base .sn-lbl').textContent = stg.getAttribute('data-base'); demo.querySelector('.sn-cur .sn-lbl').textContent = stg.getAttribute('data-cur');
+      snRun.addEventListener('click', function () { var dot = snCur.querySelector('.sn-dot'), time = snCur.querySelector('.sn-time'), diffs = 0; var anim = !demo.classList.contains('on-noanim'), tick = !demo.classList.contains('on-freeze'); dot.style.setProperty('--dx', anim ? '-14px' : '0'); dot.style.setProperty('--ds', anim ? '1.6' : '1'); dot.classList.toggle('is-diff', anim); if (anim) diffs++; time.textContent = tick ? stg.getAttribute('data-time2') : demo.querySelector('.sn-base .sn-time').textContent; time.classList.toggle('is-diff', tick); if (tick) diffs++; snRead.textContent = diffs ? diffs + ' ' + stg.getAttribute('data-diff') : '✓ ' + stg.getAttribute('data-clean'); snRead.className = 'sn-read ' + (diffs ? 'bad' : 'ok'); });
+    }
+    var itRun = demo.querySelector('.it-run');
+    if (itRun) {
+      var itDlg = demo.querySelector('.it-dialog'), itOpen = demo.querySelector('.it-open'), itClose = demo.querySelector('.it-close');
+      function itShow() { itDlg.classList.add('is-open'); itClose.focus(); }
+      function itHide() { itDlg.classList.remove('is-open'); if (demo.classList.contains('on-restore')) itOpen.focus(); else itClose.blur(); }
+      itOpen.addEventListener('click', itShow); itClose.addEventListener('click', itHide); itDlg.addEventListener('keydown', function (e) { if (e.key === 'Escape') { e.stopPropagation(); itHide(); } });
+      itRun.addEventListener('click', function () { var res = {}; itShow(); res.focusin = itDlg.contains(document.activeElement) || itDlg.classList.contains('is-open'); itHide(); res.restore = document.activeElement === itOpen || demo.classList.contains('on-restore'); res.contrast = demo.classList.contains('on-contrast'); Array.prototype.forEach.call(demo.querySelectorAll('.it-results li'), function (li) { var ok = res[li.getAttribute('data-t')]; li.className = ok ? 'ok' : 'bad'; }); itRun.focus(); });
+    }
     // Primitives demos ------------------------------------------------------
     var stageEl = demo.querySelector('.demo-stage');
     // 01 dimensions
