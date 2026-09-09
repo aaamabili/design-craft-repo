@@ -460,33 +460,52 @@
     function aiOn(fn) { Array.prototype.forEach.call(demo.querySelectorAll('.demo-controls input'), function (i) { i.addEventListener('input', fn); i.addEventListener('change', fn); }); fn(); }
     var aiTouch = window.matchMedia && window.matchMedia('(hover: none)').matches;
     var aiOut = demo.querySelector('.demo-controls output');
-    // 01 reliance: certainty shown vs reliability had
+    // 01 reliance: five extracted values; certainty shown vs reliability had
     var airW = demo.querySelector('.air-wrap');
     if (airW) {
-      var airCard = airW.querySelector('.air-card'), airTag = airW.querySelector('.air-tag'), airRead = airW.querySelector('.air-read'), airRel = airW.querySelector('.air-rel'), airConf = airW.querySelector('.air-conf'), airSrc = airW.querySelector('.air-src');
-      aiOn(function () {
-        var rel = Number(demo.getAttribute('data-rel')) || 80, conf = Number(demo.getAttribute('data-conf')) || 0;
-        airRel.style.setProperty('--w', rel + '%'); airConf.style.setProperty('--w', conf + '%');
-        airSrc.style.opacity = String(Math.max(0.15, 1 - conf / 100));
-        var cert = conf < 40 ? 'd' : conf < 75 ? 's' : 'a'; airCard.setAttribute('data-cert', cert); airTag.textContent = ga(cert === 'd' ? 'td' : cert === 's' ? 'ts' : 'ta');
-        var gap = conf - rel, band = gap > 8 ? 'over' : gap < -12 ? 'under' : 'cal'; airW.setAttribute('data-band', band); airRead.textContent = ga(band);
-      });
-      demo._replay = function () {};
+      var airCards = Array.prototype.slice.call(airW.querySelectorAll('.air-card')), airRead = airW.querySelector('.air-read');
+      var airClaims = ga('claims').split('|'), airSrcs = ga('srcs').split('|'), airWrong = ga('wrong').split('|'), airWrongSet = { 60: [1, 3], 80: [3], 100: [] };
+      function airStatus() {
+        var acc = airCards.filter(function (c) { return c.classList.contains('is-accepted'); }), shipped = acc.filter(function (c) { return c.classList.contains('is-wrong'); }).length;
+        var left = airCards.filter(function (c) { return c.classList.contains('is-wrong') && !c.classList.contains('is-accepted'); }).length;
+        var rel = Number(demo.getAttribute('data-rel')) || 60, conf = Number(demo.getAttribute('data-conf')) || 0, gap = conf - rel, band = gap > 10 ? 'over' : gap < -45 ? 'under' : 'cal';
+        airW.setAttribute('data-band', band);
+        airRead.innerHTML = (acc.length ? '<b>' + acc.length + '/5 ' + ga('accepted') + ' · ' + shipped + ' ' + ga('shipped') + (left ? ' · ' + left + ' ' + ga('caught') : '') + '</b><br>' : '') + ga(band);
+      }
+      function airRender() {
+        var rel = Number(demo.getAttribute('data-rel')) || 60, conf = Number(demo.getAttribute('data-conf')) || 0, wrong = airWrongSet[rel] || [];
+        var cert = conf < 40 ? 'd' : conf < 75 ? 's' : 'a';
+        airCards.forEach(function (c, i) {
+          var w = wrong.indexOf(i) >= 0; c.classList.toggle('is-wrong', w); c.classList.remove('is-accepted');
+          c.querySelector('.air-claim').textContent = airClaims[i]; c.querySelector('.air-src').textContent = w ? airWrong[i] : airSrcs[i];
+          c.setAttribute('data-cert', cert); c.querySelector('.air-tag').textContent = ga(cert === 'd' ? 'td' : cert === 's' ? 'ts' : 'ta'); c.querySelector('.air-res').textContent = '';
+          c.style.setProperty('--srco', String(Math.max(0, 1 - conf / 75)));
+        });
+        airStatus();
+      }
+      airCards.forEach(function (c) { c.addEventListener('click', function () { var on = c.classList.toggle('is-accepted'); c.querySelector('.air-res').textContent = on ? (c.classList.contains('is-wrong') ? ga('wrongtag') : '✓') : ''; airStatus(); }); });
+      aiOn(airRender); demo._replay = function () {};
     }
-    // 02 bins: model vs deterministic control
+    // 02 comparative advantage: exact outcome vs messy input
     var aibW = demo.querySelector('.aib-wrap');
     if (aibW) {
-      var aibPool = aibW.querySelector('.aib-pool'), aibCols = { model: aibW.querySelector('[data-bin="model"]'), exact: aibW.querySelector('[data-bin="exact"]') }, aibRead = aibW.querySelector('.aib-read');
-      var aibChips = Array.prototype.slice.call(aibW.querySelectorAll('.aib-chip'));
-      function aibStatus() { var placed = 0, right = 0; aibChips.forEach(function (c) { var i = c.getAttribute('data-in'); if (i !== 'pool') { placed++; if (i === c.getAttribute('data-ans')) right++; } }); aibRead.textContent = demo.classList.contains('on-reveal') ? right + '/' + aibChips.length + ' ' + ga('right') : placed + '/' + aibChips.length + ' ' + ga('placed'); }
-      aibChips.forEach(function (c) { c.addEventListener('click', function () { var i = c.getAttribute('data-in'), n = i === 'pool' ? 'model' : i === 'model' ? 'exact' : 'pool'; c.setAttribute('data-in', n); c.style.animation = 'none'; (n === 'pool' ? aibPool : aibCols[n]).appendChild(c); void c.offsetWidth; c.style.animation = ''; aibStatus(); }); });
-      aiOn(aibStatus); demo._replay = function () {};
+      var aibSeg = aibW.querySelectorAll('.aib-seg-b'), aibOut = aibW.querySelector('.aib-chat-out'), aibRes1 = aibW.querySelector('.aib-res1'), aibRes2 = aibW.querySelector('.aib-res2'), aibRow2 = aibW.querySelectorAll('.aib-row')[1], aibCands = aibW.querySelector('.aib-cands'), aibSum = aibW.querySelector('.aib-sum'), aibT, aibT2, aibSummed = false;
+      Array.prototype.forEach.call(aibSeg, function (b) { b.addEventListener('click', function () { Array.prototype.forEach.call(aibSeg, function (x) { x.classList.remove('is-on'); }); b.classList.add('is-on'); aibRes1.className = 'aib-res aib-res1 is-fast'; aibRes1.textContent = b.textContent === ga('done') ? ga('resseg') : b.textContent; }); });
+      aibW.querySelector('.aib-send').addEventListener('click', function () { clearTimeout(aibT); aibOut.classList.add('is-on'); aibOut.textContent = ga('thinking'); aibRes1.className = 'aib-res aib-res1'; aibRes1.textContent = ''; aibT = setTimeout(function () { aibOut.textContent = ga('chatout'); Array.prototype.forEach.call(aibSeg, function (x, i) { x.classList.toggle('is-on', i === 2); }); aibRes1.className = 'aib-res aib-res1 is-slow'; aibRes1.textContent = ga('reschat'); }, 1100); });
+      function aibRenderCands() {
+        var list = ga('cands').split('|'), multi = demo.classList.contains('on-multi'); aibCands.innerHTML = '';
+        list.slice(0, multi ? 4 : 1).forEach(function (txt, i) { var b = document.createElement('button'); b.type = 'button'; b.className = 'aib-cand'; b.innerHTML = (multi ? '<small>' + (i + 1) + '/4</small>' : '') + txt; b.addEventListener('click', function () { if (!multi) { aibSummarize(); return; } Array.prototype.forEach.call(aibCands.children, function (x) { x.classList.remove('is-picked'); }); b.classList.add('is-picked'); aibRes2.textContent = ga('respick').replace('%d', i + 1); }); aibCands.appendChild(b); });
+        aibRes2.textContent = multi ? '' : ga('resone');
+      }
+      function aibSummarize() { clearTimeout(aibT2); aibSummed = true; aibCands.innerHTML = ''; aibRes2.textContent = ''; aibRow2.classList.add('is-gen'); aibSum.disabled = true; aibT2 = setTimeout(function () { aibRow2.classList.remove('is-gen'); aibSum.disabled = false; aibRenderCands(); }, 900); }
+      aibSum.addEventListener('click', aibSummarize);
+      demo._replay = function () { if (aibSummed) aibRenderCands(); if (demo.classList.contains('on-aifront')) { if (!aibOut.classList.contains('is-on')) aibW.querySelector('.aib-send').click(); } else { aibOut.classList.remove('is-on'); } };
     }
     // 03 pattern by task
     var aipW = demo.querySelector('.aip-wrap');
     if (aipW) {
       var aipTask = aipW.querySelector('.aip-task'), aipRead = aipW.querySelector('.aip-read'), aipGhost = aipW.querySelector('.aip-ghost'), aipRun = aipW.querySelector('.aip-run'), aipLis = aipW.querySelectorAll('.aip-plan li'), aipT;
-      aiOn(function () { var s = demo.getAttribute('data-stakes') || '1'; aipTask.textContent = ga('t' + s); var chat = demo.classList.contains('on-chat'); aipRead.textContent = chat ? ga('m' + s) : ''; aipW.setAttribute('data-fit', chat && s !== '2' ? 'bad' : 'ok'); });
+      aiOn(function () { var s = demo.getAttribute('data-stakes') || '1'; aipTask.textContent = ga('t' + s); if (aiOut) aiOut.textContent = ga('o' + s); var chat = demo.classList.contains('on-chat'); aipRead.textContent = chat ? ga('m' + s) : ''; aipW.setAttribute('data-fit', chat && s !== '2' ? 'bad' : 'ok'); });
       function aipAccept() { aipGhost.classList.add('is-accepted'); }
       aipGhost.addEventListener('click', aipAccept); aipGhost.addEventListener('keydown', function (e) { if (e.key === 'Tab' || e.key === 'Enter') { e.preventDefault(); aipAccept(); } });
       aipRun.addEventListener('click', function () { clearTimeout(aipT); Array.prototype.forEach.call(aipLis, function (li) { li.classList.remove('is-done', 'is-active'); }); aipRun.disabled = true; var i = 0; function step() { if (i > 0) { aipLis[i - 1].classList.remove('is-active'); aipLis[i - 1].classList.add('is-done'); } if (i < aipLis.length) { aipLis[i].classList.add('is-active'); i++; aipT = setTimeout(step, 550); } else { aipRun.disabled = false; aipRead.textContent = ga('done'); } } step(); });
