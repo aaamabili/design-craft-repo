@@ -1,6 +1,6 @@
 # Interface Craft
 
-A study library on interface craft: 157 lessons across Craft, Typography, Color, Layout, Motion, UX, Primitives and Practice, plus a References section. Every lesson has a live, hands-on demo (sliders and switches, no play buttons), "details that make the difference", and sources.
+A study library on interface craft: 171 lessons across Craft, Typography, Color, Layout, Motion, UX, Primitives, Practice and AI, plus a References section. Every lesson has a live, hands-on demo (sliders and switches, no play buttons), "details that make the difference", and sources.
 
 Static site: HTML + CSS + a small amount of vanilla JS. English at the root, Portuguese under `pt/`. Light and dark themes, Inter everywhere, exactly five font sizes (11, 13, 16, 24 and 32px).
 
@@ -17,7 +17,7 @@ Then open `http://localhost:3000`.
 ## Structure
 
 - `index.html` — home with one card per section
-- `craft.html`, `typography.html`, `color.html`, `layout.html`, `motion.html`, `ux.html`, `primitives.html`, `practice.html`, `references.html` — sections (EN)
+- `craft.html`, `typography.html`, `color.html`, `layout.html`, `motion.html`, `ux.html`, `primitives.html`, `practice.html`, `ai.html`, `references.html` — sections (EN)
 - `pt/` — the same pages in Portuguese
 - `styles.css` — tokens, layout and every demo's styles
 - `app.js` — theme, language, sidebar and demo interactions

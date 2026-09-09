@@ -454,6 +454,198 @@
       setIdx(0, false);
       if ('ResizeObserver' in window) new ResizeObserver(function () { if (!kDragging) setIdx(lastIdx, false); }).observe(dtTrack);
     }
+    // AI demos ---------------------------------------------------------------
+    var aiS = demo.querySelector('.demo-stage');
+    function ga(n) { return aiS ? (aiS.getAttribute('data-' + n) || '') : ''; }
+    function aiOn(fn) { Array.prototype.forEach.call(demo.querySelectorAll('.demo-controls input'), function (i) { i.addEventListener('input', fn); i.addEventListener('change', fn); }); fn(); }
+    var aiTouch = window.matchMedia && window.matchMedia('(hover: none)').matches;
+    var aiOut = demo.querySelector('.demo-controls output');
+    // 01 reliance: certainty shown vs reliability had
+    var airW = demo.querySelector('.air-wrap');
+    if (airW) {
+      var airCard = airW.querySelector('.air-card'), airTag = airW.querySelector('.air-tag'), airRead = airW.querySelector('.air-read'), airRel = airW.querySelector('.air-rel'), airConf = airW.querySelector('.air-conf'), airSrc = airW.querySelector('.air-src');
+      aiOn(function () {
+        var rel = Number(demo.getAttribute('data-rel')) || 80, conf = Number(demo.getAttribute('data-conf')) || 0;
+        airRel.style.setProperty('--w', rel + '%'); airConf.style.setProperty('--w', conf + '%');
+        airSrc.style.opacity = String(Math.max(0.15, 1 - conf / 100));
+        var cert = conf < 40 ? 'd' : conf < 75 ? 's' : 'a'; airCard.setAttribute('data-cert', cert); airTag.textContent = ga(cert === 'd' ? 'td' : cert === 's' ? 'ts' : 'ta');
+        var gap = conf - rel, band = gap > 8 ? 'over' : gap < -12 ? 'under' : 'cal'; airW.setAttribute('data-band', band); airRead.textContent = ga(band);
+      });
+      demo._replay = function () {};
+    }
+    // 02 bins: model vs deterministic control
+    var aibW = demo.querySelector('.aib-wrap');
+    if (aibW) {
+      var aibPool = aibW.querySelector('.aib-pool'), aibCols = { model: aibW.querySelector('[data-bin="model"]'), exact: aibW.querySelector('[data-bin="exact"]') }, aibRead = aibW.querySelector('.aib-read');
+      var aibChips = Array.prototype.slice.call(aibW.querySelectorAll('.aib-chip'));
+      function aibStatus() { var placed = 0, right = 0; aibChips.forEach(function (c) { var i = c.getAttribute('data-in'); if (i !== 'pool') { placed++; if (i === c.getAttribute('data-ans')) right++; } }); aibRead.textContent = demo.classList.contains('on-reveal') ? right + '/' + aibChips.length + ' ' + ga('right') : placed + '/' + aibChips.length + ' ' + ga('placed'); }
+      aibChips.forEach(function (c) { c.addEventListener('click', function () { var i = c.getAttribute('data-in'), n = i === 'pool' ? 'model' : i === 'model' ? 'exact' : 'pool'; c.setAttribute('data-in', n); c.style.animation = 'none'; (n === 'pool' ? aibPool : aibCols[n]).appendChild(c); void c.offsetWidth; c.style.animation = ''; aibStatus(); }); });
+      aiOn(aibStatus); demo._replay = function () {};
+    }
+    // 03 pattern by task
+    var aipW = demo.querySelector('.aip-wrap');
+    if (aipW) {
+      var aipTask = aipW.querySelector('.aip-task'), aipRead = aipW.querySelector('.aip-read'), aipGhost = aipW.querySelector('.aip-ghost'), aipRun = aipW.querySelector('.aip-run'), aipLis = aipW.querySelectorAll('.aip-plan li'), aipT;
+      aiOn(function () { var s = demo.getAttribute('data-stakes') || '1'; aipTask.textContent = ga('t' + s); var chat = demo.classList.contains('on-chat'); aipRead.textContent = chat ? ga('m' + s) : ''; aipW.setAttribute('data-fit', chat && s !== '2' ? 'bad' : 'ok'); });
+      function aipAccept() { aipGhost.classList.add('is-accepted'); }
+      aipGhost.addEventListener('click', aipAccept); aipGhost.addEventListener('keydown', function (e) { if (e.key === 'Tab' || e.key === 'Enter') { e.preventDefault(); aipAccept(); } });
+      aipRun.addEventListener('click', function () { clearTimeout(aipT); Array.prototype.forEach.call(aipLis, function (li) { li.classList.remove('is-done', 'is-active'); }); aipRun.disabled = true; var i = 0; function step() { if (i > 0) { aipLis[i - 1].classList.remove('is-active'); aipLis[i - 1].classList.add('is-done'); } if (i < aipLis.length) { aipLis[i].classList.add('is-active'); i++; aipT = setTimeout(step, 550); } else { aipRun.disabled = false; aipRead.textContent = ga('done'); } } step(); });
+      demo._replay = function () { aipGhost.classList.remove('is-accepted'); };
+    }
+    // 04 expectations: capability line, prompts, draft framing
+    var aixW = demo.querySelector('.aix-wrap');
+    if (aixW) {
+      var aixField = aixW.querySelector('.aix-field'), aixVal = aixW.querySelector('.aix-val'), aixOut = aixW.querySelector('.aix-out'), aixP = aixOut.querySelector('p'), aixRead = aixW.querySelector('.aix-read');
+      Array.prototype.forEach.call(aixW.querySelectorAll('.aix-chip'), function (c) { c.addEventListener('click', function () { aixVal.textContent = c.textContent; aixField.classList.add('is-filled'); aixOut.classList.remove('is-on'); void aixOut.offsetWidth; aixP.textContent = ga('o' + c.getAttribute('data-i')); aixP.removeAttribute('contenteditable'); aixOut.classList.add('is-on'); aixRead.textContent = ''; }); });
+      function aixBlank() { aixRead.textContent = demo.classList.contains('on-prompts') ? '' : ga('blank'); }
+      aixField.addEventListener('click', aixBlank); aixField.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); aixBlank(); } });
+      aixW.querySelector('.aix-send').addEventListener('click', function () { aixOut.classList.remove('is-on'); aixField.classList.remove('is-filled'); aixVal.textContent = ''; });
+      aixW.querySelector('.aix-edit').addEventListener('click', function () { aixP.setAttribute('contenteditable', 'true'); aixP.focus(); });
+      aixP.addEventListener('blur', function () { aixP.removeAttribute('contenteditable'); });
+      demo._replay = function () { aixRead.textContent = ''; };
+    }
+    // 05 honesty: label, depth by audience, no fake person
+    var aihW = demo.querySelector('.aih-wrap');
+    if (aihW) {
+      var aihName = aihW.querySelector('.aih-name b'), aihRole = aihW.querySelector('.aih-name small'), aihMsg = aihW.querySelector('.aih-msg'), aihRead = aihW.querySelector('.aih-read');
+      aiOn(function () { var h = demo.classList.contains('on-human'), lv = demo.getAttribute('data-level') || '0'; aihName.textContent = ga(h ? 'nh' : 'na'); aihRole.textContent = ga(h ? 'rh' : 'ra'); aihMsg.textContent = ga(h ? 'mh' : 'ma'); aihRead.textContent = ga(h ? 'warn' : 'ok'); if (aiOut) aiOut.textContent = ga('lv' + lv); });
+      demo._replay = function () {};
+    }
+    // 06 provenance: passage on hover, score hides everything
+    var aivW = demo.querySelector('.aiv-wrap');
+    if (aivW) {
+      var aivRead = aivW.querySelector('.aiv-read');
+      function aivShow(n) { if (demo.classList.contains('on-score')) { aivW.setAttribute('data-show', ''); aivRead.textContent = n ? ga('none') : ''; return; } aivW.setAttribute('data-show', n || ''); aivRead.textContent = n ? '' : ga('hint'); }
+      Array.prototype.forEach.call(aivW.querySelectorAll('.aiv-claim'), function (c) { var n = c.getAttribute('data-n');
+        if (!aiTouch) { c.addEventListener('mouseenter', function () { aivShow(n); }); c.addEventListener('mouseleave', function () { aivShow(''); }); }
+        c.addEventListener('focus', function () { aivShow(n); }); c.addEventListener('blur', function () { aivShow(''); });
+        c.addEventListener('click', function () { aivShow(aivW.getAttribute('data-show') === n ? '' : n); }); });
+      aiOn(function () { aivShow(''); }); demo._replay = function () {};
+    }
+    // 07 agenda and sycophancy
+    var aigW = demo.querySelector('.aig-wrap');
+    if (aigW) {
+      var aigThread = aigW.querySelector('.aig-thread'), aigU = aigW.querySelector('.aig-user span'), aigR = aigW.querySelector('.aig-reply'), aigLast = null, aigT;
+      function aigRun(btn) { aigLast = btn; var q = btn.getAttribute('data-q'); aigThread.classList.remove('is-asked', 'is-replied'); void aigThread.offsetWidth; aigU.textContent = btn.textContent; aigThread.classList.add('is-asked'); clearTimeout(aigT); aigT = setTimeout(function () { aigR.textContent = q === '1' ? ga('r1') : ga(demo.classList.contains('on-flatter') ? 'r2f' : 'r2h'); aigThread.classList.add('is-replied'); }, 500); }
+      Array.prototype.forEach.call(aigW.querySelectorAll('.aig-ask'), function (b) { b.addEventListener('click', function () { aigRun(b); }); });
+      demo._replay = function () { aigRun(aigLast || aigW.querySelectorAll('.aig-ask')[1]); };
+    }
+    // 08 intelligibility: plan, trace, five questions
+    var aiiW = demo.querySelector('.aii-wrap');
+    if (aiiW) {
+      var aiiLis = aiiW.querySelectorAll('.aii-plan li'), aiiRes = aiiW.querySelector('.aii-res'), aiiA = aiiW.querySelector('.aii-a'), aiiQs = aiiW.querySelectorAll('.aii-q button'), aiiRunBtn = aiiW.querySelector('.aii-run'), aiiT = [];
+      function aiiClear() { aiiT.forEach(clearTimeout); aiiT = []; Array.prototype.forEach.call(aiiLis, function (l) { l.classList.remove('is-done', 'is-active'); }); Array.prototype.forEach.call(aiiQs, function (b) { b.classList.remove('is-on'); }); aiiA.innerHTML = ''; }
+      function aiiFinish(blind) { aiiW.classList.toggle('is-blind', blind); aiiRes.textContent = ga(blind ? 'blind' : 'res'); aiiW.setAttribute('data-phase', 'done'); }
+      function aiiTrace() { aiiW.setAttribute('data-phase', 'trace'); var i = 0; function step() { if (i > 0) { aiiLis[i - 1].classList.remove('is-active'); aiiLis[i - 1].classList.add('is-done'); } if (i < aiiLis.length) { aiiLis[i].classList.add('is-active'); i++; aiiT.push(setTimeout(step, 500)); } else aiiT.push(setTimeout(function () { aiiFinish(false); }, 250)); } step(); }
+      aiiRunBtn.addEventListener('click', function () { aiiClear(); if (demo.classList.contains('on-plan')) aiiW.setAttribute('data-phase', 'plan'); else { aiiW.setAttribute('data-phase', 'spin'); aiiT.push(setTimeout(function () { aiiFinish(true); }, 1500)); } });
+      aiiW.querySelector('.aii-go').addEventListener('click', aiiTrace);
+      aiiW.querySelector('.aii-cancel').addEventListener('click', function () { aiiClear(); aiiW.removeAttribute('data-phase'); });
+      Array.prototype.forEach.call(aiiQs, function (b) { b.addEventListener('click', function () { var on = b.classList.contains('is-on'); Array.prototype.forEach.call(aiiQs, function (x) { x.classList.remove('is-on'); }); if (on) { aiiA.innerHTML = ''; return; } b.classList.add('is-on'); aiiA.innerHTML = ga('a' + b.getAttribute('data-q')); }); });
+      demo._replay = function () { aiiRunBtn.click(); };
+    }
+    // 09 control: Tab accepts, Esc dismisses, typing over ignores; the dialog anti-pattern
+    var aicW = demo.querySelector('.aic-wrap');
+    if (aicW) {
+      var aicEd = aicW.querySelector('.aic-editor'), aicTyped = aicW.querySelector('.aic-typed'), aicGhost = aicW.querySelector('.aic-ghost'), aicRead = aicW.querySelector('.aic-read'), aicPrev = '';
+      function aicReset() { aicTyped.textContent = ga('typed'); aicGhost.textContent = ga('ghost'); aicW.classList.add('has-sugg'); aicW.classList.remove('is-accepted'); aicRead.textContent = ''; }
+      function aicAccept(viaModal) { aicPrev = aicTyped.textContent; aicTyped.textContent += aicGhost.textContent; aicGhost.textContent = ''; aicW.classList.remove('has-sugg'); aicW.classList.add('is-accepted'); aicRead.textContent = ga(viaModal ? 'macc' : 'acc'); }
+      function aicDismiss(viaModal, over) { aicGhost.textContent = ''; aicW.classList.remove('has-sugg'); aicRead.textContent = ga(viaModal ? 'mdis' : over ? 'over' : 'dis'); }
+      aicEd.addEventListener('keydown', function (e) {
+        var has = aicW.classList.contains('has-sugg'), modal = demo.classList.contains('on-modal');
+        if (modal && has) { if (e.key !== 'Tab') e.preventDefault(); return; }
+        if (e.key === 'Tab' && has) { e.preventDefault(); aicAccept(false); }
+        else if (e.key === 'Escape' && has) { e.preventDefault(); e.stopPropagation(); aicDismiss(false); }
+        else if (e.key === 'Backspace') { e.preventDefault(); aicTyped.textContent = aicTyped.textContent.slice(0, -1); }
+        else if (e.key.length === 1 && !e.metaKey && !e.ctrlKey && !e.altKey) { e.preventDefault(); if (has) aicDismiss(false, true); aicTyped.textContent += e.key; }
+      });
+      aicGhost.addEventListener('click', function () { aicEd.focus(); aicAccept(false); });
+      aicW.querySelector('.aic-yes').addEventListener('click', function () { aicAccept(true); }); aicW.querySelector('.aic-no').addEventListener('click', function () { aicDismiss(true); });
+      aicW.querySelector('.aic-undo').addEventListener('click', function () { aicTyped.textContent = aicPrev; aicW.classList.remove('is-accepted'); aicGhost.textContent = ga('ghost'); aicW.classList.add('has-sugg'); aicRead.textContent = ''; });
+      aicW.querySelector('.aic-again').addEventListener('click', aicReset);
+      aicReset(); demo._replay = aicReset;
+    }
+    // 10 timing: suggestion where the attention is; whose rule
+    var aitW = demo.querySelector('.ait-wrap');
+    if (aitW) {
+      var aitNote = aitW.querySelector('.ait-note');
+      Array.prototype.forEach.call(aitW.querySelectorAll('.ait-pane'), function (p) { function f() { aitW.setAttribute('data-focus', p.getAttribute('data-pane')); if (!aitW.classList.contains('is-off')) aitNote.textContent = ''; } p.addEventListener('click', f); p.addEventListener('focus', f); });
+      aitW.querySelector('.ait-off').addEventListener('click', function (e) { e.stopPropagation(); aitW.classList.add('is-off'); aitNote.textContent = ga('off'); });
+      aitNote.textContent = ga('focus');
+      var aitAcross = demo.querySelector('.demo-controls input[name="across"]'), aitRule = demo.querySelector('.demo-controls input[name="rule"]');
+      if (aitAcross) aitAcross.addEventListener('change', function () { if (aitAcross.checked) aitW.setAttribute('data-focus', 'read'); else if (!aitW.getAttribute('data-focus')) aitW.setAttribute('data-focus', 'comp'); });
+      if (aitRule) aitRule.addEventListener('change', function () { if (!aitW.getAttribute('data-focus')) aitW.setAttribute('data-focus', 'comp'); });
+      demo._replay = function () { if (aitW.classList.contains('is-off')) { aitW.classList.remove('is-off'); aitNote.textContent = ''; } };
+    }
+    // 11 failure: checkpoints, hedging
+    var aifW = demo.querySelector('.aif-wrap');
+    if (aifW) {
+      var aifV = [aifW.querySelector('.aif-v1'), aifW.querySelector('.aif-v2'), aifW.querySelector('.aif-v3')], aifSteps = aifW.querySelectorAll('.aif-step'), aifRead = aifW.querySelector('.aif-read'), aifT = [];
+      function aifClean(b) { b.classList.remove('is-new', 'is-bad', 'is-hedged'); }
+      function aifReset() { aifT.forEach(clearTimeout); aifT = []; aifV[0].textContent = ga('raw'); aifV[1].textContent = '—'; aifV[2].textContent = '—'; aifV.forEach(aifClean); Array.prototype.forEach.call(aifSteps, function (s) { s.classList.remove('is-done', 'is-active', 'is-bad'); }); aifW.classList.remove('is-broken'); aifRead.textContent = ''; }
+      aifW.querySelector('.aif-run').addEventListener('click', function () {
+        aifReset(); var hedge = demo.classList.contains('on-hedge'), i = 0;
+        function step() {
+          Array.prototype.forEach.call(aifSteps, function (s, k) { s.classList.toggle('is-active', k === i); if (k < i) s.classList.add('is-done'); });
+          if (i === 0) { aifV[0].textContent = ga('v1'); aifV[0].classList.add('is-new'); }
+          else if (i === 1) { aifV[1].textContent = ga('v2'); aifV[1].classList.add('is-new'); }
+          else if (i === 2) { aifV[2].textContent = ga(hedge ? 'fch' : 'fcp'); aifV[2].classList.add(hedge ? 'is-hedged' : 'is-new'); aifV[0].textContent = ga('fcp'); aifClean(aifV[0]); aifV[0].classList.add('is-bad'); aifSteps[2].classList.add('is-bad'); aifW.classList.add('is-broken'); aifRead.textContent = ga('wrong'); }
+          i++; if (i < 3) aifT.push(setTimeout(step, 600)); else aifT.push(setTimeout(function () { aifSteps[2].classList.remove('is-active'); aifSteps[2].classList.add('is-done'); }, 600));
+        }
+        step();
+      });
+      aifW.querySelector('.aif-back').addEventListener('click', function () { aifV[0].textContent = ga('v1'); aifClean(aifV[0]); aifV[0].classList.add('is-new'); aifV[2].textContent = '—'; aifClean(aifV[2]); aifSteps[2].classList.remove('is-bad', 'is-done', 'is-active'); aifW.classList.remove('is-broken'); aifRead.textContent = ga('back'); });
+      aifW.querySelector('.aif-restore').addEventListener('click', function () { aifReset(); aifRead.textContent = ga('restore'); });
+      demo._replay = function () { aifW.querySelector('.aif-run').click(); };
+    }
+    // 12 co-creation: regenerate by paragraph, review at publish
+    var aimW = demo.querySelector('.aim-wrap');
+    if (aimW) {
+      var aimPs = Array.prototype.slice.call(aimW.querySelectorAll('.aim-p')), aimRead = aimW.querySelector('.aim-read'), aimRev = aimW.querySelector('.aim-review span'), aimState = [0, 0, 0], aimPub = [0, 0, 0];
+      function aimSwap(i) { aimState[i] = 1 - aimState[i]; var p = aimPs[i].querySelector('p'); aimPs[i].classList.remove('is-swapping'); void p.offsetWidth; p.textContent = ga('p' + i + (aimState[i] ? 'b' : 'a')); aimPs[i].classList.add('is-swapping'); aimPs[i].classList.toggle('is-changed', aimState[i] !== aimPub[i]); aimRead.textContent = ''; aimW.classList.remove('is-blind'); }
+      aimPs.forEach(function (p, i) { p.querySelector('.aim-re').addEventListener('click', function () { aimSwap(i); }); });
+      aimW.querySelector('.aim-reall').addEventListener('click', function () { aimPs.forEach(function (p, i) { aimSwap(i); }); });
+      function aimChanged() { return aimState.filter(function (s, i) { return s !== aimPub[i]; }).length; }
+      function aimDoPublish(blind) { var n = aimChanged(); aimPub = aimState.slice(); aimPs.forEach(function (p) { p.classList.remove('is-changed'); }); aimW.classList.remove('is-reviewing'); aimW.classList.toggle('is-blind', blind && n > 0); aimRead.textContent = blind && n ? ga('blind').replace('%d', n) : ga('pubd'); }
+      aimW.querySelector('.aim-pub').addEventListener('click', function () { if (!demo.classList.contains('on-friction')) { aimDoPublish(true); return; } var n = aimChanged(); if (!n) { aimRead.textContent = ga('none'); return; } aimRev.textContent = ga('rev').replace('%d', n); aimW.classList.add('is-reviewing'); });
+      aimW.querySelector('.aim-confirm').addEventListener('click', function () { aimDoPublish(false); }); aimW.querySelector('.aim-cancel').addEventListener('click', function () { aimW.classList.remove('is-reviewing'); });
+      var aimFr = demo.querySelector('.demo-controls input[name="friction"]');
+      if (aimFr) aimFr.addEventListener('change', function () { if (!aimChanged()) aimSwap(1); setTimeout(function () { aimW.querySelector('.aim-pub').click(); }, 0); });
+      demo._replay = function () {};
+    }
+    // 13 autonomy: posture per action, content is data
+    var aiaW = demo.querySelector('.aia-wrap');
+    if (aiaW) {
+      var aiaActs = Array.prototype.slice.call(aiaW.querySelectorAll('.aia-act')), aiaAsk = aiaW.querySelector('.aia-ask'), aiaAskT = aiaAsk.querySelector('span'), aiaRead = aiaW.querySelector('.aia-read'), aiaPending = null;
+      function aiaState(a, txt, cls) { a.classList.remove('is-ran', 'is-denied', 'is-injected', 'is-pending'); if (cls) a.classList.add(cls); a.querySelector('.aia-state').textContent = txt; }
+      function aiaRun(a) {
+        var post = a.getAttribute('data-post');
+        if (post === 'auto') { aiaState(a, ga('ran'), 'is-ran'); aiaW.classList.add('is-read'); if (demo.classList.contains('on-boundary')) { aiaRead.textContent = ga('quoted'); aiaW.classList.remove('is-hurt'); } else { aiaState(aiaActs[3], ga('ran') + ' ⚠', 'is-injected'); aiaRead.textContent = ga('injected'); aiaW.classList.add('is-hurt'); } }
+        else if (post === 'notify') { aiaState(a, ga('ran') + ' · ' + ga('undo'), 'is-ran'); }
+        else { aiaPending = a; aiaActs.forEach(function (x) { x.classList.remove('is-pending'); }); a.classList.add('is-pending'); aiaAskT.textContent = ga('askfor').replace('%s', a.querySelector('.aia-what').textContent); aiaW.classList.add('is-asking'); }
+      }
+      aiaActs.forEach(function (a) { a.addEventListener('click', function () { if (a.classList.contains('is-ran') && a.getAttribute('data-post') === 'notify') { aiaState(a, ga('pnotify'), ''); return; } aiaRun(a); }); });
+      aiaW.querySelector('.aia-ok').addEventListener('click', function () { if (aiaPending) aiaState(aiaPending, ga('approved'), 'is-ran'); aiaW.classList.remove('is-asking'); aiaPending = null; });
+      aiaW.querySelector('.aia-deny').addEventListener('click', function () { if (aiaPending) aiaState(aiaPending, ga('denied'), 'is-denied'); aiaW.classList.remove('is-asking'); aiaPending = null; });
+      function aiaReset() { aiaActs.forEach(function (a) { aiaState(a, ga('p' + a.getAttribute('data-post')), ''); }); aiaW.classList.remove('is-read', 'is-asking', 'is-hurt'); aiaRead.textContent = ''; aiaPending = null; }
+      demo._replay = function () { var wasRead = aiaW.classList.contains('is-read'); aiaReset(); if (wasRead) aiaRun(aiaActs[0]); };
+    }
+    // 14 wait: named stages, sources as they arrive, effort with a cost line
+    var aiwW = demo.querySelector('.aiw-wrap');
+    if (aiwW) {
+      var aiwSts = aiwW.querySelectorAll('.aiw-st'), aiwSrcs = aiwW.querySelector('.aiw-srcs'), aiwCost = aiwW.querySelector('.aiw-cost'), aiwT = [], aiwRan = false;
+      aiOn(function () { if (aiOut) aiOut.textContent = ga('e' + (demo.getAttribute('data-effort') || '2')); });
+      function aiwRun() {
+        aiwRan = true; aiwT.forEach(clearTimeout); aiwT = []; aiwSrcs.innerHTML = ''; aiwW.classList.remove('is-done'); Array.prototype.forEach.call(aiwSts, function (s) { s.classList.remove('is-active', 'is-done'); }); aiwW.classList.add('is-running');
+        var e = Number(demo.getAttribute('data-effort')) || 2, n = e * 2, list = ga('srcs').split('|').slice(0, n), per = 380, t0 = 500, tRead = n * per, tWrite = 600, total = t0 + tRead + tWrite;
+        function stage(i) { Array.prototype.forEach.call(aiwSts, function (s, k) { s.classList.toggle('is-active', k === i); s.classList.toggle('is-done', k < i); }); }
+        stage(0); aiwT.push(setTimeout(function () { stage(1); }, t0));
+        list.forEach(function (s, k) { aiwT.push(setTimeout(function () { var li = document.createElement('li'); li.textContent = s; aiwSrcs.appendChild(li); }, t0 + k * per)); });
+        aiwT.push(setTimeout(function () { stage(2); }, t0 + tRead));
+        aiwT.push(setTimeout(function () { stage(3); aiwW.classList.remove('is-running'); aiwW.classList.add('is-done'); aiwCost.textContent = ga('cost').replace('%s', ga('e' + e)).replace('%d', String(n)).replace('%s', (total / 1000).toFixed(1)); }, total));
+      }
+      aiwW.querySelector('.aiw-ask').addEventListener('click', aiwRun);
+      demo._replay = aiwRun;
+    }
     // Practice demos --------------------------------------------------------
     var stg = demo.querySelector('.demo-stage');
     var exV = demo.querySelector('.xt-verdict');
