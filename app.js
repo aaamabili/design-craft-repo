@@ -665,6 +665,128 @@
       aiwW.querySelector('.aiw-ask').addEventListener('click', aiwRun);
       demo._replay = aiwRun;
     }
+    // AI demos: Shape of AI patterns ----------------------------------------
+    // 15 nudges by state
+    var ainW = demo.querySelector('.ain-wrap');
+    if (ainW) {
+      var ainT = ainW.querySelector('.ain-title'), ainB = ainW.querySelector('.ain-body'), ainN = ainW.querySelectorAll('.ain-nudge:not(.ain-up)'), ainRead = ainW.querySelector('.ain-read'), ainTs = ga('t').split('|'), ainBs = ga('body').split('|');
+      ainT.setAttribute('data-ph', ga('ph'));
+      function ainUpd() { var l = Number(demo.getAttribute('data-len')) || 0; ainT.textContent = ainTs[l]; ainB.textContent = ainBs[l]; var show = l === 0 ? [0] : l === 1 ? [1] : l === 2 ? [2] : [2, 3]; Array.prototype.forEach.call(ainN, function (n, i) { n.classList.toggle('is-on', show.indexOf(i) >= 0); }); ainRead.textContent = ga(demo.classList.contains('on-all') ? 'all' : 'state'); }
+      Array.prototype.forEach.call(ainW.querySelectorAll('.ain-nudge'), function (n) { n.addEventListener('click', function () { if (n.classList.contains('ain-up')) return; n.classList.add('is-done'); ainRead.textContent = ga('acc').replace('%s', n.textContent); }); });
+      aiOn(ainUpd); demo._replay = function () {};
+    }
+    // 16 follow-ups
+    var aiuW = demo.querySelector('.aiu-wrap');
+    if (aiuW) {
+      var aiuChips = aiuW.querySelector('.aiu-chips'), aiuWhy = aiuW.querySelector('.aiu-why'), aiuNext = aiuW.querySelector('.aiu-next'), aiuSample = aiuW.querySelector('.aiu-sample'), aiuAud = ga('aud').split('|');
+      function aiuRender() { var g = demo.classList.contains('on-generic'), list = ga(g ? 'gen' : 'anch').split('|'), nexts = ga('next').split('|'); aiuWhy.textContent = ga(g ? 'whyg' : 'whya'); aiuChips.innerHTML = ''; list.forEach(function (c, i) { var b = document.createElement('button'); b.type = 'button'; b.className = 'aiu-chip'; b.textContent = c; b.addEventListener('click', function () { aiuSample.classList.remove('is-on'); aiuNext.classList.remove('is-on'); void aiuNext.offsetWidth; aiuNext.textContent = g ? ga('nextg') : nexts[i]; aiuNext.classList.add('is-on'); }); aiuChips.appendChild(b); }); }
+      aiuW.querySelector('.aiu-big').addEventListener('click', function () { aiuNext.classList.remove('is-on'); if (demo.classList.contains('on-sample')) { aiuSample.querySelector('span').textContent = ga('sq'); aiuSample.classList.add('is-on'); } else { aiuSample.classList.remove('is-on'); void aiuNext.offsetWidth; aiuNext.textContent = ga('written').replace('%s', aiuAud[0].toLowerCase()) + ' (?)'; aiuNext.classList.add('is-on'); } });
+      Array.prototype.forEach.call(aiuW.querySelectorAll('.aiu-pick'), function (b) { b.addEventListener('click', function () { aiuSample.classList.remove('is-on'); aiuNext.textContent = ga('written').replace('%s', aiuAud[Number(b.getAttribute('data-a'))].toLowerCase()); aiuNext.classList.add('is-on'); }); });
+      aiOn(aiuRender); demo._replay = function () { aiuNext.classList.remove('is-on'); aiuSample.classList.remove('is-on'); };
+    }
+    // 17 madlibs and prompt enhancer
+    var aidW = demo.querySelector('.aid-wrap');
+    if (aidW) {
+      var aidBlanks = aidW.querySelectorAll('.aid-blank'), aidP = aidW.querySelector('.aid-prompt'), aidE = aidW.querySelector('.aid-enh'), aidRead = aidW.querySelector('.aid-read'), aidIdx = [0, 0, 0, 0], aidTpl = ga('tpl').split('|');
+      function aidVals() { return aidIdx.map(function (k, f) { return ga('f' + f).split('|')[k]; }); }
+      function aidUpd() { var v = aidVals(); Array.prototype.forEach.call(aidBlanks, function (b, f) { b.textContent = v[f]; }); aidP.textContent = aidTpl[0] + ' ' + v[0] + ' ' + aidTpl[1] + ' ' + v[1] + ' ' + aidTpl[2] + ' ' + v[2] + ' ' + aidTpl[3] + ' ' + v[3] + '.'; var e = ga('enh'); v.forEach(function (x) { e = e.replace('%s', x); }); aidE.textContent = e; aidRead.textContent = demo.classList.contains('on-enh') && demo.classList.contains('on-silent') ? ga('silent') : ''; }
+      Array.prototype.forEach.call(aidBlanks, function (b, f) { b.addEventListener('click', function () { aidIdx[f] = (aidIdx[f] + 1) % ga('f' + f).split('|').length; aidUpd(); }); });
+      aidW.querySelector('.aid-run').addEventListener('click', function () { aidRead.textContent = ga('out'); });
+      aiOn(aidUpd); demo._replay = function () {};
+    }
+    // 18 tuners: context stack
+    var aikW = demo.querySelector('.aik-wrap');
+    if (aikW) {
+      var aikChips = aikW.querySelectorAll('.aik-chip'), aikAns = aikW.querySelector('.aik-ans'), aikStack = aikW.querySelector('.aik-stack span');
+      function aikOn(k) { var c = aikW.querySelector('.aik-chip[data-k="' + k + '"]'); return c && !c.classList.contains('is-off'); }
+      function aikUpd() { var a = aikOn('att') ? ga('att') : aikOn('fil') ? ga('fil') : ga('base'); if (!aikOn('mode')) a += ga('creative'); if (!aikOn('style')) a = ga('verbose') + a; aikAns.classList.remove('is-swap'); void aikAns.offsetWidth; aikAns.textContent = a; aikAns.classList.add('is-swap'); var names = []; Array.prototype.forEach.call(aikChips, function (c) { if (!c.classList.contains('is-off')) names.push(c.textContent.replace(' ×', '').trim()); }); aikStack.textContent = names.length ? names.join(' · ') : ga('none'); }
+      Array.prototype.forEach.call(aikChips, function (c) { c.addEventListener('click', function () { var off = c.classList.toggle('is-off'); c.setAttribute('aria-pressed', off ? 'false' : 'true'); aikUpd(); }); });
+      aikUpd(); demo._replay = function () {};
+    }
+    // 19 variations and branches
+    var aijW = demo.querySelector('.aij-wrap');
+    if (aijW) {
+      var aijV = ga('v').split('|'), aijText = aijW.querySelector('.aij-text'), aijCount = aijW.querySelector('.aij-count'), aijPrev = aijW.querySelector('.aij-prev'), aijNext = aijW.querySelector('.aij-next'), aijRead = aijW.querySelector('.aij-read'), aijList = [0], aijI = 0;
+      function aijShow() { aijText.classList.remove('is-swap'); void aijText.offsetWidth; aijText.textContent = aijV[aijList[aijI]]; aijText.classList.add('is-swap'); aijCount.textContent = (aijI + 1) + ' / ' + aijList.length; aijPrev.disabled = aijI === 0; aijNext.disabled = aijI === aijList.length - 1; aijW.classList.toggle('is-multi', aijList.length > 1); }
+      aijW.querySelector('.aij-regen').addEventListener('click', function () { var nxt = (aijList[aijList.length - 1] + 1) % aijV.length; if (demo.classList.contains('on-keep')) { aijList.push(nxt); aijI = aijList.length - 1; aijW.classList.remove('is-lost'); aijShow(); aijRead.textContent = ga('kept').replace('%d', aijI + 1).replace('%d', aijList.length); } else { aijList = [nxt]; aijI = 0; aijShow(); aijW.classList.add('is-lost'); aijRead.textContent = ga('lost'); } });
+      aijPrev.addEventListener('click', function () { if (aijI > 0) { aijI--; aijShow(); } }); aijNext.addEventListener('click', function () { if (aijI < aijList.length - 1) { aijI++; aijShow(); } });
+      aijW.querySelector('.aij-use').addEventListener('click', function () { aijRead.textContent = ga('used').replace('%d', aijI + 1); });
+      aijShow(); demo._replay = function () { aijList = [aijList[aijI]]; aijI = 0; aijW.classList.remove('is-lost'); aijShow(); aijRead.textContent = ''; };
+    }
+    // 20 streaming and interruption
+    var aisW = demo.querySelector('.ais-wrap');
+    if (aisW) {
+      var aisText = aisW.querySelector('.ais-text'), aisRead = aisW.querySelector('.ais-read'), aisWords = [], aisPos = 0, aisTimer = null, aisT0 = 0, aisRan = false;
+      function aisTick() { if (aisPos >= aisWords.length) { aisFinish(); return; } aisText.textContent += (aisPos ? ' ' : '') + aisWords[aisPos++]; aisTimer = setTimeout(aisTick, 70); }
+      function aisFinish() { aisTimer = null; aisW.classList.remove('is-streaming', 'is-stopped'); aisText.classList.remove('is-streaming'); aisRead.textContent = ga('done').replace('%d', aisWords.length).replace('%s', ((performance.now() - aisT0) / 1000).toFixed(1)); }
+      function aisStart() { aisRan = true; clearTimeout(aisTimer); aisWords = ga(demo.classList.contains('on-draft') ? 'dtext' : 'text').split(' '); aisPos = 0; aisText.textContent = ''; aisT0 = performance.now(); aisW.classList.add('is-streaming'); aisW.classList.remove('is-stopped'); aisText.classList.add('is-streaming'); aisRead.textContent = demo.classList.contains('on-int') ? '' : ga('noint'); aisTick(); }
+      function aisStop() { if (!aisTimer) return; clearTimeout(aisTimer); aisTimer = null; aisW.classList.remove('is-streaming'); aisW.classList.add('is-stopped'); aisText.classList.remove('is-streaming'); aisRead.textContent = ga('stopped').replace('%d', aisPos); }
+      aisW.querySelector('.ais-go').addEventListener('click', aisStart); aisW.querySelector('.ais-stop').addEventListener('click', aisStop);
+      aisW.querySelector('.ais-cont').addEventListener('click', function () { aisW.classList.remove('is-stopped'); aisW.classList.add('is-streaming'); aisText.classList.add('is-streaming'); aisRead.textContent = ''; aisTick(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && aisTimer && demo.classList.contains('on-int')) aisStop(); });
+      demo._replay = function () { if (aisRan) aisStart(); };
+    }
+    // 21 memory and incognito
+    var aieW = demo.querySelector('.aie-wrap');
+    if (aieW) {
+      var aieBot = aieW.querySelector('.aie-bot'), aieList = aieW.querySelector('.aie-list'), aieRead = aieW.querySelector('.aie-read');
+      function aieBind(li) { li.querySelector('.aie-del').addEventListener('click', function () { aieRead.textContent = ga('del').replace('%s', li.querySelector('span').textContent); li.remove(); }); }
+      Array.prototype.forEach.call(aieList.children, aieBind);
+      aieW.querySelector('.aie-send').addEventListener('click', function () { var inc = demo.classList.contains('on-inc'); aieBot.classList.remove('is-on'); void aieBot.offsetWidth; aieBot.textContent = inc || !aieList.children.length ? ga('reply') : ga('replymem'); aieBot.classList.add('is-on'); if (inc) { aieRead.textContent = ga('notsaved'); return; } var exists = Array.prototype.some.call(aieList.children, function (li) { return li.querySelector('span').textContent === ga('new'); }); if (!exists) { var li = document.createElement('li'); li.innerHTML = '<span></span><button type="button" class="aie-del" aria-label="Forget">×</button>'; li.querySelector('span').textContent = ga('new'); aieBind(li); aieList.appendChild(li); } aieRead.textContent = ga('added').replace('%s', ga('new')); });
+      demo._replay = function () { if (aieBot.classList.contains('is-on')) aieW.querySelector('.aie-send').click(); };
+    }
+    // 22 identity and personality
+    var aiyW = demo.querySelector('.aiy-wrap');
+    if (aiyW) {
+      var aiyR1 = aiyW.querySelector('.aiy-r1'), aiyR2 = aiyW.querySelector('.aiy-r2'), aiyLv = aiyW.querySelector('.aiy-lv'), aiyNote = aiyW.querySelector('.aiy-note');
+      aiOn(function () { var p = Number(demo.getAttribute('data-pers')) || 0, ramp = demo.classList.contains('on-ramp') && p === 2; aiyLv.textContent = ga('lv').split('|')[p]; if (aiOut) aiOut.textContent = ga('lv').split('|')[p]; aiyR1.textContent = ramp ? ga('ramp') : ga('r').split('|')[p]; aiyR2.textContent = ga('fact').split('|')[p]; aiyNote.textContent = ramp ? ga('noteramp') : ga('note').split('|')[p]; });
+      demo._replay = function () {};
+    }
+    // Color: marking machine output
+    var mkoW = demo.querySelector('.mko-wrap');
+    if (mkoW) {
+      var mkoRead = mkoW.querySelector('.mko-read'), mkoHue = 0, mkoHues = ga('hues').split('|');
+      function mkoUpd() { var bad = demo.classList.contains('on-gray') && !demo.classList.contains('on-label'); mkoRead.textContent = (bad ? ga('bad') : ga('ok')) + ' · ' + ga('hue').replace('%s', mkoHues[mkoHue]); }
+      mkoW.querySelector('.mko-mark').addEventListener('click', function () { mkoHue = (mkoHue + 1) % 3; mkoW.setAttribute('data-hue', String(mkoHue)); mkoUpd(); });
+      aiOn(mkoUpd); demo._replay = function () {};
+    }
+    // Motion: streaming text
+    var stxW = demo.querySelector('.stx-wrap');
+    if (stxW) {
+      var stxText = stxW.querySelector('.stx-text'), stxBelow = stxW.querySelector('.stx-below'), stxRead = stxW.querySelector('.stx-read'), stxTimer = null, stxRan = false;
+      aiOn(function () { if (aiOut) aiOut.textContent = ga('ch').split('|')[Number(demo.getAttribute('data-chunk')) || 0]; });
+      function stxRun() {
+        stxRan = true; clearTimeout(stxTimer); var mode = Number(demo.getAttribute('data-chunk')) || 0, src = ga('text'), parts = mode === 0 ? src.split('') : mode === 1 ? src.split(' ') : src.match(/[^.]+\.?/g), i = 0, sep = mode === 1 ? ' ' : '', dt = mode === 0 ? 14 : mode === 1 ? 70 : 800;
+        var stxCard = stxW.querySelector('.stx-card'); if (demo.classList.contains('on-res')) { stxText.textContent = src; stxCard.style.minHeight = stxCard.offsetHeight + 'px'; } else { stxCard.style.minHeight = ''; }
+        stxText.textContent = ''; stxW.classList.add('is-streaming'); stxW.classList.remove('is-jumped', 'is-still'); var y0 = stxBelow.getBoundingClientRect().top - stxW.getBoundingClientRect().top, moved = 0;
+        function tick() { if (i >= parts.length) { stxW.classList.remove('is-streaming'); stxRead.textContent = moved > 1 ? ga('jump').replace('%d', Math.round(moved)) : ga('still'); stxW.classList.add(moved > 1 ? 'is-jumped' : 'is-still'); return; } stxText.textContent += (i && sep ? sep : '') + parts[i++]; var y = stxBelow.getBoundingClientRect().top - stxW.getBoundingClientRect().top; moved = Math.max(moved, y - y0); stxTimer = setTimeout(tick, dt); }
+        tick();
+      }
+      stxW.querySelector('.stx-go').addEventListener('click', stxRun); demo._replay = function () { if (stxRan) stxRun(); };
+    }
+    // Primitives: the prompt box
+    var pbxW = demo.querySelector('.pbx-wrap');
+    if (pbxW) {
+      var pbxTa = pbxW.querySelector('.pbx-ta'), pbxSend = pbxW.querySelector('.pbx-send'), pbxHint = pbxW.querySelector('.pbx-hint'), pbxRead = pbxW.querySelector('.pbx-read'), pbxBusy = null, pbxLine = 0;
+      function pbxLines() { return pbxTa.value.split('\n').length; }
+      function pbxSize() { if (!pbxLine) pbxLine = parseFloat(getComputedStyle(pbxTa).lineHeight) || 20; var grow = demo.classList.contains('on-grow'); pbxTa.style.height = 'auto'; var max = pbxLine * 6 + 8, h = grow ? Math.min(pbxTa.scrollHeight, max) : pbxLine + 8; pbxTa.style.height = h + 'px'; pbxTa.classList.toggle('is-scroll', grow && pbxTa.scrollHeight > max); var n = pbxLines(), blind = !grow && n > 1, was = pbxW.classList.contains('is-blind'); pbxW.classList.toggle('is-blind', blind); if (blind) pbxRead.textContent = ga('fixed').replace('%d', n); else if (was) pbxRead.textContent = ''; }
+      function pbxHintUpd() { pbxHint.textContent = ga(demo.classList.contains('on-enter') ? 'ha' : 'hb'); }
+      function pbxDoSend() { if (pbxBusy) { clearTimeout(pbxBusy); pbxBusy = null; pbxW.classList.remove('is-busy'); pbxSend.textContent = ga('send'); pbxRead.textContent = ga('stopped'); return; } var n = pbxLines(); if (!pbxTa.value.trim()) return; pbxTa.value = ''; pbxSize(); pbxW.classList.add('is-busy'); pbxSend.textContent = ga('stop'); pbxRead.textContent = ga('sent').replace('%d', n); pbxBusy = setTimeout(function () { pbxBusy = null; pbxW.classList.remove('is-busy'); pbxSend.textContent = ga('send'); }, 1800); }
+      pbxTa.addEventListener('input', pbxSize);
+      pbxTa.addEventListener('keydown', function (e) { if (e.key !== 'Enter') return; var enterSends = demo.classList.contains('on-enter'); if ((enterSends && !e.shiftKey) || (!enterSends && e.shiftKey)) { e.preventDefault(); pbxDoSend(); } });
+      pbxSend.addEventListener('click', pbxDoSend);
+      Array.prototype.forEach.call(pbxW.querySelectorAll('.pbx-sug'), function (b) { b.addEventListener('click', function () { pbxTa.value = b.textContent; pbxSize(); pbxTa.focus(); }); });
+      pbxW.querySelector('.pbx-chip i').addEventListener('click', function () { pbxW.querySelector('.pbx-chip').classList.add('is-gone'); });
+      aiOn(function () { pbxHintUpd(); pbxSize(); }); demo._replay = function () {};
+    }
+    // UX: warning blindness
+    var wblW = demo.querySelector('.wbl-wrap');
+    if (wblW) {
+      var wblWrong = wblW.querySelector('.wbl-wrong'), wblRead = wblW.querySelector('.wbl-read'), wblOrig = wblWrong.querySelector('.wbl-v').textContent;
+      wblW.querySelector('.wbl-fix').addEventListener('click', function () { wblWrong.classList.add('is-fixed'); wblWrong.querySelector('.wbl-v').textContent = ga('right'); wblRead.textContent = ga('fixed'); wblW.classList.remove('is-bad', 'is-ok'); });
+      wblW.querySelector('.wbl-submit').addEventListener('click', function () { var ok = wblWrong.classList.contains('is-fixed'); wblRead.textContent = ga(ok ? 'ok' : 'bad'); wblW.classList.toggle('is-ok', ok); wblW.classList.toggle('is-bad', !ok); });
+      demo._replay = function () { wblWrong.classList.remove('is-fixed'); wblWrong.querySelector('.wbl-v').textContent = wblOrig; wblW.classList.remove('is-bad', 'is-ok'); wblRead.textContent = ''; };
+    }
     // Practice demos --------------------------------------------------------
     var stg = demo.querySelector('.demo-stage');
     var exV = demo.querySelector('.xt-verdict');

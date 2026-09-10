@@ -33,7 +33,7 @@
     <nav class="nav-groups" aria-label="Sumário da seção">
       <div class="nav-group" data-section="motion" style="margin-top:0">
         <div class="nav-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17c4-8 8-8 12 0s6 0 6 0"/></svg>Motion</div>
-        <ul class="nav-list"><li><a class="nav-link" href="#why-motion-works">Why Motion Works</a></li><li><a class="nav-link" href="#easing">Easing</a></li><li><a class="nav-link" href="#perceived-duration">Perceived Duration</a></li><li><a class="nav-link" href="#duration">Duration</a></li><li><a class="nav-link" href="#springs">Springs</a></li><li><a class="nav-link" href="#overshoot-and-clamp">Overshoot and Clamp</a></li><li><a class="nav-link" href="#transform-origin">Transform Origin</a></li><li><a class="nav-link" href="#animate-only-transform-opacity">Transform &amp; Opacity</a></li><li><a class="nav-link" href="#interruptibility">Interruptibility</a></li><li><a class="nav-link" href="#choreography">Choreography</a></li><li><a class="nav-link" href="#shared-element-transitions">Shared Element Transitions</a></li><li><a class="nav-link" href="#gestures">Gestures</a></li><li><a class="nav-link" href="#when-the-gesture-fires">When the Gesture Fires</a></li><li><a class="nav-link" href="#loading-and-perceived-performance">Loading and Perceived Performance</a></li><li><a class="nav-link" href="#frequency">Frequency</a></li><li><a class="nav-link" href="#instant-in-soft-out">Instant In, Soft Out</a></li><li><a class="nav-link" href="#reduced-motion">Reduced Motion</a></li><li><a class="nav-link" href="#fidgetability">Fidgetability</a></li><li><a class="nav-link" href="#pattern-catalog">Pattern Catalog</a></li><li><a class="nav-link" href="#motion-tokens-and-specs">Motion Tokens and Specs</a></li><li><a class="nav-link" href="#critiquing-motion">Critiquing Motion</a></li></ul>
+        <ul class="nav-list"><li><a class="nav-link" href="#why-motion-works">Why Motion Works</a></li><li><a class="nav-link" href="#easing">Easing</a></li><li><a class="nav-link" href="#perceived-duration">Perceived Duration</a></li><li><a class="nav-link" href="#duration">Duration</a></li><li><a class="nav-link" href="#springs">Springs</a></li><li><a class="nav-link" href="#overshoot-and-clamp">Overshoot and Clamp</a></li><li><a class="nav-link" href="#transform-origin">Transform Origin</a></li><li><a class="nav-link" href="#animate-only-transform-opacity">Transform &amp; Opacity</a></li><li><a class="nav-link" href="#interruptibility">Interruptibility</a></li><li><a class="nav-link" href="#choreography">Choreography</a></li><li><a class="nav-link" href="#shared-element-transitions">Shared Element Transitions</a></li><li><a class="nav-link" href="#gestures">Gestures</a></li><li><a class="nav-link" href="#when-the-gesture-fires">When the Gesture Fires</a></li><li><a class="nav-link" href="#loading-and-perceived-performance">Loading and Perceived Performance</a></li><li><a class="nav-link" href="#frequency">Frequency</a></li><li><a class="nav-link" href="#instant-in-soft-out">Instant In, Soft Out</a></li><li><a class="nav-link" href="#reduced-motion">Reduced Motion</a></li><li><a class="nav-link" href="#fidgetability">Fidgetability</a></li><li><a class="nav-link" href="#pattern-catalog">Pattern Catalog</a></li><li><a class="nav-link" href="#motion-tokens-and-specs">Motion Tokens and Specs</a></li><li><a class="nav-link" href="#critiquing-motion">Critiquing Motion</a></li><li><a class="nav-link" href="#streaming-text">Streaming Text</a></li></ul>
       </div>
       <div class="nav-group nav-other" data-section="motion">
         <div class="nav-title">Outras seções</div>
@@ -1058,6 +1058,42 @@
             <li><strong>Remova uma e viva sem ela.</strong> Se um dia depois ninguém sentiu falta, ela nunca fez trabalho nenhum.</li>
           </ul>
           <footer class="sources"><span>Fontes:</span> <em>Animação de interface, handbook</em> (capítulo 15 e apêndice B) · <a href="https://developer.chrome.com/docs/devtools/css/animations" target="_blank" rel="noopener">Chrome DevTools, painel Animations</a> · <a href="https://www.interfacecraft.dev/" target="_blank" rel="noopener">Josh Puckett, Interface Craft</a> (noticing, facets of quality)</footer>
+        </article>
+        <article class="lesson" id="streaming-text">
+          <span class="eyebrow">Motion · 22</span>
+          <h2>Streaming Text</h2>
+          <p class="lede">Texto que chega token a token é o movimento-assinatura dos produtos de IA. Fragmente por palavra, nunca reflua o que já foi lido, reserve o espaço que vai ocupar e pare o cursor quando o fluxo para.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="stream-text">
+            <div class="demo-stage" data-text="A mudança na página de preços é direta depois que a estrutura de planos está decidida. Tire o mínimo por assento do plano Team, depois mostre o equivalente mensal ao lado do preço anual para a comparação ser honesta num olhar. Mantenha as três colunas." data-ch="caractere|palavra|frase" data-jump="o conteúdo abaixo se moveu %dpx durante o fluxo" data-still="o conteúdo abaixo não se moveu">
+            <div class="stx-wrap"><button type="button" class="stx-go">Transmitir</button><div class="stx-card"><p class="stx-text"></p><i class="stx-caret"></i></div><div class="stx-below">Próxima mensagem · Ana: podemos mover a revisão para quinta?</div><span class="stx-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Fragmento</span><input type="range" name="chunk" min="0" max="2" step="1" value="1" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Reservar altura</span><input type="checkbox" name="res" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Transmita a resposta. Fragmentos por caractere tremem, por frase travam, por palavra leem como escrita. Observe a mensagem abaixo: sem altura reservada ela é empurrada continuamente enquanto o texto cresce; com ela, nada sob quem lê se move.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Streaming existe para fazer uma resposta lenta parecer viva e para deixar a pessoa ler enquanto é escrita. Os dois benefícios morrem se o movimento estiver errado. Atualizações por caractere tremem e custam frames; atualizações por frase parecem download travado. Fragmentos por palavra, em torno de quinze a trinta por segundo no máximo, leem como escrita. O olho segue a cauda do texto, então a cauda precisa ser estável: nada de re-quebrar linhas anteriores quando uma palavra longa chega, nada de re-renderizar o parágrafo inteiro, nada de markdown que vira de asteriscos crus para negrito três palavras depois.</p>
+          <p>A regra de layout da seção de Motion se aplica: a página não se move debaixo de quem lê. Um cartão em fluxo que cresce empurra tudo abaixo a quarenta pixels por segundo, o pior tipo de pulo, contínuo e imprevisível. Reserve uma altura mínima, cresça o contêiner com transição quando precisar crescer, ou fixe a posição de rolagem no texto que a pessoa está lendo. O cursor é o último detalhe: um bloco piscando na cauda diz "ainda vem"; quando o fluxo termina ele precisa parar, e quando a pessoa o interrompe, o corte é uma borda simples, não uma reticência fingindo que o modelo escolheu pausar. Respeite movimento reduzido tirando o piscar e entregando fragmentos maiores.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Fragmentos por palavra, ritmo constante.</strong> Nunca por caractere, nunca parágrafos inteiros.</li>
+            <li><strong>Texto anterior é congelado.</strong> Formatação aplicada conforme chega, não retroativamente.</li>
+            <li><strong>Reserve altura ou anime o crescimento;</strong> o conteúdo abaixo não pode tremer.</li>
+            <li><strong>Cursor pisca durante o fluxo, para quando termina,</strong> desaparece quando interrompido.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Quinze a trinta palavras por segundo</strong> lê como escrita; mais rápido lê como colar.</li>
+            <li><strong>Decisões de quebra são finais.</strong> Segure a palavra atual até ela caber.</li>
+            <li><strong>Rolagem automática só segue se a pessoa estava no fim.</strong></li>
+            <li><strong>Blocos de código fluem como texto,</strong> depois destacam uma vez, não a cada token.</li>
+            <li><strong>Movimento reduzido: sem piscar, fragmentos maiores.</strong></li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://www.shapeof.ai/patterns/controls" target="_blank" rel="noopener">Shape of AI, Controls</a> · <a href="https://www.shapeof.ai/patterns/stream-of-thought" target="_blank" rel="noopener">Shape of AI, Stream of Thought</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/API/Streams_API" target="_blank" rel="noopener">MDN, Streams API</a></footer>
         </article>
       </section>
       <footer class="footer"><p>Biblioteca de estudo pessoal. Conteúdo sintetizado a partir das fontes listadas em cada aula; nomes de cursos e autores pertencem aos seus respectivos donos. Hierarquia só por tamanho, peso e espaço.</p></footer>

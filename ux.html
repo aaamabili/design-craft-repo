@@ -33,7 +33,7 @@
     <nav class="nav-groups" aria-label="Section contents">
       <div class="nav-group" data-section="ux" style="margin-top:0">
         <div class="nav-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a7 7 0 0 0-4 12.7V18a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.3A7 7 0 0 0 12 3z"/><path d="M10 22h4"/></svg>UX</div>
-        <ul class="nav-list"><li><a class="nav-link" href="#preattentive-perception">Preattentive Perception</a></li><li><a class="nav-link" href="#feedback-where-the-eye-is">Feedback Where the Eye Is</a></li><li><a class="nav-link" href="#proximity-wins">Proximity Wins</a></li><li><a class="nav-link" href="#attention-is-zero-sum">Attention Is Zero-Sum</a></li><li><a class="nav-link" href="#working-memory">Working Memory</a></li><li><a class="nav-link" href="#cognitive-load-and-defaults">Cognitive Load and Defaults</a></li><li><a class="nav-link" href="#the-two-gulfs">The Two Gulfs</a></li><li><a class="nav-link" href="#how-people-decide">How People Decide</a></li><li><a class="nav-link" href="#biases-that-matter">Biases That Matter</a></li><li><a class="nav-link" href="#choice-architecture-and-ethics">Choice Architecture and Ethics</a></li><li><a class="nav-link" href="#ux-laws-with-caveats">UX Laws, With Caveats</a></li><li><a class="nav-link" href="#time-and-progress">Time and Progress</a></li><li><a class="nav-link" href="#peak-and-end">Peak and End</a></li><li><a class="nav-link" href="#friction-and-forms">Friction and Forms</a></li><li><a class="nav-link" href="#information-architecture">Information Architecture</a></li><li><a class="nav-link" href="#onboarding">Onboarding</a></li><li><a class="nav-link" href="#accessibility-as-ux">Accessibility as UX</a></li><li><a class="nav-link" href="#research-which-method">Research: Which Method Answers What</a></li><li><a class="nav-link" href="#metrics-and-experiments">Metrics and Experiments</a></li><li><a class="nav-link" href="#the-replication-crisis">The Replication Crisis</a></li></ul>
+        <ul class="nav-list"><li><a class="nav-link" href="#preattentive-perception">Preattentive Perception</a></li><li><a class="nav-link" href="#feedback-where-the-eye-is">Feedback Where the Eye Is</a></li><li><a class="nav-link" href="#proximity-wins">Proximity Wins</a></li><li><a class="nav-link" href="#attention-is-zero-sum">Attention Is Zero-Sum</a></li><li><a class="nav-link" href="#working-memory">Working Memory</a></li><li><a class="nav-link" href="#cognitive-load-and-defaults">Cognitive Load and Defaults</a></li><li><a class="nav-link" href="#the-two-gulfs">The Two Gulfs</a></li><li><a class="nav-link" href="#how-people-decide">How People Decide</a></li><li><a class="nav-link" href="#biases-that-matter">Biases That Matter</a></li><li><a class="nav-link" href="#choice-architecture-and-ethics">Choice Architecture and Ethics</a></li><li><a class="nav-link" href="#ux-laws-with-caveats">UX Laws, With Caveats</a></li><li><a class="nav-link" href="#time-and-progress">Time and Progress</a></li><li><a class="nav-link" href="#peak-and-end">Peak and End</a></li><li><a class="nav-link" href="#friction-and-forms">Friction and Forms</a></li><li><a class="nav-link" href="#information-architecture">Information Architecture</a></li><li><a class="nav-link" href="#onboarding">Onboarding</a></li><li><a class="nav-link" href="#accessibility-as-ux">Accessibility as UX</a></li><li><a class="nav-link" href="#research-which-method">Research: Which Method Answers What</a></li><li><a class="nav-link" href="#metrics-and-experiments">Metrics and Experiments</a></li><li><a class="nav-link" href="#the-replication-crisis">The Replication Crisis</a></li><li><a class="nav-link" href="#warning-blindness">Warning Blindness</a></li></ul>
       </div>
       <div class="nav-group nav-other" data-section="ux">
         <div class="nav-title">Other sections</div>
@@ -849,6 +849,42 @@
             <li><strong>Honest uncertainty wins.</strong> "Let's watch" beats a bias cited from memory.</li>
           </ul>
           <footer class="sources"><span>Sources:</span> <em>UX, cognição e decisão, handbook</em> (chapter 20 and appendix A) · Open Science Collaboration, <em>Estimating the reproducibility of psychological science</em> (2015) · Hagger et al., multi-lab replication of ego depletion (2016)</footer>
+        </article>
+        <article class="lesson" id="warning-blindness">
+          <span class="eyebrow">UX · 21</span>
+          <h2>Warning Blindness</h2>
+          <p class="lede">A caveat under every AI answer is read once and never again. Warnings that are everywhere become texture. The specific warning, at the moment of decision, about the thing that is actually at risk, is the only one that changes behavior.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="warn-blind">
+            <div class="demo-stage" data-right="March 14, 2026" data-ok="Submitted with the corrected date." data-bad="Submitted with the wrong due date. The warning was there, on every field, and said nothing about dates." data-fixed="Fixed from the source.">
+            <div class="wbl-wrap"><div class="wbl-form"><div class="wbl-f" data-i="0"><span class="wbl-k">Vendor</span><b class="wbl-v">Northwind Ltd.</b><small class="wbl-cav">AI can make mistakes. Check important info.</small><span class="wbl-spec"><span>Dates from scanned PDFs are often wrong · source says March 14</span><button type="button" class="wbl-fix">Use source</button></span></div><div class="wbl-f" data-i="1"><span class="wbl-k">Amount</span><b class="wbl-v">$2,140.00</b><small class="wbl-cav">AI can make mistakes. Check important info.</small><span class="wbl-spec"><span>Dates from scanned PDFs are often wrong · source says March 14</span><button type="button" class="wbl-fix">Use source</button></span></div><div class="wbl-f wbl-wrong" data-i="2"><span class="wbl-k">Due date</span><b class="wbl-v">March 4, 2026</b><small class="wbl-cav">AI can make mistakes. Check important info.</small><span class="wbl-spec"><span>Dates from scanned PDFs are often wrong · source says March 14</span><button type="button" class="wbl-fix">Use source</button></span></div><div class="wbl-f" data-i="3"><span class="wbl-k">Reference</span><b class="wbl-v">INV-2041</b><small class="wbl-cav">AI can make mistakes. Check important info.</small><span class="wbl-spec"><span>Dates from scanned PDFs are often wrong · source says March 14</span><button type="button" class="wbl-fix">Use source</button></span></div><div class="wbl-bar"><button type="button" class="wbl-submit">Submit</button></div></div><span class="wbl-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Generic caveat on everything</span><input type="checkbox" name="generic" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Four fields filled by AI, one wrong. With the generic caveat, the same sentence sits under every field and you submit the wrong date. With the specific one, the warning sits on the date, names the source and offers the fix.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>"AI can make mistakes. Check important info." sits under every chat box in the industry, and Shape of AI's own assessment is that its effect on critical thinking is unproven. The mechanism is old: terms-of-service blindness, cookie-banner blindness, the safety label nobody reads. Attention habituates to anything constant, and a warning that never varies is constant by definition. The cognitive-load lessons in this section explain the rest: a blanket caveat asks the person to hold an abstract risk in mind for the whole session, which nobody does.</p>
+          <p>The alternative is to move the warning to where the risk is. "Verify the date" next to a date that came from an unreliable source is read, because it is specific, local and actionable. Shape of AI's guidance for the caveat pattern says the same: position it at the moment of decision, in plain language, tailored to the context, and pair it with patterns that actually reduce risk, such as citations and attachments. Then test whether it works instead of assuming it does. A warning is a design element with a measurable effect, and the measurement for the generic version is close to zero.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Specific over generic.</strong> Name the field, the fact, the risk.</li>
+            <li><strong>At the moment of decision,</strong> not at the top of the page.</li>
+            <li><strong>Actionable:</strong> the warning sits next to the control that fixes it.</li>
+            <li><strong>Measure it.</strong> If behavior does not change, the warning is decoration.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>One blanket caveat per product is already too many;</strong> per answer is noise.</li>
+            <li><strong>"Dates from scanned PDFs are often wrong"</strong> beats "may be inaccurate".</li>
+            <li><strong>Warnings interrupt only when the cost of the error is high.</strong></li>
+            <li><strong>Pair the warning with the fix:</strong> a source link, an edit field.</li>
+            <li><strong>Warning fatigue is a metric:</strong> track dismiss-without-reading.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <a href="https://www.shapeof.ai/patterns/caveat" target="_blank" rel="noopener">Shape of AI, Caveat</a> · <a href="https://www.shapeof.ai/patterns/citations" target="_blank" rel="noopener">Shape of AI, Citations</a> · <a href="https://www.nngroup.com/articles/banner-blindness-old-and-new-findings/" target="_blank" rel="noopener">Nielsen Norman Group, banner blindness</a></footer>
         </article>
       </section>
       <footer class="footer"><p>Personal study library. Content synthesized from the sources listed in each lesson; course and author names belong to their respective owners. Hierarchy through size, weight and space only.</p></footer>

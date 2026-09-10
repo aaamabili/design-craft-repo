@@ -33,7 +33,7 @@
     <nav class="nav-groups" aria-label="Sumário da seção">
       <div class="nav-group" data-section="color" style="margin-top:0">
         <div class="nav-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="7.5" r="4"/><circle cx="7.5" cy="15.5" r="4"/><circle cx="16.5" cy="15.5" r="4"/></svg>Color</div>
-        <ul class="nav-list"><li><a class="nav-link" href="#oklch">OKLCH</a></li><li><a class="nav-link" href="#noise">Noise</a></li><li><a class="nav-link" href="#shadows-not-borders">Shadows, Not Borders</a></li><li><a class="nav-link" href="#image-outlines">Image Outlines</a></li><li><a class="nav-link" href="#neutrals-are-not-gray">Neutrals Are Not Gray</a></li><li><a class="nav-link" href="#dark-mode-is-not-inversion">Dark Mode Is Not Inversion</a></li><li><a class="nav-link" href="#chroma-curve">Curve the Chroma</a></li><li><a class="nav-link" href="#gamut-clipping">Gamut and Silent Clipping</a></li><li><a class="nav-link" href="#two-contrast-algorithms">Contrast: WCAG 2 and APCA</a></li><li><a class="nav-link" href="#contrast-beyond-text">Contrast Is Not Only Text</a></li><li><a class="nav-link" href="#perceptual-effects">Effects That Break the Math</a></li><li><a class="nav-link" href="#twelve-step-scale">The 12-Step Scale</a></li><li><a class="nav-link" href="#token-architecture">Tokens by Role</a></li><li><a class="nav-link" href="#semantic-color">Semantic Color and the Yellow Problem</a></li><li><a class="nav-link" href="#interpolation-and-gradients">Interpolation and Gradients</a></li><li><a class="nav-link" href="#alpha-vs-solid">Alpha vs Solid</a></li><li><a class="nav-link" href="#color-blindness">Color Blindness</a></li><li><a class="nav-link" href="#color-in-data">Color in Data</a></li><li><a class="nav-link" href="#brand-vs-system">Brand vs System</a></li></ul>
+        <ul class="nav-list"><li><a class="nav-link" href="#oklch">OKLCH</a></li><li><a class="nav-link" href="#noise">Noise</a></li><li><a class="nav-link" href="#shadows-not-borders">Shadows, Not Borders</a></li><li><a class="nav-link" href="#image-outlines">Image Outlines</a></li><li><a class="nav-link" href="#neutrals-are-not-gray">Neutrals Are Not Gray</a></li><li><a class="nav-link" href="#dark-mode-is-not-inversion">Dark Mode Is Not Inversion</a></li><li><a class="nav-link" href="#chroma-curve">Curve the Chroma</a></li><li><a class="nav-link" href="#gamut-clipping">Gamut and Silent Clipping</a></li><li><a class="nav-link" href="#two-contrast-algorithms">Contrast: WCAG 2 and APCA</a></li><li><a class="nav-link" href="#contrast-beyond-text">Contrast Is Not Only Text</a></li><li><a class="nav-link" href="#perceptual-effects">Effects That Break the Math</a></li><li><a class="nav-link" href="#twelve-step-scale">The 12-Step Scale</a></li><li><a class="nav-link" href="#token-architecture">Tokens by Role</a></li><li><a class="nav-link" href="#semantic-color">Semantic Color and the Yellow Problem</a></li><li><a class="nav-link" href="#interpolation-and-gradients">Interpolation and Gradients</a></li><li><a class="nav-link" href="#alpha-vs-solid">Alpha vs Solid</a></li><li><a class="nav-link" href="#color-blindness">Color Blindness</a></li><li><a class="nav-link" href="#color-in-data">Color in Data</a></li><li><a class="nav-link" href="#brand-vs-system">Brand vs System</a></li><li><a class="nav-link" href="#marking-machine-output">Marking Machine Output</a></li></ul>
       </div>
       <div class="nav-group nav-other" data-section="color">
         <div class="nav-title">Outras seções</div>
@@ -869,6 +869,42 @@ background: <span class="f">linear-gradient</span>(in oklch longer hue, red, blu
             <li><strong>Verificações automatizadas no CI:</strong> pares, deltas, gamut, primitivos, simulação.</li>
           </ul>
           <footer class="sources"><span>Fontes:</span> <em>Cor para design engineers, handbook</em> (capítulos 16 e 17) · <a href="https://evilmartians.com/chronicles/harmonizer-generate-accessible-color-palettes" target="_blank" rel="noopener">Evil Martians, Harmonizer</a> · <a href="https://www.radix-ui.com/colors/custom" target="_blank" rel="noopener">Radix Colors, Custom palette generator</a></footer>
+        </article>
+        <article class="lesson" id="marking-machine-output">
+          <span class="eyebrow">Color · 20</span>
+          <h2>Marking Machine Output</h2>
+          <p class="lede">Roxo virou a cor informal de funcionalidades de IA, verde a segunda, do jeito que azul virou a cor dos links. Use um identificador consistente, combine com um ícone e uma palavra, e nunca deixe a cor carregar o significado sozinha.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="mk-output">
+            <div class="demo-stage" data-hue="matiz do marcador: %s · toque para trocar" data-hues="roxo|verde|laranja da marca" data-ok="Ícone + rótulo + cor: tire qualquer um e você ainda sabe qual parágrafo o modelo escreveu." data-bad="Só cor, em escala de cinza: o parágrafo da máquina ficou indistinguível dos humanos.">
+            <div class="mko-wrap"><div class="mko-doc"><div class="mko-p"><span class="mko-h">Notas da revisão</span><p>Ana levantou de novo o prazo do deck; Rui acha quarta ao meio-dia apertado mas possível.</p></div><div class="mko-p mko-ai"><span class="mko-h">Resumo</span><button type="button" class="mko-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg><span>Gerado</span></button><p>Três decisões: lançar sexta, pular o redesign, rever preço em outubro.</p></div><div class="mko-p"><span class="mko-h">Próximos passos</span><p>Rui redige o anúncio. Ana confirma o prazo do deck com design.</p></div></div><span class="mko-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Ícone e rótulo</span><input type="checkbox" name="label" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Escala de cinza</span><input type="checkbox" name="gray" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Um dos três parágrafos foi gerado. Toque no marcador para trocar o matiz: roxo, verde ou a cor da marca funcionam enquanto ícone e rótulo estão lá. Desligue ícone e rótulo, depois ligue escala de cinza: a divulgação desaparece junto com a cor.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>O Shape of AI traça a convenção: o roxo se espalhou a partir de plugins iniciais de ferramentas de design e da marca da era Copilot porque é perto o bastante do azul para ler como "interativo" e longe o bastante para ler como "diferente"; o verde veio com o ChatGPT. Alguns produtos recusam a convenção de propósito e mantêm a cor da marca até em funcionalidades de IA, o que é escolha legítima desde que outra coisa faça a identificação. O trabalho da cor é divulgação no ponto de encontro: este texto, este botão, esta sugestão vieram do modelo. Funciona porque é consistente no produto inteiro, não porque é roxo.</p>
+          <p>A regra de acessibilidade da seção de Color se aplica com força total. Um marcador que é só um matiz desaparece para pessoas com deficiência de visão de cores, em escala de cinza, na impressão e no modo escuro quando o matiz muda. Combine com ícone e rótulo, mantenha o contraste do marcador acima do limiar e teste o design em escala de cinza: se você não distingue os parágrafos da máquina dos da pessoa, o marcador falhou. Espere a convenção evoluir: conforme funcionalidades de IA virarem interface comum, a cor distinta pode desbotar como o sublinhado dos links desbotou, e o ícone e o rótulo ainda devem estar lá quando isso acontecer.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Um matiz identificador, usado só para IA,</strong> em toda superfície.</li>
+            <li><strong>Ícone mais rótulo mais cor.</strong> Remova qualquer um e o significado sobrevive.</li>
+            <li><strong>Teste em escala de cinza</strong> antes de publicar.</li>
+            <li><strong>Cor da marca é permitida</strong> se ícone e rótulo ainda divulgam.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>O matiz faz um trabalho só.</strong> Se roxo também significa "premium", a divulgação foi embora.</li>
+            <li><strong>O contraste do marcador se mede como texto,</strong> porque é lido como texto.</li>
+            <li><strong>O modo escuro desloca o matiz;</strong> confira se ainda lê como o mesmo identificador.</li>
+            <li><strong>O rótulo diz o que aconteceu:</strong> gerado, resumido, sugerido.</li>
+            <li><strong>Marcas d'água reforçam, não substituem,</strong> o marcador visível.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://www.shapeof.ai/patterns/color" target="_blank" rel="noopener">Shape of AI, Color</a> · <a href="https://www.shapeof.ai/patterns/iconography" target="_blank" rel="noopener">Shape of AI, Iconography</a> · <a href="https://www.shapeof.ai/patterns/disclosure" target="_blank" rel="noopener">Shape of AI, Disclosure</a> · <a href="https://www.shapeof.ai/patterns/watermark" target="_blank" rel="noopener">Shape of AI, Watermark</a></footer>
         </article>
       </section>
       <footer class="footer"><p>Biblioteca de estudo pessoal. Conteúdo sintetizado a partir das fontes listadas em cada aula; nomes de cursos e autores pertencem aos seus respectivos donos. Hierarquia só por tamanho, peso e espaço.</p></footer>

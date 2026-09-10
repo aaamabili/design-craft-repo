@@ -33,7 +33,7 @@
     <nav class="nav-groups" aria-label="Sumário da seção">
       <div class="nav-group" data-section="primitives" style="margin-top:0">
         <div class="nav-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="6" rx="2"/><rect x="3" y="14" width="8" height="6" rx="2"/><path d="M15 17h6M18 14v6"/></svg>Primitives</div>
-        <ul class="nav-list"><li><a class="nav-link" href="#what-makes-a-primitive">What Makes a Primitive</a></li><li><a class="nav-link" href="#hit-areas-and-targets">Hit Areas</a></li><li><a class="nav-link" href="#pointer-touch-keyboard">Pointer, Touch and Keyboard</a></li><li><a class="nav-link" href="#focus-management">Focus</a></li><li><a class="nav-link" href="#layers-and-stacking">Layers and Stacking</a></li><li><a class="nav-link" href="#scrolling-behavior">Scrolling</a></li><li><a class="nav-link" href="#component-state">State</a></li><li><a class="nav-link" href="#semantics-and-announcement">Semantics and Announcement</a></li><li><a class="nav-link" href="#button">Button</a></li><li><a class="nav-link" href="#text-field">Text Field</a></li><li><a class="nav-link" href="#checkbox-radio-switch">Checkbox, Radio and Switch</a></li><li><a class="nav-link" href="#select-and-combobox">Select and Combobox</a></li><li><a class="nav-link" href="#slider">Slider</a></li><li><a class="nav-link" href="#tooltip">Tooltip</a></li><li><a class="nav-link" href="#popover-and-menu">Popover and Menu</a></li><li><a class="nav-link" href="#command-menu">Command Menu</a></li><li><a class="nav-link" href="#dialog">Dialog</a></li><li><a class="nav-link" href="#drawer">Drawer</a></li><li><a class="nav-link" href="#toast">Toast</a></li><li><a class="nav-link" href="#tabs">Tabs</a></li><li><a class="nav-link" href="#disclosure-and-accordion">Disclosure and Accordion</a></li><li><a class="nav-link" href="#table">Table</a></li><li><a class="nav-link" href="#scroll-area">Scroll Area</a></li><li><a class="nav-link" href="#drag-and-reorder">Drag and Reorder</a></li></ul>
+        <ul class="nav-list"><li><a class="nav-link" href="#what-makes-a-primitive">What Makes a Primitive</a></li><li><a class="nav-link" href="#hit-areas-and-targets">Hit Areas</a></li><li><a class="nav-link" href="#pointer-touch-keyboard">Pointer, Touch and Keyboard</a></li><li><a class="nav-link" href="#focus-management">Focus</a></li><li><a class="nav-link" href="#layers-and-stacking">Layers and Stacking</a></li><li><a class="nav-link" href="#scrolling-behavior">Scrolling</a></li><li><a class="nav-link" href="#component-state">State</a></li><li><a class="nav-link" href="#semantics-and-announcement">Semantics and Announcement</a></li><li><a class="nav-link" href="#button">Button</a></li><li><a class="nav-link" href="#text-field">Text Field</a></li><li><a class="nav-link" href="#checkbox-radio-switch">Checkbox, Radio and Switch</a></li><li><a class="nav-link" href="#select-and-combobox">Select and Combobox</a></li><li><a class="nav-link" href="#slider">Slider</a></li><li><a class="nav-link" href="#tooltip">Tooltip</a></li><li><a class="nav-link" href="#popover-and-menu">Popover and Menu</a></li><li><a class="nav-link" href="#command-menu">Command Menu</a></li><li><a class="nav-link" href="#dialog">Dialog</a></li><li><a class="nav-link" href="#drawer">Drawer</a></li><li><a class="nav-link" href="#toast">Toast</a></li><li><a class="nav-link" href="#tabs">Tabs</a></li><li><a class="nav-link" href="#disclosure-and-accordion">Disclosure and Accordion</a></li><li><a class="nav-link" href="#table">Table</a></li><li><a class="nav-link" href="#scroll-area">Scroll Area</a></li><li><a class="nav-link" href="#drag-and-reorder">Drag and Reorder</a></li><li><a class="nav-link" href="#the-prompt-box">The Prompt Box</a></li></ul>
       </div>
       <div class="nav-group nav-other" data-section="primitives">
         <div class="nav-title">Outras seções</div>
@@ -964,6 +964,42 @@
             <li><strong>Botões de subir e descer são uma resposta válida.</strong></li>
           </ul>
           <footer class="sources"><span>Fontes:</span> <em>Anatomia dos primitivos de interface, handbook</em> (capítulo 24) · <a href="https://www.w3.org/WAI/ARIA/apg/patterns/listbox/" target="_blank" rel="noopener">APG, Listbox pattern</a> · <a href="https://dndkit.com/" target="_blank" rel="noopener">dnd kit, acessibilidade</a></footer>
+        </article>
+        <article class="lesson" id="the-prompt-box">
+          <span class="eyebrow">Primitives · 25</span>
+          <h2>The Prompt Box</h2>
+          <p class="lede">A entrada de prompt aberta é o primitivo novo: uma textarea que cresce, envia com Enter, quebra linha com Shift+Enter, guarda anexos como chips e transforma o botão Enviar em Parar. Cada uma dessas decisões é de componente, não de modelo.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="prompt-box">
+            <div class="demo-stage" data-ha="Enter envia · Shift+Enter quebra linha" data-hb="Shift+Enter envia · Enter quebra linha" data-send="Enviar" data-stop="Parar" data-sent="Enviado · %d linhas · caixa de volta a uma linha" data-stopped="Parado. Enviar voltou no mesmo lugar." data-fixed="Altura fixa: a linha %d está escondida acima; você digita às cegas.">
+            <div class="pbx-wrap"><div class="pbx-box"><span class="pbx-chip">brief.pdf <i>×</i></span><textarea class="pbx-ta" rows="1" placeholder="Pergunte sobre a página de preços…" aria-label="Prompt"></textarea><button type="button" class="pbx-send">Enviar</button></div><div class="pbx-row"><span class="pbx-hint"></span><div class="pbx-sugs"><button type="button" class="pbx-sug">Resumir a thread</button><button type="button" class="pbx-sug">Redigir resposta para a Ana</button></div></div><span class="pbx-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Enter envia</span><input type="checkbox" name="enter" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Cresce com o conteúdo</span><input type="checkbox" name="grow" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Digite na caixa e aperte Shift+Enter algumas vezes: ela cresce até um teto, depois rola. Enter envia e o botão vira Parar no mesmo lugar. Desligue o crescimento e a terceira linha some acima; inverta a regra do Enter e a dica muda junto.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>O Shape of AI chama de "Initial CTA" e "Open input": um campo grande e aberto que convida à primeira interação. Como componente, herda tudo da aula de Fields e adiciona quatro comportamentos. Cresce com o conteúdo, de uma linha até um teto de cerca de oito, depois rola; uma entrada fixa de uma linha esconde o que a pessoa escreveu, uma fixa e alta desperdiça a tela. Envia com Enter e insere quebra com Shift+Enter, a convenção de chat, a menos que o produto seja documento-primeiro, caso em que inverte, e de qualquer jeito a affordance fica escrita ao lado do botão. Guarda anexos como chips removíveis dentro do campo, não numa bandeja separada. E seu botão primário muda de papel: Enviar quando ocioso, Parar enquanto gera, na mesma posição para a mão não viajar.</p>
+          <p>Como a caixa é onde a pessoa gasta a maior parte da atenção, suas pequenas falhas são altas. Um placeholder que some no foco não deixa pista do que o campo faz; mantenha um rótulo curto acima ou uma linha de sugestões abaixo. Um Enviar desabilitado durante a geração sem um Parar prende a pessoa. Uma textarea que zera a altura depois de enviar e depois pula quando a próxima mensagem começa quebra o ritmo. O mobile adiciona o teclado: a caixa precisa ficar acima dele, e o alvo de enviar precisa ser alcançável pelo polegar.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Cresça até um teto, depois role.</strong> Nunca uma linha fixa.</li>
+            <li><strong>Enter envia, Shift+Enter quebra,</strong> e a dica diz isso.</li>
+            <li><strong>Anexos são chips no campo</strong> com um × cada.</li>
+            <li><strong>Enviar vira Parar</strong> no lugar, desde o primeiro token.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>A altura anima,</strong> mas o cursor nunca sai da última linha.</li>
+            <li><strong>Placeholder mais uma linha de sugestões,</strong> para o campo vazio nunca estar vazio.</li>
+            <li><strong>O rascunho persiste</strong> entre navegação e recarga.</li>
+            <li><strong>Colar um texto longo</strong> vira chip de anexo, não um paredão.</li>
+            <li><strong>Enviar alcançável pelo polegar no mobile,</strong> acima do teclado.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://www.shapeof.ai/patterns/cta" target="_blank" rel="noopener">Shape of AI, Initial CTA</a> · <a href="https://www.shapeof.ai/patterns/open-input" target="_blank" rel="noopener">Shape of AI, Open input</a> · <a href="https://www.shapeof.ai/patterns/attachments" target="_blank" rel="noopener">Shape of AI, Attachments</a> · <a href="https://www.shapeof.ai/patterns/controls" target="_blank" rel="noopener">Shape of AI, Controls</a></footer>
         </article>
       </section>
       <footer class="footer"><p>Biblioteca de estudo pessoal. Conteúdo sintetizado a partir das fontes listadas em cada aula; nomes de cursos e autores pertencem aos seus respectivos donos. Hierarquia só por tamanho, peso e espaço.</p></footer>

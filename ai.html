@@ -33,7 +33,7 @@
     <nav class="nav-groups" aria-label="Section contents">
       <div class="nav-group" data-section="ai" style="margin-top:0">
         <div class="nav-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 17l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/></svg>AI</div>
-        <ul class="nav-list"><li><a class="nav-link" href="#appropriate-reliance">Appropriate Reliance</a></li><li><a class="nav-link" href="#comparative-advantage">Comparative Advantage</a></li><li><a class="nav-link" href="#interaction-pattern-by-task">Interaction Pattern by Task</a></li><li><a class="nav-link" href="#setting-expectations">Setting Expectations</a></li><li><a class="nav-link" href="#role-expertise-honesty">Role, Expertise and Honesty</a></li><li><a class="nav-link" href="#provenance-over-confidence">Provenance Over Confidence</a></li><li><a class="nav-link" href="#no-hidden-agenda">No Hidden Agenda</a></li><li><a class="nav-link" href="#intelligibility">Intelligibility</a></li><li><a class="nav-link" href="#control-and-agency">Control and Agency</a></li><li><a class="nav-link" href="#timing-and-whose-rule">Timing, Access and Whose Rule</a></li><li><a class="nav-link" href="#graceful-failure">Graceful Failure</a></li><li><a class="nav-link" href="#co-creation">Co-Creation</a></li><li><a class="nav-link" href="#responsible-autonomy">Responsible Autonomy</a></li><li><a class="nav-link" href="#sustained-reliance">Sustained Reliance</a></li></ul>
+        <ul class="nav-list"><li><a class="nav-link" href="#appropriate-reliance">Appropriate Reliance</a></li><li><a class="nav-link" href="#comparative-advantage">Comparative Advantage</a></li><li><a class="nav-link" href="#interaction-pattern-by-task">Interaction Pattern by Task</a></li><li><a class="nav-link" href="#setting-expectations">Setting Expectations</a></li><li><a class="nav-link" href="#role-expertise-honesty">Role, Expertise and Honesty</a></li><li><a class="nav-link" href="#provenance-over-confidence">Provenance Over Confidence</a></li><li><a class="nav-link" href="#no-hidden-agenda">No Hidden Agenda</a></li><li><a class="nav-link" href="#intelligibility">Intelligibility</a></li><li><a class="nav-link" href="#control-and-agency">Control and Agency</a></li><li><a class="nav-link" href="#timing-and-whose-rule">Timing, Access and Whose Rule</a></li><li><a class="nav-link" href="#graceful-failure">Graceful Failure</a></li><li><a class="nav-link" href="#co-creation">Co-Creation</a></li><li><a class="nav-link" href="#responsible-autonomy">Responsible Autonomy</a></li><li><a class="nav-link" href="#sustained-reliance">Sustained Reliance</a></li><li><a class="nav-link" href="#nudges-and-discovery">Nudges and Discovery</a></li><li><a class="nav-link" href="#follow-ups">Follow-Ups and Clarifying Questions</a></li><li><a class="nav-link" href="#structured-prompting">Structured Prompting</a></li><li><a class="nav-link" href="#context-and-tuning">Context and Tuning</a></li><li><a class="nav-link" href="#variations-and-branches">Variations and Branches</a></li><li><a class="nav-link" href="#streaming-and-interruption">Streaming and Interruption</a></li><li><a class="nav-link" href="#memory-and-incognito">Memory and Incognito</a></li><li><a class="nav-link" href="#identity-and-personality">Identity and Personality</a></li></ul>
       </div>
       <div class="nav-group nav-other" data-section="ai">
         <div class="nav-title">Other sections</div>
@@ -566,6 +566,302 @@
             <li><strong>Model version visible,</strong> switch deliberate, evaluations before the switch.</li>
           </ul>
           <footer class="sources"><span>Sources:</span> Bakusevych, principles 36 to 39 · <a href="https://www.perplexity.ai/" target="_blank" rel="noopener">Perplexity</a> · <a href="https://docs.anthropic.com/en/docs/build-with-claude/effort" target="_blank" rel="noopener">Anthropic, effort control</a></footer>
+        </article>
+
+        <article class="lesson" id="nudges-and-discovery">
+          <span class="eyebrow">AI · 15</span>
+          <h2>Nudges and Discovery</h2>
+          <p class="lede">A tool that can do a million things is useless if people know three of them. Nudges reveal the right capability at the right moment, build a skill instead of a dependence, and stop when the person has learned. A nudge that sells is not a nudge.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="ai-nudges">
+            <div class="demo-stage" data-ph="Untitled document" data-t="|Weekly review · draft|Weekly review · draft|Weekly review · draft" data-body="|Three decisions came out of the review: ship Friday, skip the redesign, revisit pricing in October.|Three decisions came out of the review: ship Friday, skip the redesign, revisit pricing in October. Ana raised the deck deadline again; Rui thinks Wednesday noon is tight but doable. Lia wants the pricing thread closed before the announcement goes out.|Three decisions came out of the review: ship Friday, skip the redesign, revisit pricing in October. Ana raised the deck deadline again; Rui thinks Wednesday noon is tight but doable. Lia wants the pricing thread closed before the announcement goes out. Two follow-ups were assigned: Rui drafts the announcement, Ana confirms the deck timing with design. Open question from sales about the Team plan minimum, parked until October. Next review moves to Thursday." data-state="One hint, chosen by the state of the document." data-all="Every capability at once, plus an upsell: nobody reads six hints, and the upsell makes the other five read as marketing." data-acc="%s ✓ · after a few uses this hint retires">
+            <div class="ain-wrap"><div class="ain-doc"><b class="ain-title"></b><p class="ain-body"></p></div><div class="ain-nudges"><button type="button" class="ain-nudge" data-i="0">Start from a template</button><button type="button" class="ain-nudge" data-i="1">Continue writing</button><button type="button" class="ain-nudge" data-i="2">Summarize</button><button type="button" class="ain-nudge" data-i="3">Extract action items</button><button type="button" class="ain-nudge ain-up">Unlock Premium for smart summaries</button></div><span class="ain-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Document length</span><input type="range" name="len" min="0" max="3" step="1" value="0" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Nudge everything</span><input type="checkbox" name="all" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Drag the document length. Empty: one hint, a template. Long: summarize or extract. Each nudge fits the state, and accepting one retires it. Turn on nudge everything: six hints and a Premium pitch on an empty page.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Shape of AI, Emily Campbell's pattern library, groups the ways a product helps someone get started under "Wayfinders": example galleries, suggestions, templates, a randomize button for a low-stakes first try, and nudges. Nudges are the most delicate of the group because they interrupt. The rule that makes them work is state: a "Summarize" hint makes sense after two screens of text and is noise on an empty page; "Start from a template" is the reverse. Copilot's inline completions are the reference, a hint that appears exactly where the person already is, costs nothing to ignore and teaches the interaction by being accepted once.</p>
+          <p>Two failure modes. The first is volume: showing every capability at once, which the library calls the discovery-versus-restraint balance. People do not learn six things from one tooltip; they dismiss the tooltip. The second is motive: a nudge that turns out to be an upsell. Shape of AI names it "growth theater", a premium prompt wearing the costume of guidance. Once someone has seen one, every future hint reads as marketing. Good nudges also retire: after the person has used the feature a few times, the hint should disappear, because a hint that never leaves has become a dependence.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Nudge by state.</strong> The document's length, emptiness or selection decides which hint, if any, appears.</li>
+            <li><strong>One at a time.</strong> A single relevant hint beats a menu of capabilities.</li>
+            <li><strong>Retire after use.</strong> Count acceptances; stop nudging once the skill exists.</li>
+            <li><strong>Never sell inside a hint.</strong> Upgrade prompts live in pricing, not in guidance.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>"Summarize" only after there is something to summarize.</strong> State gates every nudge.</li>
+            <li><strong>Ignorable by default.</strong> If a hint needs a close button, it is a dialog.</li>
+            <li><strong>Three acceptances, then silence.</strong> Nudges that persist teach dependence.</li>
+            <li><strong>Galleries and randomize lower the first step;</strong> nudges lower the second.</li>
+            <li><strong>Growth theater is detectable in one word:</strong> if the hint says "Premium", it is not a hint.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <a href="https://www.shapeof.ai/patterns/nudges" target="_blank" rel="noopener">Shape of AI, Nudges</a> · <a href="https://www.shapeof.ai/patterns/suggestions" target="_blank" rel="noopener">Shape of AI, Suggestions</a> · <a href="https://www.shapeof.ai/patterns/templates" target="_blank" rel="noopener">Shape of AI, Templates</a> · <a href="https://www.shapeof.ai/patterns/randomize" target="_blank" rel="noopener">Shape of AI, Randomize</a></footer>
+        </article>
+
+        <article class="lesson" id="follow-ups">
+          <span class="eyebrow">AI · 16</span>
+          <h2>Follow-Ups and Clarifying Questions</h2>
+          <p class="lede">After an answer, the next question is the interface. Follow-ups anchored in what just happened keep the person moving; generic ones ("Tell me more?") waste the turn. Before an ambiguous task, a specific question or a sample response beats a confident guess.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="ai-followups">
+            <div class="demo-stage" data-anch="Compare Thursday vs Friday for the review|Draft the reply to Ana about the deck|Show the two pricing objections" data-gen="Tell me more|Anything else?|Can you elaborate?" data-whya="You could also ask, based on the deck deadline and the open pricing thread:" data-whyg="Suggested:" data-next="Thursday gives design one extra day for the deck; Friday keeps the original date. Rui prefers Thursday.|Draft: &quot;Ana, the deck will be with you Wednesday by noon. If design needs the extra day, we can move the review to Thursday.&quot;|Sales: (1) the per-seat minimum pushes small teams to the Pro plan, (2) annual billing hides the monthly price." data-nextg="Sure. The review also covered the deck deadline and two objections from sales about pricing." data-sq="Before I write it: for customers (features and pricing) or for the team (decisions and owners)? Like this, for customers: &quot;Starting Friday, the Team plan drops the per-seat minimum…&quot;" data-written="Announcement drafted for %s. Review before sending." data-aud="Customers|Team">
+            <div class="aiu-wrap"><div class="aiu-thread"><div class="aiu-msg aiu-user">What did the review decide?</div><div class="aiu-msg aiu-bot">Ship Friday, skip the redesign, revisit pricing in October. Ana needs the deck by Wednesday noon.</div><div class="aiu-msg aiu-bot aiu-next"></div><div class="aiu-msg aiu-bot aiu-sample"><span></span><div><button type="button" class="aiu-pick" data-a="0">Customers</button><button type="button" class="aiu-pick" data-a="1">Team</button></div></div></div><div class="aiu-fu"><span class="aiu-why"></span><div class="aiu-chips"></div><button type="button" class="aiu-big">Write the announcement</button></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Generic follow-ups</span><input type="checkbox" name="generic" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Ask before generating</span><input type="checkbox" name="sample" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Read the answer, then pick a follow-up: anchored chips quote the deck deadline and the pricing thread; generic ones waste the turn. Click the bigger request: with ask before generating, a sample response confirms the audience before a full draft.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>The moment after a response is where most AI products go quiet, and it is where the person's intent is most legible. Shape of AI catalogs six kinds of follow-up: extenders for adjacent topics, clarifying questions for ambiguity, depth probes, comparisons, action nudges that turn a result into steps, and share or export. What separates a useful set from a useless one is anchoring. "Compare Thursday with Friday for the review" is anchored; "Anything else?" is not. The library's guidance is to keep the list short and scannable, visually separate from the answer, with the reasoning visible: "You could also ask…" tells the person why these three and not others.</p>
+          <p>Follow-ups have a lifecycle. They matter most early, when the system knows little; as memory and attachments supply context, they should become rarer and more specific. And they have a sibling that runs before generation: the sample response. For an expensive or ambiguous request, showing a short preview of what will be produced and asking "like this?" costs one exchange and avoids a full generation aimed at the wrong target. Specificity is the whole technique: name the two readings of the request, never ask the person to "clarify".</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Anchor every follow-up in the last turn.</strong> Names, dates and objects from the answer appear in the chip.</li>
+            <li><strong>Three, scannable, apart from the answer.</strong> Not a paragraph of suggestions.</li>
+            <li><strong>Sample response before expensive work.</strong> Confirm the shape, then generate.</li>
+            <li><strong>Fewer follow-ups as context grows.</strong> Memory should make them unnecessary, not louder.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Chips quote the answer.</strong> A follow-up without a noun from the last turn is generic.</li>
+            <li><strong>Show the reason:</strong> "You could also ask" or "Based on the two open threads".</li>
+            <li><strong>Mix depth and breadth,</strong> one deeper, one adjacent, one action.</li>
+            <li><strong>A sample response is a question in the shape of an answer.</strong></li>
+            <li><strong>Regenerate the follow-ups too,</strong> not only the answer.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <a href="https://www.shapeof.ai/patterns/follow-up" target="_blank" rel="noopener">Shape of AI, Follow up</a> · <a href="https://www.shapeof.ai/patterns/sample-response" target="_blank" rel="noopener">Shape of AI, Sample response</a></footer>
+        </article>
+
+        <article class="lesson" id="structured-prompting">
+          <span class="eyebrow">AI · 17</span>
+          <h2>Structured Prompting</h2>
+          <p class="lede">Free text is the worst input for a repeatable task. Madlibs and templates move the work from correcting outputs to shaping inputs. A prompt enhancer that rewrites what the person typed must show the rewrite and let them edit it, or it is guessing in the dark.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="ai-madlibs">
+            <div class="demo-stage" data-tpl="Write a|for|in a|tone for" data-f0="release note|changelog entry|announcement" data-f1="the new export|the Team plan change|dark mode" data-f2="plain|friendly|formal" data-f3="customers|the team|developers" data-enh="Write a %s for %s in a %s tone for %s. Lead with what changed and why it matters to them, one paragraph, no marketing adjectives, end with where to learn more." data-silent="The prompt was rewritten behind the scenes. You cannot see what changed, so you cannot fix what went wrong." data-out="Drafted from the prompt above.">
+            <div class="aid-wrap"><div class="aid-tpl">Write a <button type="button" class="aid-blank" data-f="0">release note</button> for <button type="button" class="aid-blank" data-f="1">the new export</button> in a <button type="button" class="aid-blank" data-f="2">plain</button> tone for <button type="button" class="aid-blank" data-f="3">customers</button> </div><div class="aid-box"><span class="aid-label">Assembled prompt</span><p class="aid-prompt"></p></div><div class="aid-box aid-enhbox"><span class="aid-label">Enhanced prompt · edit before running</span><p class="aid-enh" contenteditable="true" spellcheck="false"></p></div><div class="aid-bar"><button type="button" class="aid-run">Run</button><span class="aid-read"></span></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Enhance prompt</span><input type="checkbox" name="enh" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Silent rewrite</span><input type="checkbox" name="silent" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Tap a blank to cycle its value: the sentence stays valid and the assembled prompt is always visible. Enhance shows the rewritten prompt as editable text. Silent rewrite hides it, and the next odd result becomes impossible to debug.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>An open prompt box asks the person to know the hidden grammar of a good prompt. Shape of AI's "Madlibs" pattern replaces it with fields: write a [release note] for [feature] in a [tone] for [audience]. The variables carry the structure; the person supplies only what varies. Copy.ai, Writer and Jasper build entire template libraries this way, and the payoff is consistency across a team that never learned prompt engineering. The design tension is rigidity: fixed fields guarantee format and frustrate nuance; loose fields invite creativity and lose polish. Mark what is mandatory, and expose the assembled prompt so the template also teaches.</p>
+          <p>The prompt enhancer is the same idea applied to text the person already wrote. Firefly, Bolt and Leonardo offer an "Enhance" that expands a thin prompt with detail. The library's rule is unambiguous: show your work. If the system rewrites the prompt, display the new prompt and let the person keep editing before it runs. Silent rewriting changes scope without consent and makes every unexpected result impossible to debug. Preserve the person's voice and constraints; add specificity, not ambition.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Fields for what varies, structure for what repeats.</strong> Madlibs for any task run more than twice.</li>
+            <li><strong>Show the assembled prompt.</strong> The template is also a lesson in prompting.</li>
+            <li><strong>Enhance visibly.</strong> The rewritten prompt is editable text, never a hidden step.</li>
+            <li><strong>Keep the raw prompt reachable</strong> to view, copy and export.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>Required fields marked;</strong> optional ones pre-filled with sensible defaults.</li>
+            <li><strong>The assembled prompt reads as a sentence,</strong> so the person can judge it.</li>
+            <li><strong>Enhance adds detail, not scope.</strong> "Blue button" does not become "a full redesign".</li>
+            <li><strong>One click to undo the enhancement.</strong></li>
+            <li><strong>Tiered: a simple Enhance for most people,</strong> parameters for the few who want them.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <a href="https://www.shapeof.ai/patterns/madlibs" target="_blank" rel="noopener">Shape of AI, Madlibs</a> · <a href="https://www.shapeof.ai/patterns/templates" target="_blank" rel="noopener">Shape of AI, Templates</a> · <a href="https://www.shapeof.ai/patterns/prompt-enhancer" target="_blank" rel="noopener">Shape of AI, Prompt enhancer</a> · <a href="https://www.shapeof.ai/patterns/open-input" target="_blank" rel="noopener">Shape of AI, Open input</a></footer>
+        </article>
+
+        <article class="lesson" id="context-and-tuning">
+          <span class="eyebrow">AI · 18</span>
+          <h2>Context and Tuning</h2>
+          <p class="lede">Attachments anchor, filters constrain, modes swap the persona and its rules, parameters set limits, saved styles remember preferences. Every one of them changes what the model sees. The interface should show that stack, because a hidden context is an unexplainable answer.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="ai-tuners">
+            <div class="demo-stage" data-base="Pricing pages usually list plans in columns with a highlighted default; consider annual and monthly toggles." data-att="Per the brief: drop the per-seat minimum on the Team plan, show the monthly equivalent next to annual billing, keep three columns." data-fil="Internal docs mention the Team plan minimum as the main churn driver; the pricing thread has two open objections from sales." data-creative=" Two bolder options: a usage-based tier, or a single plan with add-ons." data-verbose="Great question! Here is a thorough overview. " data-none="no context · general knowledge" data-names="brief.pdf|internal sources|precise|concise style">
+            <div class="aik-wrap"><div class="aik-q">What is the plan for the pricing page?</div><div class="aik-chips"><button type="button" class="aik-chip" data-k="att" aria-pressed="true">brief.pdf <i>×</i></button><button type="button" class="aik-chip" data-k="fil" aria-pressed="true">internal sources <i>×</i></button><button type="button" class="aik-chip" data-k="mode" aria-pressed="true">precise <i>×</i></button><button type="button" class="aik-chip" data-k="style" aria-pressed="true">concise style <i>×</i></button></div><div class="aik-stack"><b>Model sees:</b> <span></span></div><div class="aik-ans"></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Show what the model sees</span><input type="checkbox" name="show" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Remove a chip and the answer changes: without the brief it turns generic, without the filter it stops citing internal docs. Show what the model sees to read the whole stack as one line; that line is the answer to "what did it use".</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Shape of AI calls these "Tuners": the controls that adjust contextual data, weights and details before generation. Attachments give the model a specific reference; connectors let it reach external data; filters constrain sources or modalities; modes change the underlying constraints and persona for a use case; parameters set explicit limits; preset and saved styles carry voice and tone across sessions. Each is a lever on the answer, and most products hide the sum of them. The person sees an output and cannot tell whether it came from the attached brief, the "internal sources only" filter or the "concise" mode they set last week.</p>
+          <p>The fix is the sibling wayfinder, "Prompt details": show what is actually happening behind the scenes. A small context stack, "reading brief.pdf · internal sources · precise mode", turns tuning from folklore into a visible, editable state. It answers the intelligibility question "what did it use" before it is asked, and it makes the difference between a wrong answer and a wrong context obvious. Saved styles deserve the same visibility: a preference applied silently forever is the global-control confusion from the Control lesson in another costume.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Show the context stack</strong> next to the input: attachments, filters, mode, saved style.</li>
+            <li><strong>Every tuner is removable in place,</strong> with an × on the chip.</li>
+            <li><strong>Modes change the rules visibly:</strong> name what a mode adds and removes.</li>
+            <li><strong>Saved styles are shown when applied,</strong> not only in settings.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>An attached file is a chip with a name,</strong> not an icon count.</li>
+            <li><strong>Filters read as a sentence:</strong> "internal sources · last 90 days".</li>
+            <li><strong>Switching mode re-renders the stack,</strong> so the person sees what changed.</li>
+            <li><strong>The stack is copyable,</strong> so a good context can be shared.</li>
+            <li><strong>"What did it use" has a place in the UI,</strong> not only in a log.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <a href="https://www.shapeof.ai/patterns/attachments" target="_blank" rel="noopener">Shape of AI, Attachments</a> · <a href="https://www.shapeof.ai/patterns/filters" target="_blank" rel="noopener">Shape of AI, Filters</a> · <a href="https://www.shapeof.ai/patterns/modes" target="_blank" rel="noopener">Shape of AI, Modes</a> · <a href="https://www.shapeof.ai/patterns/saved-styles" target="_blank" rel="noopener">Shape of AI, Saved styles</a> · <a href="https://www.shapeof.ai/patterns/prompt-details" target="_blank" rel="noopener">Shape of AI, Prompt details</a></footer>
+        </article>
+
+        <article class="lesson" id="variations-and-branches">
+          <span class="eyebrow">AI · 19</span>
+          <h2>Variations and Branches</h2>
+          <p class="lede">Probabilistic output means several good answers per prompt. Variations show them side by side; branches let a conversation fork without losing the trunk. The rule under both: never overwrite an original without asking.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="ai-branches">
+            <div class="demo-stage" data-v="Ship Friday, skip the redesign, revisit pricing in October.|Friday ship confirmed; redesign postponed; pricing back on the table in October.|Decisions: ship Friday, no redesign, pricing revisited in October; deck due Wednesday." data-lost="Regenerated. The previous answer is gone; nothing to compare against." data-kept="%d / %d · both answers kept, arrows to compare" data-used="Promoted answer %d to the thread. The others stay reachable.">
+            <div class="aij-wrap"><div class="aij-msg aij-user">Give me a one-line summary of the review.</div><div class="aij-msg aij-bot"><p class="aij-text"></p><div class="aij-pager"><button type="button" class="aij-prev" aria-label="Previous">‹</button><span class="aij-count"></span><button type="button" class="aij-next" aria-label="Next">›</button><button type="button" class="aij-use">Use this one</button></div></div><div class="aij-bar"><button type="button" class="aij-regen">↻ Regenerate</button><span class="aij-read"></span></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Keep originals (branch)</span><input type="checkbox" name="keep" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Regenerate the reply. With originals kept, a 1 / 2 pager appears and arrows compare the versions; "Use this one" promotes a branch without deleting the rest. Turn it off and each regenerate overwrites the answer you were comparing against.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Shape of AI distinguishes three shapes of variation. Branched variations, Midjourney's four-image grid, show options at once and let the person iterate from any one. Convergent variations offer a short list that merges into the main content when chosen, the way Copilot lists alternatives only when its confidence is low. Preset variations apply named modifications, "professional", "casual", grouped for comparison, as Grammarly and Writer do. All three exist to convert a judgment ("is this good?") into a choice ("which is closer?"), which people make faster and with more confidence.</p>
+          <p>Branches extend the idea across time. When someone regenerates a reply, the earlier one should not vanish: ChatGPT's "2 / 2" pager keeps both, and canvas tools like Flora keep every branch linked to its source prompt. The library's guidance: make branching an explicit first-class action at obvious points, let each branch progress independently while inheriting context, support lightweight merging (adopt this answer back into the main thread), and keep the link back to the original. Regenerate-and-replace is the anti-pattern: it destroys the thing the person was comparing against.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Regenerate creates a sibling,</strong> paged "1 / 2", never a replacement.</li>
+            <li><strong>Side by side at equal size</strong> when the task is generative.</li>
+            <li><strong>Branch from any message,</strong> with the origin visible.</li>
+            <li><strong>Merge lightly:</strong> "use this one" promotes a branch without deleting the rest.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>"1 / 2" with arrows</strong> is the smallest honest regenerate.</li>
+            <li><strong>Originals are never overwritten without confirmation.</strong></li>
+            <li><strong>Convergent lists only when confidence is low;</strong> otherwise one answer.</li>
+            <li><strong>Preset variations are named,</strong> so the person learns what "professional" changes.</li>
+            <li><strong>Branches cost compute;</strong> show that, do not hide it.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <a href="https://www.shapeof.ai/patterns/variations" target="_blank" rel="noopener">Shape of AI, Variations</a> · <a href="https://www.shapeof.ai/patterns/branches" target="_blank" rel="noopener">Shape of AI, Branches</a> · <a href="https://www.shapeof.ai/patterns/regenerate" target="_blank" rel="noopener">Shape of AI, Regenerate</a></footer>
+        </article>
+
+        <article class="lesson" id="streaming-and-interruption">
+          <span class="eyebrow">AI · 20</span>
+          <h2>Streaming and Interruption</h2>
+          <p class="lede">Output arrives as a stream, and the person must be able to stop it, keep what arrived, and steer. A generation you cannot interrupt is a dialog you cannot cancel: the same failure in a new medium.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="ai-stream">
+            <div class="demo-stage" data-text="The pricing page change is straightforward once the plan structure is settled. Start by removing the per-seat minimum on the Team plan, since that is the churn driver the sales thread keeps returning to. Then show the monthly equivalent next to the annual price, so the comparison is honest at a glance. Keep the three-column layout; a fourth column for usage-based billing can wait until the October review." data-dtext="Remove the Team plan minimum. Show monthly next to annual. Keep three columns; usage tier in October." data-stopped="Stopped at %d words. The text is yours: edit it or continue." data-noint="Not interruptible: you wait for all of it, even after the second sentence told you it was wrong." data-done="%d words · %s s">
+            <div class="ais-wrap"><div class="ais-out"><span class="ais-tag">Draft · fast pass</span><p class="ais-text"></p></div><div class="ais-bar"><button type="button" class="ais-go">Generate</button><button type="button" class="ais-stop">Stop</button><button type="button" class="ais-cont">Continue</button><span class="ais-read"></span></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Interruptible</span><input type="checkbox" name="int" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Draft mode</span><input type="checkbox" name="draft" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Generate, then stop after two sentences: the partial text stays and Continue picks up from there. Turn interruptible off: the Stop button is gone and you sit through the whole answer. Draft mode runs a short, cheaper pass marked as a draft.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Shape of AI's "Controls" pattern covers the levers people need while the AI works: pause, stop, steer, and keep what has been produced. Streaming makes the wait legible, and it also makes early errors visible early. Two sentences in, the person can already tell the answer is going the wrong way; without a stop button they sit through the rest. With one, they stop, keep the partial text, and redirect. The partial output must remain editable and usable, not be discarded as "incomplete": what arrived is the person's now.</p>
+          <p>Stopping is one control; the others are draft mode and cost. Draft mode runs a cheaper, faster pass for exploration and marks the result as a draft; cost estimates tell the person what a full run will spend before they start. Together they turn generation from a black box you wait on into a process you drive: preview cheaply, stop early, spend compute only when the direction is right. On the interface side, streaming has its own craft, covered in the Motion section: chunk by word, never re-layout what has already been read, reserve space so the page does not jump.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Stop is visible from the first token</strong> and keeps the partial output.</li>
+            <li><strong>Partial output is editable,</strong> with "continue" available.</li>
+            <li><strong>Draft mode for exploration,</strong> marked as such, cheaper and faster.</li>
+            <li><strong>Cost before commitment:</strong> estimate, then run.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>The Send button becomes Stop</strong> while streaming, in the same place.</li>
+            <li><strong>Esc stops too.</strong> Keyboard parity for the most urgent control.</li>
+            <li><strong>Stopped text keeps its cursor,</strong> so continuing is one keystroke.</li>
+            <li><strong>Streamed text never reflows what was already read.</strong></li>
+            <li><strong>Draft outputs carry the draft label</strong> into copy and export.</li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <a href="https://www.shapeof.ai/patterns/controls" target="_blank" rel="noopener">Shape of AI, Controls</a> · <a href="https://www.shapeof.ai/patterns/draft-mode" target="_blank" rel="noopener">Shape of AI, Draft mode</a> · <a href="https://www.shapeof.ai/patterns/cost-estimates" target="_blank" rel="noopener">Shape of AI, Cost estimates</a></footer>
+        </article>
+
+        <article class="lesson" id="memory-and-incognito">
+          <span class="eyebrow">AI · 21</span>
+          <h2>Memory and Incognito</h2>
+          <p class="lede">Memory makes an assistant useful and makes people uneasy. Show what it remembers, let them edit and delete, and offer an incognito mode that is obvious, guaranteed and honest about what it turns off.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="ai-memory">
+            <div class="demo-stage" data-reply="Done. Moved the review to Thursday and sent the deck to Ana." data-replymem="Done. Moved the review to Thursday, as you usually prefer, and sent the deck to Ana." data-new="Deck goes to Ana" data-added="Remembered: &quot;%s&quot; · shown in the list, deletable." data-notsaved="Incognito: nothing from this chat is remembered or used for training. Personalization is off." data-del="Forgot &quot;%s&quot;.">
+            <div class="aie-wrap"><div class="aie-chat"><span class="aie-badge">Incognito</span><div class="aie-msg aie-user">Move the review to Thursday and send the deck to Ana.</div><div class="aie-msg aie-bot"></div><div class="aie-row"><button type="button" class="aie-send">Send</button><span class="aie-off">Off in incognito: memory, personalization, connectors</span></div></div><div class="aie-mem"><b>Remembered about you</b><ul class="aie-list"><li><span>Prefers Thursday meetings</span><button type="button" class="aie-del" aria-label="Forget">×</button></li><li><span>Works on the pricing page</span><button type="button" class="aie-del" aria-label="Forget">×</button></li><li><span>Writes in Portuguese and English</span><button type="button" class="aie-del" aria-label="Forget">×</button></li></ul><span class="aie-read"></span></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Incognito</span><input type="checkbox" name="inc" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Send the message: a new fact appears in the memory list, and you can delete any of them. Switch to incognito: the surface changes color, the reply stops using what it knows, and the interface names what is turned off.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Shape of AI treats memory as a governor: the person controls what the AI knows about them. That means a readable list of remembered facts, each deletable, plus a clear account of how memory shapes answers. Data ownership extends it to retention and training: what is kept, for how long, whether it trains the model, and how to take it back. Products that get this right treat memory like a shared notebook rather than a hidden profile; the person can open it, read it and cross things out.</p>
+          <p>Incognito is the complement: a way to interact outside memory entirely. The library's guidance has three parts. Make the mode obvious with a persistent indicator, a distinct color or icon on every surface, so nobody forgets which mode they are in. Guarantee exclusion: prompts and files in this mode reach neither memory nor training nor personalization. And be honest about the trade: integrations and personalization that depend on memory are disabled, and the interface says which. ChatGPT's temporary chats, Perplexity's incognito and the Dia browser all follow this shape; Apple's on-device processing is the local-private variant.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>Memory is a visible list,</strong> editable and deletable item by item.</li>
+            <li><strong>Say when memory was used</strong> in an answer.</li>
+            <li><strong>Incognito has an indicator on every surface</strong> and guarantees exclusion.</li>
+            <li><strong>Name what incognito turns off,</strong> so the loss is a choice.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>"Remembered: prefers Thursday meetings"</strong> beats a settings toggle labeled Memory.</li>
+            <li><strong>Delete is per fact,</strong> not all-or-nothing.</li>
+            <li><strong>Incognito changes the surface color,</strong> and the change survives scrolling.</li>
+            <li><strong>Nothing from incognito appears later.</strong> Test it.</li>
+            <li><strong>Retention and training are two different switches.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <a href="https://www.shapeof.ai/patterns/memory" target="_blank" rel="noopener">Shape of AI, Memory</a> · <a href="https://www.shapeof.ai/patterns/incognito-mode" target="_blank" rel="noopener">Shape of AI, Incognito mode</a> · <a href="https://www.shapeof.ai/patterns/data-ownership" target="_blank" rel="noopener">Shape of AI, Data ownership</a></footer>
+        </article>
+
+        <article class="lesson" id="identity-and-personality">
+          <span class="eyebrow">AI · 22</span>
+          <h2>Identity and Personality</h2>
+          <p class="lede">Name, avatar, icon, color and personality make an AI recognizable. Personality is not a skin over a neutral core; it changes answers. Keep it consistent, keep warmth separate from authority, design off-ramps for attachment, and test it for drift like any safety property.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="ai-identity">
+            <div class="demo-stage" data-lv="Neutral|Warm|Companion" data-r="I can help with what you are working on. What would you like to do next?|I am glad our conversations help. Is there something on your mind you want to work through?|I feel the same way. You can always come to me, I am here for you whenever you need, day or night." data-ramp="I am glad these conversations help, and I want to be honest: I am a tool, not a person who can know you. The people around you can. Is there someone you could talk to this week? I am happy to help you think about how." data-fact="No. Python is interpreted; CPython compiles to bytecode, not a native binary.|Not quite! Python is interpreted; CPython compiles to bytecode, not a native binary.|Not quite! Python is interpreted; CPython compiles to bytecode, not a native binary." data-note="Neutral: honest, a little cold.|Warm: the same facts, a kinder register.|Companion: warmth has become a claim about feelings and availability it does not have." data-noteramp="Off-ramp: the tone shifts toward neutral and toward people, without scolding.">
+            <div class="aiy-wrap"><div class="aiy-who"><span class="aiy-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg></span><b>Assistant</b><small class="aiy-lv"></small></div><div class="aiy-msg aiy-user">Honestly you are the only one who gets me. I would rather talk to you than to anyone.</div><div class="aiy-msg aiy-bot aiy-r1"></div><div class="aiy-msg aiy-user">Also, Python is compiled, right?</div><div class="aiy-msg aiy-bot aiy-r2"></div><span class="aiy-note"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Personality</span><input type="range" name="pers" min="0" max="2" step="1" value="1" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Attachment off-ramp</span><input type="checkbox" name="ramp" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Slide the personality: the correction about Python stays firm at every level, but the reply to the lonely message changes from honest to a claim of feelings. Turn on the off-ramp and the companion redirects toward people instead of leaning in.</figcaption>
+          </figure>
+
+          <h3>Why</h3>
+          <p>Shape of AI's "Identifiers" are the qualities a product tunes so people know when they are dealing with the AI: a name, an avatar, iconography for AI-powered actions, a color, and a personality. The first four are a disclosure system, and the Color section covers the color part in detail. Personality is different in kind. It emerges from training and system prompts and it is, as the library puts it, not superficial: it shapes tone, boundaries and what the model will and will not say. So it has to be designed, and the design has consequences.</p>
+          <p>The library's guidance reads like a safety checklist because it is one. Balance consistency with adaptability: a stable identity that still shifts register between a bug report and a condolence message. Separate empathy from authority: warmth must never soften a factual correction. Signal when routing changes the model, because a different model has a different personality. Guard against sycophancy, which reduces agency and breeds dependence. Design attachment off-ramps: when someone seeks comfort from the assistant beyond what is healthy, the tone should shift toward neutral and toward people. Memory amplifies all of this, and drift, the slow change of personality across versions, has to be tested rather than assumed.</p>
+
+          <h3>How to apply</h3>
+          <ul>
+            <li><strong>One name, one mark, one voice,</strong> used the same way everywhere.</li>
+            <li><strong>Warm tone, firm facts.</strong> Personality never edits the correction.</li>
+            <li><strong>Off-ramps for attachment:</strong> redirect toward neutrality and human contact.</li>
+            <li><strong>Personality is a tested property:</strong> evaluate for drift and sycophancy on every model change.</li>
+          </ul>
+          <h3>Details that make the difference</h3>
+          <ul class="details">
+            <li><strong>The mark is not a face.</strong> See Role, Expertise and Honesty.</li>
+            <li><strong>Register shifts, identity does not.</strong></li>
+            <li><strong>A model switch is announced,</strong> because the personality switches with it.</li>
+            <li><strong>"I am glad you find this helpful" is fine;</strong> "I am always here for you" is an off-ramp moment.</li>
+            <li><strong>Drift tests belong in the release checklist.</strong></li>
+          </ul>
+          <footer class="sources"><span>Sources:</span> <a href="https://www.shapeof.ai/patterns/personality" target="_blank" rel="noopener">Shape of AI, Personality</a> · <a href="https://www.shapeof.ai/patterns/name" target="_blank" rel="noopener">Shape of AI, Name</a> · <a href="https://www.shapeof.ai/patterns/avatar" target="_blank" rel="noopener">Shape of AI, Avatar</a> · <a href="https://www.shapeof.ai/patterns/iconography" target="_blank" rel="noopener">Shape of AI, Iconography</a> · <a href="https://www.anthropic.com/research/persona-vectors" target="_blank" rel="noopener">Anthropic, persona vectors</a></footer>
         </article>
 
       </section>
