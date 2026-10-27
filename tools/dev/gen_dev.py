@@ -67,6 +67,7 @@ def patch_home(n):
         if 'data-section="%s"' % KEY not in s:
             card = ('        <a class="home-card" data-section="%s" href="%s">\n          <div class="home-card-head">%s<span class="home-card-count">%d %s%s</span></div>\n          <h2>%s</h2>\n          <p>%s</p>\n        </a>\n' % (KEY, PAGE, ICON, n, u['lessons'], ARROW, NAME, C.HEAD['desc']))
             k = s.index('        <a class="home-card" data-section="resources"'); s = s[:k] + card + s[k:]
+        s = re.sub(r'(<a class="home-card" data-section="%s" href="[^"]+">.*?<p>).*?(</p>)' % KEY, lambda m: m.group(1) + C.HEAD['desc'] + m.group(2), s, count=1, flags=re.S)
         for key, cnt in section_counts().items():
             s = re.sub(r'(data-section="%s" href="[^"]+">\s*<div class="home-card-head">.*?<span class="home-card-count">)\d+' % key, lambda m: m.group(1) + str(cnt), s, flags=re.S)
         total = sum(section_counts().values())

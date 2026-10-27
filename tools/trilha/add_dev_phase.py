@@ -57,7 +57,7 @@ s = s.replace("--ai: oklch(58% 0.17 275); --inbox: oklch(60% 0.05 80);", "--ai: 
 s = s.replace("--ai: oklch(76% 0.13 275); --inbox: oklch(72% 0.05 80);", "--ai: oklch(76% 0.13 275); --dev: oklch(74% 0.12 230); --inbox: oklch(72% 0.05 80);")
 
 # ---- phase 4
-PHASE4 = r"""    { id: 'f4', name: 'Desenvolvimento seguro', weeks: '17 a 24', desc: 'A trilha de cybersecurity, Supabase e LGPD para o app de wishlist. Desenvolva com dados fictícios até os controles essenciais estarem prontos; nada aqui é certificação ou conformidade jurídica.', weeks_: [
+PHASE4 = r"""    { id: 'f4', name: 'Desenvolvimento seguro', weeks: '17 a 24', desc: 'A trilha de cybersecurity, Supabase e LGPD para qualquer app com contas e dados privados. Desenvolva com dados fictícios até os controles essenciais estarem prontos; nada aqui é certificação ou conformidade jurídica.', weeks_: [
       { n: 17, sec: 'dev', title: 'Fundamentos de web e HTTP', why: 'Requisições, status, TLS, cookies, same-origin e CORS. É a base para entender quem pode mandar qual requisição, e o que o navegador protege sozinho.',
         lessons: [['dev', 1, 4]],
         read: [
@@ -87,7 +87,7 @@ PHASE4 = r"""    { id: 'f4', name: 'Desenvolvimento seguro', weeks: '17 a 24', d
         ],
         tools: [['Supabase, Rate limits', 'configurar', 'https://supabase.com/docs/guides/auth/rate-limits'], ['Cloudflare Turnstile', 'CAPTCHA', 'https://developers.cloudflare.com/turnstile/'], ['Supabase, MFA', 'TOTP', 'https://supabase.com/docs/guides/auth/auth-mfa']]
       },
-      { n: 19, sec: 'dev', title: 'PostgreSQL, autorização e RLS', why: 'O esquema de profiles, wishlists e items; auth.uid() e propriedade; uma política por operação; pública, não listada e privada impostas no banco.',
+      { n: 19, sec: 'dev', title: 'PostgreSQL, autorização e RLS', why: 'O esquema de profiles, resources e items; auth.uid() e propriedade; uma política por operação; pública, não listada e privada impostas no banco.',
         lessons: [['dev', 9, 11]],
         read: [
           ['Supabase, Row Level Security', 'O guia oficial, com os exemplos de política que você vai adaptar.', 'https://supabase.com/docs/guides/database/postgres/row-level-security', 'voce'],
