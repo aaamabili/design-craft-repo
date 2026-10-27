@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-lang="pt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Development — Interface Craft</title>
+  <meta name="description" content="Publicar um web app de verdade, com contas, perfis compartilháveis e dados privados, sem vazar nada. HTTP, autenticação, Postgres e Row Level Security, as falhas do OWASP, segredos e infraestrutura, e a LGPD como requisito de produto, tudo em torno de um app concreto: uma wishlist.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#fcfcfc" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)">
+  <script>
+    // Applies the saved theme before first paint to avoid a flash
+    try { var t = localStorage.getItem('theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script>
+  <link rel="preconnect" href="https://rsms.me/">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <div>
+        <div class="brand-name">Interface Craft</div>
+        <div class="brand-sub">Biblioteca viva</div>
+      </div>
+      <div class="controls">
+        <nav class="lang-switch" aria-label="Idioma"><a class="lang-opt" href="../development.html" data-lang="en" hreflang="en">EN</a><a class="lang-opt" href="#" data-lang="pt" hreflang="pt" aria-current="true">PT</a></nav>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Alternar tema claro e escuro" title="Alternar tema claro e escuro"><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+      </div>
+    </div>
+    <a class="back-link" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>Início</a>
+    <nav class="nav-groups" aria-label="Conteúdo da seção">
+      <div class="nav-group" data-section="dev" style="margin-top:0">
+        <div class="nav-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/></svg>Development</div>
+        <ul class="nav-list"><li><a class="nav-link" href="#how-the-web-talks">How the Web Talks</a></li><li><a class="nav-link" href="#what-tls-protects">What TLS Protects</a></li><li><a class="nav-link" href="#cookies-sessions-storage">Cookies, Sessions and Browser Storage</a></li><li><a class="nav-link" href="#same-origin-and-cors">Same-Origin Policy and CORS</a></li><li><a class="nav-link" href="#authentication-vs-authorization">Authentication vs Authorization</a></li><li><a class="nav-link" href="#auth-flows">Sign Up, Sign In, Recover</a></li><li><a class="nav-link" href="#tokens-and-sessions">Tokens, JWTs and Expiry</a></li><li><a class="nav-link" href="#account-abuse">Rate Limits, CAPTCHA, MFA and Redirects</a></li><li><a class="nav-link" href="#data-model">Modeling Profiles, Lists and Items</a></li><li><a class="nav-link" href="#row-level-security">Row Level Security</a></li><li><a class="nav-link" href="#visibility-tiers">Public, Unlisted, Private</a></li><li><a class="nav-link" href="#broken-access-control">Broken Access Control and IDOR</a></li><li><a class="nav-link" href="#xss-and-safe-rendering">XSS and Safe Rendering</a></li><li><a class="nav-link" href="#sql-injection">SQL Injection</a></li><li><a class="nav-link" href="#csrf">CSRF and When It Applies</a></li><li><a class="nav-link" href="#keys-and-secrets">Keys and Secrets</a></li><li><a class="nav-link" href="#storage-and-uploads">Storage, Uploads and Signed URLs</a></li><li><a class="nav-link" href="#security-headers-and-csp">Security Headers and CSP</a></li><li><a class="nav-link" href="#dependencies-and-supply-chain">Dependencies and the Supply Chain</a></li><li><a class="nav-link" href="#logs-backups-environments">Logs, Backups and Environments</a></li><li><a class="nav-link" href="#personal-data-under-lgpd">Personal Data Under the LGPD</a></li><li><a class="nav-link" href="#legal-bases-and-rights">Legal Bases and the Rights of Data Subjects</a></li><li><a class="nav-link" href="#privacy-by-design-in-product">Privacy by Design in the Product</a></li><li><a class="nav-link" href="#vendors-incidents-and-launch">Vendors, Incidents and the Pre-Launch Review</a></li></ul>
+      </div>
+      <div class="nav-group nav-other" data-section="dev">
+        <div class="nav-title">Outras seções</div>
+        <ul class="nav-list"><li><a class="nav-link" href="craft.html">Craft</a></li><li><a class="nav-link" href="typography.html">Typography</a></li><li><a class="nav-link" href="color.html">Color</a></li><li><a class="nav-link" href="layout.html">Layout</a></li><li><a class="nav-link" href="motion.html">Motion</a></li><li><a class="nav-link" href="ux.html">UX</a></li><li><a class="nav-link" href="primitives.html">Primitives</a></li><li><a class="nav-link" href="practice.html">Practice</a></li><li><a class="nav-link" href="ai.html">AI</a></li><li><a class="nav-link" href="referencias.html">Referências</a></li></ul>
+      </div>
+    </nav>
+  </aside>
+  <main class="content">
+    <div class="container">
+<section class="section" data-section="dev">
+        <div class="section-head" id="dev">
+          <span class="eyebrow">Seção 10</span>
+          <h2>Development</h2>
+          <p>Publicar um web app de verdade, com contas, perfis compartilháveis e dados privados, sem vazar nada. HTTP, autenticação, Postgres e Row Level Security, as falhas do OWASP, segredos e infraestrutura, e a LGPD como requisito de produto, tudo em torno de um app concreto: uma wishlist.</p>
+        </div>
+
+        <article class="lesson" id="how-the-web-talks">
+          <span class="eyebrow">Development · 01</span>
+          <h2>How the Web Talks</h2>
+          <p class="lede">Toda tela que você desenha é uma sequência de requisições HTTP. O método diz a intenção, o caminho diz o recurso, o status diz o que aconteceu. Ler isso na aba Network é a primeira habilidade de segurança, porque todo o resto é sobre quem pode mandar qual requisição.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="dev-01">
+            <div class="demo-stage" data-first="Escolha um método." data-s200="200 OK · aqui está a lista" data-s201="201 Created · item adicionado" data-s204="204 No Content · excluído, nada para devolver" data-s401="401 Unauthorized · quem é você? Faça login primeiro." data-s403="403 Forbidden · sabemos quem você é; isto não é seu." data-s404="404 Not Found · nada aqui para você, e não dizemos se existe.">
+            <div class="dv01-wrap"><div class="dv01-req"><span class="dv01-line"> <code>/lists/42</code></span><div class="dv-seg dv01-m"><button type="button" class="dv-seg-b" data-v="0">GET</button><button type="button" class="dv-seg-b" data-v="1">POST</button><button type="button" class="dv-seg-b" data-v="2">PATCH</button><button type="button" class="dv-seg-b" data-v="3">DELETE</button></div></div><div class="dv01-res"><b class="dv01-status"></b><span class="dv01-read"></span></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Sem login</span><input type="checkbox" name="anon" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Lista privada de outra pessoa</span><input type="checkbox" name="other" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Escolha um método na requisição. Sem login, todo método responde 401. Logada numa lista privada de outra pessoa, leituras respondem 404 e escritas 403. O status é o estado de UI antes de existir qualquer design.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Um app de wishlist é um navegador conversando com uma API por HTTP. O navegador manda uma requisição com método, caminho, headers e às vezes um corpo; o servidor responde com um código de status, headers e um corpo, em geral JSON. Os métodos carregam significado: GET lê, POST cria, PATCH altera parte de algo, DELETE remove. Os códigos carregam o resultado: 200 ok, 201 criado, 204 feito sem nada para devolver, 400 você mandou algo errado, 401 você não está identificado, 403 você está identificado e mesmo assim não pode, 404 não está aqui, 429 devagar, 500 nós quebramos. A diferença entre 401 e 403 é a diferença entre autenticação e autorização, e ela aparece na aba Network muito antes de aparecer num design.</p>
+          <p>Os headers são onde mora o material de segurança interessante. A requisição carrega o token ou o cookie que identifica a pessoa; a resposta carrega as políticas que restringem o navegador. Abra o DevTools em qualquer app que você usa, filtre por Fetch/XHR e leia uma requisição de ponta a ponta. Você vai ver o que o app manda, o que recebe de volta, e o quão pouco a interface bonita tem a ver com o que o servidor de fato impõe. Uma regra para a seção inteira: nunca cole um token ou cookie real num print ou num chat. Trate como senha, porque é.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Leia a aba Network</strong> do seu app uma vez por semana. Método, caminho, status, headers, corpo.</li>
+            <li><strong>Use os métodos pelo significado.</strong> GET nunca altera dados; DELETE nunca finge ser POST.</li>
+            <li><strong>Mapeie status para estados de UI:</strong> 401 vai para o login, 403 diz "não é seu", 404 diz "não há nada aqui", 429 pede para esperar.</li>
+            <li><strong>Desenhe o diagrama</strong> React → Supabase (Auth, PostgREST, Storage) com cada seta rotulada pelo que carrega.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>401 e 403 são telas diferentes.</strong> Uma pergunta quem você é, a outra diz não.</li>
+            <li><strong>204 é sucesso com corpo vazio;</strong> não mostre erro porque o JSON veio vazio.</li>
+            <li><strong>Idempotência:</strong> GET, PUT e DELETE podem repetir sem dano; POST não.</li>
+            <li><strong>O corpo de um 4xx é para quem desenvolve;</strong> o texto da UI é seu.</li>
+            <li><strong>Token em print é vazamento.</strong> Tarje antes de compartilhar.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview" target="_blank" rel="noopener">MDN, An overview of HTTP</a> · <a href="https://developer.mozilla.org/pt-BR/docs/Web/HTTP" target="_blank" rel="noopener">MDN, HTTP (em português)</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status" target="_blank" rel="noopener">MDN, HTTP response status codes</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods" target="_blank" rel="noopener">MDN, HTTP request methods</a></footer>
+        </article>
+
+        <article class="lesson" id="what-tls-protects">
+          <span class="eyebrow">Development · 02</span>
+          <h2>What TLS Protects</h2>
+          <p class="lede">HTTPS cifra a conversa entre navegador e servidor. Esconde o conteúdo e o caminho, verifica que você chegou ao servidor certo e impede adulteração em trânsito. Não faz nada por dados em repouso, nada contra uma página maliciosa e nada sobre quem o servidor deixa entrar.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="dev-02">
+            <div class="demo-stage" data-seen="Visível no fio:" data-rest="Na cópia roubada do banco, tudo é legível. TLS cobre só o trânsito." data-h="Com HTTPS quem escuta vê o host e o tamanho. Nada mais." data-p="Sem HTTPS quem escuta lê o cookie, o caminho e o corpo.">
+            <div class="dv02-wrap"><div class="dv02-wire"><div class="dv02-row" data-i="0"><span class="dv02-plain">Host: wishlist.app</span><span class="dv02-enc"></span></div><div class="dv02-row" data-i="1"><span class="dv02-plain">Path: /lists/42</span><span class="dv02-enc"></span></div><div class="dv02-row" data-i="2"><span class="dv02-plain">Cookie: session=eyJhbG…</span><span class="dv02-enc"></span></div><div class="dv02-row" data-i="3"><span class="dv02-plain">Body: {"item": "Câmera"}</span><span class="dv02-enc"></span></div></div><div class="dv02-bar"><button type="button" class="dv02-sniff">Escutar a rede</button></div><div class="dv02-db"><span>wishlists.sql</span><q>ana · camping · private · "Camera"</q></div><span class="dv02-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">HTTPS</span><input type="checkbox" name="https" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Cópia do banco roubada</span><input type="checkbox" name="stolen" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Escute a rede com HTTPS ligado: host e tamanho, nada mais. Desligue: cookie, caminho e corpo em texto claro. Depois roube a cópia do banco: TLS não fez nada pelos dados em repouso, porque nunca foi para isso.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>O Transport Layer Security embrulha o HTTP de modo que alguém na mesma rede, o provedor ou um proxy hostil vê só qual host você acessou e mais ou menos quanto dado passou. Headers, cookies, tokens, corpos de requisição e respostas estão todos dentro do túnel. O certificado prova que o servidor é quem o domínio diz, e é isso que derrota uma "página de login" falsa entre você e a real. Cloudflare Pages e Supabase dão isso por padrão, com certificados renovados para você; seu trabalho é nunca oferecer um caminho em HTTP puro e dizer aos navegadores para pararem de tentar, via HSTS.</p>
+          <p>Os limites importam tanto quanto as garantias. TLS protege bytes em movimento, não bytes guardados no banco, em backups ou numa linha de log. Não impede um script injetado na sua página de ler o que a página lê. Não decide se o usuário B pode ver a lista privada do usuário A; isso é autorização, dentro do túnel, decidida pelo servidor. "O site tem o cadeado" significa exatamente uma coisa: a rede entre a pessoa e o seu servidor não é o ponto fraco.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>HTTPS em tudo, sem exceção,</strong> incluindo a URL base da API na sua configuração.</li>
+            <li><strong>Ative HSTS</strong> no projeto do Pages para que navegadores recusem HTTP puro depois da primeira visita.</li>
+            <li><strong>Não confunda o cadeado com segurança.</strong> Ele cobre trânsito, não armazenamento, scripts ou permissões.</li>
+            <li><strong>Conteúdo misto é quebra:</strong> uma imagem ou script em http numa página https enfraquece a página.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>O que a rede ainda vê:</strong> o hostname (SNI), tempos e tamanhos.</li>
+            <li><strong>Certificados expiram;</strong> plataformas gerenciadas renovam, self-hosted precisa de rotina.</li>
+            <li><strong>HSTS preload</strong> é compromisso; adicione só quando todo subdomínio estiver pronto.</li>
+            <li><strong>Dev local em http é ok;</strong> produção em http não.</li>
+            <li><strong>TLS não é criptografia em repouso.</strong> Pergunte o que cifra o banco e os backups.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://developer.mozilla.org/en-US/docs/Web/Security/Transport_Layer_Security" target="_blank" rel="noopener">MDN, Transport Layer Security</a> · <a href="https://web.dev/articles/why-https-matters" target="_blank" rel="noopener">web.dev, Why HTTPS matters</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security" target="_blank" rel="noopener">MDN, Strict-Transport-Security</a> · <a href="https://cheatsheetseries.owasp.org/cheatsheets/Transport_Layer_Security_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP, TLS cheat sheet</a></footer>
+        </article>
+
+        <article class="lesson" id="cookies-sessions-storage">
+          <span class="eyebrow">Development · 03</span>
+          <h2>Cookies, Sessions and Browser Storage</h2>
+          <p class="lede">O navegador guarda estado em três lugares: cookies, que viajam com as requisições; localStorage e sessionStorage, que scripts leem; e memória, que some ao recarregar. Onde o token de sessão mora decide quais ataques podem roubá-lo.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="dev-03">
+            <div class="demo-stage" data-read="O script leu:" data-none="nada (HttpOnly mantém o cookie fora de alcance)" data-got="o token no localStorage e o cookie" data-got2="o token no localStorage" data-noxss="Nenhum script injetado. Ligue o script injetado para tentar." data-sent="Requisição enviada · cookie anexado pelo navegador sozinho, localStorage só vai se o seu código adicionar um header.">
+            <div class="dv03-wrap"><div class="dv03-shelf"><div class="dv03-box" data-k="0"><b>Cookie</b><code>session=eyJ…</code></div><div class="dv03-box" data-k="1"><b>localStorage</b><code>session=eyJ…</code></div><div class="dv03-box" data-k="2"><b>Memória</b><code>session=eyJ…</code></div></div><div class="dv03-bar"><button type="button" class="dv03-run">Script: ler a sessão</button><button type="button" class="dv03-req">Enviar uma requisição</button></div><span class="dv03-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Cookie HttpOnly</span><input type="checkbox" name="httponly" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Script injetado rodando</span><input type="checkbox" name="xss" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Rode o script injetado: ele lê o localStorage sempre, e o cookie só quando HttpOnly está desligado. Envie uma requisição: o cookie viaja sozinho, o que é conveniente para você e para o CSRF.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Sessão é o servidor lembrando quem você é entre requisições. O portador usual é um token, e o token precisa ser guardado em algum lugar do navegador. Cookies são enviados automaticamente em toda requisição ao seu domínio, o que é conveniente e também a raiz do CSRF; com a flag HttpOnly um script não consegue lê-los, a melhor defesa contra XSS roubar a sessão; com Secure só viajam por HTTPS; com SameSite deixam de ser anexados a requisições de outros sites. O localStorage é a troca oposta: nada é enviado automaticamente, então CSRF não se aplica, mas qualquer script rodando na página consegue ler, então um único buraco de XSS entrega todas as sessões.</p>
+          <p>O cliente de navegador do Supabase guarda a sessão em localStorage por padrão; configurações com renderização no servidor movem para cookies. As duas escolhas são defensáveis quando você sabe o que custam: com localStorage, XSS é o jogo inteiro e a Content Security Policy vira obrigatória; com cookies, SameSite e proteção contra CSRF viram obrigatórias. O que nunca é defensável é token em URL, token em log, ou token que nunca expira. Headers são o terceiro armazenamento que você não controla: o header Authorization é como o token chega à API a cada chamada, e a aba Network o mostra em texto claro para qualquer pessoa com o notebook aberto.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Saiba onde sua sessão mora</strong> e escreva as defesas correspondentes: CSP para localStorage, SameSite e tokens de CSRF para cookies.</li>
+            <li><strong>Cookies levam HttpOnly, Secure e SameSite</strong> por padrão, sempre.</li>
+            <li><strong>Nada sensível no sessionStorage também;</strong> scripts leem, só dura menos.</li>
+            <li><strong>Nunca token em URL.</strong> URLs acabam em logs, histórico e referrers.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>HttpOnly é para o token, não para preferências.</strong> Tema pode morar em localStorage.</li>
+            <li><strong>SameSite=Lax é o padrão sensato;</strong> Strict quebra links de e-mail, None exige Secure.</li>
+            <li><strong>Logout precisa limpar o armazenamento,</strong> não só o estado da UI.</li>
+            <li><strong>Computadores compartilhados:</strong> sessão persistida é decisão, ofereça "manter conectado" explicitamente.</li>
+            <li><strong>Inspecione Application → Storage</strong> no DevTools para ver exatamente o que seu app deixa para trás.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies" target="_blank" rel="noopener">MDN, Using HTTP cookies</a> · <a href="https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP, Session management cheat sheet</a> · <a href="https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP, HTML5 security cheat sheet (local storage)</a> · <a href="https://supabase.com/docs/guides/auth/sessions" target="_blank" rel="noopener">Supabase, Sessions</a></footer>
+        </article>
+
+        <article class="lesson" id="same-origin-and-cors">
+          <span class="eyebrow">Development · 04</span>
+          <h2>Same-Origin Policy and CORS</h2>
+          <p class="lede">O navegador impede uma página de uma origem de ler respostas de outra. CORS é o servidor dizendo quais origens podem. Protege usuários de páginas maliciosas; não protege sua API de ninguém com curl.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="dev-04">
+            <div class="demo-stage" data-fromb="de uma página em evil.example" data-fromc="do curl, sem navegador" data-blocked="O navegador impediu a página de ler a resposta. A API respondeu mesmo assim; o usuário foi protegido." data-read="A página em evil.example leu a resposta. Origem refletida ou curinga derrota a política." data-curlr="O curl recebeu a resposta inteira. CORS não existe fora de navegadores; só o token e a RLS protegem os dados.">
+            <div class="dv04-wrap"><div class="dv04-flow"><div class="dv04-node dv04-src"><b>evil.example</b><small class="dv04-from"></small></div><i class="dv04-arrow"></i><div class="dv04-node dv04-api"><b>api.wishlist.app</b><small>Access-Control-Allow-Origin: <span class="dv04-acao"></span></small></div></div><button type="button" class="dv04-send">Enviar requisição</button><span class="dv04-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Allow-Origin: só app.example</span><input type="checkbox" name="allow" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Chamar do curl</span><input type="checkbox" name="curl" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Envie da página maliciosa: o navegador esconde a resposta quando a API nomeia só app.example. Envie do curl: a resposta chega de qualquer jeito. CORS protege pessoas em navegadores; o banco protege os dados.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Origem é esquema mais host mais porta. A same-origin policy diz que um script em evil.example não pode ler a resposta de uma requisição à sua API, mesmo que o navegador a tenha enviado. É uma proteção do usuário: impede uma página aleatória de puxar seus dados logados através do seu próprio navegador. O CORS afrouxa isso de propósito: a API responde com Access-Control-Allow-Origin nomeando as origens que podem ler, e para requisições não simples o navegador manda antes um OPTIONS de preflight perguntando. O Supabase aceita chamadas de qualquer origem porque o portão de verdade é o token e a Row Level Security, não a origem.</p>
+          <p>O mal-entendido a matar cedo: CORS é imposto por navegadores, para navegadores. Um script, um app mobile, Postman ou curl o ignoram por completo. Se sua API só funciona porque "o frontend é a única coisa que chama", ela está aberta. Do mesmo modo, um Allow-Origin curinga com credenciais é uma configuração que o navegador recusa, e um Allow-Origin refletido (ecoando a origem que pediu) é porta aberta para os ataques que a política existe para impedir. A regra para a wishlist: assuma que todo endpoint será chamado diretamente, por qualquer um, e faça o banco dizer não.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Trate CORS como cortesia do navegador,</strong> nunca como controle de acesso.</li>
+            <li><strong>Permita origens específicas,</strong> nunca reflita a origem do pedido, nunca curinga com credenciais.</li>
+            <li><strong>Todo endpoint precisa ser seguro chamado por curl</strong> com token roubado ou ausente.</li>
+            <li><strong>Leia o preflight</strong> na aba Network uma vez, para o OPTIONS deixar de ser mistério.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Esquema, host, porta:</strong> https://app e http://app são origens diferentes.</li>
+            <li><strong>Site versus origem:</strong> cookies SameSite usam o site; CORS usa a origem.</li>
+            <li><strong>O preflight é cacheado;</strong> um OPTIONS falhando aparece como "network error" vago no console.</li>
+            <li><strong>O Supabase ignora a origem por design;</strong> RLS é o portão.</li>
+            <li><strong>Se remover o frontend expusesse dados,</strong> o backend nunca esteve protegido.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy" target="_blank" rel="noopener">MDN, Same-origin policy</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS" target="_blank" rel="noopener">MDN, Cross-Origin Resource Sharing</a> · <a href="https://portswigger.net/web-security/cors" target="_blank" rel="noopener">PortSwigger, CORS</a> · <a href="https://web.dev/articles/same-site-same-origin" target="_blank" rel="noopener">web.dev, Same-site and same-origin</a></footer>
+        </article>
+
+        <article class="lesson" id="authentication-vs-authorization">
+          <span class="eyebrow">Development · 05</span>
+          <h2>Authentication vs Authorization</h2>
+          <p class="lede">Autenticação responde quem você é. Autorização responde o que você pode fazer. A maioria das violações reais é falha de autorização: o sistema sabia exatamente quem era a pessoa e mesmo assim entregou os dados de outra.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="dev-05">
+            <div class="demo-stage" data-ok="permitido" data-no="negado pelo banco" data-hidden="botão escondido" data-leak="permitido pela API: a UI escondeu o botão, o banco nunca checou." data-first="Escolha um papel, depois uma ação.">
+            <div class="dv05-wrap"><div class="dv-seg dv05-role"><button type="button" class="dv-seg-b" data-v="0">Visitante</button><button type="button" class="dv-seg-b is-on" data-v="1">Dono</button><button type="button" class="dv-seg-b" data-v="2">Outro usuário</button></div><div class="dv05-acts"><div class="dv05-act" data-a="0"><span>Ler lista privada</span><button type="button" class="dv05-btn">→</button><button type="button" class="dv05-api">Chamar a API diretamente</button><i class="dv05-res"></i></div><div class="dv05-act" data-a="1"><span>Adicionar item</span><button type="button" class="dv05-btn">→</button><button type="button" class="dv05-api">Chamar a API diretamente</button><i class="dv05-res"></i></div><div class="dv05-act" data-a="2"><span>Excluir lista</span><button type="button" class="dv05-btn">→</button><button type="button" class="dv05-api">Chamar a API diretamente</button><i class="dv05-res"></i></div></div><span class="dv05-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Checagem só na UI</span><input type="checkbox" name="uionly" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Troque de papel e tente as ações. Com checagem no banco, visitante e outro usuário são negados chamem o que chamarem. Com checagem só na UI os botões somem, mas "chamar a API diretamente" continua funcionando.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Fazer login prova identidade: esta requisição vem da conta que sabe a senha, tem o magic link ou passou pelo segundo fator. Não diz nada sobre permissões. Autorização é a decisão separada, tomada a cada requisição, de que esta identidade pode ler esta lista, editar este item, excluir esta conta. As duas se confundem o tempo todo porque a tela de login é visível e a checagem de permissão não. O OWASP coloca Broken Access Control no topo da lista desde 2021 justamente porque times constroem fluxos de login lindos e depois confiam no frontend para esconder os botões que usuários não deveriam apertar.</p>
+          <p>Para a wishlist, o modelo de autorização é pequeno e precisa estar escrito: visitante lê listas públicas; pessoa logada lê listas públicas e tudo que possui; ninguém além do dono escreve. Essa matriz é a especificação. Ela é imposta no banco, via Row Level Security, para que todo caminho até os dados, o app, uma chamada direta à API, um futuro cliente mobile, obedeça às mesmas regras. Esconder um botão Editar é interface; negar o UPDATE é segurança. Os dois são necessários, nessa ordem de importância invertida.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Escreva a matriz de permissões</strong> antes de escrever uma tabela: operação × papel, com Sim ou Não em cada célula.</li>
+            <li><strong>Imponha no banco,</strong> reflita na UI. Nunca o contrário.</li>
+            <li><strong>Autorize a cada requisição,</strong> não uma vez no login.</li>
+            <li><strong>Teste como três pessoas:</strong> visitante, dono e outro usuário, para toda operação.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>"Logado" não é permissão.</strong> É identidade.</li>
+            <li><strong>Negar por padrão:</strong> tudo é proibido até uma regra permitir.</li>
+            <li><strong>Dono é uma coluna, não um sentimento:</strong> user_id em toda linha que pertence a alguém.</li>
+            <li><strong>Admin é um papel com auditoria própria,</strong> não uma senha compartilhada.</li>
+            <li><strong>A matriz é o plano de testes.</strong> Cada célula é um teste.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://auth0.com/docs/get-started/identity-fundamentals/authentication-and-authorization" target="_blank" rel="noopener">Auth0, Authentication vs. authorization</a> · <a href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP, Authorization cheat sheet</a> · <a href="https://owasp.org/Top10/A01_2021-Broken_Access_Control/" target="_blank" rel="noopener">OWASP Top 10, A01 Broken Access Control</a></footer>
+        </article>
+
+        <article class="lesson" id="auth-flows">
+          <span class="eyebrow">Development · 06</span>
+          <h2>Sign Up, Sign In, Recover</h2>
+          <p class="lede">Fluxos de conta são onde segurança e UX se encontram com mais força. Verificação de e-mail, regras de senha, links de recuperação e logout têm cada um uma forma correta, e o Supabase Auth implementa a maior parte, mas o produto ainda decide o que é exigido e o que a pessoa vê.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="dev-06">
+            <div class="demo-stage" data-created="Conta criada · e-mail de verificação enviado" data-blocked="Login bloqueado · verifique seu e-mail primeiro" data-unverified="Logada sem verificar · qualquer um registra um endereço que não possui" data-sin="Logada" data-rneutral="Se esse e-mail existir, enviamos um link de recuperação." data-rleak="Nenhuma conta para ninguem@example.com. (Agora o atacante sabe.)" data-first="Cadastre, depois tente entrar.">
+            <div class="dv06-wrap"><div class="dv06-card"><span class="dv06-email">ana@example.com</span><div class="dv06-btns"><button type="button" class="dv06-signup">Cadastrar</button><button type="button" class="dv06-signin">Entrar</button></div><div class="dv06-state"></div></div><div class="dv06-card"><span class="dv06-email">ninguem@example.com</span><div class="dv06-btns"><button type="button" class="dv06-recover">Recuperar senha</button></div><div class="dv06-state dv06-rec"></div></div><span class="dv06-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Exigir verificação de e-mail</span><input type="checkbox" name="verify" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Mensagens neutras</span><input type="checkbox" name="neutral" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Cadastre e depois entre: com verificação exigida a porta fica fechada até o e-mail ser confirmado. Recupere a senha de um endereço desconhecido: a mensagem neutra não entrega nada; a prestativa confirma quais e-mails existem.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Cadastro cria uma identidade; login prova; logout encerra a sessão; recuperação deixa alguém voltar sem a senha. Cada passo é superfície de ataque. E-mails não verificados permitem registrar endereços que a pessoa não possui, que depois viram forma de sequestrar contas ou enviar spam. Regras de senha fracas convidam credential stuffing; o conserto é tamanho mínimo, checagem contra senhas vazadas, e nenhuma regra de composição que produza "Senha1!". Recuperação é o buraco clássico: um link que nunca expira, que funciona mais de uma vez, ou que revela se um e-mail existe, entrega contas a atacantes. Logout que só limpa a UI deixa um token válido no aparelho.</p>
+          <p>O Supabase Auth dá cadastro com e-mail de confirmação, login por senha, magic links, provedores OAuth, recuperação de senha e gestão de sessão. As decisões que sobram são de produto: exigir verificação antes de qualquer escrita; mostrar a mesma mensagem neutra exista ou não o e-mail; expirar links de recuperação rápido e uma única vez; invalidar outras sessões na troca de senha; e fazer "Sair" revogar o refresh token, não só descartar o estado local. Documente o fluxo como diagrama com todo estado, inclusive os tristes, porque esse diagrama também é a especificação de UX.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Exija verificação de e-mail</strong> antes de a conta poder criar ou compartilhar qualquer coisa.</li>
+            <li><strong>Mensagens neutras:</strong> "Se esse e-mail existir, enviamos um link", para cadastro, recuperação e erro de login igualmente.</li>
+            <li><strong>Links de recuperação expiram e são de uso único;</strong> troca de senha invalida outras sessões.</li>
+            <li><strong>Sair revoga</strong> a sessão no servidor e limpa o armazenamento local.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Mínimo de 12 caracteres, sem regras de composição,</strong> checagem contra vazamentos conhecidos.</li>
+            <li><strong>O e-mail de verificação é parte do produto:</strong> escreva, teste, dê marca.</li>
+            <li><strong>SMTP próprio em produção;</strong> o remetente padrão tem limites estritos.</li>
+            <li><strong>Destinos de redirecionamento em allowlist,</strong> nunca tirados de query string.</li>
+            <li><strong>Duas contas de teste, sempre.</strong> Uma nunca basta para achar bug de autorização.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://supabase.com/docs/guides/auth" target="_blank" rel="noopener">Supabase, Auth overview</a> · <a href="https://supabase.com/docs/guides/auth/passwords" target="_blank" rel="noopener">Supabase, Password-based auth</a> · <a href="https://supabase.com/docs/guides/auth/password-security" target="_blank" rel="noopener">Supabase, Password security</a> · <a href="https://cheatsheetseries.owasp.org/cheatsheets/Forgot_Password_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP, Forgot password cheat sheet</a> · <a href="https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP, Authentication cheat sheet</a></footer>
+        </article>
+
+        <article class="lesson" id="tokens-and-sessions">
+          <span class="eyebrow">Development · 07</span>
+          <h2>Tokens, JWTs and Expiry</h2>
+          <p class="lede">Um JWT é uma afirmação assinada sobre quem é o portador, válida até expirar. Access tokens curtos limitam o dano de um roubo; refresh tokens estendem a sessão sem novo login. Assinado não é cifrado: qualquer um lê um JWT.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="dev-07">
+            <div class="demo-stage" data-valid="válido" data-expired="expirou → renovado em silêncio" data-rev="Reuso detectado: a rotação revogou a sessão inteira. Atacante e usuário saíram." data-hij="Reuso aceito: sem rotação o atacante agora tem uma sessão nova." data-first="Use o app algumas vezes, depois reuse um token roubado.">
+            <div class="dv07-wrap"><div class="dv07-clock">t = <b class="dv07-t">0</b> min</div><div class="dv07-tokens"><div class="dv07-tok dv07-a"><span>access token</span><i class="dv07-bar"><b></b></i><small class="dv07-as"></small></div><div class="dv07-tok dv07-r"><span>refresh token</span><small class="dv07-rs">#1</small></div></div><div class="dv07-btns"><button type="button" class="dv07-use">Usar o app (+20 min)</button><button type="button" class="dv07-steal">Atacante reusa um refresh token roubado</button></div><span class="dv07-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Duração do access token</span><input type="range" name="ttl" min="5" max="60" step="5" value="30" data-unit=" min"><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Rotação do refresh</span><input type="checkbox" name="rotate" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Use o app: a cada 20 minutos o relógio anda; quando o access token expira ele é renovado sem login. Reuse um refresh token roubado: com rotação ligada, o reuso revoga a sessão; desligada, o atacante entra.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Depois do login, o Supabase emite um access token, um JSON Web Token assinado pelo projeto, e um refresh token. O access token viaja em toda chamada à API no header Authorization; o Postgres lê suas claims, e é assim que auth.uid() sabe quem está pedindo. Ele expira em cerca de uma hora por padrão. Quando expira, o cliente usa o refresh token para obter um novo par, em silêncio. O desenho é uma troca: access tokens curtos fazem um token roubado servir por pouco tempo; refresh tokens evitam login a cada hora. A rotação de refresh token, ligada por padrão, torna cada refresh token de uso único, então um roubado que seja reusado depois de o cliente legítimo tê-lo usado derruba a sessão inteira.</p>
+          <p>Três fatos evitam a maioria dos erros com JWT. Um: o payload é base64, não cifrado, então nunca ponha segredos nele e assuma que a pessoa lê as próprias claims. Dois: o servidor não consulta o token num banco; verifica a assinatura, por isso revogar é difícil e a expiração é o controle real. Três: o segredo de assinatura e a chave service role são as chaves do reino; nunca saem do servidor. A expiração da sessão também é decisão de produto: uma wishlist não precisa de timeout de banco, mas "lembrar para sempre" num computador compartilhado é escolha consciente, com um jeito visível de sair de todos os aparelhos.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Access tokens curtos,</strong> cliente renovando em silêncio, rotação ligada.</li>
+            <li><strong>Nunca confie em claims do lado do cliente para permissões;</strong> o banco verifica a assinatura e aplica RLS.</li>
+            <li><strong>Ofereça "sair de todos os aparelhos"</strong> e dispare isso na troca de senha.</li>
+            <li><strong>Decodifique um token uma vez no jwt.io</strong> com conta de teste, para saber exatamente o que ele carrega.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>exp é o controle.</strong> Todo o resto de um JWT é conveniência.</li>
+            <li><strong>Rotação detecta reuso:</strong> refresh token repetido mata a sessão.</li>
+            <li><strong>A claim role é "authenticated" ou "anon",</strong> não a flag de admin do seu app.</li>
+            <li><strong>Desvio de relógio existe;</strong> não entre em pânico com um token rejeitado segundos antes.</li>
+            <li><strong>Token em log é credencial em log.</strong> Limpe o header Authorization.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://supabase.com/docs/guides/auth/jwts" target="_blank" rel="noopener">Supabase, JSON Web Tokens</a> · <a href="https://supabase.com/docs/guides/auth/sessions" target="_blank" rel="noopener">Supabase, User sessions</a> · <a href="https://jwt.io/introduction" target="_blank" rel="noopener">jwt.io, Introduction to JSON Web Tokens</a> · <a href="https://portswigger.net/web-security/jwt" target="_blank" rel="noopener">PortSwigger, JWT attacks</a></footer>
+        </article>
+
+        <article class="lesson" id="account-abuse">
+          <span class="eyebrow">Development · 08</span>
+          <h2>Rate Limits, CAPTCHA, MFA and Redirects</h2>
+          <p class="lede">Atacantes automatizam. Rate limits tornam adivinhar caro, CAPTCHA sobe o custo de bots onde a fricção vale a pena, MFA protege as contas que mais importam, e uma allowlist de redirecionamento impede seu login de virar lançador de phishing.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="dev-08">
+            <div class="demo-stage" data-wait="429 · muitas tentativas, espere" data-wrong="401 · e-mail ou senha incorretos" data-sin="Logada" data-code="Senha aceita · digite o código de 6 dígitos" data-first="Clique em &quot;tentar uma senha&quot; rápido.">
+            <div class="dv08-wrap"><div class="dv08-login"><span class="dv08-field">admin@wishlist.app</span><span class="dv08-field">••••••••</span><div class="dv08-btns"><button type="button" class="dv08-try">Tentar uma senha</button><button type="button" class="dv08-right">Senha correta</button></div><div class="dv08-out"></div></div><span class="dv08-count"><b>0</b> tentativas</span><span class="dv08-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Rate limit</span><input type="checkbox" name="limit" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">MFA para admin</span><input type="checkbox" name="mfa" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Martele o login: depois de cinco erros o rate limit responde 429 e o atacante espera. Depois use a senha correta: com MFA ligado, o admin ainda precisa do código. O erro nunca diz qual metade estava errada.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Um formulário de login sem limites é um oráculo: tente um milhão de senhas, guarde as que funcionam. O Supabase aplica rate limits nos endpoints de auth e deixa ajustar; seu app também deve recuar no cliente, mostrar o 429 como "muitas tentativas, espere um minuto", e nunca revelar se o e-mail ou a senha era a metade errada. CAPTCHA, via provedores como o Cloudflare Turnstile, cabe no cadastro e na recuperação, onde bots criam contas lixo e disparam enxurradas de e-mail, e deve ficar fora do login diário a menos que apareça abuso, porque cada desafio é fricção paga por gente honesta.</p>
+          <p>Autenticação multifator é o maior upgrade para as contas que podem causar dano: a sua, como admin, e qualquer papel com direitos elevados. O Supabase suporta TOTP; exigir no login de admin custa segundos e tira a senha de ponto único de falha. Redirecionamentos são o item silencioso: fluxos de auth mandam a pessoa de volta a uma URL depois do login ou da recuperação, e se essa URL vem da requisição, um link forjado loga alguém no seu site real e a deixa numa página do atacante. O Supabase só redireciona para URLs registradas; mantenha a lista curta e nunca adicione a ela a partir de entrada do usuário.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Rate limits no auth e em todo endpoint que envia e-mail;</strong> mostre 429 como um "espere" calmo.</li>
+            <li><strong>CAPTCHA no cadastro e na recuperação,</strong> não em todo login, a menos que veja abuso.</li>
+            <li><strong>MFA obrigatório para contas admin,</strong> opcional para as outras, com códigos de recuperação.</li>
+            <li><strong>Só allowlist de redirecionamento.</strong> Sem open redirect, sem redirecionamento vindo de query string.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Mesmo erro para e-mail errado e senha errada.</strong> Enumeração começa com uma mensagem prestativa.</li>
+            <li><strong>Bloqueio de conta é vetor de negação de serviço;</strong> prefira backoff a travas rígidas.</li>
+            <li><strong>Turnstile em vez de quebra-cabeças de imagem:</strong> invisível para a maioria, caro para bots.</li>
+            <li><strong>Admin é uma história de login separada,</strong> com MFA e log de auditoria próprio.</li>
+            <li><strong>Teste um redirecionamento forjado uma vez</strong> para ver a allowlist recusar.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://supabase.com/docs/guides/auth/rate-limits" target="_blank" rel="noopener">Supabase, Rate limits</a> · <a href="https://supabase.com/docs/guides/auth/auth-captcha" target="_blank" rel="noopener">Supabase, Bot detection with CAPTCHA</a> · <a href="https://supabase.com/docs/guides/auth/auth-mfa" target="_blank" rel="noopener">Supabase, Multi-factor authentication</a> · <a href="https://supabase.com/docs/guides/auth/redirect-urls" target="_blank" rel="noopener">Supabase, Redirect URLs</a> · <a href="https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP, Unvalidated redirects cheat sheet</a> · <a href="https://developers.cloudflare.com/turnstile/" target="_blank" rel="noopener">Cloudflare Turnstile</a></footer>
+        </article>
+
+        <article class="lesson" id="data-model">
+          <span class="eyebrow">Development · 09</span>
+          <h2>Modeling Profiles, Lists and Items</h2>
+          <p class="lede">Três tabelas carregam a wishlist: profiles, wishlists, wishlist_items. Chaves estrangeiras tornam as relações reais, constraints tornam dados ruins impossíveis, e a coluna de dono em toda linha é o que a Row Level Security vai checar depois. Modele para as permissões que vai precisar.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="dev-09">
+            <div class="demo-stage" data-hint="Clique num perfil para ver o que pertence a ele." data-gone="Excluída ana: as listas e os itens dela foram junto." data-orphan="Excluída ana: 2 listas e 2 itens ficaram órfãos, ainda guardados, apontando para ninguém.">
+            <div class="dv09-wrap"><div class="dv09-tables"><div class="dv09-table" data-t="0"><b>profiles</b><span class="dv09-row" data-owner="ana">ana</span><span class="dv09-row" data-owner="rui">rui</span></div><div class="dv09-table" data-t="1"><b>wishlists</b><span class="dv09-row" data-owner="ana">Aniversário (ana)</span><span class="dv09-row" data-owner="ana">Camping (ana)</span><span class="dv09-row" data-owner="rui">Livros (rui)</span></div><div class="dv09-table" data-t="2"><b>wishlist_items</b><span class="dv09-row" data-owner="ana">Câmera → Aniversário</span><span class="dv09-row" data-owner="ana">Barraca → Camping</span><span class="dv09-row" data-owner="rui">Atlas → Livros</span></div></div><button type="button" class="dv09-del">Excluir a usuária ana</button><span class="dv09-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">ON DELETE CASCADE</span><input type="checkbox" name="cascade" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Clique em ana para ver as listas e os itens dela acenderem pelas chaves estrangeiras. Exclua: com CASCADE tudo que era dela desaparece; sem, linhas órfãs ficam para trás, o que a LGPD um dia vai perguntar.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>O Supabase mantém a autenticação em auth.users, que você não edita diretamente. O perfil público (nome de exibição, handle, avatar) mora numa tabela profiles com o mesmo id, criada por um trigger quando alguém se cadastra. Wishlists referenciam o perfil por uma chave estrangeira user_id e carregam uma coluna de visibilidade; itens referenciam sua wishlist. Chaves estrangeiras com ON DELETE CASCADE fazem excluir uma conta remover suas listas e itens, o que é limpo e, como as aulas de LGPD vão mostrar, uma necessidade legal. Constraints fazem o resto da higiene: NOT NULL onde o valor é obrigatório, UNIQUE no handle, CHECK na visibilidade para só existirem os três valores permitidos, e limite de tamanho nos títulos para ninguém guardar um romance.</p>
+          <p>Índices deixam as consultas comuns rápidas: wishlists por user_id, itens por wishlist_id, perfis por handle. Chaves primárias em UUID em vez de inteiros sequenciais fecham o ataque mais barato que existe, adivinhar o próximo id, embora UUID não substitua autorização. Escreva o esquema como migrações SQL no repositório, não como cliques num painel; SQL versionado é o que permite reconstruir o banco, revisar uma mudança e saber qual política existia quando.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>profiles(id → auth.users), wishlists(user_id, visibility), wishlist_items(wishlist_id).</strong> Coluna de dono em tudo que tem dono.</li>
+            <li><strong>Constraints antes de código:</strong> NOT NULL, UNIQUE, CHECK, limites de tamanho.</li>
+            <li><strong>Chaves primárias UUID,</strong> e índice em toda chave estrangeira usada em filtro.</li>
+            <li><strong>Migrações no git.</strong> O painel é para ler, o repositório é a verdade.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Nunca guarde o e-mail em profiles</strong> a menos que precise dele público; auth.users já o tem.</li>
+            <li><strong>CASCADE é decisão de design;</strong> escreva o que desaparece junto com a conta.</li>
+            <li><strong>Timestamps com fuso,</strong> created_at e updated_at em toda tabela.</li>
+            <li><strong>Visibilidade como CHECK constraint,</strong> não string livre.</li>
+            <li><strong>Popule com dados fictícios</strong> e mantenha um script para resetar.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://supabase.com/docs/guides/auth/managing-user-data" target="_blank" rel="noopener">Supabase, Managing user data</a> · <a href="https://www.postgresql.org/docs/current/ddl-constraints.html" target="_blank" rel="noopener">PostgreSQL, Constraints</a> · <a href="https://www.postgresql.org/docs/current/indexes.html" target="_blank" rel="noopener">PostgreSQL, Indexes</a> · <a href="https://supabase.com/docs/guides/database/postgres/cascade-deletes" target="_blank" rel="noopener">Supabase, Cascade deletes</a> · <a href="https://www.postgresql.org/docs/current/tutorial.html" target="_blank" rel="noopener">PostgreSQL, Tutorial</a></footer>
+        </article>
+
+        <article class="lesson" id="row-level-security">
+          <span class="eyebrow">Development · 10</span>
+          <h2>Row Level Security</h2>
+          <p class="lede">RLS transforma autorização em regras do banco: cada tabela ganha políticas que dizem quais linhas um usuário pode selecionar, inserir, atualizar ou excluir. Com auth.uid() na política, o próprio banco recusa o que a pessoa não pode, seja quem for e de onde for.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="dev-10">
+            <div class="demo-stage" data-r="linhas devolvidas" data-norls="Sem RLS: a chave anon lê toda linha." data-leftover="Uma política permissiva esquecida é somada com OU às boas: toda linha passa." data-first="Escolha quem pergunta, depois rode a consulta.">
+            <div class="dv10-wrap"><div class="dv-seg dv10-as"><button type="button" class="dv-seg-b is-on" data-v="0">Visitante</button><button type="button" class="dv-seg-b" data-v="1">Ana</button><button type="button" class="dv-seg-b" data-v="2">Rui</button></div><div class="dv10-bar"><button type="button" class="dv10-run">SELECT * FROM wishlists</button><span class="dv10-count"></span></div><div class="dv10-table"><div class="dv10-row" data-owner="ana" data-vis="public"><span>Aniversário</span><span>ana</span><span>pública</span></div><div class="dv10-row" data-owner="ana" data-vis="private"><span>Camping</span><span>ana</span><span>privada</span></div><div class="dv10-row" data-owner="rui" data-vis="private"><span>Livros</span><span>rui</span><span>privada</span></div></div><span class="dv10-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">RLS ligada</span><input type="checkbox" name="rls" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Política "permite tudo" esquecida</span><input type="checkbox" name="leftover" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Rode a consulta como visitante, como Ana, como Rui. Com RLS ligada, cada um vê só as públicas mais as próprias. Desligue a RLS, ou deixe uma política de teste "permite tudo", e todo mundo vê tudo.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>O Supabase expõe suas tabelas por uma API que o navegador chama diretamente com o token da pessoa. Isso só funciona porque Row Level Security está ligada: uma tabela sem RLS e com a chave anon no cliente é pública para o mundo. Com RLS ativa, o Postgres avalia uma política para cada linha em cada operação. A política pode ler auth.uid(), o id do token verificado, e comparar com a coluna de dono. Uma política por operação mantém a lógica legível: SELECT permite donos e, para listas públicas, todo mundo; INSERT checa que o user_id da linha nova é quem chama; UPDATE e DELETE permitem só o dono. Políticas são aditivas: se qualquer uma permite, a linha passa, então uma permissiva esquecida de testes é um buraco.</p>
+          <p>Duas práticas mantêm a RLS honesta. Primeira, teste de fora da UI: rode a mesma consulta como visitante sem token, como usuário A, como usuário B, pela API, e compare as linhas. Segunda, mantenha as políticas em migrações e revise como código, porque política é código. Performance vem junto: embrulhe auth.uid() num subselect para ser avaliado uma vez, indexe as colunas que as políticas comparam, e evite joins dentro de políticas. Os advisors do Supabase apontam tabelas sem RLS e políticas que parecem erradas; rode antes de todo release.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>ALTER TABLE … ENABLE ROW LEVEL SECURITY</strong> em toda tabela, antes da primeira linha.</li>
+            <li><strong>Uma política por operação,</strong> nomeada pelo que permite: "donos atualizam suas wishlists".</li>
+            <li><strong>INSERT usa WITH CHECK</strong> para ninguém criar linhas de outro dono.</li>
+            <li><strong>Teste pela API como três pessoas</strong> e guarde os resultados numa tabela no repositório.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Sem RLS mais chave anon é tabela pública.</strong> Não há meio-termo.</li>
+            <li><strong>Políticas são somadas com OU.</strong> Apague a "permite tudo para teste".</li>
+            <li><strong>(select auth.uid())</strong> em vez de auth.uid() para velocidade em tabelas grandes.</li>
+            <li><strong>service_role ignora RLS,</strong> por isso nunca chega ao cliente.</li>
+            <li><strong>Views e funções precisam de pensamento próprio;</strong> funções security definer pulam a RLS.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://supabase.com/docs/guides/database/postgres/row-level-security" target="_blank" rel="noopener">Supabase, Row Level Security</a> · <a href="https://www.postgresql.org/docs/current/ddl-rowsecurity.html" target="_blank" rel="noopener">PostgreSQL, Row security policies</a> · <a href="https://www.postgresql.org/docs/current/sql-createpolicy.html" target="_blank" rel="noopener">PostgreSQL, CREATE POLICY</a> · <a href="https://supabase.com/docs/guides/database/secure-data" target="_blank" rel="noopener">Supabase, Securing your data</a> · <a href="https://supabase.com/docs/guides/database/database-advisors" target="_blank" rel="noopener">Supabase, Database advisors</a></footer>
+        </article>
+
+        <article class="lesson" id="visibility-tiers">
+          <span class="eyebrow">Development · 11</span>
+          <h2>Public, Unlisted, Private</h2>
+          <p class="lede">Uma wishlist tem três públicos: qualquer um, qualquer um com o link, só o dono. Cada nível é uma política no banco e uma frase na interface. Se a frase promete mais do que a política impõe, o produto está mentindo.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="dev-11">
+            <div class="demo-stage" data-labels="Qualquer um pode encontrar esta lista|Só quem tem o link|Só você" data-vis="Pública|Não listada|Privada" data-yes="consegue abrir" data-no="não consegue abrir" data-leak="abre pela API: a UI escondeu a lista, o banco permitiu." data-newmsg="Nova lista criada como %s." data-first="Defina a visibilidade, depois teste cada visitante.">
+            <div class="dv11-wrap"><div class="dv11-card"><b>Camping</b><div class="dv-seg dv11-vis"><button type="button" class="dv-seg-b" data-v="0">Pública</button><button type="button" class="dv-seg-b" data-v="1">Não listada</button><button type="button" class="dv-seg-b is-on" data-v="2">Privada</button></div><small class="dv11-label"></small></div><div class="dv11-viewers"><button type="button" class="dv11-viewer" data-v="0">Achou na busca</button><button type="button" class="dv11-viewer" data-v="1">Tem o link</button><button type="button" class="dv11-viewer" data-v="2">Dono</button></div><div class="dv11-bar"><button type="button" class="dv11-new">Nova lista</button></div><span class="dv11-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Imposta só na UI</span><input type="checkbox" name="uionly" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Privada por padrão</span><input type="checkbox" name="defpriv" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Defina o nível e teste cada visitante. Não listada some da busca e abre pelo link; privada abre só para o dono. Imponha só na UI e quem tem o link lê uma lista privada pela API. Privada por padrão deixa a lista nova segura antes de alguém decidir.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Listas públicas aparecem na busca e no perfil; listas não listadas abrem para quem tem a URL mas não aparecem em lugar nenhum; listas privadas são só do dono. A diferença é trivial na UI e decisiva no banco. Pública: SELECT permitido para todos onde visibility = public. Não listada: SELECT permitido para todos por id, mas a consulta que alimenta a página de perfil as exclui, então descobrir depende de saber o UUID, por isso o id precisa ser inadivinhável. Privada: SELECT só para o dono. Itens herdam a visibilidade da lista por uma política que faz join com o pai, ou por uma coluna desnormalizada mantida em sincronia por trigger.</p>
+          <p>A interface precisa dizer exatamente o que cada nível significa, onde a pessoa escolhe, em palavras simples: "Qualquer um pode encontrar esta lista", "Só quem tem o link", "Só você". O princípio da transparência da LGPD torna isso mais que boa educação. E o padrão importa: uma lista nova deve ser privada até a pessoa decidir o contrário, porque uma lista pública por acidente é um vazamento que a pessoa não consentiu. Teste os níveis como um atacante: busque uma lista não listada por id sem token, liste as listas de um perfil e confira que as não listadas estão ausentes, busque uma privada como outro usuário e espere nada de volta.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Três valores, uma CHECK constraint, três políticas.</strong> Nenhum outro estado.</li>
+            <li><strong>Privada por padrão.</strong> Compartilhar é ação que a pessoa toma.</li>
+            <li><strong>Rótulos em linguagem simples</strong> no controle, não numa página de ajuda.</li>
+            <li><strong>Itens seguem a lista;</strong> nunca deixe um item mais visível que o pai.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Não listada significa inadivinhável:</strong> ids UUID v4, nenhum número sequencial em lugar nenhum.</li>
+            <li><strong>Mudar para privada vale na hora,</strong> incluindo páginas em cache e imagens.</li>
+            <li><strong>A busca indexa só listas públicas;</strong> não listadas nunca vazam pela busca.</li>
+            <li><strong>O diálogo de compartilhar repete a visibilidade</strong> no momento de copiar o link.</li>
+            <li><strong>URLs de imagem seguem o nível também;</strong> lista privada com imagem pública não é privada.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://supabase.com/docs/guides/database/postgres/row-level-security" target="_blank" rel="noopener">Supabase, Row Level Security</a> · <a href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP, Authorization cheat sheet</a> · <a href="https://www.gov.br/anpd/pt-br/centrais-de-conteudo/materiais-educativos-e-publicacoes" target="_blank" rel="noopener">ANPD, materiais educativos</a></footer>
+        </article>
+
+        <article class="lesson" id="broken-access-control">
+          <span class="eyebrow">Development · 12</span>
+          <h2>Broken Access Control and IDOR</h2>
+          <p class="lede">Troque o id na URL e veja os dados de outra pessoa: isso é uma Insecure Direct Object Reference, o bug sério mais comum da web. O conserto nunca é esconder o id; é fazer toda consulta checar propriedade, o que a RLS faz se as políticas estão certas.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="dev-12">
+            <div class="demo-stage" data-ok="200 · sua lista" data-empty="404 · nada (a RLS não devolveu linhas)" data-leak="200 · lista privada de outra pessoa" data-guess="UUIDs não se adivinham, mas um vazado funciona para sempre." data-first="Mude o id na URL.">
+            <div class="dv12-wrap"><div class="dv12-url"><span>GET /lists/</span><b class="dv12-id">42</b></div><div class="dv12-btns"><button type="button" class="dv12-mine">Minha lista</button><button type="button" class="dv12-next">Próximo id</button><button type="button" class="dv12-leaked">Id vazado</button></div><div class="dv12-res"></div><span class="dv12-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">RLS ligada</span><input type="checkbox" name="rls" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Ids UUID</span><input type="checkbox" name="uuid" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Busque sua lista, depois o próximo id. Com RLS, o banco devolve nada para uma lista que não é sua. Sem, a lista privada vaza. UUIDs impedem adivinhar; o botão de id vazado mostra que não impedem um link copiado.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>O OWASP coloca Broken Access Control em primeiro porque está em todo lugar e é simples: o app checa quem você é, busca o registro que você pediu, e esquece de checar se o registro é seu. A versão de API se chama BOLA, Broken Object Level Authorization. Sintomas: mudar /lists/42 para /lists/43 mostra a lista privada de outra pessoa; um PATCH no item de outro usuário dá certo; um endpoint de exportação devolve os dados de todo mundo porque o filtro era aplicado no frontend. Ids inadivinháveis atrasam isso e não consertam; um atacante que viu um id uma vez, num link compartilhado ou num print, o tem para sempre.</p>
+          <p>A defesa é estrutural. Com RLS ligada e correta, a consulta que busca a lista 43 devolve nada para o usuário errado, mande o frontend o que mandar. O trabalho que sobra é testar: para cada operação da matriz de permissões, execute como o usuário errado pela API e confirme a recusa. Guarde um documento desses testes com a requisição, o resultado esperado e o obtido; é a evidência de que seu controle de acesso funciona, e a primeira coisa a rodar de novo depois de qualquer mudança de esquema. Vigie também os caminhos de segunda ordem: joins que puxam linhas relacionadas, funções que rodam com direitos elevados, e arquivos no storage cujas URLs pulam o banco por completo.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Toda busca de objeto é filtrada por propriedade ou visibilidade,</strong> no banco.</li>
+            <li><strong>Teste troca de id</strong> em todo endpoint, como visitante e como outro usuário.</li>
+            <li><strong>Ids inadivinháveis são cortesia,</strong> não controle.</li>
+            <li><strong>Mantenha o log de testes ofensivos</strong> ao lado do esquema e rode de novo a cada mudança.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Negar por padrão devolve vazio ou 404,</strong> não 403 com o nome do objeto.</li>
+            <li><strong>Mass assignment é o primo:</strong> nunca deixe o cliente definir user_id ou visibilidade na linha de outro.</li>
+            <li><strong>Endpoints em lote filtram por linha,</strong> não por requisição.</li>
+            <li><strong>Funções SECURITY DEFINER</strong> precisam de checagem de propriedade própria.</li>
+            <li><strong>Automatize o teste de três usuários</strong> depois que funcionar à mão.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://owasp.org/Top10/A01_2021-Broken_Access_Control/" target="_blank" rel="noopener">OWASP Top 10, A01 Broken Access Control</a> · <a href="https://portswigger.net/web-security/access-control" target="_blank" rel="noopener">PortSwigger, Access control vulnerabilities</a> · <a href="https://portswigger.net/web-security/access-control/idor" target="_blank" rel="noopener">PortSwigger, IDOR</a> · <a href="https://owasp.org/API-Security/editions/2023/en/0xa1-broken-object-level-authorization/" target="_blank" rel="noopener">OWASP API Security, Broken Object Level Authorization</a></footer>
+        </article>
+
+        <article class="lesson" id="xss-and-safe-rendering">
+          <span class="eyebrow">Development · 13</span>
+          <h2>XSS and Safe Rendering</h2>
+          <p class="lede">Cross-site scripting é conteúdo de usuário executando como código no navegador de outro usuário. A defesa é renderizar texto como texto: o React faz isso por padrão, dangerouslySetInnerHTML desfaz, e uma Content Security Policy pega o que escapar.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="dev-13">
+            <div class="demo-stage" data-text="Renderizado como texto: a marcação aparece e é inofensiva." data-ran="Script executado no navegador de todo visitante. Sessão roubada." data-blocked="Marcação injetada, mas a CSP bloqueou o script inline." data-first="Escolha uma nota, depois troque a renderização." data-p0="Uma nota sobre uma câmera" data-p1="&lt;img src=x onerror=&quot;roubar()&quot;&gt;" data-p2="&lt;a href=&quot;javascript:roubar()&quot;&gt;presente&lt;/a&gt;">
+            <div class="dv13-wrap"><div class="dv13-pays"><button type="button" class="dv13-pay" data-i="0">Uma nota sobre uma câmera</button><button type="button" class="dv13-pay" data-i="1">&lt;img src=x onerror=&quot;roubar()&quot;&gt;</button><button type="button" class="dv13-pay" data-i="2">&lt;a href=&quot;javascript:roubar()&quot;&gt;presente&lt;/a&gt;</button></div><div class="dv13-card"><small>Prévia para outros visitantes</small><div class="dv13-out"></div></div><span class="dv13-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Renderizar como HTML</span><input type="checkbox" name="html" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">CSP: sem scripts inline</span><input type="checkbox" name="csp" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Escolha uma nota e renderize. Como texto, marcação é só caractere. Como HTML, o payload da imagem roda para todo visitante; a CSP é a segunda camada que bloqueia o script inline mesmo depois do erro.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Uma wishlist guarda texto que as pessoas digitam: nomes de itens, notas, bios de perfil, URLs. Se qualquer parte disso entra na página como HTML, uma nota contendo uma tag script roda no navegador de todo mundo que vê a lista, com a sessão de cada um. Isso é XSS armazenado, e com a sessão em localStorage é fim de jogo para todo visitante. O React escapa texto no JSX, então o caminho comum é seguro; os buracos são as saídas de emergência: dangerouslySetInnerHTML, escrever em innerHTML, montar strings de HTML, e atributos que recebem URLs, onde links javascript: executam no clique. Renderização de Markdown é fonte clássica, porque o renderizador produz HTML a partir de texto não confiável.</p>
+          <p>As regras são curtas. Nunca renderize conteúdo de usuário como HTML a menos que tenha passado por um sanitizador como o DOMPurify com allowlist de tags. Valide URLs antes de usar como href ou src: só http e https, nada mais. Defina uma Content Security Policy que proíba scripts inline, para que mesmo uma tag injetada não rode. E teste com os payloads que importam: uma tag script, um img com onerror, uma URL javascript:, um svg com onload, em todo campo que depois é exibido. Codificação de saída é contextual, por isso "escapar tudo" não é estratégia; o contexto (texto HTML, atributo, URL, JavaScript) decide a codificação.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Texto continua texto.</strong> Nada de dangerouslySetInnerHTML com conteúdo de usuário, nunca.</li>
+            <li><strong>Sanitize com allowlist</strong> se precisar renderizar texto rico; DOMPurify, não regex.</li>
+            <li><strong>Permita só http(s) em URLs</strong> digitadas; renderize o resto como texto simples.</li>
+            <li><strong>CSP sem unsafe-inline</strong> como segunda camada.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Markdown é HTML com passos extras;</strong> sanitize depois de renderizar.</li>
+            <li><strong>Teste campos com</strong> &lt;img src=x onerror=alert(1)&gt; e um link javascript:.</li>
+            <li><strong>DOM XSS mora no cliente:</strong> location.hash em innerHTML é clássico.</li>
+            <li><strong>rel="noopener"</strong> em links para URLs fornecidas por usuários.</li>
+            <li><strong>Scripts de terceiros compartilham sua origem;</strong> carregue o mínimo possível.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://portswigger.net/web-security/cross-site-scripting" target="_blank" rel="noopener">PortSwigger, Cross-site scripting</a> · <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP, XSS prevention cheat sheet</a> · <a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP, DOM-based XSS prevention</a> · <a href="https://react.dev/reference/react-dom/components/common#dangerously-setting-the-inner-html" target="_blank" rel="noopener">React, dangerouslySetInnerHTML</a> · <a href="https://github.com/cure53/DOMPurify" target="_blank" rel="noopener">DOMPurify</a></footer>
+        </article>
+
+        <article class="lesson" id="sql-injection">
+          <span class="eyebrow">Development · 14</span>
+          <h2>SQL Injection</h2>
+          <p class="lede">Injeção acontece quando dado é colado numa consulta como texto e o banco o lê como código. Consultas parametrizadas mantêm os dois separados. O cliente do Supabase e o PostgREST parametrizam por você; o risco volta no momento em que você monta strings de SQL.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="dev-14">
+            <div class="demo-stage" data-safe="O valor é um parâmetro; o banco procura um título literalmente igual ao texto." data-inj="A aspa encerrou a string e o resto virou código: toda linha devolvida, privadas incluídas." data-first="Busque um título, depois tente o payload." data-i0="Câmera" data-i1="&#x27; OR 1=1 --">
+            <div class="dv14-wrap"><div class="dv14-ins"><button type="button" class="dv14-in" data-i="0">Câmera</button><button type="button" class="dv14-in" data-i="1">&#x27; OR 1=1 --</button></div><div class="dv14-sql"><small>SQL enviado</small><code class="dv14-q"></code></div><div class="dv14-rows"><span class="dv14-row">Câmera (ana, pública)</span><span class="dv14-row">Barraca (ana, privada)</span><span class="dv14-row">Atlas (rui, privada)</span></div><span class="dv14-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Consulta parametrizada</span><input type="checkbox" name="param" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Busque "Câmera", depois o payload. Parametrizado, o texto estranho é só um título que ninguém tem. Concatenado, a aspa fecha a string e OR 1=1 devolve toda linha privada.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>O ataque tem quarenta anos e continua na lista do OWASP porque concatenar strings é fácil. Uma caixa de busca que vira WHERE title = '… transforma uma aspa simples num jeito de encerrar a string e escrever mais SQL: ler outras tabelas, pular um login, derrubar uma tabela. A defesa não é escapar aspas; é nunca misturar dado ao texto da consulta. Consultas parametrizadas enviam o SQL e os valores separados, então o banco trata o valor como valor, sejam quais forem os caracteres. O cliente JavaScript do Supabase monta requisições parametrizadas, e o PostgREST faz o mesmo no servidor, então o caminho comum é seguro.</p>
+          <p>Os buracos aparecem onde você escreve SQL: funções do banco que montam consultas dinâmicas por concatenação, chamadas RPC que recebem fragmentos crus, Edge Functions que falam direto com o Postgres, e scripts de admin. Em funções Postgres use format() com %L e %I, ou EXECUTE … USING, nunca || com entrada de usuário. Validação de entrada ajuda por sanidade (número de página é número) mas não é a defesa; uma string de aparência válida ainda pode ser injeção. Teste com os payloads clássicos em toda entrada que chega a uma consulta e observe erros que vazam a consulta, o que por si já é divulgação de informação.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Parâmetros, nunca concatenação,</strong> em todo lugar que toca SQL.</li>
+            <li><strong>Em funções Postgres,</strong> format() com %L/%I ou EXECUTE … USING.</li>
+            <li><strong>Usuário de banco com privilégio mínimo</strong> para qualquer código de servidor que você escreva.</li>
+            <li><strong>Mensagens de erro para usuários são genéricas;</strong> o erro real vai para o log.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Teste com</strong> ' OR 1=1 -- e uma aspa em todo campo.</li>
+            <li><strong>ORMs e clientes são seguros até você chamar .raw()</strong> ou montar uma string de filtro.</li>
+            <li><strong>Nomes de coluna e tabela não são parâmetros;</strong> use allowlist.</li>
+            <li><strong>Entradas de busca full-text</strong> também passam por parâmetros.</li>
+            <li><strong>Um erro vazado com SQL dentro</strong> é um achado por si só.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://portswigger.net/web-security/sql-injection" target="_blank" rel="noopener">PortSwigger, SQL injection</a> · <a href="https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP, SQL injection prevention cheat sheet</a> · <a href="https://owasp.org/Top10/A03_2021-Injection/" target="_blank" rel="noopener">OWASP Top 10, A03 Injection</a> · <a href="https://cheatsheetseries.owasp.org/cheatsheets/Database_Security_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP, Database security cheat sheet</a></footer>
+        </article>
+
+        <article class="lesson" id="csrf">
+          <span class="eyebrow">Development · 15</span>
+          <h2>CSRF and When It Applies</h2>
+          <p class="lede">Cross-site request forgery é outro site fazendo o navegador mandar uma requisição ao seu com os cookies do usuário anexados. Só funciona quando a credencial viaja automaticamente. Saiba qual modelo você usa, depois aplique a defesa correspondente.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="dev-15">
+            <div class="demo-stage" data-cyes="cookie de sessão (o navegador adicionou)" data-css="nenhuma (SameSite segurou o cookie em casa)" data-chdr="nenhuma (o header só é adicionado pelo seu próprio código)" data-ok="Servidor aceitou: um item foi adicionado sem a pessoa saber." data-rej="Servidor recusou: sem credencial, sem forjamento.">
+            <div class="dv15-wrap"><div class="dv15-evil"><b>evil.example</b><button type="button" class="dv15-submit">Formulário escondido em evil.example envia</button></div><div class="dv15-req"><code>POST /lists/42/items</code><small>Credencial anexada: <span class="dv15-cred">—</span></small></div><span class="dv15-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Sessão em cookie</span><input type="checkbox" name="cookie" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">SameSite=Lax</span><input type="checkbox" name="samesite" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Deixe o formulário malicioso enviar. Com a sessão em cookie e sem SameSite, o navegador anexa e o forjamento funciona. SameSite segura o cookie em casa. Com o token em header, a página estranha não consegue adicioná-lo.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Cookies são anexados às requisições pelo navegador, seja qual for a página que as iniciou. Um formulário escondido em evil.example que faz POST na sua API chegaria carregando o cookie de sessão da vítima, e o servidor acreditaria. Isso é CSRF. As defesas são cookies SameSite, que impedem o navegador de anexar cookies a requisições de outros sites, tokens anti-CSRF que o atacante não conhece, e checagem do header Origin. Se em vez disso o token de sessão mora em localStorage e é enviado como header Authorization pelo seu próprio JavaScript, uma página estranha não consegue adicionar esse header, e CSRF não se aplica; o preço, como a aula de armazenamento disse, é que XSS vira o jogo inteiro.</p>
+          <p>O cliente de navegador padrão do Supabase usa o modelo de header, então uma wishlist simples construída nele não está exposta a CSRF. No momento em que você move a sessão para cookies, para renderização no servidor ou para um backend próprio, o CSRF volta e SameSite=Lax mais checagem de origem viram obrigatórios. Lembre também das variantes sem cookie: uma ação logada disparada por GET (um link de "descadastrar" ou "excluir") é forjável a partir de uma tag de imagem, mais um motivo para GET nunca mudar estado. Decida o modelo, escreva, e teste: um formulário em outra origem fazendo POST na sua API deve falhar.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Token em header: sem CSRF, CSP obrigatória.</strong> Token em cookie: SameSite mais tokens ou checagem de origem.</li>
+            <li><strong>Requisições que mudam estado nunca são GET.</strong></li>
+            <li><strong>Cheque Origin ou Referer no servidor</strong> quando cookies são a credencial.</li>
+            <li><strong>Teste de uma página estranha</strong> uma vez; espere a requisição recusada.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>SameSite=Lax ainda envia cookies em navegação GET de nível superior;</strong> por isso GET precisa ser seguro.</li>
+            <li><strong>CORS não previne CSRF;</strong> a requisição é enviada, só a resposta é escondida.</li>
+            <li><strong>Login CSRF também existe:</strong> logar a vítima na conta do atacante.</li>
+            <li><strong>Double-submit cookie</strong> é o esquema de token mais simples para um app pequeno.</li>
+            <li><strong>Documente o modelo de sessão</strong> para a próxima pessoa aplicar a defesa certa.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://portswigger.net/web-security/csrf" target="_blank" rel="noopener">PortSwigger, CSRF</a> · <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP, CSRF prevention cheat sheet</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite" target="_blank" rel="noopener">MDN, SameSite cookies</a> · <a href="https://web.dev/articles/samesite-cookies-explained" target="_blank" rel="noopener">web.dev, SameSite cookies explained</a></footer>
+        </article>
+
+        <article class="lesson" id="keys-and-secrets">
+          <span class="eyebrow">Development · 16</span>
+          <h2>Keys and Secrets</h2>
+          <p class="lede">A chave anon foi feita para ser pública e é inútil sem RLS. A chave service role ignora a RLS e nunca pode sair de um servidor. Variáveis de ambiente, .gitignore e varredura de segredos mantêm a segunda fora do bundle e do repositório.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="dev-16">
+            <div class="demo-stage" data-bad="A chave service role está no bundle público: qualquer um ignora toda política de RLS." data-good="Só a chave anon é enviada. Sem RLS seria um banco público; com RLS, é inútil para um atacante." data-found="Varredura: .env commitado no histórico com 2 chaves. Rotacione agora; o histórico nunca esquece." data-clean="Varredura: nenhum segredo no repositório.">
+            <div class="dv16-wrap"><div class="dv16-bundle"><small>dist/assets/index-8f2a.js</small><code class="dv16-anon">VITE_SUPABASE_ANON_KEY = "eyJ…anon"</code><code class="dv16-sr">VITE_SERVICE_ROLE = "eyJ…service_role"</code></div><div class="dv16-bar"><button type="button" class="dv16-scan">Varrer o repositório</button></div><span class="dv16-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">service_role numa variável VITE_</span><input type="checkbox" name="srv" role="switch"><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">.env no .gitignore</span><input type="checkbox" name="ignore" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Ponha a chave service role numa variável VITE_ e leia o bundle compilado: ela está lá, para todos. Varra o repositório com o .env fora do ignore: as chaves estão no histórico, e rotacionar é o único conserto.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>O Supabase dá a todo projeto dois tipos de chave. A publishable ou anon identifica o projeto e vai no navegador; seu único poder é chamar a API como usuário anônimo ou autenticado, que a RLS então restringe. A secret ou service role é a chave mestra: ignora toda política e lê e escreve qualquer coisa. Ela pertence a um ambiente de servidor, uma Edge Function ou um script confiável, nunca a código de frontend, nunca a uma variável Vite com prefixo VITE_, porque tudo com esse prefixo é compilado no bundle público. Uma chave service role num bundle JavaScript é igual a um banco público.</p>
+          <p>Segredos chegam ao repositório por descuido: um .env commitado sem querer, uma chave colada num arquivo de configuração, um print na documentação. As defesas são rotina: .env no .gitignore desde o primeiro commit, um .env.example com placeholders, varredura de segredos do GitHub ligada, um scanner local como o gitleaks num hook de pre-commit, e rotação no momento em que uma chave é suspeita de ter vazado, porque o histórico do git lembra de tudo. O Cloudflare Pages guarda variáveis de produção no painel, separadas dos ambientes de preview, e é aí que a divisão dev/prod começa a importar.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Chave anon no cliente, service role nunca.</strong> Sem prefixo VITE_ em nada secreto.</li>
+            <li><strong>.env ignorado, .env.example commitado,</strong> variáveis definidas no painel da hospedagem.</li>
+            <li><strong>Varredura de segredos no repositório</strong> e um scanner de pre-commit local.</li>
+            <li><strong>Rotacione na suspeita,</strong> não na prova. Chave vazada é vazada para sempre no histórico.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Procure "service_role" no bundle compilado</strong> antes de todo deploy. Leva dez segundos.</li>
+            <li><strong>Chaves diferentes por ambiente;</strong> chave de staging vazada não pode abrir produção.</li>
+            <li><strong>Rotação é treino:</strong> pratique antes de precisar.</li>
+            <li><strong>Prints do painel</strong> frequentemente contêm chaves. Recorte.</li>
+            <li><strong>A chave anon é pública por design;</strong> pare de tratá-la como segredo e passe a tratar a RLS como a fechadura.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://supabase.com/docs/guides/api/api-keys" target="_blank" rel="noopener">Supabase, API keys</a> · <a href="https://vite.dev/guide/env-and-mode" target="_blank" rel="noopener">Vite, Env variables and modes</a> · <a href="https://docs.github.com/en/code-security/secret-scanning/introduction/about-secret-scanning" target="_blank" rel="noopener">GitHub, About secret scanning</a> · <a href="https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP, Secrets management cheat sheet</a> · <a href="https://github.com/gitleaks/gitleaks" target="_blank" rel="noopener">gitleaks</a></footer>
+        </article>
+
+        <article class="lesson" id="storage-and-uploads">
+          <span class="eyebrow">Development · 17</span>
+          <h2>Storage, Uploads and Signed URLs</h2>
+          <p class="lede">Imagens de presentes são arquivos, e arquivos têm permissões próprias. Buckets são públicos ou privados, políticas decidem quem envia e quem lê, URLs assinadas dão acesso temporário a arquivos privados, e limites de tamanho e tipo impedem uploads de virarem ataque.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="dev-17">
+            <div class="demo-stage" data-pub="Bucket público: o link funciona para sempre, para qualquer um, mesmo depois de a lista ficar privada." data-signed="URL assinada copiada · expira em %d min" data-ok="Abriu: a assinatura ainda valia." data-expired="Expirou: a assinatura parou de funcionar. Arquivos privados seguem privados depois de um link compartilhado." data-first="Copie o link, depois abra mais tarde.">
+            <div class="dv17-wrap"><div class="dv17-file"><i></i><span>camera.jpg</span><small class="dv17-bucket"></small></div><div class="dv17-btns"><button type="button" class="dv17-copy">Copiar link da imagem</button><button type="button" class="dv17-open">Abrir como visitante, 30 min depois</button></div><code class="dv17-url"></code><span class="dv17-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Bucket privado</span><input type="checkbox" name="private" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl"><span class="ctl-label">Expiração da URL assinada</span><input type="range" name="exp" min="5" max="60" step="5" value="15" data-unit=" min"><output></output></label></div>
+          </div>
+            <figcaption class="demo-caption">Copie o link da imagem e abra como visitante meia hora depois. Bucket público serve para sempre. Bucket privado com URL assinada curta para de funcionar, que é o que "lista privada" precisa significar para as imagens também.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>O Supabase Storage guarda arquivos em buckets com políticas no estilo RLS sobre a tabela de objetos. Um bucket público serve qualquer arquivo por URL, para sempre, a qualquer um; isso é certo para avatares e errado para imagens numa lista privada. Um bucket privado serve arquivos só por requisições autenticadas ou URLs assinadas, links que expiram depois de um tempo definido. A wishlist precisa dos dois: bucket público para fotos de perfil, bucket privado para imagens de itens, com políticas que espelham a visibilidade da lista, para que as imagens de uma lista privada não vazem por uma URL copiada uma vez. Convenções de caminho ajudam: user_id/list_id/arquivo, com políticas que comparam a primeira pasta com auth.uid().</p>
+          <p>Upload é entrada. Limite tamanho por arquivo e por bucket, restrinja tipos MIME às imagens que você de fato exibe, e nunca confie na extensão; o servidor decide o tipo de conteúdo. Renomeie arquivos no upload para os caminhos não serem controlados pelo usuário, o que fecha truques de path traversal e sobrescrita. Remova metadados EXIF se localização puder vazar. E considere o que acontece ao excluir: remover um item deve remover sua imagem, ou você segue pagando por, e potencialmente servindo, arquivos que deveriam ter sumido, o que a LGPD vai cobrar.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Bucket público para avatares, privado para imagens de lista,</strong> políticas espelhando a visibilidade.</li>
+            <li><strong>URLs assinadas com expiração curta</strong> para tudo que é privado; nunca link permanente.</li>
+            <li><strong>Limites de tamanho e MIME no bucket,</strong> nomes gerados pelo servidor, sem caminhos de usuário.</li>
+            <li><strong>Exclua arquivos junto com as linhas,</strong> e teste que uma imagem excluída para de ser servida.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>URLs de bucket público são cacheáveis para sempre;</strong> mover a lista para privada não as recolhe.</li>
+            <li><strong>Caminhos pasta-por-usuário</strong> deixam políticas de propriedade numa linha.</li>
+            <li><strong>Transformações de imagem no servidor</strong> também removem conteúdo perigoso.</li>
+            <li><strong>Uploads de SVG podem carregar scripts;</strong> trate como código, não como imagem.</li>
+            <li><strong>Teste os três usuários em arquivos também,</strong> não só em linhas.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://supabase.com/docs/guides/storage/security/access-control" target="_blank" rel="noopener">Supabase, Storage access control</a> · <a href="https://supabase.com/docs/guides/storage/uploads/file-limits" target="_blank" rel="noopener">Supabase, File limits</a> · <a href="https://supabase.com/docs/guides/storage/serving/downloads" target="_blank" rel="noopener">Supabase, Serving downloads and signed URLs</a> · <a href="https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP, File upload cheat sheet</a> · <a href="https://portswigger.net/web-security/file-upload" target="_blank" rel="noopener">PortSwigger, File upload vulnerabilities</a></footer>
+        </article>
+
+        <article class="lesson" id="security-headers-and-csp">
+          <span class="eyebrow">Development · 18</span>
+          <h2>Security Headers and CSP</h2>
+          <p class="lede">Um punhado de headers de resposta diz ao navegador como proteger sua página: quais scripts podem rodar, se ela pode ser emoldurada, como referrers vazam, quais recursos são permitidos. A Content Security Policy é o mais pesado e o mais valioso, porque amortece XSS mesmo quando existe um buraco.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="dev-18">
+            <div class="demo-stage" data-ran="Script inline rodou. Sem CSP, sem segunda camada." data-blk="Bloqueado: script-src não tem unsafe-inline. O console mostra a violação." data-framed="Seu login renderizado dentro de evil.example, pronto para clickjacking." data-noframe="Recusou exibir dentro de um frame." data-first="Tente uma injeção, depois um frame.">
+            <div class="dv18-wrap"><div class="dv18-page"><div class="dv18-frame"><span>evil.example</span></div><div class="dv18-app"><b>wishlist.app</b><div class="dv18-out"></div></div></div><div class="dv18-btns"><button type="button" class="dv18-inject">Injetar script inline</button><button type="button" class="dv18-embed">Embutir em frame malicioso</button></div><div class="dv18-hdrs"><span class="dv18-h dv18-csp">Content-Security-Policy: script-src 'self'</span><span class="dv18-h dv18-fa">Content-Security-Policy: frame-ancestors 'none'</span><span class="dv18-h">Strict-Transport-Security</span><span class="dv18-h">X-Content-Type-Options: nosniff</span><span class="dv18-h">Referrer-Policy: strict-origin-when-cross-origin</span><span class="dv18-h">Permissions-Policy: camera=(), geolocation=()</span></div><span class="dv18-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">CSP imposta</span><input type="checkbox" name="csp" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">frame-ancestors none</span><input type="checkbox" name="frame" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Injete um script inline com a CSP desligada: ele roda. Com a CSP ligada, o navegador recusa e registra a violação. Embuta a página num frame hostil: frame-ancestors none recusa. Os outros headers moram no mesmo arquivo _headers.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>O navegador faz muito por você se pedido. Content-Security-Policy lista de onde scripts, estilos, imagens e conexões podem vir; uma política estrita sem unsafe-inline faz uma tag script injetada simplesmente não rodar. Strict-Transport-Security fixa HTTPS. X-Content-Type-Options impede sniffing de MIME. X-Frame-Options ou frame-ancestors impede seu login de ser emoldurado numa página de clickjacking. Referrer-Policy impede URLs completas, que podem conter ids de listas não listadas, de vazarem para outros sites. Permissions-Policy desliga câmera, geolocalização e afins que você não usa. O Cloudflare Pages define tudo isso por um arquivo _headers na saída do build.</p>
+          <p>CSP é o que dá trabalho, porque um app Vite com cliente Supabase, Google Fonts e um script de analytics tem fontes reais para declarar, e estilos inline de bibliotecas brigam com um style-src estrito. Comece em modo report-only, leia as violações, aperte, depois imponha. O connect-src precisa incluir sua URL do Supabase; img-src precisa incluir o domínio do storage; script-src deve ser sua origem mais hashes ou nonces, nada inline. Teste com o securityheaders.com e com o console aberto. A recompensa é que o pior caso da aula de XSS, um script numa nota, vira uma requisição bloqueada em vez de uma sessão roubada.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Arquivo _headers no Pages</strong> com HSTS, nosniff, frame-ancestors, Referrer-Policy, Permissions-Policy.</li>
+            <li><strong>CSP em report-only primeiro,</strong> depois imposta, sem unsafe-inline para scripts.</li>
+            <li><strong>Declare só o que usa:</strong> sua origem, Supabase, fontes.</li>
+            <li><strong>Reconfira os headers depois de toda mudança de infra</strong> com um scanner externo.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Referrer-Policy: strict-origin-when-cross-origin</strong> mantém ids não listados fora dos logs de outros sites.</li>
+            <li><strong>frame-ancestors 'none'</strong> a menos que você embuta de propósito.</li>
+            <li><strong>Nonces ou hashes</strong> para o único script inline que não dá para evitar.</li>
+            <li><strong>Report-only não é proteção;</strong> marque uma data para impor.</li>
+            <li><strong>Headers são por resposta;</strong> cheque a API e o domínio do storage também, não só a página.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP" target="_blank" rel="noopener">MDN, Content Security Policy</a> · <a href="https://web.dev/articles/strict-csp" target="_blank" rel="noopener">web.dev, Strict CSP</a> · <a href="https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP, HTTP headers cheat sheet</a> · <a href="https://developers.cloudflare.com/pages/configuration/headers/" target="_blank" rel="noopener">Cloudflare Pages, Headers</a> · <a href="https://securityheaders.com/" target="_blank" rel="noopener">securityheaders.com</a></footer>
+        </article>
+
+        <article class="lesson" id="dependencies-and-supply-chain">
+          <span class="eyebrow">Development · 19</span>
+          <h2>Dependencies and the Supply Chain</h2>
+          <p class="lede">Seu app é majoritariamente código dos outros. Um pacote vulnerável entrega sua vulnerabilidade; um pacote sequestrado entrega o malware de alguém. Lockfiles, auditorias, atualizações automáticas e o hábito de ler o que instala são os controles.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="dev-19">
+            <div class="demo-stage" data-known="vulnerabilidades conhecidas" data-rep="audit: %d vulnerabilidades (%d altas) · %s" data-patched="corrigidas em uma semana por PRs automáticos" data-open="abertas, ninguém olhou" data-first="Arraste os meses, depois rode o audit.">
+            <div class="dv19-wrap"><div class="dv19-deps"><div class="dv19-dep"><span>react 18.3</span><i class="dv19-v"></i></div><div class="dv19-dep"><span>vite 5.4</span><i class="dv19-v"></i></div><div class="dv19-dep"><span>markdown-it 14</span><i class="dv19-v"></i></div><div class="dv19-dep"><span>@supabase/supabase-js 2.4</span><i class="dv19-v"></i></div><div class="dv19-dep"><span>lodash 4.17</span><i class="dv19-v"></i></div></div><div class="dv19-bar"><button type="button" class="dv19-audit">npm audit</button><span class="dv19-known"></span></div><span class="dv19-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl"><span class="ctl-label">Meses sem atualizar</span><input type="range" name="months" min="0" max="24" step="1" value="0" data-unit=""><output></output></label><label class="ctl ctl-switch"><span class="ctl-label">Dependabot + audit no CI</span><input type="checkbox" name="bot" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Deixe os meses passarem sem atualizar e rode o audit: vulnerabilidades se acumulam em pacotes que você nunca tocou. Com Dependabot e audit no CI, os mesmos meses produzem PRs que são mesclados, e a contagem fica perto de zero.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Um projeto Vite com React puxa centenas de pacotes, cada um um buraco em potencial e cada um um caminho possível para uma atualização maliciosa. O OWASP lista componentes vulneráveis e desatualizados no Top 10; os incidentes de supply chain dos últimos anos acrescentaram typosquatting e sequestro de contas de mantenedores à lista. A base é mecânica: commite o lockfile para instalações serem reproduzíveis, rode npm audit no CI e leia o resultado, ligue o Dependabot ou equivalente para atualizações chegarem como pull requests revisáveis, e fixe versões maiores de tudo que toca autenticação ou renderização. A parte de julgamento é ler: antes de adicionar um pacote, veja manutenção, downloads, árvore de dependências e se você precisa mesmo dele.</p>
+          <p>Código de frontend roda no navegador do usuário com a sessão do usuário, então uma biblioteca de UI comprometida é tão perigosa quanto um backend comprometido. Mantenha a lista de dependências curta, prefira recursos da plataforma a pacotes para necessidades pequenas, e evite pacotes que puxam dezenas de outros por uma função. Atualizações agendadas e chatas vencem as heroicas: uma janela mensal em que tudo avança um pouco é mais segura que um salto anual que quebra o build. Quando sair uma vulnerabilidade em algo que você usa, saiba em um dia, não num trimestre.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Lockfile commitado, npm audit no CI,</strong> falhas triadas na mesma semana.</li>
+            <li><strong>PRs automáticos de atualização</strong> com cadência regular de merge.</li>
+            <li><strong>Leia antes de instalar:</strong> mantenedores, atividade, tamanho, dependências transitivas.</li>
+            <li><strong>Menos pacotes:</strong> cada dependência é uma decisão permanente de confiar num estranho.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>npm audit fix --force</strong> pode quebrar coisas; leia o diff.</li>
+            <li><strong>Dependências de dev rodam na sua máquina;</strong> scripts postinstall também são vetor.</li>
+            <li><strong>Fixe pelo lockfile, não por versões exatas no package.json,</strong> para patches continuarem fluindo.</li>
+            <li><strong>Assine os avisos</strong> dos cinco pacotes que mais importam.</li>
+            <li><strong>Remova o que parou de usar;</strong> pacote sem uso ainda é instalado e ainda é hackeado.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://owasp.org/Top10/A06_2021-Vulnerable_and_Outdated_Components/" target="_blank" rel="noopener">OWASP Top 10, A06 Vulnerable and Outdated Components</a> · <a href="https://docs.npmjs.com/cli/v10/commands/npm-audit" target="_blank" rel="noopener">npm, npm audit</a> · <a href="https://docs.github.com/en/code-security/dependabot" target="_blank" rel="noopener">GitHub, Dependabot</a> · <a href="https://cheatsheetseries.owasp.org/cheatsheets/Vulnerable_Dependency_Management_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP, Vulnerable dependency management cheat sheet</a></footer>
+        </article>
+
+        <article class="lesson" id="logs-backups-environments">
+          <span class="eyebrow">Development · 20</span>
+          <h2>Logs, Backups and Environments</h2>
+          <p class="lede">Não se defende o que não se vê nem se restaura. Logs dizem que algo aconteceu, alertas dizem agora, backups deixam desfazer, e um teste de restauração prova que o backup é real. Ambientes separados mantêm experimentos longe dos dados de pessoas reais.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="dev-20">
+            <div class="demo-stage" data-rows="12.480 wishlists" data-lost="Tabela sumiu." data-nobackup="Sem backup. 12.480 wishlists se foram para sempre." data-untested="Backup existe, restauração falha: região errada, extensão faltando. Ninguém nunca tinha tentado." data-ok="Restaurado do backup de ontem em 14 minutos. Perda: até 24 horas de mudanças." data-first="Derrube a tabela, depois restaure.">
+            <div class="dv20-wrap"><div class="dv20-table"><b>wishlists</b><span class="dv20-rows">12.480 wishlists</span></div><div class="dv20-btns"><button type="button" class="dv20-oops">Ops: DROP TABLE wishlists</button><button type="button" class="dv20-restore">Restaurar</button></div><span class="dv20-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Backups diários</span><input type="checkbox" name="backup" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Restauração testada</span><input type="checkbox" name="tested" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Derrube a tabela, depois restaure. Sem backup: perdido. Backup nunca testado: a restauração falha na primeira vez que importa. Backup testado: catorze minutos e uma janela de perda conhecida. O teste é o controle.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Falhas de log e monitoramento são uma categoria própria do OWASP porque violações passam meses sem serem notadas. Para um app pequeno a régua é modesta e ainda assim real: o Supabase guarda logs de auth, API e banco; leia quando algo estiver estranho, e configure alertas para os eventos que importam, rajadas de login falho, erros disparando, volumes incomuns de leitura. Registre o que aconteceu e quem fez, nunca o que a pessoa digitou num campo de senha nem o token que carregava. Logs também são dado pessoal sob a LGPD, então ganham prazo de retenção como tudo mais.</p>
+          <p>Backups são a diferença entre um incidente e uma catástrofe. O Supabase faz backups diários nos planos pagos, com recuperação pontual disponível; o plano gratuito não, e isso é motivo para decidir cedo o que perder tudo significaria. Um backup que ninguém restaurou é esperança, não controle; agende uma restauração num projeto descartável e cronometre. Ambientes completam o quadro: desenvolva contra um projeto separado com dados fictícios, use deploys de preview para revisão, e mantenha chaves de produção só em produção. O branching do Supabase e os previews do Cloudflare tornam a divisão barata; a disciplina é nunca apontar um build de dev para o banco de produção "só um minuto".</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Leia os logs semanalmente,</strong> alerte para rajadas de login falho e picos de erro.</li>
+            <li><strong>Backups ligados, restauração testada</strong> ao menos uma vez antes do lançamento e depois de mudanças grandes.</li>
+            <li><strong>Projetos separados para dev e prod,</strong> dados fictícios em dev, previews para revisão.</li>
+            <li><strong>Logs têm retenção,</strong> e nunca contêm senhas ou tokens.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Cronometre o treino de restauração</strong> e anote quanto tempo levou.</li>
+            <li><strong>Fadiga de alerta é modo de falha;</strong> três alertas que importam vencem trinta.</li>
+            <li><strong>Limpe headers Authorization e e-mails</strong> de qualquer coisa que mande a um logger de terceiros.</li>
+            <li><strong>Quem tem acesso a produção?</strong> Escreva a lista; mantenha curta.</li>
+            <li><strong>Migrações rodam em dev primeiro,</strong> depois preview, depois prod, com plano de rollback.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://owasp.org/Top10/A09_2021-Security_Logging_and_Monitoring_Failures/" target="_blank" rel="noopener">OWASP Top 10, A09 Security Logging and Monitoring Failures</a> · <a href="https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP, Logging cheat sheet</a> · <a href="https://supabase.com/docs/guides/platform/backups" target="_blank" rel="noopener">Supabase, Backups</a> · <a href="https://supabase.com/docs/guides/deployment/branching" target="_blank" rel="noopener">Supabase, Branching</a> · <a href="https://supabase.com/docs/guides/deployment/going-into-prod" target="_blank" rel="noopener">Supabase, Going into production</a> · <a href="https://12factor.net/config" target="_blank" rel="noopener">The Twelve-Factor App, Config</a></footer>
+        </article>
+
+        <article class="lesson" id="personal-data-under-lgpd">
+          <span class="eyebrow">Development · 21</span>
+          <h2>Personal Data Under the LGPD</h2>
+          <p class="lede">A Lei Geral de Proteção de Dados se aplica no momento em que você guarda um nome ou um e-mail. Ela define dado pessoal e dado sensível, nomeia os papéis de controlador e operador, e fixa princípios que se leem como requisitos de produto: finalidade, necessidade, transparência, segurança.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="dev-21">
+            <div class="demo-stage" data-ans="1|1|1|1|2|0|1" data-notes="Identifica uma pessoa.|Identifica uma pessoa.|Logs contam: um IP pode identificar um aparelho e uma pessoa.|Pessoal; junto com outros campos, identificador.|Revela saúde: dado sensível, regras especiais.|Nome de produto não identifica ninguém.|Um rosto é dado pessoal; um template biométrico seria sensível." data-score="%d / 7 classificados certo" data-first="Classifique cada campo, depois revele.">
+            <div class="dv21-wrap"><div class="dv21-fields"><div class="dv21-f" data-i="0"><span class="dv21-name">Handle</span><div class="dv-seg dv21-c"><button type="button" class="dv-seg-b" data-v="0">Não pessoal</button><button type="button" class="dv-seg-b" data-v="1">Pessoal</button><button type="button" class="dv-seg-b" data-v="2">Sensível</button></div><small class="dv21-note"></small></div><div class="dv21-f" data-i="1"><span class="dv21-name">E-mail</span><div class="dv-seg dv21-c"><button type="button" class="dv-seg-b" data-v="0">Não pessoal</button><button type="button" class="dv-seg-b" data-v="1">Pessoal</button><button type="button" class="dv-seg-b" data-v="2">Sensível</button></div><small class="dv21-note"></small></div><div class="dv21-f" data-i="2"><span class="dv21-name">IP nos logs</span><div class="dv-seg dv21-c"><button type="button" class="dv-seg-b" data-v="0">Não pessoal</button><button type="button" class="dv-seg-b" data-v="1">Pessoal</button><button type="button" class="dv-seg-b" data-v="2">Sensível</button></div><small class="dv21-note"></small></div><div class="dv21-f" data-i="3"><span class="dv21-name">Data de nascimento</span><div class="dv-seg dv21-c"><button type="button" class="dv-seg-b" data-v="0">Não pessoal</button><button type="button" class="dv-seg-b" data-v="1">Pessoal</button><button type="button" class="dv-seg-b" data-v="2">Sensível</button></div><small class="dv21-note"></small></div><div class="dv21-f" data-i="4"><span class="dv21-name">Item: "teste de gravidez"</span><div class="dv-seg dv21-c"><button type="button" class="dv-seg-b" data-v="0">Não pessoal</button><button type="button" class="dv-seg-b" data-v="1">Pessoal</button><button type="button" class="dv-seg-b" data-v="2">Sensível</button></div><small class="dv21-note"></small></div><div class="dv21-f" data-i="5"><span class="dv21-name">Item: "câmera"</span><div class="dv-seg dv21-c"><button type="button" class="dv-seg-b" data-v="0">Não pessoal</button><button type="button" class="dv-seg-b" data-v="1">Pessoal</button><button type="button" class="dv-seg-b" data-v="2">Sensível</button></div><small class="dv21-note"></small></div><div class="dv21-f" data-i="6"><span class="dv21-name">Foto do avatar</span><div class="dv-seg dv21-c"><button type="button" class="dv-seg-b" data-v="0">Não pessoal</button><button type="button" class="dv-seg-b" data-v="1">Pessoal</button><button type="button" class="dv-seg-b" data-v="2">Sensível</button></div><small class="dv21-note"></small></div></div><span class="dv21-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Revelar respostas</span><input type="checkbox" name="reveal" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Classifique todo campo que a wishlist guarda. Revele: o IP nos logs é pessoal, o teste de gravidez numa wishlist é sensível, e a câmera não é de ninguém. O inventário começa com este exercício.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Dado pessoal é qualquer coisa que identifica ou pode identificar uma pessoa natural: nome, e-mail, handle, foto, endereço IP, id de dispositivo, e a combinação de campos inofensivos que juntos apontam para alguém. Dado sensível é um conjunto mais estreito com regras mais duras: saúde, orientação sexual, religião, etnia, política, biometria, genética. Uma wishlist parece inofensiva até você notar que uma lista de itens desejados pode revelar uma gravidez, uma religião ou uma condição médica; desenhe os campos para não coletar o que não precisa, e trate texto livre como potencialmente sensível. A pessoa dona do dado detém os direitos; você, que decide por que e como ele é tratado, é o controlador; Supabase e Cloudflare, tratando sob suas instruções, são operadores.</p>
+          <p>Os princípios do artigo 6 são o briefing de design. Finalidade: colete por um motivo específico e declarado. Adequação e necessidade: só o que esse motivo precisa. Transparência: diga às pessoas, em linguagem clara, o que você faz. Segurança: medidas proporcionais ao risco. Prevenção, não discriminação, responsabilização. O inventário é o primeiro passo prático: uma tabela com todo campo que você guarda, com finalidade, base legal que pretende usar, quem acessa, qual fornecedor o mantém e por quanto tempo. Essa tabela alimenta a política de privacidade, o fluxo de exclusão e o plano de incidentes, e é o que a ANPD, a autoridade nacional, pediria para ver.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Inventarie todo campo</strong> com finalidade, base legal, acesso, fornecedor e retenção.</li>
+            <li><strong>Colete menos:</strong> se a finalidade não precisa da data de nascimento, não peça.</li>
+            <li><strong>Nomeie os papéis:</strong> você é o controlador; liste seus operadores.</li>
+            <li><strong>Trate texto livre como capaz de ser sensível</strong> e mantenha privado por padrão.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Endereços IP e ids de dispositivo são dado pessoal.</strong> Logs contam.</li>
+            <li><strong>Pseudonimizado ainda é pessoal;</strong> só anonimização de verdade sai da lei.</li>
+            <li><strong>Dados de crianças</strong> exigem consentimento específico dos pais e o melhor interesse da criança.</li>
+            <li><strong>O inventário é documento vivo;</strong> atualize a cada campo novo.</li>
+            <li><strong>Isto é educação, não assessoria jurídica;</strong> uma pessoa advogada revisa antes do lançamento.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm" target="_blank" rel="noopener">Lei nº 13.709/2018 (LGPD), texto integral</a> · <a href="https://www.gov.br/anpd/pt-br" target="_blank" rel="noopener">ANPD, Autoridade Nacional de Proteção de Dados</a> · <a href="https://www.gov.br/anpd/pt-br/centrais-de-conteudo/materiais-educativos-e-publicacoes" target="_blank" rel="noopener">ANPD, materiais educativos e publicações</a> · <a href="https://www.serpro.gov.br/lgpd" target="_blank" rel="noopener">Serpro, LGPD explicada</a></footer>
+        </article>
+
+        <article class="lesson" id="legal-bases-and-rights">
+          <span class="eyebrow">Development · 22</span>
+          <h2>Legal Bases and the Rights of Data Subjects</h2>
+          <p class="lede">Consentimento é uma de dez bases legais, e em geral não a melhor. Operar a conta que a pessoa pediu é execução de contrato; prevenir fraude é legítimo interesse. Seja qual for a base, a pessoa mantém direitos: acesso, correção, portabilidade, exclusão, e resposta em prazo razoável.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="dev-22">
+            <div class="demo-stage" data-wok="Newsletter parada. A conta e os logs continuam nas próprias bases." data-wbad="A própria conta repousa em consentimento: revogar significa excluir a conta que a pessoa ainda quer." data-expok="conta.json pronto: perfil, listas, itens." data-expman="&quot;Mande e-mail ao suporte que retornamos.&quot; (Dentro do prazo legal, à mão.)" data-delok="Conta, listas, itens e arquivos excluídos. Backups expurgam em 30 dias." data-delman="Ticket aberto. Alguém vai excluir manualmente, uma hora." data-first="Escolha uma base legal por finalidade.">
+            <div class="dv22-wrap"><div class="dv22-rows"><div class="dv22-row" data-i="0"><span>Operar a conta (e-mail, listas)</span><div class="dv-seg dv22-b"><button type="button" class="dv-seg-b" data-v="0">Consentimento</button><button type="button" class="dv-seg-b is-on" data-v="1">Contrato</button><button type="button" class="dv-seg-b" data-v="2">Legítimo interesse</button></div></div><div class="dv22-row" data-i="1"><span>Logs de segurança (IP, tentativas)</span><div class="dv-seg dv22-b"><button type="button" class="dv-seg-b" data-v="0">Consentimento</button><button type="button" class="dv-seg-b" data-v="1">Contrato</button><button type="button" class="dv-seg-b is-on" data-v="2">Legítimo interesse</button></div></div><div class="dv22-row" data-i="2"><span>Newsletter mensal</span><div class="dv-seg dv22-b"><button type="button" class="dv-seg-b is-on" data-v="0">Consentimento</button><button type="button" class="dv-seg-b" data-v="1">Contrato</button><button type="button" class="dv-seg-b" data-v="2">Legítimo interesse</button></div></div></div><div class="dv22-btns"><button type="button" class="dv22-withdraw">Usuária revoga o consentimento</button><button type="button" class="dv22-export">Exportar meus dados</button><button type="button" class="dv22-delete">Excluir minha conta</button></div><span class="dv22-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Direitos construídos no produto</span><input type="checkbox" name="rights" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Escolha a base por finalidade e revogue o consentimento: se a conta repousa em consentimento, revogar a exclui. Com contrato para o serviço e consentimento só para a newsletter, revogar para a newsletter. Direitos construídos respondem na hora; direitos por ticket respondem uma hora.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>A LGPD lista as bases legais no artigo 7: consentimento, obrigação legal, políticas públicas, pesquisa, execução de contrato, exercício de direitos, proteção da vida, tutela da saúde, legítimo interesse, proteção ao crédito. Um produto que pede consentimento para tudo ganha dois problemas: consentimento pode ser revogado a qualquer momento, o que significaria excluir a conta que a pessoa ainda quer, e um termo longo que ninguém lê não é o consentimento livre, informado e inequívoco que a lei exige. Para a wishlist, guardar o e-mail e as listas é execução do contrato que a pessoa aceitou ao se cadastrar; logs de segurança são legítimo interesse; uma newsletter de marketing é consentimento, separado, opt-in, revogável com um clique.</p>
+          <p>Direitos são a outra metade. A pessoa pode confirmar se você trata seus dados, acessá-los, corrigi-los, anonimizar ou excluir o desnecessário, recebê-los em formato portável, saber com quem você compartilhou, e revogar consentimento. Cada direito precisa de um caminho no produto ou de um processo manual documentado, e de resposta nos prazos da lei. Construa os óbvios: uma exportação dos dados da pessoa em JSON, exclusão de conta que exclui de verdade, uma página de perfil onde os campos são editáveis, e um canal de contato que responde. Registre pedidos e respostas; responsabilização é princípio, e o registro é sua prova.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Escolha a base por finalidade:</strong> contrato para o serviço, legítimo interesse para segurança, consentimento só para extras.</li>
+            <li><strong>Consentimento é granular, opt-in e revogável</strong> onde você o usar.</li>
+            <li><strong>Entregue exportação e exclusão</strong> como funcionalidades, não como tickets de suporte.</li>
+            <li><strong>Registre pedidos e respostas</strong> com datas.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Caixas pré-marcadas não são consentimento.</strong></li>
+            <li><strong>Legítimo interesse exige um teste de ponderação escrito</strong> que você possa mostrar.</li>
+            <li><strong>Exclusão tem exceções:</strong> obrigações legais podem exigir guardar alguns registros; diga quais.</li>
+            <li><strong>Portabilidade é exportação legível por máquina,</strong> JSON serve.</li>
+            <li><strong>Designe um encarregado</strong> mesmo que seja você, e publique o contato.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm" target="_blank" rel="noopener">Lei nº 13.709/2018 (LGPD), artigos 7, 11 e 18</a> · <a href="https://www.gov.br/anpd/pt-br/centrais-de-conteudo/materiais-educativos-e-publicacoes" target="_blank" rel="noopener">ANPD, materiais educativos e publicações</a> · <a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/data-protection-principles/a-guide-to-the-data-protection-principles/" target="_blank" rel="noopener">ICO, Guide to the data protection principles (paralelo com o GDPR)</a></footer>
+        </article>
+
+        <article class="lesson" id="privacy-by-design-in-product">
+          <span class="eyebrow">Development · 23</span>
+          <h2>Privacy by Design in the Product</h2>
+          <p class="lede">Privacy by design significa que a escolha segura é o padrão e a escolha privada é real no backend, não um botão que esconde outro. Controles de visibilidade, exclusão, retenção, cookies e a política de privacidade são funcionalidades de produto, construídas com o mesmo cuidado da própria wishlist.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="dev-23">
+            <div class="demo-stage" data-bok="Aviso de cookies: só o cookie de sessão; analytics desligado até você aceitar." data-bbad="Banner de cookies: analytics já rodando; &quot;Aceitar tudo&quot; é o botão grande." data-new="Nova lista: %s" data-pub="pública" data-priv="privada" data-deleted="Excluído: 3 listas, 11 itens, 7 imagens, entradas de busca. Backups expurgam em até 30 dias. E-mail de confirmação enviado.">
+            <div class="dv23-wrap"><div class="dv23-banner"></div><div class="dv23-policy"><small>Resumo da política (gerado das configurações):</small><ul class="dv23-list"></ul></div><div class="dv23-btns"><button type="button" class="dv23-new">Nova lista</button><button type="button" class="dv23-del">Excluir minha conta</button></div><span class="dv23-read"></span></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">Listas novas privadas por padrão</span><input type="checkbox" name="defpriv" role="switch" checked><span class="switch" aria-hidden="true"></span></label><label class="ctl ctl-switch"><span class="ctl-label">Analytics ligado por padrão</span><input type="checkbox" name="analytics" role="switch"><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Inverta os padrões e veja o resumo da política se reescrever: privada por padrão e analytics desligado são as escolhas de privacy by design. Exclua a conta: linhas, arquivos, entradas de busca e uma janela de backup declarada, com confirmação.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>A LGPD pede privacidade desde a concepção e por padrão. Na wishlist isso significa: listas novas privadas, campos de perfil mínimos, analytics desligado até a pessoa concordar, e todo "privado" na interface sustentado por uma política no banco e no storage. A política de privacidade e os termos de uso são documentos diferentes com trabalhos diferentes: a política explica quais dados, por quê, em qual base, com quem, por quanto tempo e como exercer direitos; os termos fixam as regras do serviço. Os dois são lidos por poucos e importam a todos; escreva em linguagem simples e mantenha exatos, porque uma política que promete o que o sistema não faz é por si uma violação.</p>
+          <p>Cookies ganham parágrafo próprio porque o folclore está errado. Cookies estritamente necessários, a sessão e a preferência que você precisa para rodar o serviço, não exigem banner de consentimento. Analytics e marketing exigem uma escolha real, desligada por padrão, com a mesma facilidade para recusar e para aceitar; a ANPD publicou orientação exatamente sobre isso. Retenção fecha o ciclo: decida por quanto tempo guarda uma conta inativa, dados de lista excluída, logs e backups, e automatize a exclusão. Excluir conta precisa cascatear por linhas, arquivos e, dentro da janela de backup, backups também, e a pessoa deve receber confirmação. Por fim, um contato de privacidade que responde, e um histórico datado de mudanças na política.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Privado por padrão,</strong> todo controle de visibilidade imposto no banco e no storage.</li>
+            <li><strong>Política de privacidade e termos como páginas separadas, em linguagem simples,</strong> fiéis ao que o código faz.</li>
+            <li><strong>Escolha de cookies só para analytics e marketing,</strong> desligados por padrão, recusar tão fácil quanto aceitar.</li>
+            <li><strong>Cronograma de retenção automatizado,</strong> exclusão cascateando por linhas, arquivos e backups.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>Excluir é excluir:</strong> linhas, objetos no storage, índices de busca, e a janela de backup declarada.</li>
+            <li><strong>Sem banner para cookies necessários;</strong> o que bloqueia a página para tudo é o anti-padrão.</li>
+            <li><strong>O diálogo de compartilhar é um momento de privacidade:</strong> repita o que ficará visível.</li>
+            <li><strong>Versione a política</strong> com datas, e avise em mudanças relevantes.</li>
+            <li><strong>Perfil mínimo:</strong> handle e nome de exibição; o resto opcional.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://www.gov.br/anpd/pt-br/documentos-e-publicacoes/guia-orientativo-cookies-e-protecao-de-dados-pessoais.pdf" target="_blank" rel="noopener">ANPD, guia orientativo sobre cookies e proteção de dados pessoais</a> · <a href="https://www.gov.br/anpd/pt-br/centrais-de-conteudo/materiais-educativos-e-publicacoes/guia-orientativo-sobre-seguranca-da-informacao-para-agentes-de-tratamento-de-pequeno-porte" target="_blank" rel="noopener">ANPD, guia de segurança para agentes de tratamento de pequeno porte</a> · <a href="https://catalogue.projectsbyif.com/" target="_blank" rel="noopener">IF, Data patterns catalogue</a> · <a href="https://ico.org.uk/for-organisations/advice-for-small-organisations/" target="_blank" rel="noopener">ICO, advice for small organisations</a></footer>
+        </article>
+
+        <article class="lesson" id="vendors-incidents-and-launch">
+          <span class="eyebrow">Development · 24</span>
+          <h2>Vendors, Incidents and the Pre-Launch Review</h2>
+          <p class="lede">Supabase, Cloudflare e GitHub tratam os dados dos seus usuários em seu nome, muitas vezes fora do Brasil. Conheça os termos, saiba onde os dados moram, e tenha um plano para o dia em que algo der errado. Depois rode a revisão de pré-lançamento: três usuários, toda operação, todo arquivo, todo header, com evidência.</p>
+
+          <figure class="demo-figure">
+          <div class="demo" data-demo="dev-24">
+            <div class="demo-stage" data-pass="%d / 15 passam" data-fail="%d falhas: a matriz diz Não, o banco disse Sim." data-first="Clique numa célula para testar, ou rode todos.">
+            <div class="dv24-wrap"><div class="dv24-grid"><div class="dv24-h"></div><div class="dv24-h">Visitante</div><div class="dv24-h">Dono</div><div class="dv24-h">Outro usuário</div><div class="dv24-op">Ler lista pública</div><button type="button" class="dv24-cell" data-o="0" data-r="0" data-exp="1">✓</button><button type="button" class="dv24-cell" data-o="0" data-r="1" data-exp="1">✓</button><button type="button" class="dv24-cell" data-o="0" data-r="2" data-exp="1">✓</button><div class="dv24-op">Ler lista privada</div><button type="button" class="dv24-cell" data-o="1" data-r="0" data-exp="0">✗</button><button type="button" class="dv24-cell" data-o="1" data-r="1" data-exp="1">✓</button><button type="button" class="dv24-cell" data-o="1" data-r="2" data-exp="0">✗</button><div class="dv24-op">Adicionar item</div><button type="button" class="dv24-cell" data-o="2" data-r="0" data-exp="0">✗</button><button type="button" class="dv24-cell" data-o="2" data-r="1" data-exp="1">✓</button><button type="button" class="dv24-cell" data-o="2" data-r="2" data-exp="0">✗</button><div class="dv24-op">Editar ou excluir item</div><button type="button" class="dv24-cell" data-o="3" data-r="0" data-exp="0">✗</button><button type="button" class="dv24-cell" data-o="3" data-r="1" data-exp="1">✓</button><button type="button" class="dv24-cell" data-o="3" data-r="2" data-exp="0">✗</button><div class="dv24-op">Excluir lista</div><button type="button" class="dv24-cell" data-o="4" data-r="0" data-exp="0">✗</button><button type="button" class="dv24-cell" data-o="4" data-r="1" data-exp="1">✓</button><button type="button" class="dv24-cell" data-o="4" data-r="2" data-exp="0">✗</button></div><div class="dv24-bar"><button type="button" class="dv24-run">Rodar todos os testes</button><span class="dv24-read"></span></div></div>
+            </div>
+            <div class="demo-controls"><label class="ctl ctl-switch"><span class="ctl-label">RLS ligada</span><input type="checkbox" name="rls" role="switch" checked><span class="switch" aria-hidden="true"></span></label></div>
+          </div>
+            <figcaption class="demo-caption">Cada célula é um teste: a operação, como aquele papel, pela API. Rode todos com RLS ligada: quinze aprovados. Desligue a RLS: as células em que a matriz diz Não e o banco diz Sim ficam vermelhas. É a revisão de pré-lançamento numa grade.</figcaption>
+          </figure>
+
+          <h3>Por quê</h3>
+          <p>Operadores fazem parte da sua responsabilidade. Leia os termos de tratamento de dados de cada fornecedor, anote as regiões onde os dados ficam, e registre no inventário; a LGPD regula transferências internacionais e a ANPD tem regras para elas, então um banco numa região fora do Brasil é decisão a documentar, não acidente. Suboperadores mudam: assine os avisos dos fornecedores. Incidentes vão acontecer: uma chave vazada, um erro de política que expôs listas privadas, uma conta comprometida. A LGPD exige comunicar incidentes relevantes à ANPD e às pessoas afetadas; o plano prático tem quatro passos, detectar, conter, avaliar, comunicar, com contatos, modelos e critérios de decisão escritos antes de precisar.</p>
+          <p>A revisão de pré-lançamento é onde esta seção inteira vira evidência. Percorra a matriz de permissões com visitante, dono e outro usuário, pela API, para toda operação, e registre resultados. Busque imagens privadas por URL como o usuário errado. Revise os fluxos de auth, regras de senha, e-mails e todo redirecionamento. Cheque headers, CSP, HTTPS, limites de upload e tratamento de URLs externas. Confirme que segredos estão fora do repositório e do bundle, dependências atualizadas, backups restauram, alertas disparam. Releia inventário, política, cronograma de retenção e fluxo de exclusão contra o que o código de fato faz. Liste os riscos residuais que aceita e os itens que adia, com responsável e data. Lance com esse documento, não com uma sensação.</p>
+
+          <h3>Como aplicar</h3>
+          <ul>
+            <li><strong>Tabela de fornecedores:</strong> o que cada um trata, onde, sob quais termos, com link para o feed de avisos.</li>
+            <li><strong>Plano de incidentes numa página:</strong> detectar, conter, avaliar, comunicar, com contatos e modelos.</li>
+            <li><strong>Revisão de pré-lançamento com evidência:</strong> toda célula da matriz testada, todo check com print ou log anexado.</li>
+            <li><strong>Registro de riscos residuais</strong> assinado antes de usuários reais chegarem.</li>
+          </ul>
+          <h3>Detalhes que fazem a diferença</h3>
+          <ul class="details">
+            <li><strong>"Configurado" não é "testado".</strong> A revisão testa.</li>
+            <li><strong>Pratique o plano de incidentes</strong> com um exercício de mesa de chave vazada.</li>
+            <li><strong>Reteste depois de toda mudança de esquema ou política,</strong> automatizado onde der.</li>
+            <li><strong>Prioridade se o tempo for curto:</strong> RLS e testes entre usuários, depois auth, depois storage e segredos, depois OWASP, depois documentos da LGPD.</li>
+            <li><strong>Esta trilha é educação;</strong> não é certificação nem conformidade jurídica. Peça revisão antes do lançamento.</li>
+          </ul>
+          <footer class="sources"><span>Fontes:</span> <a href="https://www.gov.br/anpd/pt-br/assuntos/incidente-de-seguranca" target="_blank" rel="noopener">ANPD, incidentes de segurança</a> · <a href="https://www.gov.br/anpd/pt-br/assuntos/transferencia-internacional-de-dados" target="_blank" rel="noopener">ANPD, transferência internacional de dados</a> · <a href="https://owasp.org/www-project-web-security-testing-guide/" target="_blank" rel="noopener">OWASP, Web Security Testing Guide</a> · <a href="https://owasp.org/www-project-application-security-verification-standard/" target="_blank" rel="noopener">OWASP, Application Security Verification Standard</a> · <a href="https://supabase.com/docs/guides/deployment/going-into-prod" target="_blank" rel="noopener">Supabase, Going into production</a> · <a href="https://developers.cloudflare.com/pages/" target="_blank" rel="noopener">Cloudflare Pages</a></footer>
+        </article>
+
+      </section>
+      <footer class="footer"><p>Biblioteca de estudo pessoal. Conteúdo sintetizado a partir das fontes listadas em cada aula; nomes de cursos e autores pertencem aos seus respectivos donos. Hierarquia só por tamanho, peso e espaço.</p></footer>
+    </div>
+  </main>
+</div>
+<script src="../app.js"></script>
+</body>
+</html>
