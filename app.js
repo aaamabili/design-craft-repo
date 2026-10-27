@@ -795,7 +795,7 @@
     var dvS = demo.querySelector('.demo-stage');
     function gd(n) { return dvS ? (dvS.getAttribute('data-' + n) || '') : ''; }
     function dvOn(fn) { Array.prototype.forEach.call(demo.querySelectorAll('.demo-controls input'), function (i) { i.addEventListener('input', fn); i.addEventListener('change', fn); }); fn(); }
-    function dvSeg(wrap, cls, onChange) { var bs = wrap ? wrap.querySelectorAll('.' + cls + ' .dv-seg-b') : []; Array.prototype.forEach.call(bs, function (b) { b.addEventListener('click', function () { Array.prototype.forEach.call(bs, function (x) { x.classList.remove('is-on'); }); b.classList.add('is-on'); onChange(Number(b.getAttribute('data-v')), b); }); }); return function () { var on = wrap.querySelector('.' + cls + ' .dv-seg-b.is-on'); return on ? Number(on.getAttribute('data-v')) : -1; }; }
+    function dvSeg(wrap, cls, onChange) { var bs = wrap ? wrap.querySelectorAll('.' + cls + ' .dv-seg-b') : []; Array.prototype.forEach.call(bs, function (b) { b.setAttribute('aria-pressed', b.classList.contains('is-on') ? 'true' : 'false'); b.addEventListener('click', function () { Array.prototype.forEach.call(bs, function (x) { x.classList.remove('is-on'); x.setAttribute('aria-pressed', 'false'); }); b.classList.add('is-on'); b.setAttribute('aria-pressed', 'true'); onChange(Number(b.getAttribute('data-v')), b); }); }); return function () { var on = wrap.querySelector('.' + cls + ' .dv-seg-b.is-on'); return on ? Number(on.getAttribute('data-v')) : -1; }; }
     function dvRead(el, txt, cls) { if (!el) return; el.textContent = txt; el.classList.remove('dv-bad', 'dv-good'); if (cls) el.classList.add(cls); }
     var dvOut = demo.querySelector('.demo-controls output');
     // 01 HTTP
@@ -812,7 +812,7 @@
       var dv02rd = dv02.querySelector('.dv02-read');
       Array.prototype.forEach.call(dv02.querySelectorAll('.dv02-row'), function (r) { var plain = r.querySelector('.dv02-plain').textContent; r.querySelector('.dv02-enc').textContent = plain.split(':')[0] + ': ••••••••••••'; });
       function dv02upd() { dvRead(dv02rd, demo.classList.contains('on-stolen') ? gd('rest') : '', demo.classList.contains('on-stolen') ? 'dv-bad' : ''); }
-      dv02.querySelector('.dv02-sniff').addEventListener('click', function () { var h = demo.classList.contains('on-https'); dvRead(dv02rd, gd(h ? 'h' : 'p'), h ? 'dv-good' : 'dv-bad'); });
+      dv02.querySelector('.dv02-sniff').addEventListener('click', function () { var h = demo.classList.contains('on-https'); dv02.querySelector('.dv02-wire').classList.add('is-sniffed'); dvRead(dv02rd, gd(h ? 'h' : 'p'), h ? 'dv-good' : 'dv-bad'); });
       dvOn(dv02upd); demo._replay = function () { if (!demo.classList.contains('on-stolen')) dv02.querySelector('.dv02-sniff').click(); };
     }
     // 03 storage
@@ -821,16 +821,17 @@
       var dv03b = dv03.querySelectorAll('.dv03-box'), dv03rd = dv03.querySelector('.dv03-read');
       function dv03clear() { Array.prototype.forEach.call(dv03b, function (b) { b.classList.remove('is-read', 'is-sent'); }); }
       dvOn(function () { dv03b[0].classList.toggle('is-locked', demo.classList.contains('on-httponly')); dv03clear(); dv03rd.textContent = ''; });
+      demo._replay = function () { dv03.querySelector('.dv03-run').click(); };
       dv03.querySelector('.dv03-run').addEventListener('click', function () { dv03clear(); if (!demo.classList.contains('on-xss')) { dvRead(dv03rd, gd('noxss')); return; } var ho = demo.classList.contains('on-httponly'); dv03b[1].classList.add('is-read'); if (!ho) dv03b[0].classList.add('is-read'); dvRead(dv03rd, gd('read') + ' ' + gd(ho ? 'got2' : 'got'), 'dv-bad'); });
       dv03.querySelector('.dv03-req').addEventListener('click', function () { dv03clear(); dv03b[0].classList.add('is-sent'); dvRead(dv03rd, gd('sent')); });
-      demo._replay = function () { if (demo.classList.contains('on-xss')) dv03.querySelector('.dv03-run').click(); };
     }
     // 04 CORS
     var dv04 = demo.querySelector('.dv04-wrap');
     if (dv04) {
       var dv04rd = dv04.querySelector('.dv04-read'), dv04from = dv04.querySelector('.dv04-from'), dv04acao = dv04.querySelector('.dv04-acao'), dv04src = dv04.querySelector('.dv04-src b');
       dvOn(function () { var c = demo.classList.contains('on-curl'); dv04from.textContent = gd(c ? 'fromc' : 'fromb'); dv04src.textContent = c ? 'curl' : 'evil.example'; dv04acao.textContent = demo.classList.contains('on-allow') ? 'https://app.example' : '*'; dv04.classList.remove('is-blocked', 'is-leak'); dv04rd.textContent = ''; });
-      dv04.querySelector('.dv04-send').addEventListener('click', function () { dv04.classList.remove('is-blocked', 'is-leak'); if (demo.classList.contains('on-curl')) { dvRead(dv04rd, gd('curlr'), 'dv-bad'); dv04.classList.add('is-leak'); } else if (demo.classList.contains('on-allow')) { dvRead(dv04rd, gd('blocked'), 'dv-good'); dv04.classList.add('is-blocked'); } else { dvRead(dv04rd, gd('read'), 'dv-bad'); dv04.classList.add('is-leak'); } });
+      var dv04resp = dv04.querySelector('.dv04-resp'), dv04r = gd('resp').split('|');
+      dv04.querySelector('.dv04-send').addEventListener('click', function () { dv04.classList.remove('is-blocked', 'is-leak'); dv04resp.textContent = demo.classList.contains('on-curl') ? dv04r[2] : demo.classList.contains('on-allow') ? dv04r[0] : dv04r[1]; if (demo.classList.contains('on-curl')) { dvRead(dv04rd, gd('curlr'), 'dv-bad'); dv04.classList.add('is-leak'); } else if (demo.classList.contains('on-allow')) { dvRead(dv04rd, gd('blocked'), 'dv-good'); dv04.classList.add('is-blocked'); } else { dvRead(dv04rd, gd('read'), 'dv-bad'); dv04.classList.add('is-leak'); } });
       demo._replay = function () { dv04.querySelector('.dv04-send').click(); };
     }
     // 05 AuthN vs AuthZ
@@ -841,38 +842,41 @@
       function dv05upd() { Array.prototype.forEach.call(dv05acts, function (a) { a.classList.toggle('is-hidden', dv05role !== 1); var r = a.querySelector('.dv05-res'); r.textContent = ''; r.className = 'dv05-res'; }); dv05rd.textContent = gd('first'); }
       Array.prototype.forEach.call(dv05acts, function (a) {
         var r = a.querySelector('.dv05-res');
-        a.querySelector('.dv05-btn').addEventListener('click', function () { var ok = dv05role === 1; dvRead(r, ok ? gd('ok') : gd('no'), ok ? 'dv-good' : 'dv-bad'); });
-        a.querySelector('.dv05-api').addEventListener('click', function () { var ok = dv05role === 1; if (ok) { dvRead(r, gd('ok'), 'dv-good'); } else { dvRead(r, gd('leak'), 'dv-bad'); } });
+        a.querySelector('.dv05-btn').addEventListener('click', function () { dv05rd.textContent = ''; var ok = dv05role === 1; dvRead(r, ok ? gd('ok') : gd('no'), ok ? 'dv-good' : 'dv-bad'); });
+        a.querySelector('.dv05-api').addEventListener('click', function () { dv05rd.textContent = ''; var ok = dv05role === 1; if (ok) { dvRead(r, gd('ok'), 'dv-good'); } else { dvRead(r, gd('leak'), 'dv-bad'); } });
       });
       dvOn(dv05upd); demo._replay = function () {};
     }
     // 06 auth flows
     var dv06 = demo.querySelector('.dv06-wrap');
     if (dv06) {
-      var dv06st = dv06.querySelector('.dv06-state'), dv06rec = dv06.querySelector('.dv06-rec'), dv06rd = dv06.querySelector('.dv06-read'), dv06up = false;
-      dv06.querySelector('.dv06-signup').addEventListener('click', function () { dv06up = true; dvRead(dv06st, gd('created'), 'dv-good'); dv06rd.textContent = ''; });
-      dv06.querySelector('.dv06-signin').addEventListener('click', function () { if (!dv06up) { dvRead(dv06st, gd(demo.classList.contains('on-neutral') ? 'rneutral' : 'rleak').replace(/recovery link|link de recuperação/, 'link'), ''); dv06rd.textContent = gd('first'); return; } if (demo.classList.contains('on-verify')) dvRead(dv06st, gd('blocked'), 'dv-good'); else dvRead(dv06st, gd('unverified'), 'dv-bad'); });
+      var dv06st = dv06.querySelector('.dv06-state'), dv06rec = dv06.querySelector('.dv06-rec'), dv06rd = dv06.querySelector('.dv06-read'), dv06up = false, dv06ok = false, dv06confirm = dv06.querySelector('.dv06-confirm');
+      dv06.querySelector('.dv06-signup').addEventListener('click', function () { dv06up = true; dv06ok = false; dv06confirm.hidden = !demo.classList.contains('on-verify'); dvRead(dv06st, gd('created'), 'dv-good'); dv06rd.textContent = ''; });
+      dv06confirm.addEventListener('click', function () { dv06ok = true; dv06confirm.hidden = true; dvRead(dv06st, gd('verified'), 'dv-good'); });
+      dv06.querySelector('.dv06-signin').addEventListener('click', function () { if (!dv06up) { dvRead(dv06st, gd('noacct'), ''); return; } if (demo.classList.contains('on-verify') && !dv06ok) dvRead(dv06st, gd('blocked'), 'dv-good'); else if (!demo.classList.contains('on-verify') && !dv06ok) dvRead(dv06st, gd('unverified'), 'dv-bad'); else dvRead(dv06st, gd('sin'), 'dv-good'); });
       dv06.querySelector('.dv06-recover').addEventListener('click', function () { var n = demo.classList.contains('on-neutral'); dvRead(dv06rec, gd(n ? 'rneutral' : 'rleak'), n ? 'dv-good' : 'dv-bad'); });
-      dv06rd.textContent = gd('first'); demo._replay = function () { if (dv06rec.textContent) dv06.querySelector('.dv06-recover').click(); if (dv06up) dv06.querySelector('.dv06-signin').click(); };
+      dv06rd.textContent = gd('first'); demo._replay = function () { if (dv06rec.textContent) dv06.querySelector('.dv06-recover').click(); if (dv06up) { dv06confirm.hidden = !demo.classList.contains('on-verify') || dv06ok; dv06.querySelector('.dv06-signin').click(); } };
     }
     // 07 tokens
     var dv07 = demo.querySelector('.dv07-wrap');
     if (dv07) {
-      var dv07t = 0, dv07issued = 0, dv07n = 1, dv07T = dv07.querySelector('.dv07-t'), dv07a = dv07.querySelector('.dv07-a'), dv07r = dv07.querySelector('.dv07-r'), dv07bar = dv07.querySelector('.dv07-bar b'), dv07as = dv07.querySelector('.dv07-as'), dv07rs = dv07.querySelector('.dv07-rs'), dv07rd = dv07.querySelector('.dv07-read'), dv07dead = false;
+      var dv07t = 0, dv07issued = 0, dv07n = 1, dv07T = dv07.querySelector('.dv07-t'), dv07a = dv07.querySelector('.dv07-a'), dv07r = dv07.querySelector('.dv07-r'), dv07bar = dv07.querySelector('.dv07-bar b'), dv07as = dv07.querySelector('.dv07-as'), dv07rs = dv07.querySelector('.dv07-rs'), dv07rd = dv07.querySelector('.dv07-read'), dv07dead = false, dv07stole = false;
       function dv07ttl() { return Number(demo.getAttribute('data-ttl')) || 30; }
       function dv07paint(note) { var age = dv07t - dv07issued, left = Math.max(0, dv07ttl() - age); dv07T.textContent = dv07t; dv07bar.style.width = (left / dv07ttl() * 100) + '%'; dv07a.classList.toggle('is-expired', left === 0); dv07as.textContent = left ? left + ' min · ' + gd('valid') : gd('expired'); dv07rs.textContent = '#' + dv07n; if (note !== undefined) dv07rd.textContent = note; }
-      dv07.querySelector('.dv07-use').addEventListener('click', function () { if (dv07dead) return; dv07t += 20; if (dv07t - dv07issued >= dv07ttl()) { dv07issued = dv07t; if (demo.classList.contains('on-rotate')) dv07n++; dv07paint(gd('expired')); } else dv07paint(''); });
-      dv07.querySelector('.dv07-steal').addEventListener('click', function () { dv07a.classList.remove('is-revoked', 'is-hijacked'); dv07r.classList.remove('is-revoked', 'is-hijacked'); if (demo.classList.contains('on-rotate')) { dv07dead = true; dv07r.classList.add('is-revoked'); dv07a.classList.add('is-revoked'); dvRead(dv07rd, gd('rev'), 'dv-good'); } else { dv07r.classList.add('is-hijacked'); dvRead(dv07rd, gd('hij'), 'dv-bad'); } });
+      dv07.querySelector('.dv07-use').addEventListener('click', function () { if (dv07dead) { dvRead(dv07rd, gd('dead'), 'dv-bad'); return; } dv07t += 20; if (dv07t - dv07issued >= dv07ttl()) { dv07issued = dv07t; if (demo.classList.contains('on-rotate')) dv07n++; dv07paint(gd('expired')); } else dv07paint(''); });
+      dv07.querySelector('.dv07-steal').addEventListener('click', function () { dv07stole = true; dv07a.classList.remove('is-revoked', 'is-hijacked'); dv07r.classList.remove('is-revoked', 'is-hijacked'); if (demo.classList.contains('on-rotate')) { dv07dead = true; dv07r.classList.add('is-revoked'); dv07a.classList.add('is-revoked'); dvRead(dv07rd, gd('rev'), 'dv-good'); } else { dv07r.classList.add('is-hijacked'); dvRead(dv07rd, gd('hij'), 'dv-bad'); } });
       dvOn(function () { dv07paint(); }); dv07rd.textContent = gd('first');
-      demo._replay = function () { dv07t = 0; dv07issued = 0; dv07n = 1; dv07dead = false; dv07a.classList.remove('is-revoked', 'is-hijacked'); dv07r.classList.remove('is-revoked', 'is-hijacked'); dv07paint(gd('first')); };
+      demo._replay = function () { if (dv07stole) { dv07dead = false; dv07.querySelector('.dv07-steal').click(); } else dv07paint(); };
     }
     // 08 abuse
     var dv08 = demo.querySelector('.dv08-wrap');
     if (dv08) {
-      var dv08n = 0, dv08login = dv08.querySelector('.dv08-login'), dv08out = dv08.querySelector('.dv08-out'), dv08c = dv08.querySelector('.dv08-count b'), dv08rd = dv08.querySelector('.dv08-read'), dv08T;
-      dv08.querySelector('.dv08-try').addEventListener('click', function () { dv08n++; dv08c.textContent = dv08n; if (demo.classList.contains('on-limit') && dv08n >= 5) { dvRead(dv08out, gd('wait'), 'dv-bad'); dv08login.classList.add('is-locked'); clearTimeout(dv08T); dv08T = setTimeout(function () { dv08login.classList.remove('is-locked'); dv08n = 0; dv08c.textContent = '0'; dv08out.textContent = ''; }, 2500); } else dvRead(dv08out, gd('wrong'), ''); dv08rd.textContent = ''; });
-      dv08.querySelector('.dv08-right').addEventListener('click', function () { if (dv08login.classList.contains('is-locked')) { dvRead(dv08out, gd('wait'), 'dv-bad'); return; } dvRead(dv08out, gd(demo.classList.contains('on-mfa') ? 'code' : 'sin'), 'dv-good'); dv08rd.textContent = ''; });
-      dv08rd.textContent = gd('first'); demo._replay = function () {};
+      var dv08n = 0, dv08login = dv08.querySelector('.dv08-login'), dv08out = dv08.querySelector('.dv08-out'), dv08c = dv08.querySelector('.dv08-count b'), dv08rd = dv08.querySelector('.dv08-read'), dv08T, dv08last = '';
+      dv08.querySelector('.dv08-try').addEventListener('click', function () { dv08n++; dv08c.textContent = dv08n; if (demo.classList.contains('on-limit') && dv08n >= 5) { dvRead(dv08out, gd('wait'), 'dv-bad'); dv08login.classList.add('is-locked'); clearTimeout(dv08T); dv08T = setTimeout(dv08unlock, 2500); } else dvRead(dv08out, gd('wrong'), ''); dv08last = 'try'; dv08rd.textContent = ''; });
+      function dv08unlock() { clearTimeout(dv08T); dv08login.classList.remove('is-locked'); dv08n = 0; dv08c.textContent = '0'; if (dv08last === 'try') dv08out.textContent = ''; }
+      dv08.querySelector('.dv08-right').addEventListener('click', function () { if (dv08login.classList.contains('is-locked')) { dvRead(dv08out, gd('wait'), 'dv-bad'); return; } dvRead(dv08out, gd(demo.classList.contains('on-mfa') ? 'code' : 'sin'), 'dv-good'); dv08last = 'right'; dv08rd.textContent = ''; });
+      dv08rd.textContent = gd('first'); dvOn(function () { if (!demo.classList.contains('on-limit') && dv08login.classList.contains('is-locked')) dv08unlock(); });
+      demo._replay = function () { if (dv08last === 'right') dv08.querySelector('.dv08-right').click(); };
     }
     // 09 data model
     var dv09 = demo.querySelector('.dv09-wrap');
@@ -894,12 +898,13 @@
     // 11 visibility
     var dv11 = demo.querySelector('.dv11-wrap');
     if (dv11) {
-      var dv11vis = 2, dv11label = dv11.querySelector('.dv11-label'), dv11rd = dv11.querySelector('.dv11-read'), dv11viewers = dv11.querySelectorAll('.dv11-viewer'), dv11labels = gd('labels').split('|'), dv11names = gd('vis').split('|');
-      dvSeg(dv11, 'dv11-vis', function (v) { dv11vis = v; dv11upd(); });
+      var dv11vis = 2, dv11label = dv11.querySelector('.dv11-label'), dv11rd = dv11.querySelector('.dv11-read'), dv11viewers = dv11.querySelectorAll('.dv11-viewer'), dv11labels = gd('labels').split('|'), dv11names = gd('vis').split('|'), dv11last = null;
+      dvSeg(dv11, 'dv11-vis', function (v) { dv11vis = v; dv11upd(); dv11again(); });
+      function dv11again() { if (dv11last === 'new') dv11.querySelector('.dv11-new').click(); else if (dv11last) dv11last.click(); }
       function dv11upd() { dv11label.textContent = dv11labels[dv11vis]; Array.prototype.forEach.call(dv11viewers, function (b) { b.classList.remove('is-yes', 'is-no', 'is-leak'); }); dv11rd.textContent = gd('first'); }
-      Array.prototype.forEach.call(dv11viewers, function (b) { b.addEventListener('click', function () { var v = Number(b.getAttribute('data-v')), can = v === 2 || (v === 1 && dv11vis <= 1) || (v === 0 && dv11vis === 0), leak = !can && demo.classList.contains('on-uionly') && v === 1; Array.prototype.forEach.call(dv11viewers, function (x) { x.classList.remove('is-yes', 'is-no', 'is-leak'); }); b.classList.add(leak ? 'is-leak' : can ? 'is-yes' : 'is-no'); dvRead(dv11rd, b.textContent + ' ' + (leak ? gd('leak') : can ? gd('yes') : gd('no')), leak ? 'dv-bad' : can ? 'dv-good' : ''); }); });
-      dv11.querySelector('.dv11-new').addEventListener('click', function () { var p = demo.classList.contains('on-defpriv'); dvRead(dv11rd, gd('newmsg').replace('%s', dv11names[p ? 2 : 0].toLowerCase()), p ? 'dv-good' : 'dv-bad'); });
-      dvOn(dv11upd); demo._replay = function () {};
+      Array.prototype.forEach.call(dv11viewers, function (b) { b.addEventListener('click', function () { dv11last = b; var v = Number(b.getAttribute('data-v')), can = v === 2 || (v === 1 && dv11vis <= 1) || (v === 0 && dv11vis === 0), leak = !can && demo.classList.contains('on-uionly') && v === 1; Array.prototype.forEach.call(dv11viewers, function (x) { x.classList.remove('is-yes', 'is-no', 'is-leak'); }); b.classList.add(leak ? 'is-leak' : can ? 'is-yes' : 'is-no'); dvRead(dv11rd, b.textContent + ' ' + (leak ? gd('leak') : can ? gd('yes') : gd('no')), leak ? 'dv-bad' : can ? 'dv-good' : ''); }); });
+      dv11.querySelector('.dv11-new').addEventListener('click', function () { dv11last = 'new'; Array.prototype.forEach.call(dv11viewers, function (x) { x.classList.remove('is-yes', 'is-no', 'is-leak'); }); var p = demo.classList.contains('on-defpriv'); dvRead(dv11rd, gd('newmsg').replace('%s', dv11names[p ? 2 : 0].toLowerCase()), p ? 'dv-good' : 'dv-bad'); });
+      dv11upd(); demo._replay = dv11again;
     }
     // 12 IDOR
     var dv12 = demo.querySelector('.dv12-wrap');
@@ -935,19 +940,21 @@
     // 16 keys
     var dv16 = demo.querySelector('.dv16-wrap');
     if (dv16) {
-      var dv16rd = dv16.querySelector('.dv16-read');
-      dvOn(function () { var s = demo.classList.contains('on-srv'); dvRead(dv16rd, gd(s ? 'bad' : 'good'), s ? 'dv-bad' : 'dv-good'); });
-      dv16.querySelector('.dv16-scan').addEventListener('click', function () { var ig = demo.classList.contains('on-ignore'); dvRead(dv16rd, gd(ig ? 'clean' : 'found'), ig ? 'dv-good' : 'dv-bad'); });
+      var dv16rd = dv16.querySelector('.dv16-read'), dv16scanned = false;
+      function dv16bundle() { var s = demo.classList.contains('on-srv'); dvRead(dv16rd, gd(s ? 'bad' : 'good'), s ? 'dv-bad' : 'dv-good'); }
+      function dv16scan() { dv16scanned = true; var ig = demo.classList.contains('on-ignore'); dvRead(dv16rd, gd(ig ? 'clean' : 'found'), ig ? 'dv-good' : 'dv-bad'); }
+      dv16bundle(); dv16.querySelector('.dv16-scan').addEventListener('click', dv16scan);
       demo._replay = function () {};
+      Array.prototype.forEach.call(demo.querySelectorAll('.demo-controls input'), function (i) { i.addEventListener('change', function () { if (i.name === 'ignore' && dv16scanned) dv16scan(); else if (i.name === 'srv') dv16bundle(); }); });
     }
     // 17 storage
     var dv17 = demo.querySelector('.dv17-wrap');
     if (dv17) {
-      var dv17url = dv17.querySelector('.dv17-url'), dv17rd = dv17.querySelector('.dv17-read'), dv17b = dv17.querySelector('.dv17-bucket'), dv17copied = false;
-      dvOn(function () { dv17b.textContent = demo.classList.contains('on-private') ? 'private/lists/42/' : 'public/lists/42/'; dv17url.textContent = ''; dv17url.classList.remove('is-expired'); dv17copied = false; dv17rd.textContent = gd('first'); });
-      dv17.querySelector('.dv17-copy').addEventListener('click', function () { dv17copied = true; dv17url.classList.remove('is-expired'); if (demo.classList.contains('on-private')) { var e = Number(demo.getAttribute('data-exp')) || 15; dv17url.textContent = 'https://…/object/sign/private/lists/42/camera.jpg?token=eyJ…&exp=' + (e * 60); dvRead(dv17rd, gd('signed').replace('%d', e), ''); } else { dv17url.textContent = 'https://…/object/public/lists/42/camera.jpg'; dvRead(dv17rd, gd('pub'), 'dv-bad'); } });
-      dv17.querySelector('.dv17-open').addEventListener('click', function () { if (!dv17copied) { dv17rd.textContent = gd('first'); return; } if (!demo.classList.contains('on-private')) { dvRead(dv17rd, gd('pub'), 'dv-bad'); return; } var e = Number(demo.getAttribute('data-exp')) || 15; if (e > 30) { dvRead(dv17rd, gd('ok'), ''); } else { dv17url.classList.add('is-expired'); dvRead(dv17rd, gd('expired'), 'dv-good'); } });
-      demo._replay = function () {};
+      var dv17url = dv17.querySelector('.dv17-url'), dv17rd = dv17.querySelector('.dv17-read'), dv17b = dv17.querySelector('.dv17-bucket'), dv17copied = false, dv17opened = false;
+      dvOn(function () { dv17b.textContent = demo.classList.contains('on-private') ? 'private/lists/42/' : 'public/lists/42/'; if (!dv17copied) dv17rd.textContent = gd('first'); });
+      dv17.querySelector('.dv17-copy').addEventListener('click', function () { dv17copied = true; dv17opened = false; dv17url.classList.remove('is-expired'); if (demo.classList.contains('on-private')) { var e = Number(demo.getAttribute('data-exp')) || 15; dv17url.textContent = 'https://…/object/sign/private/lists/42/camera.jpg?token=eyJ…&exp=' + (e * 60); dvRead(dv17rd, gd('signed').replace('%d', e), ''); } else { dv17url.textContent = 'https://…/object/public/lists/42/camera.jpg'; dvRead(dv17rd, gd('pub'), 'dv-bad'); } });
+      dv17.querySelector('.dv17-open').addEventListener('click', function () { if (!dv17copied) { dv17rd.textContent = gd('first'); return; } dv17opened = true; if (!demo.classList.contains('on-private')) { dvRead(dv17rd, gd('pub'), 'dv-bad'); return; } var e = Number(demo.getAttribute('data-exp')) || 15; if (e > 30) { dvRead(dv17rd, gd('ok'), ''); } else { dv17url.classList.add('is-expired'); dvRead(dv17rd, gd('expired'), 'dv-good'); } });
+      demo._replay = function () { if (!dv17copied) return; var o = dv17opened; dv17.querySelector('.dv17-copy').click(); if (o) dv17.querySelector('.dv17-open').click(); };
     }
     // 18 CSP
     var dv18 = demo.querySelector('.dv18-wrap');
@@ -968,10 +975,10 @@
     // 20 backups
     var dv20 = demo.querySelector('.dv20-wrap');
     if (dv20) {
-      var dv20tbl = dv20.querySelector('.dv20-table'), dv20rows = dv20.querySelector('.dv20-rows'), dv20rd = dv20.querySelector('.dv20-read');
-      dv20.querySelector('.dv20-oops').addEventListener('click', function () { dv20tbl.classList.add('is-gone'); dv20tbl.classList.remove('is-back'); dv20.classList.add('is-gone'); dvRead(dv20rd, gd('lost'), 'dv-bad'); });
-      dv20.querySelector('.dv20-restore').addEventListener('click', function () { var b = demo.classList.contains('on-backup'), t = demo.classList.contains('on-tested'); if (!b) { dvRead(dv20rd, gd('nobackup'), 'dv-bad'); return; } if (!t) { dvRead(dv20rd, gd('untested'), 'dv-bad'); return; } dv20tbl.classList.remove('is-gone'); dv20tbl.classList.add('is-back'); dv20.classList.remove('is-gone'); dvRead(dv20rd, gd('ok'), 'dv-good'); });
-      dv20rd.textContent = gd('first'); demo._replay = function () { if (dv20.classList.contains('is-gone')) dv20.querySelector('.dv20-restore').click(); };
+      var dv20tbl = dv20.querySelector('.dv20-table'), dv20rows = dv20.querySelector('.dv20-rows'), dv20rd = dv20.querySelector('.dv20-read'), dv20restored = false;
+      dv20.querySelector('.dv20-oops').addEventListener('click', function () { dv20restored = false; dv20tbl.classList.add('is-gone'); dv20tbl.classList.remove('is-back'); dv20.classList.add('is-gone'); dvRead(dv20rd, gd('lost'), 'dv-bad'); });
+      dv20.querySelector('.dv20-restore').addEventListener('click', function () { dv20restored = true; var b = demo.classList.contains('on-backup'), t = demo.classList.contains('on-tested'); if (!b) { dvRead(dv20rd, gd('nobackup'), 'dv-bad'); return; } if (!t) { dvRead(dv20rd, gd('untested'), 'dv-bad'); return; } dv20tbl.classList.remove('is-gone'); dv20tbl.classList.add('is-back'); dv20.classList.remove('is-gone'); dvRead(dv20rd, gd('ok'), 'dv-good'); });
+      dv20rd.textContent = gd('first'); demo._replay = function () { if (!dv20restored) return; dv20.querySelector('.dv20-oops').click(); dv20.querySelector('.dv20-restore').click(); };
     }
     // 21 personal data
     var dv21 = demo.querySelector('.dv21-wrap');
@@ -984,28 +991,29 @@
     // 22 legal bases
     var dv22 = demo.querySelector('.dv22-wrap');
     if (dv22) {
-      var dv22rows = dv22.querySelectorAll('.dv22-row'), dv22rd = dv22.querySelector('.dv22-read'), dv22base = [1, 2, 0];
-      Array.prototype.forEach.call(dv22rows, function (r, i) { dvSeg(r, 'dv22-b', function (v) { dv22base[i] = v; r.classList.remove('is-bad'); dv22rd.textContent = ''; }); });
-      dv22.querySelector('.dv22-withdraw').addEventListener('click', function () { Array.prototype.forEach.call(dv22rows, function (r) { r.classList.remove('is-bad'); }); if (dv22base[0] === 0) { dv22rows[0].classList.add('is-bad'); dvRead(dv22rd, gd('wbad'), 'dv-bad'); } else { dvRead(dv22rd, gd('wok'), 'dv-good'); } });
-      dv22.querySelector('.dv22-export').addEventListener('click', function () { var r = demo.classList.contains('on-rights'); dvRead(dv22rd, gd(r ? 'expok' : 'expman'), r ? 'dv-good' : 'dv-bad'); });
-      dv22.querySelector('.dv22-delete').addEventListener('click', function () { var r = demo.classList.contains('on-rights'); dvRead(dv22rd, gd(r ? 'delok' : 'delman'), r ? 'dv-good' : 'dv-bad'); });
-      dv22rd.textContent = gd('first'); demo._replay = function () {};
+      var dv22rows = dv22.querySelectorAll('.dv22-row'), dv22rd = dv22.querySelector('.dv22-read'), dv22base = [1, 2, 0], dv22last = '';
+      function dv22again() { if (dv22last) dv22.querySelector('.dv22-' + dv22last).click(); }
+      Array.prototype.forEach.call(dv22rows, function (r, i) { dvSeg(r, 'dv22-b', function (v) { dv22base[i] = v; r.classList.remove('is-bad'); if (dv22last === 'withdraw') dv22again(); else dv22rd.textContent = ''; }); });
+      dv22.querySelector('.dv22-withdraw').addEventListener('click', function () { dv22last = 'withdraw'; Array.prototype.forEach.call(dv22rows, function (r) { r.classList.remove('is-bad'); }); if (dv22base[0] === 0) { dv22rows[0].classList.add('is-bad'); dvRead(dv22rd, gd('wbad'), 'dv-bad'); } else { dvRead(dv22rd, gd('wok'), 'dv-good'); } });
+      dv22.querySelector('.dv22-export').addEventListener('click', function () { dv22last = 'export'; var r = demo.classList.contains('on-rights'); dvRead(dv22rd, gd(r ? 'expok' : 'expman'), r ? 'dv-good' : 'dv-bad'); });
+      dv22.querySelector('.dv22-delete').addEventListener('click', function () { dv22last = 'delete'; var r = demo.classList.contains('on-rights'); dvRead(dv22rd, gd(r ? 'delok' : 'delman'), r ? 'dv-good' : 'dv-bad'); });
+      dv22rd.textContent = gd('first'); demo._replay = dv22again;
     }
     // 23 privacy by design
     var dv23 = demo.querySelector('.dv23-wrap');
     if (dv23) {
-      var dv23banner = dv23.querySelector('.dv23-banner'), dv23list = dv23.querySelector('.dv23-list'), dv23rd = dv23.querySelector('.dv23-read');
+      var dv23banner = dv23.querySelector('.dv23-banner'), dv23list = dv23.querySelector('.dv23-list'), dv23rd = dv23.querySelector('.dv23-read'), dv23last = '';
       var dv23txt = document.documentElement.lang.indexOf('pt') === 0 ? ['Listas novas nascem %s.', 'Guardamos e-mail, listas e itens para operar sua conta (execução de contrato).', 'Analytics %s.', 'Você pode exportar e excluir seus dados a qualquer momento; backups expurgam em 30 dias.', 'privadas', 'públicas', 'só roda se você aceitar (consentimento)', 'roda por padrão'] : ['New lists are born %s.', 'We keep email, lists and items to run your account (contract).', 'Analytics %s.', 'You can export and delete your data at any time; backups purge within 30 days.', 'private', 'public', 'runs only if you accept (consent)', 'runs by default'];
       dvOn(function () { var p = demo.classList.contains('on-defpriv'), a = demo.classList.contains('on-analytics'); dvRead(dv23banner, gd(a ? 'bbad' : 'bok'), ''); dv23list.innerHTML = ''; [[dv23txt[0].replace('%s', dv23txt[p ? 4 : 5]), !p], [dv23txt[1], false], [dv23txt[2].replace('%s', dv23txt[a ? 7 : 6]), a], [dv23txt[3], false]].forEach(function (x) { var li = document.createElement('li'); li.textContent = x[0]; if (x[1]) li.classList.add('is-bad'); dv23list.appendChild(li); }); });
-      dv23.querySelector('.dv23-new').addEventListener('click', function () { var p = demo.classList.contains('on-defpriv'); dvRead(dv23rd, gd('new').replace('%s', gd(p ? 'priv' : 'pub')), p ? 'dv-good' : 'dv-bad'); });
-      dv23.querySelector('.dv23-del').addEventListener('click', function () { dvRead(dv23rd, gd('deleted'), 'dv-good'); });
-      demo._replay = function () {};
+      dv23.querySelector('.dv23-new').addEventListener('click', function () { dv23last = 'new'; var p = demo.classList.contains('on-defpriv'); dvRead(dv23rd, gd('new').replace('%s', gd(p ? 'priv' : 'pub')), p ? 'dv-good' : 'dv-bad'); });
+      dv23.querySelector('.dv23-del').addEventListener('click', function () { dv23last = 'del'; dvRead(dv23rd, gd('deleted'), 'dv-good'); });
+      demo._replay = function () { if (dv23last) dv23.querySelector('.dv23-' + dv23last).click(); };
     }
     // 24 matrix
     var dv24 = demo.querySelector('.dv24-wrap');
     if (dv24) {
       var dv24cells = dv24.querySelectorAll('.dv24-cell'), dv24rd = dv24.querySelector('.dv24-read');
-      function dv24test(c) { var exp = c.getAttribute('data-exp') === '1', r = Number(c.getAttribute('data-r')), o = Number(c.getAttribute('data-o')), rls = demo.classList.contains('on-rls'); var actual = rls ? exp : (o === 1 && r !== 1 ? true : exp); var pass = actual === exp; c.classList.remove('is-pass', 'is-fail'); c.classList.add(pass ? 'is-pass' : 'is-fail'); c.textContent = pass ? '✓' : '✗'; return pass; }
+      function dv24test(c) { var exp = c.getAttribute('data-exp') === '1', r = Number(c.getAttribute('data-r')), o = Number(c.getAttribute('data-o')), rls = demo.classList.contains('on-rls'); var actual = rls ? exp : true; var pass = actual === exp; c.classList.remove('is-pass', 'is-fail'); c.classList.add(pass ? 'is-pass' : 'is-fail'); c.textContent = pass ? '✓' : '✗'; return pass; }
       function dv24sum() { var tested = 0, pass = 0; Array.prototype.forEach.call(dv24cells, function (c) { if (c.classList.contains('is-pass') || c.classList.contains('is-fail')) { tested++; if (c.classList.contains('is-pass')) pass++; } }); if (!tested) { dv24rd.textContent = gd('first'); return; } var fail = tested - pass; dvRead(dv24rd, fail ? gd('fail').replace('%d', fail) : gd('pass').replace('%d', pass), fail ? 'dv-bad' : 'dv-good'); }
       Array.prototype.forEach.call(dv24cells, function (c) { c.addEventListener('click', function () { dv24test(c); dv24sum(); }); });
       dv24.querySelector('.dv24-run').addEventListener('click', function () { Array.prototype.forEach.call(dv24cells, dv24test); dv24sum(); });
